@@ -71,3 +71,14 @@ body {
 .Product_Details .slick-disabled {
   @apply opacity-50 cursor-text;
 }
+
+.aboutUsBg{
+  background:linear-gradient(rgba(49, 49, 49, 0.507),rgba(66, 65, 65, 0.452)), url("./assets/banners/aboutBanner.png");
+  background-size: cover;
+  background-position: center;
+}
+.contactUsBg{
+  background:url("./assets/banners/contactBanner.png");
+  background-size: cover;
+  background-position: center;
+}
