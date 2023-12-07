@@ -1,11 +1,33 @@
 import Link from "next/link";
+import Image from "next/image";
+
+import Menu from "@/app/assets/icons/menu.svg";
+
+import heart from "@/app/assets/icons/heart.svg";
+import profile from "@/app/assets/icons/profile-circle.svg";
+import cart from "@/app/assets/icons/cart.svg";
+import search from "@/app/assets/icons/search.svg";
 
 const Navbar = () => {
+
+  const Links = [
+    { label: "Home", link: "#"},
+    { label: "Bed", link: "#"},
+    { label: "sofa", link: "#"},
+    { label: "Dressing table", link: "#"},
+    { label: "Wardrobe", link: "#"},
+    { label: "Bean bag", link: "#"},
+    { label: "Curtain", link: "#"},
+    { label: "Office furniture", link: "#"},
+    { label: "Coffee table/ Living  room table", link: "#"},
+    { label: "TV units", link: "#"},
+  ]
+
   return (
-    <div className="bg-gray-400 text-white">
+    <div className="bg-gray-900 text-white">
       <header className="border-b">
         <div className="container">
-          <ul className="flex gap-3">
+          <ul className="flex gap-8 py-2">
             <li>
               <Link href="#">
                 Track Order
@@ -36,11 +58,49 @@ const Navbar = () => {
               <h1 className="text-primary text-xl font-black text-center">Guideline</h1>
               <p className="text-sm text-white">group of companies</p>
             </div>
-            <button className="hidden lg:block px-[20px] py-[10px] bg-sliver text-white rounded-md shrink-0">
-              Menu
-            </button>
+            <div className="grow flex items-center px-16 gap-3">
+              <button className="p-[10px] bg-gray-400 text-white shrink-0 flex items-center gap-2">
+                <Image src={Menu} alt="menu icon" />
+                Menu
+              </button>
+              <div className="grow flex items-center">
+                <input 
+                  type="text"
+                  placeholder="Search here..."
+                  className="grow py-2.5 px-3"
+                />
+                <button className="bg-primary shrink-0 h-[44px] px-2.5">
+                  <Image src={search} alt="search" />  
+                </button>
+              </div>
+              <button className="p-[10px] bg-gray-400 text-white shrink-0">
+                Customize furniture
+              </button>
+            </div>
+            <div className="flex items-center gap-6">
+              <button className="shrink-0">
+                <Image src={profile} alt="user" />
+              </button>
+              <button className="shrink-0 relative">
+                <Image src={cart} alt="user" />
+                <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full w-[20px] h-[20px] text-white bg-primary text-xs">2</span>
+              </button>
+              <button className="shrink-0 relative">
+                <Image src={heart} alt="user" />
+                <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full w-[20px] h-[20px] text-white bg-primary text-xs">2</span>
+              </button>
+            </div>
           </div>
         </nav>
+        <ul className="flex items-center justify-between gap-3 pb-3">
+          {Links?.map((item: any, index: number) => (
+            <li key={index}>
+              <Link href={item?.link}>
+                {item?.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   )

@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        "sliver": "#F3F2EF",
+        "silver": "#F3F2EF",
         "cream": "#F3EFE5",
         
         "gray-100": "#A9A9A9",
