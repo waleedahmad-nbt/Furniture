@@ -82,3 +82,44 @@ body {
   background-size: cover;
   background-position: center;
 }
+.cementBg{
+  background:url("../public/cementTexture.png");
+  background-size: cover;
+  background-position: center;
+}
+.wishlistBg{
+  background:linear-gradient(rgba(49, 49, 49, 0.507),rgba(66, 65, 65, 0.452)), url("../public/wishlistbanner.png");
+  background-size: cover;
+  background-position: center;
+}
+.customizeFurnitureBg{
+  background:url("../public/customizeFurniture.png");
+  background-size: cover;
+  background-position: center;
+}
+.FAQSBg{
+  background:url("../public/FAQS\ Banner.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.tcBanner{
+  background:url("../public/t&c\ Banner.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.accordion-content {
+  /* max-height: 0; */
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.accordion-content.open {
+  /* max-height: 1000px; */
+  transition: max-height 0.3s ease;
+}
+
+.transition-transform {
+  transition: transform 0.3s ease;
+}
