@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Footer, Navbar } from './components';
+import ReduxProvider from '@/lib/store/ReduxProvider';
 
 export const metadata: Metadata = {
   title: 'Furniture',
@@ -21,11 +22,13 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Navbar />
-        <main>
-          {children}
-        </main>
-        <Footer />
+        <ReduxProvider>
+          <Navbar />
+          <main>
+            {children}
+          </main>
+          <Footer />
+        </ReduxProvider>
       </body>
     </html>
   )
