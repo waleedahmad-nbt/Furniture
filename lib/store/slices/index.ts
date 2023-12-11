@@ -1,3 +1,4 @@
 import Allslice from "./Allslices";
+import localdataslice from "./localdataslice";
 
-export { Allslice };
+export { Allslice, localdataslice };

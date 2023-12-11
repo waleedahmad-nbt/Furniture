@@ -4,7 +4,6 @@ import { MultiProductView } from "..";
 
 import star from "@/app/assets/icons/star.svg";
 import starFill from "@/app/assets/icons/star_fill.svg";
-import { useSelector } from "react-redux";
 
 const ProductCard = ({ item, className, offer }: any) => {
 

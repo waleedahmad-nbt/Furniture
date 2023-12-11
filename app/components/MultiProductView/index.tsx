@@ -2,15 +2,44 @@
 import { useState } from "react";
 import Image from "next/image";
 
-import Heart from "@/app/assets/icons/heart_dark.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
+import { addToCart, addToWhislist, removeWishList } from "@/lib/store/slices/Allslices";
+
 import cart from "@/app/assets/icons/cart_dark.svg";
 import zoom from "@/app/assets/icons/zoom.svg";
+import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
 
 const MultiProductView = ({ item }: any) => {
+  const dispatch = useDispatch();
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
-
   const bgColor = item?.status === "sale" ? "bg-secondary" : "bg-primary";
+  
+  const cartItems: any = useSelector((state: RootState) => state.cart);
+  const wishList: any = useSelector((state: RootState) => state.wishList);
+  
+  const handleCart = () => {
+    const filterCart = cartItems.filter((product: any) => product._id === item?._id);
+
+    if (filterCart.length <= 0) {
+      dispatch(addToCart({ ...item, quantity: 1 }));
+    }
+  };
+
+  const handleWishList = () => {
+    const id = item?._id;
+    const filterWishList = wishList.filter((product: any) => product._id === id);
+
+    if (filterWishList.length > 0) {
+      dispatch(removeWishList({ id }));
+    } else {
+      dispatch(addToWhislist(item));
+    }
+  };
+
+  // check if exists in wishlist or not
+  const existWish = wishList.filter((wish: any) => wish._id === item?._id);
 
   return (
     <>
@@ -21,8 +50,12 @@ const MultiProductView = ({ item }: any) => {
           </span>
         )}
         <div className="absolute top-2 right-3 z-10">
-          <button className="bg-white border rounded-full w-[32px] h-[32px] flex items-center justify-center">
-            <Image src={Heart} alt="product"/>
+          <button
+            onClick={handleWishList}
+            className={`bg-white border rounded-full w-[32px] h-[32px] text-xl flex items-center justify-center 
+            ${existWish.length > 0 ? "text-primary" : "text-gray-100"}`}
+          >
+            {existWish.length > 0 ? <IoHeartSharp /> : <IoHeartOutline />}
           </button>
           <button className="bg-white border rounded-full w-[32px] h-[32px] opacity-0 duration-200 group-hover:opacity-100 flex items-center justify-center mt-1">
             <Image src={zoom} alt="product"/>
@@ -37,7 +70,8 @@ const MultiProductView = ({ item }: any) => {
           </div>
         ))}
         <div className="absolute bottom-0 group-hover:bottom-4 translate-y-full group-hover:translate-y-0 duration-200 opacity-0 group-hover:opacity-100">
-          <button 
+          <button
+            onClick={handleCart}
             className="bg-primary px-8 py-2 w-max text-white font-medium text-[14px]"
           >
             ADD TO CART

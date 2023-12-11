@@ -8,6 +8,8 @@ import heart from "@/app/assets/icons/heart.svg";
 import profile from "@/app/assets/icons/profile-circle.svg";
 import cart from "@/app/assets/icons/cart.svg";
 import search from "@/app/assets/icons/search.svg";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
 
 import { SignInModal, ForgotPasswordModal } from "../index";
 import { useState } from "react";
@@ -26,6 +28,9 @@ const Navbar = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  const cartItems: any = useSelector((state: RootState) => state.cart);
+  const wishList: any = useSelector((state: RootState) => state.wishList);
 
   const Links = [
     { label: "Home", link: "#" },
@@ -92,17 +97,21 @@ const Navbar = () => {
               <button className="shrink-0" onClick={showModal}>
                 <Image src={profile} alt="user" />
               </button>
-              <button className="shrink-0 relative">
+              <Link href="/cart" className="shrink-0 relative">
                 <Image src={cart} alt="user" />
-                <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full w-[20px] h-[20px] text-white bg-primary text-xs">
-                  2
-                </span>
-              </button>
+                {cartItems.length > 0 && (
+                  <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full w-[20px] h-[20px] text-white bg-primary text-xs">
+                    {cartItems.length}
+                  </span>
+                )}
+              </Link>
               <button className="shrink-0 relative">
                 <Image src={heart} alt="user" />
-                <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full w-[20px] h-[20px] text-white bg-primary text-xs">
-                  2
-                </span>
+                {wishList.length > 0 && (
+                  <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full w-[20px] h-[20px] text-white bg-primary text-xs">
+                    {wishList.length}
+                  </span>
+                )}
               </button>
             </div>
           </div>

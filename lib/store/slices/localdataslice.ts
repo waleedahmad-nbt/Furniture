@@ -1,34 +1,30 @@
-"use client";
+// localDataSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "@/lib/store";
 
-interface AuthState {
+interface LocalDataState {
   cart: Array<object>;
   wishList: Array<object>;
 }
 
-const initialState: AuthState = {
+const initialState: LocalDataState = {
   cart: [],
   wishList: []
 };
 
-export const Allslice = createSlice({
-  name: "Allslice",
+const localDataSlice = createSlice({
+  name: "localData",
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<object>) => {
       state.cart = [...state.cart, action.payload];
     },
-    removeCartItem: (state, action: PayloadAction<{ id: string }>) => {
-      const idToRemove = action.payload.id;
-      state.cart = state.cart.filter((item: any) => item._id !== idToRemove);
-    },
     addToWhislist: (state, action: PayloadAction<object>) => {
       state.wishList = [...state.wishList, action.payload];
     },
-    removeWishList: (state, action: PayloadAction<{ id: string }>) => {
+    removeCartItem: (state, action: PayloadAction<{ id: string }>) => {
       const idToRemove = action.payload.id;
-      state.wishList = state.wishList.filter((item: any) => item._id !== idToRemove);
+      state.cart = state.cart.filter((item: any) => item._id !== idToRemove);
     },
   },
 });
@@ -37,9 +33,8 @@ export const selectAuth = (state: RootState) => state._persist;
 
 export const { 
   addToCart, 
-  removeCartItem,
-  addToWhislist,
-  removeWishList,
-} = Allslice.actions;
+  removeCartItem, 
+  addToWhislist
+} = localDataSlice.actions;
 
-export default Allslice.reducer;
+export default localDataSlice.reducer;

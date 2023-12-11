@@ -41,11 +41,11 @@ const ProductDetails = () => {
   });
 
   const newArrival = [
-    { name: "Rocket stool", images: [Pro2, kitchen, bed], priceWas: "27.90", priceNow: "18.80", quantity: 2, status: "sale" },
-    { name: "Rocket stool", images: [Pro2, Pro1], priceWas: "27.90", priceNow: "18.80", quantity: 0, status: "sale" },
-    { name: "Rocket stool", images: [Pro2], priceWas: "27.90", priceNow: "18.80", quantity: 5, status: "sale" },
-    { name: "Rocket stool", images: [Pro1], priceWas: "27.90", priceNow: "18.80", quantity: 2, status: "sale" },
-    { name: "Rocket stool", images: [Pro1], priceWas: "27.90", priceNow: "18.80", quantity: 2, status: "new" },
+    { _id: "1", name: "Rocket stool", images: [Pro2, kitchen, bed], priceWas: "27.90", priceNow: "18.80", quantity: 2, status: "sale" },
+    { _id: "2", name: "Rocket stool", images: [Pro2, Pro1], priceWas: "27.90", priceNow: "18.80", quantity: 0, status: "sale" },
+    { _id: "3", name: "Rocket stool", images: [Pro2], priceWas: "27.90", priceNow: "18.80", quantity: 5, status: "sale" },
+    { _id: "4", name: "Rocket stool", images: [Pro1], priceWas: "27.90", priceNow: "18.80", quantity: 2, status: "sale" },
+    { _id: "5", name: "Rocket stool", images: [Pro1], priceWas: "27.90", priceNow: "18.80", quantity: 2, status: "new" },
   ];
   
   const data = {
@@ -61,6 +61,26 @@ const ProductDetails = () => {
 
   const [product, setProduct] = useState<any>(data);
 
+  function SamplePrevArrow(props: any) {
+    const { className, onClick } = props;
+    return (
+      <FaAngleLeft
+        className={className}
+        onClick={onClick}
+      />
+    );
+  }
+
+  function SampleNextArrow(props: any) {
+    const { className, onClick } = props;
+    return (
+      <FaAngleRight
+        className={className}
+        onClick={onClick}
+      />
+    );
+  }
+
   const settings = {
     customPaging: function(i: any) {
       return (
@@ -74,8 +94,8 @@ const ProductDetails = () => {
     infinite: false,
     slidesToShow: 1,
     slidesToScroll: 1,
-    prevArrow: <FaAngleLeft />,
-    nextArrow: <FaAngleRight />,
+    prevArrow: <SamplePrevArrow />,
+    nextArrow: <SampleNextArrow />,
   };
 
   const setAmount = (type: string) => {
