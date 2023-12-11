@@ -26,7 +26,7 @@ const TermsAndConditions = () => {
           </h1>
           <hr className="mt-5 bg-[#A9A9A9]" />
           <h2 className="font-bold mt-5">Your Agreement</h2>
-          <div className="p-5 text-gray-200 text-[17px] font-medium">
+          <div className="p-5 text-[#6B6B6B] text-[17px] font-medium">
             <p>
               Last Revised: December 16, 2013 Welcome to www.lorem-ipsum.info.
               This site is provided as a service to our visitors and may be used
