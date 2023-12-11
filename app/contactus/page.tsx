@@ -13,7 +13,6 @@ const contactUs = () => {
             Lorem ipsum, or lipsum as it is sometimes known, is dummy text used
             in laying out print, graphic or <br /> web designs. The passage is
             attributed to an unknown typesetter in.
-            fghfghf
           </p>
         </div>
       </div>
