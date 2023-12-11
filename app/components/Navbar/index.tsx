@@ -11,10 +11,11 @@ import search from "@/app/assets/icons/search.svg";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 
-import { SignInModal, ForgotPasswordModal } from "../index";
+import { SignInModal, SignUpModal } from "../index";
 import { useState } from "react";
 
 const Navbar = () => {
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -31,7 +32,15 @@ const Navbar = () => {
 
   const cartItems: any = useSelector((state: RootState) => state.cart);
   const wishList: any = useSelector((state: RootState) => state.wishList);
+  
+  const showSignUp = () => {
+    setIsSignUpOpen(true);
+    console.log(isSignUpOpen, "hello");
+  };
 
+  const handleSignUpCancel = () => {
+    setIsSignUpOpen(false);
+  };
   const Links = [
     { label: "Home", link: "#" },
     { label: "Bed", link: "#" },
@@ -129,13 +138,15 @@ const Navbar = () => {
         showModal={showModal}
         handleOk={handleOk}
         handleCancel={handleCancel}
+        showSignUp={showSignUp}
+        isSignUpOpen={isSignUpOpen}
       />
-      {/* <ForgotPasswordModal
-        isModalOpen={isPasswordModalOpen}
-        showModal={showModal}
+      <SignUpModal
+        isSignUpOpen={isSignUpOpen}
+        showSignUp={showSignUp}
         handleOk={handleOk}
-        handleCancel={handleCancel}
-      /> */}
+        handleSignUpCancel={handleSignUpCancel}
+      />
     </div>
   );
 };

@@ -4,17 +4,18 @@ import { RxCross1 } from "react-icons/rx";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiEyeOff } from "react-icons/fi";
 
-const ForgotPasswordModal = ({
-  showModal,
-  handleOk,
+const SignUpModal = ({
+  isSignUpOpen,
+  showSignUp,
   handleCancel,
   isModalOpen,
+  handleSignUpCancel,
 }: any) => {
   const [showPassword, setShowPasswords] = useState(true);
 
   return (
     <>
-      {isModalOpen && (
+      {isSignUpOpen && (
         <div className="fixed z-30 inset-0 overflow-y-auto">
           <div className="flex items-start justify-center min-h-screen pt-5 px-4 pb-20 text-center sm:block sm:p-0">
             <div className="fixed inset-0 transition-opacity">
@@ -36,7 +37,7 @@ const ForgotPasswordModal = ({
                   <RxCross1 />
                 </div>
                 <h1 className="text-center text-gray-900 text-2xl font-medium">
-                  Forgot Password
+                  Sign Up
                 </h1>
                 <p className="text-center text-gray-200 text-[14px] mt-2">
                   If you have an account, sign in with your email address.
@@ -116,4 +117,4 @@ const ForgotPasswordModal = ({
   );
 };
 
-export default ForgotPasswordModal;
+export default SignUpModal;

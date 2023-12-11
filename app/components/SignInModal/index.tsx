@@ -4,7 +4,13 @@ import { RxCross1 } from "react-icons/rx";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiEyeOff } from "react-icons/fi";
 
-const Modal = ({ showModal, handleOk, handleCancel, isModalOpen }: any) => {
+const Modal = ({
+  showModal,
+  handleOk,
+  handleCancel,
+  isModalOpen,
+  showSignUp,
+}: any) => {
   const [showSignIn, setSignIn] = useState(true);
   const [showPassword, setShowPasswords] = useState(true);
   const [forgotPassword, setForgotPassword] = useState(false);
@@ -13,7 +19,7 @@ const Modal = ({ showModal, handleOk, handleCancel, isModalOpen }: any) => {
     <>
       {isModalOpen && (
         <div className="fixed z-30 inset-0 overflow-y-auto">
-          <div className="flex items-center justify-center min-h-screen px-4 text-center ">
+          <div className="flex items-center  justify-center min-h-screen px-4 text-center ">
             <div className="fixed inset-0 transition-opacity">
               <div
                 className="absolute inset-0 bg-gray-400 opacity-70"
@@ -69,7 +75,7 @@ const Modal = ({ showModal, handleOk, handleCancel, isModalOpen }: any) => {
                         <div className="flex justify-between items-center w-[368px] h-[48px] px-5 mt-2 border border-gray-100 rounded-md">
                           <input
                             className="bg-white h-full outline-none"
-                            type={showPassword ? "password" : "text"}
+                            type={showPassword ? "text" : "password"}
                             name="password"
                             id="password"
                             placeholder="Type your Password"
@@ -111,7 +117,14 @@ const Modal = ({ showModal, handleOk, handleCancel, isModalOpen }: any) => {
                       <br />
                       keep more than one address, track orders and more.
                     </p>
-                    <button className="text-white bg-[#3CB242] w-[212px] h-[40px] mt-5">
+                    <button
+                      className="text-white bg-[#3CB242] w-[212px] h-[40px] mt-5"
+                      // onClick={() => {
+                      //   // setSignIn(!showSignIn);
+                      //   showSignUp;
+                      // }}
+                      onClick={showSignUp}
+                    >
                       Create An Account
                     </button>
                   </div>
@@ -129,7 +142,11 @@ const Modal = ({ showModal, handleOk, handleCancel, isModalOpen }: any) => {
                 <div className="relative bg-white  min-h-[80vh ] px-4 pt-10 pb-10 sm:p-6 sm:pb-4 text-gray-900">
                   <div
                     className="absolute top-5 right-5"
-                    onClick={handleCancel}
+                    onClick={() => {
+                      handleCancel;
+                      setSignIn(!showSignIn);
+                      setForgotPassword(!forgotPassword);
+                    }}
                   >
                     <RxCross1 />
                   </div>

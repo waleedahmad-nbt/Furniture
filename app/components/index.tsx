@@ -6,7 +6,7 @@ import MultiProductView from "./MultiProductView";
 import PaginationContainer from "./PaginationContainer";
 import ProductComment from "./ProductComment";
 import SignInModal from "./SignInModal";
-import ForgotPasswordModal from "./ForgotPasswordModal";
+import SignUpModal from "./SignUpModal";
 
 export {
   Navbar,
@@ -17,5 +17,5 @@ export {
   PaginationContainer,
   ProductComment,
   SignInModal,
-  ForgotPasswordModal,
+  SignUpModal,
 };
