@@ -8,4 +8,66 @@
 
 body {
   font-family: 'Satoshi', sans-serif;
+  @apply bg-silver;
+}
+
+.Product_Slider .slick-dots li {
+  @apply w-[10px] h-[10px];
+}
+
+.Product_Slider .slick-track {
+  display: flex !important;
+  justify-content: space-between;
+}
+
+.Product_Slider .slick-slide {
+  width: max-content !important;
+}
+
+.Product_Slider .slick-dots li button {
+  @apply w-[10px] h-[10px] bg-gray-100 rounded-full;
+}
+
+.Product_Slider .slick-dots li.slick-active button {
+  @apply bg-primary;
+}
+
+.Product_Slider .slick-dots li button:before {
+  @apply content-[""];
+}
+
+.Discount_Banner {
+  background: linear-gradient(89.95deg, #F3EFE5 0.04%, #F3EFE5 24.13%, rgba(243, 239, 229, 0) 83.32%);
+}
+
+.Product_Details .slick-dots {
+  bottom: 0;
+  transform: translateY(calc(100% + 15px));
+}
+
+.Product_Details .slick-dots li {
+  width: auto;
+  height: auto;
+  margin: 0 10px;
+}
+
+.Product_Details .slick-dots li > div {
+  @apply border border-transparent;
+}
+
+.Product_Details .slick-dots li.slick-active > div {
+  @apply border-primary;
+}
+
+.Product_Details .slick-arrow {
+  @apply text-black;
+}
+
+.Product_Details .slick-arrow:hover,
+.Product_Details .slick-arrow:focus {
+  @apply text-black;
+}
+
+.Product_Details .slick-disabled {
+  @apply opacity-50 cursor-text;
 }

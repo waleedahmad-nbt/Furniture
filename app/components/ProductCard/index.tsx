@@ -1,32 +1,47 @@
 import Image from "next/image";
+import { MultiProductView } from "..";
 
+import star from "@/app/assets/icons/star.svg";
+import starFill from "@/app/assets/icons/star_fill.svg";
 
-import Heart from "@/app/assets/icons/heart_dark.svg";
-
-const ProductCard = ({ item }: any) => {
-
-  const count = ["", "", "", ""];
+const ProductCard = ({ item, className, offer }: any) => {
 
   return (
-    <div>
-      <div className="bg-white h-[203px] flex items-center justify-center relative">
-        <span className="absolute top-2 left-3 rounded-2xl px-2 py-1 bg-secondary text-white font-bold text-[10px]">SALE</span>
-        <button className="absolute top-2 right-3 bg-white border rounded-full w-[30px] h-[30px] flex items-center justify-center">
-          <Image src={Heart} alt="product"/>
-        </button>
-        <Image src={item?.image} alt="product" className="mx-auto"/>
+    <div className={className}>
+      <div className="h-[203px]">
+        <MultiProductView item={item} />
       </div>
-      <div className="flex gap-2">
-        {count?.map((item: any, index: number) => (
-          <div className="flex h-[4px] w-full bg-gray-300"></div>
-        ))}
+      <div className="flex mt-3 gap-1">
+        <div className="flex">
+          {Array.from({ length: 4 })?.map((_, index) => (
+            <Image src={starFill} alt="product" width={10} height={10} key={index}/>
+          ))}
+          <Image src={star} alt="product" width={10} height={10}/>
+        </div>
+        <span className="text-gray-500 text-[14px]">3</span>
       </div>
-      <h3 className="font-medium text-gray-300 mt-3">{item?.name}</h3>
-      <div className="flex flex-items gap-4">
-        <span>{item?.priceWas}</span>
-        <span>{item?.priceNow}</span>
+      <h3 className="font-medium text-gray-300 mt-1">{item?.name}</h3>
+      <div className="flex flex-items gap-3">
+        <span className="text-gray-500 line-through">${item?.priceWas}</span>
+        <span className="text-primary">${item?.priceNow}</span>
       </div>
-      <p className="text-gray-300 text-[14px]">{item?.quantity} Products</p>
+      <p className="text-gray-300 text-[14px]">
+        {item?.quantity > 0 ? <span className="text-green">In Stock</span> : <span className="text-secondary">Out Of Stock</span>}
+      </p>
+      {offer && (
+        <>
+          <div className="flex text-gray-blue gap-1 mt-1">
+            <p className="text-gray-300 bg-[#EEF2F6] px-2 py-1 font-medium">38</p>
+            :
+            <p className="text-gray-300 bg-[#EEF2F6] px-2 py-1 font-medium">38</p>
+            :
+            <p className="text-gray-300 bg-[#EEF2F6] px-2 py-1 font-medium">38</p>
+            :
+            <p className="text-gray-300 bg-[#EEF2F6] px-2 py-1 font-medium">38</p>
+          </div>
+          <span className="text-gray-blue text-[12px]">Time remaining until the end of the offer</span>
+        </>
+      )}
     </div>
   )
 }
