@@ -1,6 +1,6 @@
+"use client"
 import Image from "next/image";
 import DiningTable from "../assets/images/DiningTable.png";
-import map from "../assets/images/map.png";
 import ContactForm from "../components/ContactFrom";
 
 const contactUs = () => {
@@ -21,8 +21,16 @@ const contactUs = () => {
         <div>
           <Image src={DiningTable} alt="" />
         </div>
-        <div>
-          <Image src={map} alt="" />
+        <div className="grow">
+          <div className="mapouter w-full">
+            <div className="gmap_canvas w-full">
+              <iframe
+                style={{ width: "100%", height: "600px" }}
+                className="gmap_iframe"
+                src="https://maps.google.com/maps?width=700&amp;height=700&amp;hl=en&amp;q= Al Mozna Building -  Al Qusais 1- Dubai - United Arab  Emirates&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+              ></iframe>
+            </div>
+          </div>
         </div>
       </div>
 

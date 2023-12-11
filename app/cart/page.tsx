@@ -8,6 +8,7 @@ import { FiX } from "react-icons/fi";
 import angle from "@/app/assets/icons/angle-right.svg";
 import { removeCartItem } from "@/lib/store/slices/Allslices";
 import CartTotal from "./CartTotal";
+import Link from "next/link";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -87,7 +88,7 @@ const Cart = () => {
               </table>
             </div>
             <div className="flex mt-10 gap-4">
-              <button className="bg-primary w-[270px] py-2 text-white font-medium">Continue Shopping</button>
+              <Link href="/products" className="text-center bg-primary w-[270px] py-2 text-white font-medium">Continue Shopping</Link>
               <button className="bg-[#F3EFE5] w-[270px] py-2 text-gray-200 font-medium">Update Cart</button>
             </div>
           </div>

@@ -1,4 +1,12 @@
+"use client"
+import { useSelector } from "react-redux";
+import { ProductCard } from "../components";
+import { RootState } from "@/lib/store";
+
 const wishlist = () => {
+
+  const wishList: any = useSelector((state: RootState) => state.wishList);
+
   return (
     <>
       <div className="wishlistBg">
@@ -9,6 +17,17 @@ const wishlist = () => {
             in laying out print, graphic or <br /> web designs. The passage is
             attributed to an unknown typesetter in.
           </p>
+        </div>
+      </div>
+
+      <div className="container">
+        <div className="w-full my-10">
+          <h1 className="text-gray-900 text-[38px] text-center">Your <span className="text-primary">Wishlist</span></h1>
+          <div className="relative flex gap-7 my-16">
+            {wishList.length > 0 && wishList?.map((item: any, index: number) => (
+              <ProductCard item={item} key={index} className="shrink-0 w-[213px]" />
+            ))}
+          </div>
         </div>
       </div>
     </>

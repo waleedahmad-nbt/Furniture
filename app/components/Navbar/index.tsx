@@ -54,13 +54,13 @@ const Navbar = () => {
               <Link href="#">Track Order</Link>
             </li>
             <li>
-              <Link href="#">About Us</Link>
+              <Link href="aboutus">About Us</Link>
             </li>
             <li>
-              <Link href="#">Contact</Link>
+              <Link href="/contactus">Contact</Link>
             </li>
             <li>
-              <Link href="#">FAQ</Link>
+              <Link href="faqs">FAQ</Link>
             </li>
           </ul>
         </div>
@@ -68,12 +68,12 @@ const Navbar = () => {
       <div className="container">
         <nav>
           <div className="flex gap-3 justify-start items-center py-5">
-            <div className="shrink-0">
+            <Link href="/" className="shrink-0 cursor-pointer">
               <h1 className="text-primary text-xl font-black text-center">
                 Guideline
               </h1>
               <p className="text-sm text-white">group of companies</p>
-            </div>
+            </Link>
             <div className="grow flex items-center px-16 gap-3">
               <button className="p-[10px] bg-gray-400 text-white shrink-0 flex items-center gap-2">
                 <Image src={Menu} alt="menu icon" />
@@ -105,14 +105,14 @@ const Navbar = () => {
                   </span>
                 )}
               </Link>
-              <button className="shrink-0 relative">
+              <Link href="/wishlist" className="shrink-0 relative">
                 <Image src={heart} alt="user" />
                 {wishList.length > 0 && (
                   <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full w-[20px] h-[20px] text-white bg-primary text-xs">
                     {wishList.length}
                   </span>
                 )}
-              </button>
+              </Link>
             </div>
           </div>
         </nav>
