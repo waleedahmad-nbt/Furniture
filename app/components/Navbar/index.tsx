@@ -32,10 +32,9 @@ const Navbar = () => {
 
   const cartItems: any = useSelector((state: RootState) => state.cart);
   const wishList: any = useSelector((state: RootState) => state.wishList);
-  
+
   const showSignUp = () => {
     setIsSignUpOpen(true);
-    console.log(isSignUpOpen, "hello");
   };
 
   const handleSignUpCancel = () => {
