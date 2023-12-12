@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiEyeOff } from "react-icons/fi";
+import { FaCheck } from "react-icons/fa";
 
 const SignUpModal = ({ isSignUpOpen, handleSignUpCancel }: any) => {
   const [showPassword, setShowPasswords] = useState(true);
   const [reenterPassword, setReenterPasswords] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
 
   const [password, setPassword] = useState("");
   const [isValid, setIsValid] = useState(true);
@@ -49,14 +51,14 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel }: any) => {
               ></div>
             </div>
             <div
-              className=" w-max px-10 md:w-[839px] min-h-max max-h-[80vh] rounded-lg text-left transform transition-all "
+              className=" w-max px-10 md:w-[839px] rounded-lg text-left transform transition-all "
               role="dialog"
               aria-modal="true"
               aria-labelledby="modal-headline"
             >
-              <div className="relative bg-white px-4 pt-10 pb-10 sm:p-6 text-gray-900">
+              <div className="relative min-h-[75vh] bg-white px-4 pt-10 pb-10 sm:p-6 text-gray-900">
                 <div
-                  className="absolute top-5 right-5"
+                  className="absolute top-5 right-5 cursor-pointer"
                   onClick={handleSignUpCancel}
                 >
                   <RxCross1 />
@@ -141,7 +143,26 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel }: any) => {
                     </div>
 
                     <div className="flex justify-between gap-3 mt-5 pr-16">
-                      <input type="checkbox" className="-mt-5" />
+                      <div>
+                        <input
+                          className="hidden"
+                          type="checkbox"
+                          name=""
+                          id="checkInp"
+                          checked={isChecked}
+                          onChange={() => setIsChecked(!isChecked)}
+                        />
+                        <label
+                          htmlFor="checkInp"
+                          className={`${
+                            isChecked
+                              ? "bg-primary rounded-none "
+                              : "bg-white border border-gray-100 rounded-sm "
+                          }text-white flex justify-center items-center w-[20px] h-[20px]`}
+                        >
+                          <FaCheck />
+                        </label>
+                      </div>
                       <p className="text-[14px] text-gray-200">
                         By using this form you agree with the storage <br /> and
                         handling of your data by this website.

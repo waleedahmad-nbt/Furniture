@@ -3,6 +3,14 @@ import Link from "next/link";
 import Image from "next/image";
 
 import Menu from "@/app/assets/icons/menu.svg";
+import bloomSofa from "@/app/assets/images/bloomSofa.png";
+import redSofa from "@/app/assets/images/redSofa.png";
+import greenSofa from "@/app/assets/images/greenSofa.png";
+import pinkSofa from "@/app/assets/images/pinkSofa.png";
+import dustSofa from "@/app/assets/images/dustSofa.png";
+import tumericSofa from "@/app/assets/images/tumericSofa.png";
+
+import starIcon from "@/app/assets/icons/star_fill.svg";
 
 import heart from "@/app/assets/icons/heart.svg";
 import profile from "@/app/assets/icons/profile-circle.svg";
@@ -40,21 +48,108 @@ const Navbar = () => {
   const handleSignUpCancel = () => {
     setIsSignUpOpen(false);
   };
+
+  const homeMenu: any = [
+    {
+      img: bloomSofa,
+      title: "Rocket Stool",
+      discount: "15%",
+      price: "$27.90",
+      discountedPrice: "$18.80",
+      Reviews: "3",
+    },
+    {
+      img: redSofa,
+      title: "Rocket Stool",
+      discount: "15%",
+      price: "$27.90",
+      discountedPrice: "$18.80",
+      Reviews: "3",
+    },
+    {
+      img: greenSofa,
+      title: "Rocket Stool",
+      discount: "15%",
+      price: "$27.90",
+      discountedPrice: "$18.80",
+      Reviews: "3",
+    },
+    {
+      img: pinkSofa,
+      title: "Rocket Stool",
+      discount: "15%",
+      price: "$27.90",
+      discountedPrice: "$18.80",
+      Reviews: "3",
+    },
+    {
+      img: dustSofa,
+      title: "Rocket Stool",
+      discount: "15%",
+      price: "$27.90",
+      discountedPrice: "$18.80",
+      Reviews: "3",
+    },
+    {
+      img: tumericSofa,
+      title: "Rocket Stool",
+      discount: "15%",
+      price: "$27.90",
+      discountedPrice: "$18.80",
+      Reviews: "3",
+    },
+  ];
+
+  const bedMenu: any = [
+    {
+      img: bloomSofa,
+      title: "Rocket Stool",
+      discount: "15%",
+      price: "$27.90",
+      discountedPrice: "$18.80",
+      Reviews: "3",
+    },
+    {
+      img: redSofa,
+      title: "Rocket Stool",
+      discount: "15%",
+      price: "$27.90",
+      discountedPrice: "$18.80",
+      Reviews: "3",
+    },
+    {
+      img: dustSofa,
+      title: "Rocket Stool",
+      discount: "15%",
+      price: "$27.90",
+      discountedPrice: "$18.80",
+      Reviews: "3",
+    },
+    {
+      img: tumericSofa,
+      title: "Rocket Stool",
+      discount: "15%",
+      price: "$27.90",
+      discountedPrice: "$18.80",
+      Reviews: "3",
+    },
+  ];
+
   const Links = [
-    { label: "Home", link: "#" },
-    { label: "Bed", link: "#" },
-    { label: "sofa", link: "#" },
-    { label: "Dressing table", link: "#" },
-    { label: "Wardrobe", link: "#" },
-    { label: "Bean bag", link: "#" },
-    { label: "Curtain", link: "#" },
-    { label: "Office furniture", link: "#" },
-    { label: "Coffee table/ Living  room table", link: "#" },
-    { label: "TV units", link: "#" },
+    { label: "Home", link: "#", subMenu: homeMenu },
+    { label: "Bed", link: "#", subMenu: bedMenu },
+    { label: "sofa", link: "#", subMenu: homeMenu },
+    { label: "Dressing table", link: "#", subMenu: homeMenu },
+    { label: "Wardrobe", link: "#", subMenu: homeMenu },
+    { label: "Bean bag", link: "#", subMenu: homeMenu },
+    { label: "Curtain", link: "#", subMenu: homeMenu },
+    { label: "Office furniture", link: "#", subMenu: homeMenu },
+    { label: "Coffee table/ Living  room table", link: "#", subMenu: homeMenu },
+    { label: "TV units", link: "#", subMenu: homeMenu },
   ];
 
   return (
-    <div className="bg-gray-900 text-white">
+    <div className="relative bg-gray-900 text-white">
       <header className="border-b">
         <div className="container">
           <ul className="flex gap-8 py-2">
@@ -124,10 +219,62 @@ const Navbar = () => {
             </div>
           </div>
         </nav>
-        <ul className="flex items-center justify-between gap-3 pb-3">
+        <ul className="flex items-center justify-between gap-3 ">
           {Links?.map((item: any, index: number) => (
-            <li key={index}>
+            <li
+              key={index}
+              className="hover:text-primary transition-all group pb-3"
+            >
               <Link href={item?.link}>{item?.label}</Link>
+              <div className="absolute w-full min-h-[33vh] bottom-0 translate-y-[100%] left-0 bg-white z-50 hidden group-hover:block hover:block">
+                <div className="container py-5">
+                  <div className="flex items-center gap-5">
+                    <h1 className="text-[14px] text-gray-300 font-bold">
+                      The best discount this week{" "}
+                    </h1>
+                    <span className="text-gray-200 text-[10px] font-normal">
+                      Every week you can find the best discount here
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-around flex-wrap mt-5">
+                    {item?.subMenu.map((e: any, i: any) => {
+                      return (
+                        <div
+                          key={i}
+                          className={`${
+                            i == 0 ? "border-0" : "border-l"
+                          } p-5 flex flex-col gap-3`}
+                        >
+                          <Image src={e.img} alt="" />
+                          <p className="w-[40px] h-[22px] bg-secondary rounded-full text-[12px] text-white text-center leading-[21px]">
+                            {e.discount}
+                          </p>
+                          <div className="flex gap-2">
+                            <s className="text-gray-300 text-[14px]">
+                              {e.price}
+                            </s>
+                            <p className="text-white bg-[#3CB242] text-[14px] px-1">
+                              {e.discountedPrice}
+                            </p>
+                          </div>
+                          <h1 className="text-gray-300">{e.title}</h1>
+                          <div className="flex gap-3">
+                            <div className="flex bg-[#FFF6DC] gap-1 px-2 rounded-md">
+                              <Image src={starIcon} alt="" />
+                              <p className="text-gray-200 text-[12px]">
+                                {e.Reviews}{" "}
+                              </p>
+                            </div>
+                            <p className="text-gray-200 text-[12px]">
+                              {e.Reviews} Reviews
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
             </li>
           ))}
         </ul>

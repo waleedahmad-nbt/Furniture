@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiEyeOff } from "react-icons/fi";
+import { FaCheck } from "react-icons/fa";
 
 const Modal = ({
   showModal,
@@ -14,12 +15,13 @@ const Modal = ({
   const [showSignIn, setSignIn] = useState(true);
   const [showPassword, setShowPasswords] = useState(true);
   const [forgotPassword, setForgotPassword] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   return (
     <>
       {isModalOpen && (
         <div className="fixed z-30 inset-0 overflow-y-auto">
-          <div className="flex items-center  justify-center min-h-screen px-4 text-center ">
+          <div className="flex items-center justify-center min-h-screen px-4 text-center ">
             <div className="fixed inset-0 transition-opacity">
               <div
                 className="absolute inset-0 bg-gray-400 opacity-70"
@@ -28,14 +30,14 @@ const Modal = ({
             </div>
             {showSignIn && !forgotPassword && (
               <div
-                className=" w-max px-10 md:w-[839px] min-h-max max-h-[80vh] rounded-lg text-left transform transition-all "
+                className=" w-max px-10 md:w-[839px]  rounded-lg text-left transform transition-all "
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="modal-headline"
               >
-                <div className="relative bg-white px-4 pt-10 pb-10 sm:p-6 text-gray-900">
+                <div className="relative bg-white min-h-[75vh]  px-4 pt-10 pb-10 sm:p-6 text-gray-900">
                   <div
-                    className="absolute top-5 right-5"
+                    className="absolute top-5 right-5 cursor-pointer"
                     onClick={handleCancel}
                   >
                     <RxCross1 />
@@ -88,7 +90,26 @@ const Modal = ({
                       </div>
 
                       <div className="flex justify-between gap-3 mt-5 pr-16">
-                        <input type="checkbox" />
+                        <div>
+                          <input
+                            className="hidden"
+                            type="checkbox"
+                            name=""
+                            id="checkInp"
+                            checked={isChecked}
+                            onChange={() => setIsChecked(!isChecked)}
+                          />
+                          <label
+                            htmlFor="checkInp"
+                            className={`${
+                              isChecked
+                                ? "bg-primary rounded-none "
+                                : "bg-white border border-gray-100 rounded-sm "
+                            }text-white flex justify-center items-center w-[20px] h-[20px]`}
+                          >
+                            <FaCheck />
+                          </label>
+                        </div>
                         <p className="text-[14px] text-gray-200">
                           By using this form you agree with the storage <br />{" "}
                           and handling of your data by this website.
@@ -100,7 +121,7 @@ const Modal = ({
                         Sign In
                       </button>
                       <button
-                        className="border-b border-gray-200 text-[14px]"
+                        className="underline text-[14px]"
                         onClick={() => {
                           setForgotPassword(true);
                           setSignIn(!showSignIn);
@@ -134,14 +155,14 @@ const Modal = ({
 
             {forgotPassword && !showSignIn && (
               <div
-                className="w-max px-10 md:w-[839px] min-h-max max-h-[80vh]  rounded-lg text-left transform transition-all "
+                className="w-max px-10 md:w-[839px] rounded-lg text-left transform transition-all "
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="modal-headline"
               >
-                <div className="relative bg-white  min-h-[80vh ] px-4 pt-10 pb-10 sm:p-6 sm:pb-4 text-gray-900">
+                <div className="relative bg-white min-h-[75vh] px-4 pt-10 pb-10 sm:p-6 sm:pb-4 text-gray-900">
                   <div
-                    className="absolute top-5 right-5"
+                    className="absolute top-5 right-5 cursor-pointer"
                     onClick={() => {
                       handleCancel;
                       setSignIn(!showSignIn);
@@ -151,7 +172,7 @@ const Modal = ({
                     <RxCross1 />
                   </div>
 
-                  <div className="w-max mx-auto pb-10">
+                  <div className="w-max mx-auto pt-20">
                     <h1 className="text-left text-gray-900 text-2xl font-medium">
                       Forgot Password
                     </h1>
