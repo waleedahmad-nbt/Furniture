@@ -6,7 +6,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import { Features, MultiProductView, ProductCard } from "./components";
+import { Features, MainSlider, MultiProductView, ProductCard } from "./components";
 
 import arrowL from "@/app/assets/icons/arrow-left.svg";
 import mirror from "@/app/assets/products/mirror.png";
@@ -59,6 +59,7 @@ export default function Home() {
 
   const settings = {
     dots: true,
+    arrows: false,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 5
@@ -67,33 +68,35 @@ export default function Home() {
   return (
     <>
       <div className="relative bg-cream">
+        <div className="absolute inset-0 flex justify-end">
+          <div className="w-[60%]">
+            <MainSlider />
+          </div>
+        </div>
         <div className="container">
-          <div className="flex -mx-[15px] Home_Banner">
-            <div className="flex-[0_0_100%] md:flex-[0_0_50%] px-[15px]">
-              <div className="text-gray-300">
-                <span className="text-[18px] font-medium">
-                  Trending Furniture
-                </span>
-                <h1 className="text-[50px] font-medium">
-                  Great Furniture
-                  <br />
-                  Sale
-                </h1>
-                <p className="border-l-[3px] border-gray-300 my-10 pl-5">
-                  Limited time
-                  <br />
-                  sale up to 30% off
-                </p>
-                <Link
-                  href="#"
-                  className="flex items-center gap-3 bg-primary px-6 py-3 w-max text-white"
-                >
-                  <span>Shop now</span>
-                  <Image src={arrowL} alt="icon" />
-                </Link>
-              </div>
+          <div className="flex Home_Banner py-28">
+            <div className="text-gray-300">
+              <span className="text-[18px] font-medium">
+                Trending Furniture
+              </span>
+              <h1 className="text-[50px] font-medium">
+                Great Furniture
+                <br />
+                Sale
+              </h1>
+              <p className="border-l-[3px] border-gray-300 my-10 pl-5">
+                Limited time
+                <br />
+                sale up to 30% off
+              </p>
+              <Link
+                href="#"
+                className="flex items-center gap-3 bg-primary px-6 py-3 w-max text-white"
+              >
+                <span>Shop now</span>
+                <Image src={arrowL} alt="icon" />
+              </Link>
             </div>
-            <div className="flex-[0_0_100%] md:flex-[0_0_50%] px-[15px]"></div>
           </div>
         </div>
       </div>

@@ -79,7 +79,7 @@ const MyAccount = () => {
                 <label htmlFor="firstName" className="block mb-2 text-gray-200 font-medium">First Name *</label>
                 <input 
                   type="text"
-                  className="w-full border px-3 py-2 outline-none text-gray-200"
+                  className="w-full border px-3 py-2 outline-none focus:border-primary text-gray-200"
                   name="firstName"
                   id="firstName"
                   placeholder="First name"
@@ -96,7 +96,7 @@ const MyAccount = () => {
                 <label htmlFor="lastName" className="block mb-2 text-gray-200 font-medium">Last Name *</label>
                 <input 
                   type="text"
-                  className="w-full border px-3 py-2 outline-none text-gray-200"
+                  className="w-full border px-3 py-2 outline-none focus:border-primary text-gray-200"
                   name="lastName"
                   id="lastName"
                   placeholder="Last name"
@@ -114,7 +114,7 @@ const MyAccount = () => {
               <label htmlFor="displayName" className="block mb-2 text-gray-200 font-medium">Display Name *</label>
               <input 
                 type="text"
-                className="w-full border px-3 py-2 outline-none text-gray-200"
+                className="w-full border px-3 py-2 outline-none focus:border-primary text-gray-200"
                 name="displayName"
                 id="displayName"
                 placeholder="Display name"
@@ -132,7 +132,7 @@ const MyAccount = () => {
               <label htmlFor="email" className="block mb-2 text-gray-200 font-medium">Email *</label>
               <input 
                 type="email"
-                className="w-full border px-3 py-2 outline-none text-gray-200"
+                className="w-full border px-3 py-2 outline-none focus:border-primary text-gray-200"
                 name="email"
                 id="email"
                 placeholder="Email"
@@ -150,7 +150,7 @@ const MyAccount = () => {
               <label htmlFor="oldPassword" className="block mb-2 text-gray-200 font-medium">Old Password</label>
               <input 
                 type="password"
-                className="w-full border px-3 py-2 outline-none text-gray-200"
+                className="w-full border px-3 py-2 outline-none focus:border-primary text-gray-200"
                 name="oldPassword"
                 id="oldPassword"
                 placeholder="Old password"
@@ -168,7 +168,7 @@ const MyAccount = () => {
                 <label htmlFor="newPassword" className="block mb-2 text-gray-200 font-medium">New Password</label>
                 <input 
                   type="password"
-                  className="w-full border px-3 py-2 outline-none text-gray-200"
+                  className="w-full border px-3 py-2 outline-none focus:border-primary text-gray-200"
                   name="newPassword"
                   id="newPassword"
                   placeholder="New password"
@@ -185,7 +185,7 @@ const MyAccount = () => {
                 <label htmlFor="repeatPassword" className="block mb-2 text-gray-200 font-medium">Repeat New Password</label>
                 <input 
                   type="password"
-                  className="w-full border px-3 py-2 outline-none text-gray-200"
+                  className="w-full border px-3 py-2 outline-none focus:border-primary text-gray-200"
                   name="repeatPassword"
                   id="repeatPassword"
                   placeholder="Repeat new password"

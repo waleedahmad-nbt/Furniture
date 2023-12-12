@@ -1,9 +1,6 @@
 "use client"
-import { useState } from "react";
 import Image from "next/image";
 import { AccountSideBar } from "../components";
-import { useSelector } from "react-redux";
-import { RootState } from "@/lib/store";
 import { FiX } from "react-icons/fi";
 
 import Pro2 from "@/app/assets/products/table_03.png";

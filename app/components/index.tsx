@@ -1,4 +1,5 @@
 import Navbar from "./Navbar";
+import SideBar from "./SideBar";
 import Footer from "./Footer";
 import Features from "./Features";
 import ProductCard from "./ProductCard";
@@ -9,9 +10,11 @@ import SignInModal from "./SignInModal";
 import SignUpModal from "./SignUpModal";
 import NavLink from "./NavLink";
 import AccountSideBar from "./AccountSideBar";
+import MainSlider from "./MainSlider";
 
 export {
   Navbar,
+  SideBar,
   Footer,
   Features,
   ProductCard,
@@ -22,4 +25,5 @@ export {
   SignUpModal,
   NavLink,
   AccountSideBar,
+  MainSlider,
 };

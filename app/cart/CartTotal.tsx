@@ -24,6 +24,7 @@ const CartTotal = () => {
   }
 
   const [formData, setFormData] = useState<any>(fields);
+  const [promoCode, setPromoCode] = useState<string>("");
 
   const options = [
     { label: "pakistan", value: "pakistan" },
@@ -51,6 +52,10 @@ const CartTotal = () => {
       borderRadius: "10px",
       boxShadow: "none",
       padding: "5px",
+      borderColor: state.isFocused ? '#FF6F00' : '',
+      '&:hover': {
+        border: "1px solid #FF6F00",
+      }
     }),
   };
 
@@ -164,8 +169,10 @@ const CartTotal = () => {
         <div className="my-4">
           <input
             type="text"
-            className="w-full px-4 py-3 rounded-[10px] outline-none"
+            className="w-full px-4 py-3 rounded-[10px] outline-none border focus:border-primary"
             placeholder="Enter promo code"
+            value={promoCode}
+            onChange={(e) => setPromoCode(e.target.value)}
           />
         </div>
         <button className="bg-[#F3EFE5] w-full py-2 text-gray-200 font-medium mb-4">Apply</button>

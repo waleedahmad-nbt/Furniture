@@ -19,12 +19,13 @@ import search from "@/app/assets/icons/search.svg";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 
-import { SignInModal, SignUpModal } from "../index";
+import { SideBar, SignInModal, SignUpModal } from "../index";
 import { useState } from "react";
 
 const Navbar = () => {
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -178,7 +179,7 @@ const Navbar = () => {
               <p className="text-sm text-white">group of companies</p>
             </Link>
             <div className="grow flex items-center px-16 gap-3">
-              <button className="p-[10px] bg-gray-400 text-white shrink-0 flex items-center gap-2">
+              <button onClick={() => setMenuOpen(true)} className="p-[10px] bg-gray-400 text-white shrink-0 flex items-center gap-2">
                 <Image src={Menu} alt="menu icon" />
                 Menu
               </button>
@@ -293,6 +294,7 @@ const Navbar = () => {
         handleOk={handleOk}
         handleSignUpCancel={handleSignUpCancel}
       />
+      <SideBar menuOpen={menuOpen} setMenuOpen={setMenuOpen}/>
     </div>
   );
 };
