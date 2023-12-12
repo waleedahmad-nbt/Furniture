@@ -157,13 +157,13 @@ const Navbar = () => {
               <Link href="#">Track Order</Link>
             </li>
             <li>
-              <Link href="aboutus">About Us</Link>
+              <Link href="/aboutus">About Us</Link>
             </li>
             <li>
               <Link href="/contactus">Contact</Link>
             </li>
             <li>
-              <Link href="faqs">FAQ</Link>
+              <Link href="/faqs">FAQ</Link>
             </li>
           </ul>
         </div>

@@ -4,6 +4,7 @@ import { MultiProductView } from "..";
 
 import star from "@/app/assets/icons/star.svg";
 import starFill from "@/app/assets/icons/star_fill.svg";
+import Link from "next/link";
 
 const ProductCard = ({ item, className, offer }: any) => {
 
@@ -21,7 +22,9 @@ const ProductCard = ({ item, className, offer }: any) => {
         </div>
         <span className="text-gray-500 text-[14px]">3</span>
       </div>
-      <h3 className="font-medium text-gray-300 mt-1">{item?.name}</h3>
+      <Link href="/products/details/dummy">
+        <h3 className="font-medium text-gray-300 mt-1">{item?.name}</h3>
+      </Link>
       <div className="flex flex-items gap-3">
         <span className="text-gray-500 line-through">${item?.priceWas}</span>
         <span className="text-primary">${item?.priceNow}</span>

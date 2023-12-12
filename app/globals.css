@@ -11,6 +11,15 @@ body {
   @apply bg-silver;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  box-shadow: 0 0 0 30px white inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 .Product_Slider .slick-dots li {
   @apply w-[10px] h-[10px];
 }
@@ -122,4 +131,42 @@ body {
 
 .transition-transform {
   transition: transform 0.3s ease;
+}
+
+
+.multi-range-slider .thumb .caption .min-caption {
+  @apply bg-gray-900;
+}
+
+.multi-range-slider .thumb .caption .max-caption {
+  @apply bg-gray-900;
+}
+
+.multi-range-slider .bar .bar-inner {
+  @apply bg-gray-200 border-none shadow-none;
+}
+
+.multi-range-slider .bar .bar-left,
+.multi-range-slider .bar .bar-right {
+  box-shadow: none;
+  border: none;
+  background-color: #DADADA;
+}
+
+.multi-range-slider .thumb {
+  transform: translateY(2px);
+}
+
+.multi-range-slider .thumb::before {
+  content: "";
+  background-color: inherit;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: solid 1px #0a4232 !important;
+  box-shadow: none !important;
+  border-radius: 50%;
+  z-index: 1;
+  margin: -8px -12px;
+  cursor: pointer;
 }

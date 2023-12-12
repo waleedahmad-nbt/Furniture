@@ -39,7 +39,7 @@ const Cart = () => {
       </div>
 
       <div className="container">
-        <div className="flex flex-wrap justify-between my-5">
+        <div className="flex flex-wrap justify-between mt-5 mb-16">
 
           <div className="flex-[0_0_66.66%] pr-10">
             <h1 className="text-[20px] font-medium">Cart</h1>

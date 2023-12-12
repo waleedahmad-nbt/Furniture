@@ -6,6 +6,7 @@ import { PaginationContainer, ProductCard } from "../components";
 
 import { FaAngleDown, FaList, FaSlidersH } from "react-icons/fa";
 import { CgMenuGridO } from "react-icons/cg";
+import MultiRangeSlider from "multi-range-slider-react";
 
 import angle from "@/app/assets/icons/angle-right.svg";
 import check from "@/app/assets/icons/check.svg";
@@ -60,6 +61,14 @@ const Products = () => {
     { _id: "4", name: "Rocket stool", images: [Pro1], priceWas: "27.90", priceNow: "18.80", quantity: 2, status: "sale" },
     { _id: "5", name: "Rocket stool", images: [Pro1], priceWas: "27.90", priceNow: "18.80", quantity: 2, status: "new" },
   ]
+
+  const [minPrice, setMinPrice] = useState<number>(29);
+  const [maxPrice, setMaxPrice] = useState<number>(929);
+
+  const handleInput2 = (e: any) => {
+    setMinPrice(e.minValue);
+    setMaxPrice(e.maxValue);
+  };
 
   return (
     <>
@@ -139,7 +148,28 @@ const Products = () => {
               </div>
               <div className="bg-[#FAFAFA] px-5 py-7 mt-7">
                 <p className="text-gray-900 font-bold">Filter by Price</p>
-                <div className="flex flex-wrap mt-4 gap-4">
+                <div className="w-full mt-4 mb-1">
+                  <MultiRangeSlider
+                    min={29}
+                    max={929}
+                    step={5}
+                    minValue={minPrice}
+                    maxValue={maxPrice}
+                    style={{
+                      border: "none",
+                      boxShadow: "none",
+                      padding: "15px 10px",
+                    }}
+                    onChange={handleInput2}
+                    label={false}
+                    ruler={false}
+                    thumbLeftColor="#FFFFFF"
+                    thumbRightColor="#FFFFFF"
+                  />
+                </div>
+                <div className="flex flex-wrap items-center justify-between text-gray-200">
+                  <span>Min. Price: $29</span>
+                  <span>Max. Price: $929</span>
                 </div>
               </div>
               <div className="bg-[#FAFAFA] px-5 py-7 mt-7">

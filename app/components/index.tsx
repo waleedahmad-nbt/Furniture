@@ -7,6 +7,8 @@ import PaginationContainer from "./PaginationContainer";
 import ProductComment from "./ProductComment";
 import SignInModal from "./SignInModal";
 import SignUpModal from "./SignUpModal";
+import NavLink from "./NavLink";
+import AccountSideBar from "./AccountSideBar";
 
 export {
   Navbar,
@@ -18,4 +20,6 @@ export {
   ProductComment,
   SignInModal,
   SignUpModal,
+  NavLink,
+  AccountSideBar,
 };

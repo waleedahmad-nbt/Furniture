@@ -24,9 +24,11 @@ const wishlist = () => {
         <div className="w-full my-10">
           <h1 className="text-gray-900 text-[38px] text-center">Your <span className="text-primary">Wishlist</span></h1>
           <div className="relative flex gap-7 my-16">
-            {wishList.length > 0 && wishList?.map((item: any, index: number) => (
+            {wishList.length > 0 ? wishList?.map((item: any, index: number) => (
               <ProductCard item={item} key={index} className="shrink-0 w-[213px]" />
-            ))}
+            )) : (
+              <p className="text-gray-100 text-center w-full mb-16 py-3 bg-[#F3EFE5]">No Data to show</p> 
+            )}
           </div>
         </div>
       </div>

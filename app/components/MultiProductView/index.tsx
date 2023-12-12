@@ -9,6 +9,7 @@ import { addToCart, addToWhislist, removeWishList } from "@/lib/store/slices/All
 import cart from "@/app/assets/icons/cart_dark.svg";
 import zoom from "@/app/assets/icons/zoom.svg";
 import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
+import Link from "next/link";
 
 const MultiProductView = ({ item }: any) => {
   const dispatch = useDispatch();
@@ -64,11 +65,13 @@ const MultiProductView = ({ item }: any) => {
             <Image src={cart} alt="product"/>
           </button>
         </div>
-        {item?.images?.length > 0 && item?.images?.map((img: any, index: number) => (
-          <div className={`mx-auto duration-200 ${index === activeIndex ? "relative opacity-100 visible" : "absolute opacity-0 invisible pointer-events-none"}`} key={index}>
-            <Image src={img} alt="product"/>
-          </div>
-        ))}
+        <Link href="/products/details/dummy">
+          {item?.images?.length > 0 && item?.images?.map((img: any, index: number) => (
+            <div className={`mx-auto duration-200 ${index === activeIndex ? "relative opacity-100 visible" : "absolute inset-0 opacity-0 invisible pointer-events-none"}`} key={index}>
+              <Image src={img} alt="product"/>
+            </div>
+          ))}
+        </Link>
         <div className="absolute bottom-0 group-hover:bottom-4 translate-y-full group-hover:translate-y-0 duration-200 opacity-0 group-hover:opacity-100">
           <button
             onClick={handleCart}
