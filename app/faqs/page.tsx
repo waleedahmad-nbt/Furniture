@@ -6,7 +6,7 @@ const FAQs = () => {
     <>
       <div className="FAQSBg">
         <div className="container flex flex-col items-center justify-center gap-4 min-h-[50vh]">
-          <h1 className="text-white text-5xl font-bold">FAQ </h1>
+          <h1 className="text-white text-3xl md:text-5xl font-bold">FAQ </h1>
           <p className="text-white text-center">
             Lorem ipsum, or lipsum as it is sometimes known, is dummy text used
             in laying out print, graphic or <br /> web designs. The passage is

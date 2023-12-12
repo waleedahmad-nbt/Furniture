@@ -16,13 +16,16 @@ import emily from "../assets/images/emily.png";
 import david from "../assets/images/david.png";
 
 import arrowIcon from "../assets/icons/ArrowIcon.svg";
+import { Features } from "../components";
 
 const aboutUs = () => {
   return (
     <>
       <div className="aboutUsBg">
         <div className="container flex flex-col items-center justify-center gap-4 min-h-[50vh]">
-          <h1 className="text-white text-5xl font-bold">About Us</h1>
+          <h1 className="text-white  text-3xl md:text-5xl font-bold">
+            About Us
+          </h1>
           <p className="text-white text-center">
             Lorem ipsum, or lipsum as it is sometimes known, is dummy text used
             in laying out print, graphic or <br /> web designs. The passage is
@@ -30,7 +33,9 @@ const aboutUs = () => {
           </p>
         </div>
       </div>
-
+      <div className="py-10 container">
+        <Features />
+      </div>
       <div className="container grid grid-cols-1 md:grid-cols-2 gap-10 place-items-center py-20">
         <div className="flex gap-5 ">
           <div>
@@ -41,7 +46,7 @@ const aboutUs = () => {
           </div>
         </div>
         <div>
-          <h1 className="text-gray-300 text-5xl font-normal">
+          <h1 className="text-gray-300 text-3xl md:text-5xl font-normal">
             About Our <span className="text-primary">Online</span> <br />
             Store
           </h1>
@@ -55,12 +60,12 @@ const aboutUs = () => {
       </div>
 
       <div className="bg-cream">
-        <div className="container grid grid-cols-2 place-items-center py-16">
+        <div className="container grid grid-cols-1 md:grid-cols-2 place-items-center py-16">
           <div>
             <Image src={graySofas} alt="" />
           </div>
           <div className=" ps-10">
-            <h1 className="text-gray-300 text-5xl font-normal">
+            <h1 className="text-gray-300 text-3xl md:text-5xl  font-normal mt-3 md:mt-0">
               Our <span className="text-primary">Core</span> Values
             </h1>
             <p className="text-gray-200 mt-5">
@@ -72,7 +77,7 @@ const aboutUs = () => {
               officia deserunt mollit anim id est laborum.
             </p>
           </div>
-          <div className="border-2 border-gray-100 px-5 py-10 m-10">
+          <div className="border border-gray-100 px-5 py-10 m-10">
             <h1 className="text-2xl text-gray-300">Our Vision</h1>
             <p className="text-gray-100 ">
               Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -81,7 +86,7 @@ const aboutUs = () => {
               type and scrambled
             </p>
           </div>
-          <div className="border-2 border-gray-100 px-5 py-10 m-10">
+          <div className="border border-gray-100 px-5 py-10 m-10">
             <h1 className="text-2xl text-gray-300">Our Mission</h1>
             <p className="text-gray-100 ">
               Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -94,7 +99,7 @@ const aboutUs = () => {
       </div>
       <div className="py-20">
         <div className="flex flex-col items-center justify-center gap-5 py-5">
-          <h1 className="text-gray-300 text-5xl font-normal">
+          <h1 className="text-gray-300 text-3xl md:text-5xl  font-normal">
             Our company <span className="text-primary">partners</span>
           </h1>
           <p className="text-gray-200 text-center text-sm px-5">

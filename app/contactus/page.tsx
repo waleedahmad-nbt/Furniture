@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import DiningTable from "../assets/images/DiningTable.png";
 import ContactForm from "../components/ContactFrom";
@@ -8,7 +8,9 @@ const contactUs = () => {
     <>
       <div className="contactUsBg">
         <div className="container flex flex-col items-center justify-center gap-4 min-h-[50vh]">
-          <h1 className="text-white text-5xl font-bold">Contact Us</h1>
+          <h1 className="text-white text-3xl md:text-5xl font-bold">
+            Contact Us
+          </h1>
           <p className="text-white text-center">
             Lorem ipsum, or lipsum as it is sometimes known, is dummy text used
             in laying out print, graphic or <br /> web designs. The passage is
@@ -17,7 +19,7 @@ const contactUs = () => {
         </div>
       </div>
 
-      <div className="container flex items-center gap-5 py-10">
+      <div className="container flex flex-col md:flex-row items-center gap-5 py-10">
         <div>
           <Image src={DiningTable} alt="" />
         </div>
@@ -34,7 +36,7 @@ const contactUs = () => {
         </div>
       </div>
 
-      <div className="cementBg h-screen">
+      <div className="cementBg">
         <div className="container py-10">
           <div className="flex flex-col items-center">
             <div>
@@ -49,7 +51,7 @@ const contactUs = () => {
                 your business to new heights.
               </p>
             </div>
-            <div className="z-20">
+            <div>
               <ContactForm />
             </div>
           </div>

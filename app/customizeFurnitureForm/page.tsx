@@ -169,7 +169,7 @@ const customizeFurnitureForm = () => {
     setFormData({ ...formData, material: material });
   }, [material]);
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log(formData, "formData");
   };
@@ -178,7 +178,9 @@ const customizeFurnitureForm = () => {
     <>
       <div className="contactUsBg">
         <div className="container flex flex-col items-center justify-center gap-4 min-h-[50vh]">
-          <h1 className="text-white text-5xl font-bold">Get a quote</h1>
+          <h1 className="text-white text-3xl md:text-5xl font-bold">
+            Get a quote
+          </h1>
           <p className="text-white text-center">
             Lorem ipsum, or lipsum as it is sometimes known, is dummy text used
             in laying out print, graphic or <br /> web designs. The passage is
@@ -192,7 +194,7 @@ const customizeFurnitureForm = () => {
           <Image src={stylishChair} alt="" className="w-full" />
         </div>
         <div
-          className="absolute  top-[30%] left-[30%] w-[452px] h-[#FFFFFF] border-2 border-white text-center py-5"
+          className="absolute  top-[30%] left-1/2 -translate-x-1/2 w-[452px] h-[#FFFFFF] border-2 border-white text-center py-5"
           style={{ backgroundColor: "rgba(61, 60, 60, 0.527)" }}
         >
           <h1 className="capitalize text-white text-3xl font-medium">
@@ -504,28 +506,30 @@ const customizeFurnitureForm = () => {
 
       <div className="container py-10">
         <div className="flex flex-col items-center gap-2">
-          <div className="flex gap-2">
+          <div className="flex flex-col lg:flex-row gap-2">
             <div className="relative ">
               <Image src={blueSofa} alt="" />
-              <div className="absolute top-5 left-32 bg-[#3C3C3C] w-[356px] h-[159px] text-center px-2 border">
-                <h1 className="text-white text-3xl mt-3">
-                  Living <span className="text-primary">Room</span> <br />
-                  Customize{" "}
-                </h1>
-                <p className="text-white text-[14px] mt-3">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been
-                </p>
+              <div className="absolute top-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-5">
+                <div className="bg-[#3C3C3C] w-[200px] min-h-[100px] md:w-[356px] md:h-[159px] text-center px-2 border">
+                  <h1 className="text-white text-xl md:text-3xl mt-3">
+                    Living <span className="text-primary">Room</span> <br />
+                    Customize{" "}
+                  </h1>
+                  <p className="text-white text-[10px] md:text-[14px] mt-3">
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been
+                  </p>
+                </div>
+                <button className=" text-white bg-primary py-[8px] px-[16px] w-[172px] h-[40px]">
+                  Order Now
+                </button>
               </div>
-              <button className="absolute top-[55%] left-[40%] text-white bg-primary py-[8px] px-[16px]">
-                Order Now
-              </button>
             </div>
             <div>
               <Image src={sofacmBed} alt="" />
             </div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-col md:flex-row items-center gap-2">
             <div>
               <Image src={grayBed} alt="" />
             </div>

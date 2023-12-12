@@ -9,7 +9,7 @@ const TermsAndConditions = () => {
     <>
       <div className="tcBanner">
         <div className="container flex flex-col items-center justify-center gap-4 min-h-[50vh]">
-          <h1 className="text-white text-5xl font-bold">
+          <h1 className="text-white text-center text-3xl md:text-5xl font-bold">
             Terms and Condition{" "}
           </h1>
           <p className="text-white text-center">
@@ -65,7 +65,7 @@ const TermsAndConditions = () => {
             </p>
           </div>
 
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col lg:flex-row items-start gap-8 justify-between ">
             <div className="ms-5 flex">
               <input
                 className="hidden"
@@ -90,7 +90,7 @@ const TermsAndConditions = () => {
                 and privacy policy.
               </span>
             </div>
-            <div>
+            <div className="ps-5">
               <button className="border-0 text-gray-200">Cancel</button>
               <button
                 className={`${
