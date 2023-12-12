@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -12,15 +13,14 @@ import tumericSofa from "@/app/assets/images/tumericSofa.png";
 
 import starIcon from "@/app/assets/icons/star_fill.svg";
 
-import heart from "@/app/assets/icons/heart.svg";
 import profile from "@/app/assets/icons/profile-circle.svg";
-import cart from "@/app/assets/icons/cart.svg";
+import { BsCart2 } from "react-icons/bs";
+import { BsHeart } from "react-icons/bs";
 import search from "@/app/assets/icons/search.svg";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 
-import { SideBar, SignInModal, SignUpModal } from "../index";
-import { useState } from "react";
+import { NavLink, SideBar, SignInModal, SignUpModal } from "../index";
 
 const Navbar = () => {
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
@@ -155,16 +155,16 @@ const Navbar = () => {
         <div className="container">
           <ul className="flex gap-8 py-2">
             <li>
-              <Link href="#">Track Order</Link>
+              <NavLink href="/myorders">Track Order</NavLink>
             </li>
             <li>
-              <Link href="/aboutus">About Us</Link>
+              <NavLink href="/aboutus">About Us</NavLink>
             </li>
             <li>
-              <Link href="/contactus">Contact</Link>
+              <NavLink href="/contactus">Contact</NavLink>
             </li>
             <li>
-              <Link href="/faqs">FAQ</Link>
+              <NavLink href="/faqs">FAQ</NavLink>
             </li>
           </ul>
         </div>
@@ -201,22 +201,22 @@ const Navbar = () => {
               <button className="shrink-0" onClick={showModal}>
                 <Image src={profile} alt="user" />
               </button>
-              <Link href="/cart" className="shrink-0 relative">
-                <Image src={cart} alt="user" />
+              <NavLink href="/cart" className="shrink-0 relative text-[26px]">
+                <BsCart2 />
                 {cartItems.length > 0 && (
                   <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full w-[20px] h-[20px] text-white bg-primary text-xs">
                     {cartItems.length}
                   </span>
                 )}
-              </Link>
-              <Link href="/wishlist" className="shrink-0 relative">
-                <Image src={heart} alt="user" />
+              </NavLink>
+              <NavLink href="/wishlist" className="shrink-0 relative text-[24px]">
+                <BsHeart />
                 {wishList.length > 0 && (
                   <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full w-[20px] h-[20px] text-white bg-primary text-xs">
                     {wishList.length}
                   </span>
                 )}
-              </Link>
+              </NavLink>
             </div>
           </div>
         </nav>

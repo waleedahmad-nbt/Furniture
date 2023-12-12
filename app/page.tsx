@@ -68,10 +68,8 @@ export default function Home() {
   return (
     <>
       <div className="relative bg-cream">
-        <div className="absolute inset-0 flex justify-end">
-          <div className="w-[60%]">
-            <MainSlider />
-          </div>
+        <div className="absolute top-0 right-0 h-full w-[60%] flex justify-end">
+          <MainSlider />
         </div>
         <div className="container">
           <div className="flex Home_Banner py-28">
@@ -90,8 +88,8 @@ export default function Home() {
                 sale up to 30% off
               </p>
               <Link
-                href="#"
-                className="flex items-center gap-3 bg-primary px-6 py-3 w-max text-white"
+                href="/products"
+                className="flex items-center gap-3 bg-primary px-6 py-3 w-max text-white cursor-pointer"
               >
                 <span>Shop now</span>
                 <Image src={arrowL} alt="icon" />
@@ -151,7 +149,7 @@ export default function Home() {
             ))}
           </div>
           <Link
-            href="#"
+            href="/products"
             className="flex items-center gap-3 bg-primary px-2 py-1 w-max text-white uppercase text-[14px]"
           >
             <span>view all</span>
@@ -278,7 +276,7 @@ export default function Home() {
               </button>
             ))}
           </div>
-          <Link href="#" className="flex items-center gap-3 bg-primary px-2 py-1 w-max text-white uppercase text-[14px]">
+          <Link href="/products" className="flex items-center gap-3 bg-primary px-2 py-1 w-max text-white uppercase text-[14px]">
             <span>view all</span>
             <Image src={arrowL} alt="icon"/>
           </Link>

@@ -32,37 +32,37 @@ const Footer = () => {
             <div className="border-0 lg:border-l border-gray-100 text-[16px] font-normal px-5 md:px-20">
               <h1 className="font-medium">Services</h1>
               <div className="flex flex-col gap-3 mt-6">
-                <p>Bed</p>
-                <p>Sofa</p>
-                <p>Wardrobe</p>
-                <p>Bean Bag</p>
-                <p>Curtain</p>
-                <p>Office Furniture</p>
-                <p>Coffee table/ Living Room Table</p>
-                <p>TV Units</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Bed</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Sofa</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Wardrobe</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Bean Bag</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Curtain</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Office Furniture</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Coffee table/ Living Room Table</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">TV Units</p>
               </div>
             </div>
             <div className="text-[16px] font-normal px-5 md:px-20">
               <h1 className="font-medium">Customized Services</h1>
               <div className="flex flex-col gap-3 mt-6">
-                <p>Customized Services</p>
-                <p>Customized Sofa</p>
-                <p>Customized Wardrobe</p>
-                <p>Customized Bean Bag</p>
-                <p>Customized Curtain</p>
-                <p>Customized Office Furniture</p>
-                <p>Customized Coffee table/ Living Room Table</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Customized Services</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Customized Sofa</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Customized Wardrobe</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Customized Bean Bag</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Customized Curtain</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Customized Office Furniture</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Customized Coffee table/ Living Room Table</p>
               </div>
             </div>
             <div className="text-[16px] font-normal px-5 md:px-20">
               <h1 className="font-medium">Pages</h1>
               <div className="flex flex-col gap-3 mt-6">
-                <p>Home</p>
-                <p>About us</p>
-                <p>Contact us</p>
-                <p>My Account</p>
-                <p>Cart</p>
-                <p>Wishlist</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Home</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">About us</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Contact us</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">My Account</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Cart</p>
+                <p className="hover:text-primary duration-150 cursor-pointer">Wishlist</p>
               </div>
             </div>
           </div>

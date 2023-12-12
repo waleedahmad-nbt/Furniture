@@ -14,7 +14,7 @@ const MainSlider = () => {
   const images = [Banner, Banner1, Banner2, Banner3];
 
   return (
-    <div className="h-full flex">
+    <div className="h-full w-full flex">
       {images?.map((item: any, i: number) => (
         <SliderImage item={item} hover={index === i} setIndex={setIndex} itemNumebr={i} key={i}/>
       ))}

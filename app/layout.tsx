@@ -23,7 +23,7 @@ export default function RootLayout({
       </head>
       <body>
         <ReduxProvider>
-          {/* <Navbar /> */}
+          <Navbar />
           <main className="min-h-[75vh]">
             {children}
           </main>
