@@ -178,24 +178,24 @@ const Navbar = () => {
               </h1>
               <p className="text-sm text-white">group of companies</p>
             </Link>
-            <div className="grow flex items-center px-16 gap-3">
+            <div className="grow shrink flex items-center px-5 lg:px-16 gap-3">
               <button onClick={() => setMenuOpen(true)} className="p-[10px] bg-gray-400 text-white shrink-0 flex items-center gap-2">
                 <Image src={Menu} alt="menu icon" />
                 Menu
               </button>
-              <div className="grow flex items-center">
+              <div className="grow shrink flex items-center">
                 <input
                   type="text"
                   placeholder="Search here..."
-                  className="grow py-2.5 px-3"
+                  className="grow py-2.5 px-3 w-full"
                 />
                 <button className="bg-primary shrink-0 h-[44px] px-2.5">
                   <Image src={search} alt="search" />
                 </button>
               </div>
-              <button className="p-[10px] bg-gray-400 text-white shrink-0">
+              <Link href="/customizeFurniture" className="p-[10px] bg-gray-400 text-white shrink-0">
                 Customize furniture
-              </button>
+              </Link>
             </div>
             <div className="flex items-center gap-6">
               <button className="shrink-0" onClick={showModal}>
@@ -220,7 +220,7 @@ const Navbar = () => {
             </div>
           </div>
         </nav>
-        <ul className="flex items-center justify-between gap-3 ">
+        <ul className="flex flex-wrap items-center justify-between gap-3">
           {Links?.map((item: any, index: number) => (
             <li
               key={index}

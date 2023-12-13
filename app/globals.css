@@ -57,6 +57,7 @@ input[type="number"] {
 
 .Product_Slider .slick-track {
   display: flex !important;
+  gap: 10px;
   justify-content: space-between;
 }
 

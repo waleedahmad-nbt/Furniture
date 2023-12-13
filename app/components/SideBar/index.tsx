@@ -106,7 +106,7 @@ const SideBar = ({ menuOpen, setMenuOpen }: any) => {
                 <Link href="/contactus" className="capitalize">Contact</Link>
               </li>
             </ul>
-            <div className="py-3">
+            <div className="pt-3">
               <div className="text-gray-100 border-b-[2px] border-primary border-opacity-40 w-max pb-1 shrink-0 mb-3">
                 <span>Contact Details</span>
               </div>
@@ -124,7 +124,7 @@ const SideBar = ({ menuOpen, setMenuOpen }: any) => {
                 </div>
                 <span className="text-gray-200 text-sm">You can send email at any time</span>
               </div>
-              <p className="text-gray-200 py-5 px-3">Copyroght 2023 guidline website. All right reserved</p>
+              <p className="text-gray-200 pt-5 px-3">Copyroght 2023 guidline website. All right reserved</p>
             </div>
           </div>
         </div>

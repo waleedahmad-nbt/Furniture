@@ -10,7 +10,6 @@ const SliderImage = ({ item, itemNumebr, setIndex, hover }: any) => {
   useEffect(() => {
     if(img.current) {
       setWidth(img.current.scrollWidth);
-      console.log(img.current.scrollWidth)
     }
   }, [img])
 
@@ -18,7 +17,7 @@ const SliderImage = ({ item, itemNumebr, setIndex, hover }: any) => {
     <div
       onMouseEnter={() => setIndex(itemNumebr)}
       onMouseLeave={() => setIndex(0)}
-      className="relative flex-[1_1_auto] mx-[2px] overflow-hidden duration-500"
+      className="relative flex-[1_1_auto] mx-[2px] overflow-hidden duration-500 max-w-[70%]"
       style={{ 
         width: hover ? `${width}px` : '33.33%',
         flexShrink: hover ? "0" : "1",

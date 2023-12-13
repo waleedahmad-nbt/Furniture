@@ -1,6 +1,7 @@
 "use client"
+import Link from "next/link";
 import { useEffect, useRef } from "react";
-import { FaAngleDown } from "react-icons/fa"
+import { FaAngleDown } from "react-icons/fa";
 
 const SubMenu = ({ title, options, isOpen, setIsOpen }: any) => {
 
@@ -30,7 +31,7 @@ const SubMenu = ({ title, options, isOpen, setIsOpen }: any) => {
       <ul className="mx-5 duration-300 h-full overflow-hidden" ref={subMenu}>
         {options?.map((item: any, index: any) => (
           <li key={index} className="p-3">
-            <span className="capitalize">{item}</span>
+            <Link href="#" className="capitalize hover:text-primary duration-150">{item}</Link>
           </li>
         ))}
       </ul>

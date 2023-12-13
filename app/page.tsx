@@ -62,7 +62,33 @@ export default function Home() {
     arrows: false,
     speed: 500,
     slidesToShow: 5,
-    slidesToScroll: 5
+    slidesToScroll: 5,
+    responsive: [
+      {
+        breakpoint: 1155,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
+      {
+        breakpoint: 1025,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 775,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 650,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
   return (
@@ -113,7 +139,7 @@ export default function Home() {
             industry. Lorem Ipsum.
           </p>
         </div>
-        <div className="grid grid-cols-6 gap-5 my-14">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 my-14">
           {cats?.map((item: any, index: number) => (
             <div key={index}>
               <div className="bg-cream h-[170px] flex items-center justify-center">
@@ -131,11 +157,11 @@ export default function Home() {
       </div>
 
       <div className="container my-10">
-        <div className="flex items-center justify-between">
-          <h1 className="text-[38px] text-gray-300 font-bold">
+        <div className="flex flex-wrap items-center justify-between gap-y-6">
+          <h1 className="text-[27px] md:text-[38px] text-gray-300 font-bold">
             Best Selling Products
           </h1>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center gap-x-1 gap-y-5 md:gap-5">
             {tabs?.map((item: any, index: number) => (
               <button
                 onClick={() => setActiveTab(item)}
@@ -159,9 +185,9 @@ export default function Home() {
         <div className="w-full my-10">
           <Slider {...settings} className="Product_Slider">
             {products?.map((item: any, index: number) => (
-              <div className={`relative min-w-[213px] max-w-[213px]`}>
+              <div className={`relative min-w-[213px] max-w-full w-full sm:max-w-[213px]`} key={index}>
                 <div className="">
-                  <ProductCard item={item} key={index} />
+                  <ProductCard item={item} />
                 </div>
               </div>
             ))}
@@ -170,11 +196,13 @@ export default function Home() {
       </div>
 
       <div className="container my-20">
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div className="relative">
-            <Image src={sofa1} alt="banner" className="w-full h-auto object-cover"/>
-            <div className="absolute inset-0 p-10 pr-20">
-              <h2 className="text-white font-bold text-[38px]">Redefine you space,<br/> because comfort is everything</h2>
+            <div className="absolute inset-0 z-[-1]">
+              <Image src={sofa1} alt="banner" className="w-full h-full object-cover"/>
+            </div>
+            <div className="p-7 md:p-10 md:pr-20">
+              <h2 className="text-white font-bold text-[27px] md:text-[38px]">Redefine you space,<br/> because comfort is everything</h2>
               <p className="text-white mb-5 mt-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum.</p>
               <Link href="#" className="flex items-center gap-3 bg-primary px-6 py-3 w-max text-white mb-30">
                 <span>Shop now</span>
@@ -183,25 +211,27 @@ export default function Home() {
             </div>
           </div>
           <div className="relative">
-            <Image src={sofa2} alt="banner" className="w-full h-auto object-cover"/>
-            <div className="absolute inset-0 p-10 pr-20">
-              <h2 className="text-black font-bold text-[38px]">Redefine you space,<br/> because comfort is everything</h2>
+            <div className="p-7 md:p-10 md:pr-20">
+              <h2 className="text-black font-bold text-[27px] md:text-[38px]">Redefine you space,<br/> because comfort is everything</h2>
               <p className="text-black mb-5 mt-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum.</p>
               <Link href="#" className="flex items-center gap-3 bg-primary px-6 py-3 w-max text-white mb-30">
                 <span>Shop now</span>
                 <Image src={arrowL} alt="icon"/>
               </Link>
             </div>
+            <div className="absolute inset-0 z-[-1]">
+              <Image src={sofa2} alt="banner" className="w-full h-full object-cover"/>
+            </div>
           </div>
         </div>
       </div>
 
       <div className="container my-10">
-        <div className="flex justify-between">
+        <div className="flex flex-wrap justify-between gap-5">
           <ProductCard item={newArrival[0]} className="shrink-0 w-[213px]" offer />
-          <div className="grow mx-5 p-5 pb-7 border-[5px] border-primary h-max">
-            <div className="flex gap-6">
-              <div className="w-[266px] h-[262px]">
+          <div className="grow p-5 pb-7 border-[5px] border-primary h-max">
+            <div className="flex flex-wrap gap-6">
+              <div className="w-full h-full sm:w-[266px] sm:h-[262px] shrink-0">
                 <MultiProductView item={newArrival[0]} />
               </div>
               <div className="grow">
@@ -250,12 +280,12 @@ export default function Home() {
       <div className="container my-10">
         <div className="relative h-[300px]">
           <div className="absolute h-full right-0 top-0 z-[-1]">
-            <Image src={Banner} alt="banner" className="max-h-[300px]"/>
+            <Image src={Banner} alt="banner" className="max-h-[300px] h-full object-cover"/>
           </div>
           <div className="Discount_Banner px-10 py-10 h-full flex items-center">
             <div>
               <span className="text-primary uppercase font-medium">Weekend discount</span>
-              <h2 className="text-[30px] font-medium text-gray-300">Leave the season in blonwe style</h2>
+              <h2 className="text-[27px] md:text-[30px] font-medium text-gray-300">Leave the season in blonwe style</h2>
               <p className="font-medium text-gray-200">Organizing never looked so good, Design yours today!..</p>
               <div className="flex gap-3 items-end mt-3">
                 <span className="text-gray-300 font-medium">from</span>
@@ -267,9 +297,9 @@ export default function Home() {
       </div>
 
       <div className="container my-10">
-        <div className="flex items-center justify-between">
-          <h1 className="text-[38px] text-gray-300 font-bold">New Arrival</h1>
-          <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-y-6">
+          <h1 className="text-[27px] md:text-[38px] text-gray-300 font-bold">New Arrival</h1>
+          <div className="flex flex-wrap items-center justify-between">
             {tabs?.map((item: any, index: number) => (
               <button onClick={() => setActiveTab(item)} className={`px-5 text-gray-200 rounded-md ${activeTab === item ? "bg-gray-100" : ""}`} key={index}>
                 {item}
@@ -282,7 +312,7 @@ export default function Home() {
           </Link>
         </div>
         <div className="w-full my-10">
-          <div className="relative flex justify-between">
+          <div className="relative flex flex-wrap gap-y-10 justify-between">
             {newArrival?.map((item: any, index: number) => (
               <ProductCard item={item} key={index} className="shrink-0 w-[213px]" />
             ))}
