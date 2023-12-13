@@ -1,5 +1,4 @@
 "use client";
-import Developing from "@/app/components/Developingmode";
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineShoppingCart } from "react-icons/ai";
 import { BsArrowUp } from "react-icons/bs";
