@@ -391,7 +391,7 @@ const customizeFurnitureForm = () => {
                   Select Stuff
                 </label>
                 <div
-                  className="w-full h-[48px] bg-white mt-1 flex justify-between pl-5 items-center"
+                  className="w-full h-[48px] bg-white mt-1 flex justify-between px-5 items-center"
                   onClick={changeStuffHeight}
                 >
                   <p className="text-gray-200 cursor-default">{stuff}</p>
