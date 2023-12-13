@@ -2,12 +2,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "@/lib/store";
 
-interface CartItem {
-  title: string;
-  qty: number;
-  // Add other properties as needed
-}
-
 interface OrderItem {
   Itemname: string;
   Price: number;
@@ -17,6 +11,7 @@ interface OrderItem {
 interface AuthState {
   cart: Array<object>;
   wishList: Array<object>;
+  user: Object;
 
   Authcheck: boolean;
   Wishlists: object[]; // You can specify a more specific type here if needed
@@ -31,9 +26,10 @@ interface AuthState {
 const initialState: AuthState = {
   cart: [],
   wishList: [],
+  user: {},
 
+  
   orderItems: [],
-
   Authcheck: false,
   Wishlists: [],
   CurrentCart: "",
@@ -61,6 +57,11 @@ export const Allslice = createSlice({
       const idToRemove = action.payload.id;
       state.wishList = state.wishList.filter((item: any) => item._id !== idToRemove);
     },
+    setLoginUser: (state, action: PayloadAction<object>) => {
+      state.user = action.payload;
+    },
+
+
 
     AssignsideTrue: (state) => {
       state.siebarcheck = true;
@@ -106,6 +107,7 @@ export const {
   removeCartItem,
   addToWhislist,
   removeWishList,
+  setLoginUser,
 
 
   AssignAuthTrue,
