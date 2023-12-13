@@ -52,7 +52,7 @@ const Sidebar = () => {
             <li className="text-sm px-2 text-ubuntu-medium text-HeadingColours">
               Orders
             </li>
-            <span className="absolute right-2 h-max px-2 rounded-md text-HeadingColours bg-gray-200">{orderItems.length}</span>
+            <span className="absolute right-2 h-max px-2 rounded-md text-HeadingColours bg-gray-200">{orderItems?.length}</span>
           </div>
         </Link>
         <div

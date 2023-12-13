@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineBell, AiOutlineSearch } from "react-icons/ai";
 import { BiMessageRoundedDots } from "react-icons/bi";
-import userimg from "@/app/Assets/images/admin/user-01.png";
+import userimg from "@/app/assets/images/admin/user-01.png";
 import Image from "next/image";
 import { BsChevronDown } from "react-icons/bs";
 import { HiBars3 } from "react-icons/hi2";

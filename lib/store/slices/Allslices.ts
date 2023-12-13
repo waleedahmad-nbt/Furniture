@@ -2,14 +2,45 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "@/lib/store";
 
+interface CartItem {
+  title: string;
+  qty: number;
+  // Add other properties as needed
+}
+
+interface OrderItem {
+  Itemname: string;
+  Price: number;
+  Quantity: number;
+}
+
 interface AuthState {
   cart: Array<object>;
   wishList: Array<object>;
+
+  Authcheck: boolean;
+  Wishlists: object[]; // You can specify a more specific type here if needed
+  CurrentCart: string;
+  currentTab: string;
+  siebarcheck: boolean;
+  Mobilesides: boolean;
+  AdminSide: boolean;
+  orderItems: OrderItem[];
 }
 
 const initialState: AuthState = {
   cart: [],
-  wishList: []
+  wishList: [],
+
+  orderItems: [],
+
+  Authcheck: false,
+  Wishlists: [],
+  CurrentCart: "",
+  currentTab: "Home",
+  siebarcheck: false,
+  Mobilesides: false,
+  AdminSide: false
 };
 
 export const Allslice = createSlice({
@@ -30,6 +61,41 @@ export const Allslice = createSlice({
       const idToRemove = action.payload.id;
       state.wishList = state.wishList.filter((item: any) => item._id !== idToRemove);
     },
+
+    AssignsideTrue: (state) => {
+      state.siebarcheck = true;
+    },
+    Assignsidefalse: (state) => {
+      state.siebarcheck = false;
+    },
+    AssignAuthTrue: (state) => {
+      state.Authcheck = true;
+    },
+    AssignAuthFalse: (state) => {
+      state.Authcheck = false;
+    },
+    Assigncurrrent: (state, action: PayloadAction<string>) => {
+      state.currentTab = action.payload;
+    },
+    addCustomItem: (state, action: PayloadAction<OrderItem>) => {
+      state.orderItems.push(action.payload);
+    },
+    deleteCustomItem: (state, action: PayloadAction<number>) => {
+      state.orderItems.splice(action.payload, 1);
+    },
+    AssignMobilesideTrue: (state) => {
+      state.Mobilesides = true;
+    },
+    AssignMobilesidefalse: (state) => {
+      state.Mobilesides = false;
+    },
+
+    AssignAdminsideTrue: (state) => {
+      state.AdminSide = true;
+    },
+    AssignAdminsidefalse: (state) => {
+      state.AdminSide = false;
+    },
   },
 });
 
@@ -40,6 +106,20 @@ export const {
   removeCartItem,
   addToWhislist,
   removeWishList,
+
+
+  AssignAuthTrue,
+  AssignAuthFalse,
+  Assigncurrrent,
+  addCustomItem,
+  deleteCustomItem,
+  AssignsideTrue,
+  Assignsidefalse,
+  AssignMobilesideTrue,
+  AssignMobilesidefalse,
+  AssignAdminsideTrue,
+  AssignAdminsidefalse
+
 } = Allslice.actions;
 
 export default Allslice.reducer;

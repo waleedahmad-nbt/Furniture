@@ -7,21 +7,21 @@ import { Marketgraph } from "../../components";
 import { FiArrowUpRight } from "react-icons/fi";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import Image from "next/image"; 
-import icon1 from './../../../assests/images/Marketing/icon1.svg'
-import icon2 from './../../../assests/images/Marketing/icon2.svg'
-import icon3 from './../../../assests/images/Marketing/icon3.svg'
-import icon4 from './../../../assests/images/Marketing/icon4.svg'
-import icon5 from './../../../assests/images/Marketing/icon5.svg'
+import icon1 from '@/app/assets/images/Marketing/icon1.svg'
+import icon2 from '@/app/assets/images/Marketing/icon2.svg'
+import icon3 from '@/app/assets/images/Marketing/icon3.svg'
+import icon4 from '@/app/assets/images/Marketing/icon4.svg'
+import icon5 from '@/app/assets/images/Marketing/icon5.svg'
 
-import applogo1 from './../../../assests/images/Marketing/appLogo1.webp'
-import applogo2 from './../../../assests/images/Marketing/applogo2.webp'
-import applogo3 from './../../../assests/images/Marketing/applogo3.avif'
-import applogo4 from './../../../assests/images/Marketing/applogo4.webp'
-import applogo5 from './../../../assests/images/Marketing/applogo5.avif'
+import applogo1 from '@/app/assets/images/Marketing/appLogo1.webp'
+import applogo2 from '@/app/assets/images/Marketing/applogo2.webp'
+import applogo3 from '@/app/assets/images/Marketing/appLogo1.webp'
+import applogo4 from '@/app/assets/images/Marketing/applogo4.webp'
+import applogo5 from '@/app/assets/images/Marketing/appLogo1.webp'
 
-import email from './../../../assests/images/Marketing/14711ad7477a3d0211488990623ad24c_32x32.webp'
-import slider1 from './../../../assests/images/Marketing/Still.webp'
-import slider2 from './../../../assests/images/Marketing/principles-of-advertising.webp'
+import email from '@/app/assets/images/Marketing/14711ad7477a3d0211488990623ad24c_32x32.webp'
+import slider1 from '@/app/assets/images/Marketing/Still.webp'
+import slider2 from '@/app/assets/images/Marketing/principles-of-advertising.webp'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { LiaAngleLeftSolid, LiaAngleRightSolid } from "react-icons/lia";

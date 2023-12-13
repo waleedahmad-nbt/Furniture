@@ -1,27 +1,11 @@
 'use client'
 import React, { Fragment } from "react";
 import Sellerlayout from "../../../layouts/SellerDashboard";
-import { BsFillCalendarFill, BsFilter, BsThreeDots } from "react-icons/bs";
-import { SiSimpleanalytics } from "react-icons/si";
-import { Marketgraph } from "../../../components";
-import { FiArrowUpRight } from "react-icons/fi";
-import { HiOutlineDocumentReport } from "react-icons/hi";
+import { BsFilter, BsThreeDots } from "react-icons/bs";
+
 import Image from "next/image"; 
-import icon1 from './../../../../assests/images/Marketing/icon1.svg'
-import icon2 from './../../../../assests/images/Marketing/icon2.svg'
-import icon3 from './../../../../assests/images/Marketing/icon3.svg'
-import icon4 from './../../../../assests/images/Marketing/icon4.svg'
-import icon5 from './../../../../assests/images/Marketing/icon5.svg'
 
-import applogo1 from './../../../../assests/images/Marketing/appLogo1.webp'
-import applogo2 from './../../../../assests/images/Marketing/applogo2.webp'
-import applogo3 from './../../../../assests/images/Marketing/applogo3.avif'
-import applogo4 from './../../../../assests/images/Marketing/applogo4.webp'
-import applogo5 from './../../../../assests/images/Marketing/applogo5.avif'
-
-import email from './../../../../assests/images/Marketing/14711ad7477a3d0211488990623ad24c_32x32.webp'
-import slider1 from './../../../../assests/images/Marketing/7926d9cf-8703-4673-863f-efca26447dec.webp'
-import slider2 from './../../../../assests/images/Marketing/principles-of-advertising.webp'
+import slider1 from '@/app/assets/images/Marketing/7926d9cf-8703-4673-863f-efca26447dec.webp'
 import { Menu, Transition } from '@headlessui/react'
 
 import "slick-carousel/slick/slick.css";

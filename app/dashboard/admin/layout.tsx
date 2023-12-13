@@ -22,9 +22,9 @@ export default function Adminlayout({
     <html lang="en">
       <body className={inter.className}>
         <ReduxProvider>
-          <div className="flex relative">
+          <div className="relative">
             <Sidebar />
-            <div className="flex-1 absolute right-0 bg-[rgb(241,245,249)] adminHeader">
+            <div className="bg-[rgb(241,245,249)] adminHeader pl-[250px]">
               <Header />
               <div className="sm:p-10 p-4">{children}</div>
             </div>

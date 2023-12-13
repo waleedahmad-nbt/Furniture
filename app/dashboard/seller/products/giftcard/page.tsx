@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Sellerlayout from "../../../layouts/SellerDashboard";
 import Image from "next/image";
-import image1 from "../../../../assests/images/product/productImage1.svg";
+import image1 from "@/app/assets/images/product/productImage1.svg";
 import Link from "next/link";
 
 const GiftCard = () => {

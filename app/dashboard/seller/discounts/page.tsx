@@ -1,13 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Sellerlayout from "../../layouts/SellerDashboard";
-import Image from "next/image";
-import image from "../../../assests/images/Seller/Product.jpeg";
+import image from "@/app/assets/images/Seller/Product.jpeg";
 import { BiSearch, BiSort } from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
 import Link from "next/link";
-
-// Status	Method	Type	Combinations	
 
 // Used
 const products:any = [

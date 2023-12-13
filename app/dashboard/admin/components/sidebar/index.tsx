@@ -1,21 +1,14 @@
 "use client";
 import React from "react";
-import adminLogo from "@/app/Assets/images/header/E_Logo.png";
+import adminLogo from "@/app/assets/images/header/E_Logo.png";
 import Image from "next/image";
-import {
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@material-tailwind/react";
 import Link from "next/link";
 import { PiSquaresFourDuotone } from "react-icons/pi";
 import {
   AiOutlineFolderAdd,
   AiOutlineUnorderedList,
-  AiOutlineUserAdd,
 } from "react-icons/ai";
-import { FiMail, FiUserCheck, FiUsers } from "react-icons/fi";
-import { CiMail } from "react-icons/ci";
+import { FiMail, FiUsers } from "react-icons/fi";
 import { BsArrowLeft, BsHandbag } from "react-icons/bs";
 import { BiLogOutCircle } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";

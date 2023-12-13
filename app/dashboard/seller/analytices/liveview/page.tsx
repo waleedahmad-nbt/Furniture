@@ -3,19 +3,19 @@ import Sellerlayout from "@/app/dashboard/layouts/SellerDashboard";
 import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment } from "react";
-import visitorImage from '../../../../assests/images/Analytics/157a132fd8922050.svg'
+import visitorImage from '@/app/assets/images/Analytics/157a132fd8922050.svg'
 import { AiOutlineBarChart, AiOutlineEye } from "react-icons/ai";
 import { BsArrowsAngleExpand } from "react-icons/bs";
 
 
-import image from "../../../../assests/images/Seller/Product.jpeg";
+import image from "@/app/assets/images/Seller/Product.jpeg";
 import { BiLink, BiSearch, BiSort } from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
 
-import Crusher from "../../../../assests/images/Analytics/Q-123-4_50x50@2x.jpg";
+import Crusher from "@/app/assets/images/Analytics/Q-123-4_50x50@2x.jpg";
 
 const products:any = [
   {

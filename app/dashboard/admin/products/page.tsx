@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect } from "react";
-import productImage from "../../../assests/images/admin/Related1.png";
+import productImage from "@/app/assets/images/admin/Related1.png";
 import { useDispatch } from "react-redux";
 import { AssignAdminsidefalse } from "@/lib/store/slices/Allslices";
 

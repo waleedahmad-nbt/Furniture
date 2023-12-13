@@ -7,7 +7,7 @@ import { FiArrowUpRight, FiUsers } from "react-icons/fi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import Wavechart from "../components/wavechart";
 import { PieChart, Sellproductsgraph, Treemap } from "../components";
-import userimg from "@/app/Assets/images/admin/user-01.png";
+import userimg from "@/app/assets/images/admin/user-01.png";
 import Image from "next/image";
 
 const Admin = () => {

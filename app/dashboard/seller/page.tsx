@@ -7,9 +7,9 @@ import { CiHardDrive } from "react-icons/ci";
 import { BsCreditCard2Front } from "react-icons/bs";
 import { TbMathGreater } from "react-icons/tb";
 import Image from "next/image";
-import Product from "@/app/Assets/images/Seller/Product.jpeg";
-import Instagrampic from "@/app/Assets/images/Seller/Instagram.svg"
-import Facebookpic from "@/app/Assets/images/Seller/facebook.jpg"
+import Product from "@/app/assets/images/Seller/Product.jpeg";
+import Instagrampic from "@/app/assets/images/Seller/Instagram.svg"
+import Facebookpic from "@/app/assets/images/Seller/facebook.jpg"
 import Link from "next/link";
 
 const Seller = () => {

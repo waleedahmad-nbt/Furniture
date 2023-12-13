@@ -1,16 +1,12 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import productImage from "../../../assests/images/admin/Related1.png";
 import {
-  AiOutlineBell,
   AiOutlineEllipsis,
   AiOutlineReload,
   AiOutlineSearch,
 } from "react-icons/ai";
-import userimg from "../../../assests/images/admin/user-01.png";
-import { BiMessageRoundedDots } from "react-icons/bi";
-import { BsChevronDown } from "react-icons/bs";
+import userimg from "@/app/assets/images/admin/user-01.png";
 import { MdDeleteOutline } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { AssignAdminsidefalse } from "@/lib/store/slices/Allslices";
