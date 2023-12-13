@@ -158,7 +158,7 @@ const CartTotal = () => {
       </div>
 
       <div
-        className={`flex items-center mt-1 justify-between px-5 py-2 rounded-md group cursor-pointer select-none ${togglePromo ? "text-gray-900 active" : "bg-white text-[#555555]"}`}
+        className={`flex items-center mt-2 justify-between px-5 py-2 rounded-md group cursor-pointer select-none ${togglePromo ? "text-gray-900 active" : "bg-white text-[#555555]"}`}
         onClick={() => setTogglePromo(!togglePromo)}
       >
         <p>Apply Promo Code</p>

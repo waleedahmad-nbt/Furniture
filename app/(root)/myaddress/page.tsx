@@ -4,7 +4,6 @@ import Select from "react-select";
 import { AccountSideBar } from "../components";
 
 const MyAddress = () => {
-  
   const customStyles = {
     option: (provided: any) => ({
       ...provided,
@@ -23,10 +22,10 @@ const MyAddress = () => {
       borderRadius: "0px",
       boxShadow: "none",
       padding: "5px",
-      borderColor: state.isFocused ? '#FF6F00' : '',
-      '&:hover': {
+      borderColor: state.isFocused ? "#FF6F00" : "",
+      "&:hover": {
         border: "1px solid #FF6F00",
-      }
+      },
     }),
   };
 
@@ -45,7 +44,7 @@ const MyAddress = () => {
     address: "",
     country: "",
     city: "",
-  }
+  };
 
   const [formData, setFormData] = useState<any>(fields);
   const [formErrors, setFormErrors] = useState<any>({});
@@ -53,8 +52,10 @@ const MyAddress = () => {
   const handleChange = (e: any) => {
     const { name, value } = e.target;
 
-    setFormData((prev: any) => { return { ...prev, [name]: value } });
-  }
+    setFormData((prev: any) => {
+      return { ...prev, [name]: value };
+    });
+  };
 
   const validateForm = () => {
     let errors: any = {};
@@ -70,72 +71,66 @@ const MyAddress = () => {
     setFormErrors(errors);
 
     return Object.keys(errors).length === 0;
-  }
+  };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    if(validateForm()) {
-      console.log("submit")
+    if (validateForm()) {
+      console.log("submit");
     }
-  }
+  };
 
   return (
     <>
       <div>
-        <h1 className="text-4xl text-[#1F1F1F] text-center font-medium py-10">
+        <h1 className="text-3xl text-[#1F1F1F] md:text-5xl text-center font-medium py-10">
           My Address
         </h1>
         <div className="container bg-white py-10 mb-20">
-          <div className="bg-white px-10 py-10 rounded-sm flex flex-wrap mb-16">
-            <div className="flex-[0_0_30%] pr-5">
+          <div className="bg-white px-10 py-10 rounded-sm flex flex-wrap gap-y-5 mb-16">
+            <div className="w-full md:w-[30%] pr-5">
               <AccountSideBar />
             </div>
-            <div className="flex-[0_0_70%] pl-5">
+            <div className="w-full md:w-[70%] pl-0 md:pl-5">
               <div className="">
                 <h2 className="text-[20px] text-gray-900 font-medium">
                   Home Address
                 </h2>
-                <div className="mt-5 flex flex-col gap-5">
-                  <div className="flex">
-                    <h3 className="text-[16px] text-gray-300 font-medium w-[120px]">
+                <div className="grid grid-cols-2 mt-5">
+                  <div className="col-span-1 flex flex-col gap-y-3">
+                    <h2 className="text-[16px] text-gray-300 font-medium">
                       County
-                    </h3>
-                    <p className="text-[14px] text-gray-200 font-normal ps-16">
-                      Bangalore-560016
-                    </p>
-                  </div>
-                  <div className="flex">
-                    <h3 className="text-[16px] text-gray-300 font-medium w-[120px]">
+                    </h2>
+                    <h2 className="text-[16px] text-gray-300 font-medium">
                       City
-                    </h3>
-                    <p className="text-[14px] text-gray-200 font-normal ps-16">
-                      Akshya Nagar
-                    </p>
-                  </div>
-                  <div className="flex">
-                    <h3 className="text-[16px] text-gray-300 font-medium w-[120px]">
+                    </h2>
+                    <h2 className="text-[16px] text-gray-300 font-medium">
                       Address
-                    </h3>
-                    <p className="text-[14px] text-gray-200 font-normal ps-16">
-                      Akshya Nagar 1st Block 1st Cross, Rammurthy nagar,
+                    </h2>
+                    <h2 className="text-[16px] text-gray-300 font-medium">
+                      Phone Number
+                    </h2>
+                    <h2 className="text-[16px] text-gray-300 font-medium">
+                      Alternative Phone Number
+                    </h2>
+                  </div>
+                  <div className="col-span-1 flex flex-col gap-y-2">
+                    <p className="text-[14px] text-gray-200 font-normal">
                       Bangalore-560016
                     </p>
-                  </div>
-                  <div className="flex">
-                    <h3 className="text-[16px] text-gray-300 font-medium w-[120px]">
-                      Phone Number
-                    </h3>
-                    <p className="text-[14px] text-gray-200 font-normal ps-16">
-                      353656756 5745
+                    <p className="text-[14px] text-gray-200 font-normal">
+                      Akshya Nagar{" "}
                     </p>
-                  </div>
-                  <div className="flex">
-                    <h3 className="text-[16px] text-gray-300 font-medium w-[120px]">
-                      Alternative Phone Number
-                    </h3>
-                    <p className="text-[14px] text-gray-200 font-normal ps-16">
-                      4545645 756
+                    <p className="text-[14px] text-gray-200 font-normal">
+                      Akshya Nagar 1st Block 1st Cross, Rammurthy nagar,
+                      Bangalore-560016{" "}
+                    </p>
+                    <p className="text-[14px] text-gray-200 font-normal">
+                      353656756 5745{" "}
+                    </p>
+                    <p className="text-[14px] text-gray-200 font-normal">
+                      4545645 756{" "}
                     </p>
                   </div>
                 </div>
@@ -145,46 +140,40 @@ const MyAddress = () => {
                 <h2 className="text-[20px] text-gray-900 font-medium">
                   Office Address
                 </h2>
-                <div className="mt-5 flex flex-col gap-5">
-                  <div className="flex">
-                    <h3 className="text-[16px] text-gray-300 font-medium w-[120px]">
+                <div className="grid grid-cols-2 mt-5">
+                  <div className="col-span-1 flex flex-col gap-y-3">
+                    <h2 className="text-[16px] text-gray-300 font-medium">
                       County
-                    </h3>
-                    <p className="text-[14px] text-gray-200 font-normal ps-16">
-                      Bangalore-560016
-                    </p>
-                  </div>
-                  <div className="flex">
-                    <h3 className="text-[16px] text-gray-300 font-medium w-[120px]">
+                    </h2>
+                    <h2 className="text-[16px] text-gray-300 font-medium">
                       City
-                    </h3>
-                    <p className="text-[14px] text-gray-200 font-normal ps-16">
-                      Akshya Nagar
-                    </p>
-                  </div>
-                  <div className="flex">
-                    <h3 className="text-[16px] text-gray-300 font-medium w-[120px]">
+                    </h2>
+                    <h2 className="text-[16px] text-gray-300 font-medium">
                       Address
-                    </h3>
-                    <p className="text-[14px] text-gray-200 font-normal ps-16">
-                      Akshya Nagar 1st Block 1st Cross, Rammurthy nagar,
+                    </h2>
+                    <h2 className="text-[16px] text-gray-300 font-medium">
+                      Phone Number
+                    </h2>
+                    <h2 className="text-[16px] text-gray-300 font-medium">
+                      Alternative Phone Number
+                    </h2>
+                  </div>
+                  <div className="col-span-1 flex flex-col gap-y-2">
+                    <p className="text-[14px] text-gray-200 font-normal">
                       Bangalore-560016
                     </p>
-                  </div>
-                  <div className="flex">
-                    <h3 className="text-[16px] text-gray-300 font-medium w-[120px]">
-                      Phone Number
-                    </h3>
-                    <p className="text-[14px] text-gray-200 font-normal ps-16">
-                      353656756 5745
+                    <p className="text-[14px] text-gray-200 font-normal">
+                      Akshya Nagar{" "}
                     </p>
-                  </div>
-                  <div className="flex">
-                    <h3 className="text-[16px] text-gray-300 font-medium w-[120px]">
-                      Alternative Phone Number
-                    </h3>
-                    <p className="text-[14px] text-gray-200 font-normal ps-16">
-                      4545645 756
+                    <p className="text-[14px] text-gray-200 font-normal">
+                      Akshya Nagar 1st Block 1st Cross, Rammurthy nagar,
+                      Bangalore-560016{" "}
+                    </p>
+                    <p className="text-[14px] text-gray-200 font-normal">
+                      353656756 5745{" "}
+                    </p>
+                    <p className="text-[14px] text-gray-200 font-normal">
+                      4545645 756{" "}
                     </p>
                   </div>
                 </div>
@@ -196,8 +185,8 @@ const MyAddress = () => {
                 </h2>
                 <div className="mt-5">
                   <form onSubmit={handleSubmit}>
-                    <div className="flex gap-5">
-                      <div className="flex flex-col gap-2">
+                    <div className="flex flex-col md:flex-row gap-5">
+                      <div className="flex w-full flex-col gap-2">
                         <label
                           htmlFor="firstName"
                           className="text-[16px] font-medium text-gray-300"
@@ -208,7 +197,7 @@ const MyAddress = () => {
                           type="text"
                           name="firstName"
                           id="firstName"
-                          className="w-[348px] h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
+                          className="w-full md:w-[100%] h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
                           placeholder="First Name"
                           onChange={handleChange}
                         />
@@ -218,7 +207,7 @@ const MyAddress = () => {
                           </p>
                         )}
                       </div>
-                      <div className="flex flex-col gap-2">
+                      <div className="flex  w-full flex-col gap-2">
                         <label
                           htmlFor="lastName"
                           className="text-[16px] font-medium text-gray-300"
@@ -229,7 +218,7 @@ const MyAddress = () => {
                           type="text"
                           name="lastName"
                           id="lastName"
-                          className="w-[348px] h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
+                          className="w-full md:w-[100%] h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
                           placeholder="Last Name"
                           onChange={handleChange}
                         />
@@ -252,14 +241,14 @@ const MyAddress = () => {
                         type="text"
                         name="displayName"
                         id="displayName"
-                        className="w-[707px] h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
+                        className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
                         placeholder="Display Name"
                         onChange={handleChange}
                       />
                     </div>
                     <p className="text-[12px] text-gray-200 mt-5">
-                      This will be how your name will be displayed in the account
-                      section and in reviews
+                      This will be how your name will be displayed in the
+                      account section and in reviews
                     </p>
 
                     <div className="flex flex-col gap-2 mt-5">
@@ -273,7 +262,7 @@ const MyAddress = () => {
                         type="number"
                         name="alternativePhoneNumber"
                         id="alternativePhoneNumber"
-                        className="w-[707px] h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
+                        className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
                         placeholder="Alternative Phone Number"
                         onChange={handleChange}
                       />
@@ -290,14 +279,14 @@ const MyAddress = () => {
                         type="text"
                         name="address"
                         id="address"
-                        className="w-[707px] h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
+                        className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
                         placeholder="Address"
                         onChange={handleChange}
                       />
                     </div>
 
-                    <div className="flex gap-5 mt-5">
-                      <div className="flex flex-col gap-2">
+                    <div className="flex flex-col md:flex-row gap-5 mt-5">
+                      <div className="flex w-full flex-col gap-2">
                         <label
                           htmlFor="country"
                           className="text-[16px] font-medium text-gray-300"
@@ -305,7 +294,7 @@ const MyAddress = () => {
                           Country
                         </label>
                         <Select
-                          className="w-[349px]"
+                          className="w-full"
                           id="country"
                           styles={customStyles}
                           options={options}
@@ -321,7 +310,7 @@ const MyAddress = () => {
                         />
                       </div>
 
-                      <div className="flex flex-col gap-2 ">
+                      <div className="flex w-full flex-col gap-2 ">
                         <label
                           htmlFor="city"
                           className="text-[16px] font-medium text-gray-300"
@@ -329,7 +318,7 @@ const MyAddress = () => {
                           City
                         </label>
                         <Select
-                          className="w-[349px]"
+                          className="w-full"
                           id="city"
                           styles={customStyles}
                           options={options}
