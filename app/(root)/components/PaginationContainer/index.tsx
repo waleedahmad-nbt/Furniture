@@ -1,6 +1,6 @@
-"use client"
-import React, { useEffect, useState } from 'react';
-import { ProductCard } from '..';
+"use client";
+import React, { useEffect, useState } from "react";
+import { ProductCard } from "..";
 
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
@@ -20,22 +20,20 @@ const PaginationContainer = ({ items, setStats }: any) => {
   const handlePageChange = (newPage: any) => {
     setCurrentPage(newPage);
   };
-  
-  useEffect(() => {
 
+  useEffect(() => {
     const resultsStart = Math.min(startIndex + 1, items.length);
     const resultsEnd = Math.min(endIndex, items.length);
 
     setStats(resultsStart, resultsEnd);
-
   }, [currentPage]);
 
   return (
     <>
       {/* Display current page items */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {currentItems?.map((item: any, index: number) => (
-          <ProductCard item={item} key={index} className="h-max"/>
+          <ProductCard item={item} key={index} className="h-max" />
         ))}
       </div>
 
@@ -45,7 +43,10 @@ const PaginationContainer = ({ items, setStats }: any) => {
           className="flex items-center gap-1 text-[#979899] font-medium"
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
-        ><FaAngleLeft />PREVIOUS</button>
+        >
+          <FaAngleLeft />
+          PREVIOUS
+        </button>
 
         <div className="flex">
           {/* Page numbers with active class */}
@@ -53,7 +54,11 @@ const PaginationContainer = ({ items, setStats }: any) => {
             <button
               key={index}
               onClick={() => handlePageChange(index + 1)}
-              className={`w-[44px] h-[45px] flex items-center justify-center ${currentPage === index + 1 ? 'bg-[#181818] text-white' : 'text-[#1C1F23]'}`}
+              className={`w-[44px] h-[45px] flex items-center justify-center ${
+                currentPage === index + 1
+                  ? "bg-[#181818] text-white"
+                  : "text-[#1C1F23]"
+              }`}
             >
               {index + 1}
             </button>
@@ -64,7 +69,10 @@ const PaginationContainer = ({ items, setStats }: any) => {
           className="flex items-center gap-1 text-[#979899] font-medium"
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-        >NEXT<FaAngleRight /></button>
+        >
+          NEXT
+          <FaAngleRight />
+        </button>
       </div>
     </>
   );

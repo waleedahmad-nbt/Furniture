@@ -176,7 +176,7 @@ export default function Home() {
   return (
     <>
       <div className="relative bg-cream">
-        <div className="absolute bottom-0 right-0 -translate-y-[15%] md:-translate-y-0 h-[30%] md:h-full w-[80%] md:w-[60%] flex justify-end">
+        <div className="absolute container bottom-0 right-0 max-md:right-1/2 max-md:translate-x-1/2 -translate-y-[15%] md:-translate-y-0 h-[30%] md:h-full w-full md:w-[60%] flex justify-end">
           <MainSlider />
         </div>
         <div className="container">
