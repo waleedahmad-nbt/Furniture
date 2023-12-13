@@ -77,7 +77,7 @@ const aboutUs = () => {
               officia deserunt mollit anim id est laborum.
             </p>
           </div>
-          <div className="border border-gray-100 px-5 py-10 m-10">
+          <div className="border border-gray-100 px-5 py-10 m-10 ">
             <h1 className="text-2xl text-gray-300">Our Vision</h1>
             <p className="text-gray-100 ">
               Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -86,7 +86,7 @@ const aboutUs = () => {
               type and scrambled
             </p>
           </div>
-          <div className="border border-gray-100 px-5 py-10 m-10">
+          <div className="border border-gray-100 px-5 py-10 mx-10 -mt-3 md:-mt-0">
             <h1 className="text-2xl text-gray-300">Our Mission</h1>
             <p className="text-gray-100 ">
               Lorem Ipsum is simply dummy text of the printing and typesetting

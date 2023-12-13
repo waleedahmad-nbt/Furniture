@@ -194,24 +194,25 @@ const customizeFurnitureForm = () => {
           <Image src={stylishChair} alt="" className="w-full" />
         </div>
         <div
-          className="absolute  top-[30%] left-1/2 -translate-x-1/2 w-[452px] h-[#FFFFFF] border-2 border-white text-center py-5"
+          className="absolute  top-[30%] left-1/2 -translate-x-1/2 w-[250px] md:w-[452px] border-2 border-white text-center py-5"
           style={{ backgroundColor: "rgba(61, 60, 60, 0.527)" }}
         >
-          <h1 className="capitalize text-white text-3xl font-medium">
+          <h1 className="capitalize text-white text-sm md:text-3xl font-medium">
             Fill the form and <br />
             <span className="text-primary">Put your request </span>
           </h1>
-          <p className="text-white">
+          <p className="text-white text-[8px] sm:text-[12px] md:text-[16px]">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been
           </p>
         </div>
       </div>
-      <div className="container  pb-20">
-        <div className="relative bg-gray-900 text-gray-200 py-10 w-max mx-auto px-20 -mt-20 z-20">
-          <form onSubmit={handleSubmit}>
-            <div className="flex gap-5 justify-center">
-              <div className="flex flex-col gap-2">
+
+      <div className="container px-20 pb-20 pt-10 lg:pt-0">
+        <div className="relative w-auto lg:w-max bg-gray-900 text-gray-200 py-10 mx-auto px-5 md:px-20 -mt-0 lg:-mt-20 z-20">
+          <form onSubmit={handleSubmit} className="w-full">
+            <div className="flex flex-wrap justify-between gap-y-5  gap-x-2">
+              <div className="w-full md:w-[49%]">
                 <label htmlFor="name" className="ms-5">
                   Name
                 </label>
@@ -219,12 +220,12 @@ const customizeFurnitureForm = () => {
                   type="text"
                   name="name"
                   id="name"
-                  className="w-[400px] h-[48px] ps-5 outline-primary"
+                  className="h-[46px] border border-[#DCDCDC] mt-2  ps-4 w-full outline-primary"
                   placeholder="Name"
                   onChange={handleChanging}
                 />
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="w-full md:w-[49%]">
                 <label htmlFor="phone" className="ms-5">
                   Phone
                 </label>
@@ -232,15 +233,15 @@ const customizeFurnitureForm = () => {
                   type="text"
                   name="phone"
                   id="phone"
-                  className="w-[400px] h-[48px] ps-5 outline-primary"
+                  className="h-[46px] border border-[#DCDCDC] mt-2  ps-4 w-full outline-primary"
                   placeholder="123-4566"
                   onChange={handleChanging}
                 />
               </div>
             </div>
 
-            <div className="flex gap-5 justify-center mt-5">
-              <div className="flex flex-col gap-2">
+            <div className="flex justify-between flex-wrap gap-y-5 mt-5 ">
+              <div className="flex-[0_0_100%] md:flex-[0_0_33.33%]">
                 <label htmlFor="name" className="ms-5">
                   Email
                 </label>
@@ -248,19 +249,19 @@ const customizeFurnitureForm = () => {
                   type="text"
                   name="name"
                   id="name"
-                  className="w-[260px] h-[48px] ps-5 outline-primary"
+                  className="h-[46px] border border-[#DCDCDC] mt-2  ps-4 w-full outline-primary"
                   placeholder="xyz@gmail.com"
                   onChange={handleChanging}
                 />
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex-[0_0_100%] md:flex-[0_0_33.33%] md:pl-2.5">
                 <label htmlFor="country" className="ms-5">
                   Country
                 </label>
                 <select
                   name="country"
                   id="country"
-                  className="w-[260px] h-[48px] px-5 outline-primary"
+                  className="h-[46px] border border-[#DCDCDC] mt-2  ps-4 w-full outline-primary"
                   onChange={handleChanging}
                 >
                   <option value="" hidden>
@@ -274,7 +275,7 @@ const customizeFurnitureForm = () => {
                 </select>
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex-[0_0_100%] md:flex-[0_0_33.33%] md:pl-2.5">
                 <label htmlFor="City" className="ms-5">
                   City
                 </label>
@@ -282,7 +283,7 @@ const customizeFurnitureForm = () => {
                   name="city"
                   id="City"
                   defaultValue="City"
-                  className="w-[260px] h-[48px] px-5 outline-primary"
+                  className="h-[46px] border border-[#DCDCDC] mt-2  ps-4 w-full outline-primary"
                   onChange={handleChanging}
                 >
                   <option value="" hidden>
@@ -311,8 +312,8 @@ const customizeFurnitureForm = () => {
                 </div>
               </div>
               <div
-                className={`absolute z-10 w-[205px] ${
-                  categoriesHeight ? `h-[260px]` : `h-[0px]`
+                className={`absolute z-10  ${
+                  categoriesHeight ? `h-[260px] w-[205px]` : `h-[0px] w-[0px]`
                 } px-2 bg-cream right-10 top-14 overflow-y-auto transition-all duration-300`}
               >
                 {categories.map((item: any, index: any) => {
@@ -332,8 +333,8 @@ const customizeFurnitureForm = () => {
               </div>
             </div>
 
-            <div className="flex gap-5 items-center mt-5">
-              <div className="flex flex-col gap-2">
+            <div className="flex items-center flex-wrap gap-y-5 mt-5">
+              <div className="flex-[0_0_100%] md:flex-[0_0_33.33%] md:pr-2.5">
                 <label htmlFor="size" className="ms-5">
                   Size
                 </label>
@@ -341,18 +342,18 @@ const customizeFurnitureForm = () => {
                   type="text"
                   name="size"
                   id="size"
-                  className="w-[260px] h-[48px] ps-5 outline-primary"
+                  className="h-[46px] border border-[#DCDCDC] mt-1  ps-4 w-full outline-primary"
                   placeholder="Size"
                   onChange={handleChanging}
                 />
               </div>
 
-              <div className="relative">
+              <div className="relative flex-[0_0_100%] md:flex-[0_0_33.33%] md:pr-2.5">
                 <label htmlFor="color" className="ms-5">
                   Select Color
                 </label>
                 <div
-                  className="w-[260px] h-[48px] bg-white mt-1 flex justify-between px-5 items-center"
+                  className="w-full h-[48px] bg-white mt-1 flex justify-between px-5 items-center"
                   onClick={changeColorHeight}
                 >
                   <p className="text-gray-200 cursor-default">{color}</p>
@@ -361,8 +362,8 @@ const customizeFurnitureForm = () => {
                   </div>
                 </div>
                 <div
-                  className={`absolute w-[205px] ${
-                    colorsHeight ? `h-[260px]` : `h-[0px]`
+                  className={`absolute  ${
+                    colorsHeight ? `h-[260px] w-[205px]` : `h-[0px] w-[0px]`
                   } px-4 bg-white z-10 right-10 top-16 overflow-y-auto transition-all duration-300`}
                 >
                   {colors.map((item: any, index: any) => {
@@ -385,12 +386,12 @@ const customizeFurnitureForm = () => {
                 </div>
               </div>
 
-              <div className="relative">
+              <div className="relative flex-[0_0_100%] md:flex-[0_0_33.33%] ">
                 <label htmlFor="size" className="ms-5">
                   Select Stuff
                 </label>
                 <div
-                  className="w-[260px] h-[48px] bg-white mt-1 flex justify-between px-5 items-center"
+                  className="w-full h-[48px] bg-white mt-1 flex justify-between pl-5 items-center"
                   onClick={changeStuffHeight}
                 >
                   <p className="text-gray-200 cursor-default">{stuff}</p>
@@ -399,8 +400,8 @@ const customizeFurnitureForm = () => {
                   </div>
                 </div>
                 <div
-                  className={`absolute w-[205px] ${
-                    stuffsHeight ? `h-[260px]` : `h-[0px]`
+                  className={`absolute  ${
+                    stuffsHeight ? `h-[260px] w-[205px]` : `h-[0px] w-[0px]`
                   } px-4 bg-white z-10 right-10 top-16 overflow-y-auto transition-all duration-300`}
                 >
                   {stuffs.map((item: any, index: any) => {
@@ -422,11 +423,11 @@ const customizeFurnitureForm = () => {
             </div>
 
             <div className="relative mt-5">
-              <label htmlFor="City" className="ms-5">
+              <label htmlFor="City" className="ms-0 md:ms-5">
                 Please indicate the preferred material type for the product
               </label>
               <div
-                className="w-full h-[48px] bg-white mt-1 flex justify-between px-5 items-center"
+                className="w-full h-[48px] bg-white mt-3 flex justify-between px-5 items-center "
                 onClick={changeMaterialHeight}
               >
                 <p className="text-gray-200 cursor-default">{material}</p>
@@ -435,8 +436,8 @@ const customizeFurnitureForm = () => {
                 </div>
               </div>
               <div
-                className={`absolute z-10 w-[205px] ${
-                  materialsHeight ? `h-[180px]` : `h-[0px]`
+                className={`absolute z-10  ${
+                  materialsHeight ? `h-[180px] w-[205px]` : `h-[0px] w-[0px]`
                 } px-2 bg-white z-10 right-10 top-14 overflow-y-auto transition-all duration-300`}
               >
                 {materials.map((item: any, index: any) => {
