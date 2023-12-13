@@ -2,32 +2,32 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import stylishChair from "../assets/images/stylishChair.png";
-import arrowDown from "../assets/icons/arrowDown.svg";
+import stylishChair from "@/app/assets/images/stylishChair.png";
+import arrowDown from "@/app/assets/icons/arrowDown.svg";
 
-import bed from "../assets/images/bed.png";
-import dressingTable from "../assets/images/Dressingtable.png";
-import sofa from "../assets/images/sofa.png";
-import wardrobe from "../assets/images/Wardrobe.png";
-import curtains from "../assets/images/Curtains.png";
+import bed from "@/app/assets/images/bed.png";
+import dressingTable from "@/app/assets/images/Dressingtable.png";
+import sofa from "@/app/assets/images/sofa.png";
+import wardrobe from "@/app/assets/images/Wardrobe.png";
+import curtains from "@/app/assets/images/Curtains.png";
 
-import grayVelvet from "../assets/images/grayVelvet.png";
-import offWhiteWool from "../assets/images/offWhiteWool.png";
-import velvet from "../assets/images/velvet.png";
-import redVelvet from "../assets/images/redVelvet.png";
-import wool from "../assets/images/wool.png";
+import grayVelvet from "@/app/assets/images/grayVelvet.png";
+import offWhiteWool from "@/app/assets/images/offWhiteWool.png";
+import velvet from "@/app/assets/images/velvet.png";
+import redVelvet from "@/app/assets/images/redVelvet.png";
+import wool from "@/app/assets/images/wool.png";
 
-import wood from "../assets/images/wood.png";
-import blackWood from "../assets/images/blackWood.png";
-import iron from "../assets/images/iron.png";
+import wood from "@/app/assets/images/wood.png";
+import blackWood from "@/app/assets/images/blackWood.png";
+import iron from "@/app/assets/images/iron.png";
 
-import joybird from "../assets/images/joybird.png";
-import blueSofa from "../assets/images/blueSofa.png";
-import chair from "../assets/images/desingedChair.png";
-import graypair from "../assets/images/grayPair.png";
-import sofacmBed from "../assets/images/sofacmBed.png";
-import grayBed from "../assets/images/grayBed.png";
-import yellowSofa from "../assets/images/yellowSofa.png";
+import joybird from "@/app/assets/images/joybird.png";
+import blueSofa from "@/app/assets/images/blueSofa.png";
+import chair from "@/app/assets/images/desingedChair.png";
+import graypair from "@/app/assets/images/grayPair.png";
+import sofacmBed from "@/app/assets/images/sofacmBed.png";
+import grayBed from "@/app/assets/images/grayBed.png";
+import yellowSofa from "@/app/assets/images/yellowSofa.png";
 
 const customizeFurnitureForm = () => {
   const categories = [
