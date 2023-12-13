@@ -45,14 +45,15 @@ const AbandonedCheckouts = () => {
           </div>
           <div className="py-6 px-2">
             <p className="text-ubuntu-regular text-sm ">Export</p>
-            <Radio name="type" label="Current page" className="rad" /> <br />
-            <Radio name="type" label="All orders" className="rad" /> <br />
+            <Radio name="type" label="Current page" className="rad" crossOrigin="anonymous" /> <br />
+            <Radio name="type" label="All orders" className="rad" crossOrigin="anonymous" /> <br />
             <Radio
               name="order"
               label="Selected: 0 orders"
               disabled
               checked
               className="rad"
+              crossOrigin="anonymous"
             />{" "}
             <br />
             <Radio
@@ -61,9 +62,10 @@ const AbandonedCheckouts = () => {
               checked
               disabled
               className="rad"
+              crossOrigin="anonymous"
             />{" "}
             <br />
-            <Radio name="type" label="Orders by date" className="rad" />
+            <Radio name="type" label="Orders by date" className="rad" crossOrigin="anonymous"/>
             <br />
           </div>
           <div className="py-0 px-2">
@@ -72,12 +74,14 @@ const AbandonedCheckouts = () => {
               name="Exportas"
               label="CSV for Excel, Numbers, or other spreadsheet programs"
               className="rad"
+              crossOrigin="anonymous"
             />{" "}
             <br />
             <Radio
               name="Exportas"
               label="Plain CSV fil"
               className="rad"
+              crossOrigin="anonymous"
             />{" "}
             <br />
           </div>
