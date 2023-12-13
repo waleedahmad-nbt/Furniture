@@ -1,13 +1,9 @@
 "use client";
-import Image from "next/image";
-import productImage from "../../../assests/images/admin/Related1.png";
-import Sellerlayout from "@/app/dashboard/layouts/SellerDashboard";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { BiCalendarWeek, BiCross, BiSearch } from "react-icons/bi";
+import { BiCalendarWeek } from "react-icons/bi";
 import { HiXMark } from "react-icons/hi2";
-import { BsArrowLeft, BsFilter } from "react-icons/bs";
 
 // import ReactQuill from 'react-quill';
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
