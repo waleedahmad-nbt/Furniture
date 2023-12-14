@@ -246,7 +246,7 @@ const MyAccount = () => {
             </div>
             <button
               type="submit"
-              className="bg-primary text-white font-medium px-8 py-3 mt-5"
+              className="bg-primary text-white font-medium px-3 py-2 md:px-8 md:py-3 mt-5"
             >
               Save changes
             </button>

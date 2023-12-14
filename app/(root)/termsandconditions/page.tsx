@@ -21,7 +21,7 @@ const TermsAndConditions = () => {
       </div>
       <div className="py-20">
         <div className="container bg-silver p-5">
-          <h1 className="text-3xl font-medium text-gray-300">
+          <h1 className="text-2xl sm:text-3xl font-medium text-gray-300">
             Terms and Conditions
           </h1>
           <hr className="mt-5 bg-[#A9A9A9]" />
@@ -66,38 +66,40 @@ const TermsAndConditions = () => {
           </div>
 
           <div className="flex flex-col lg:flex-row items-start gap-8 justify-between ">
-            <div className="ms-5 flex">
-              <input
-                className="hidden"
-                type="checkbox"
-                name=""
-                id="checkInp"
-                checked={isChecked}
-                onChange={() => setIsChecked(!isChecked)}
-              />
-              <label
-                htmlFor="checkInp"
-                className={`${
-                  isChecked
-                    ? "bg-primary rounded-none "
-                    : "bg-white border border-gray-100 rounded-md "
-                }text-white flex justify-center items-center w-[24px] h-[24px]`}
-              >
-                <FaCheck />
-              </label>
+            <div className="ms-5 flex items-start">
+              <div>
+                <input
+                  className="hidden"
+                  type="checkbox"
+                  name=""
+                  id="checkInp"
+                  checked={isChecked}
+                  onChange={() => setIsChecked(!isChecked)}
+                />
+                <label
+                  htmlFor="checkInp"
+                  className={`${
+                    isChecked
+                      ? "bg-primary rounded-none "
+                      : "bg-white border border-gray-100 rounded-md "
+                  }text-white flex justify-center items-center w-[24px] h-[24px]`}
+                >
+                  <FaCheck />
+                </label>
+              </div>
               <span className="text-[17px] font-medium ms-3">
                 I confirm that I have read and accept the terms and conditions
                 and privacy policy.
               </span>
             </div>
-            <div className="ps-5">
+            <div className="px-5 flex justify-between w-full sm:w-auto">
               <button className="border-0 text-gray-200">Cancel</button>
               <button
                 className={`${
                   isChecked
                     ? "cursor-default opacity-100"
                     : "cursor-not-allowed opacity-40"
-                }  bg-primary w-[167px] h-[44px] text-white ms-8`}
+                }  bg-primary w-[130px] md:w-[167px] h-[44px] text-white ms-10`}
                 disabled={isChecked}
               >
                 Accept

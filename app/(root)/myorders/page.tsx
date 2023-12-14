@@ -86,7 +86,7 @@ const MyOrders = () => {
                               className="shrink-0 max-h-full w-auto"
                             />
                           </div>
-                          <div className="text-gray-300 text-xs md:text-sm">
+                          <div className="text-gray-300 text-xs md:text-sm hidden xs:block">
                             <p>{item?.name}</p>
                             <span>Sunny Premium</span>
                           </div>

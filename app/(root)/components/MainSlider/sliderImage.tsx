@@ -6,13 +6,15 @@ const SliderImage = ({ item, itemNumebr, setIndex, hover }: any) => {
   const [width, setWidth] = useState<number>(0);
   const img = useRef<any>(null);
 
+  
   useEffect(() => {
     if (!img.current) {
       return;
     }
-
+    
     const resize = () => {
       setWidth(img.current.scrollWidth);
+      console.log(img.current.scrollWidth);
     };
 
     document?.addEventListener("resize", resize);

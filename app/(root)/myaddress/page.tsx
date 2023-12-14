@@ -335,7 +335,7 @@ const MyAddress = () => {
                       </div>
                     </div>
 
-                    <button className="bg-primary text-white w-[175px] h-[52px] mt-5">
+                    <button className="bg-primary text-white font-medium px-3 py-2 md:px-8 md:py-3 mt-5">
                       Save changes
                     </button>
                   </form>

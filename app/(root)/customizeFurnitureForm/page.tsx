@@ -194,10 +194,10 @@ const customizeFurnitureForm = () => {
           <Image src={stylishChair} alt="" className="w-full" />
         </div>
         <div
-          className="absolute  top-[30%] left-1/2 -translate-x-1/2 w-[250px] md:w-[452px] border-2 border-white text-center py-5"
+          className="absolute  top-[30%] left-1/2 -translate-x-1/2 w-[200px] sm:w-[250px] md:w-[452px] border-2 border-white text-center py-2 md:py-5"
           style={{ backgroundColor: "rgba(61, 60, 60, 0.527)" }}
         >
-          <h1 className="capitalize text-white text-sm md:text-3xl font-medium">
+          <h1 className="capitalize text-white text-xs md:text-3xl font-medium">
             Fill the form and <br />
             <span className="text-primary">Put your request </span>
           </h1>

@@ -19,7 +19,7 @@ const ProductComment = () => {
             ))}
           </div>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col md:flex-row items-end md:items-center gap-3">
           <div className="text-primary bg-[#F3EFE5] px-5 py-1 font-medium text-[12px] rounded-md shrink-0">Purchased by 247 supplier</div>
           <div className="text-primary bg-[#F3EFE5] px-5 py-1 font-medium text-[12px] rounded-md shrink-0">Gold color</div>
         </div>

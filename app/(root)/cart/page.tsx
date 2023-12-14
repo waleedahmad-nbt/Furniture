@@ -47,10 +47,18 @@ const Cart = () => {
                 <thead>
                   <tr>
                     <th></th>
-                    <th className="py-3 px-5">Product</th>
-                    <th className="py-3 px-5">Price</th>
-                    <th className="py-3 px-5">Qty</th>
-                    <th className="py-3 px-5">Sub Total</th>
+                    <th className="py-3 px-2 md:px-5 text-sm font-medium md:font-semibold">
+                      Product
+                    </th>
+                    <th className="py-3 px-5 text-sm font-medium md:font-semibold">
+                      Price
+                    </th>
+                    <th className="py-3 px-5 text-sm font-medium md:font-semibold">
+                      Qty
+                    </th>
+                    <th className="py-3 px-0 md:px-5 text-sm font-medium md:font-semibold">
+                      Sub Total
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -71,7 +79,7 @@ const Cart = () => {
                                 className="shrink-0 max-h-full w-auto"
                               />
                             </div>
-                            <div className="text-gray-300 text-xs md:text-sm">
+                            <div className="text-gray-300 text-xs md:text-sm hidden xs:block">
                               <p>{item?.name}</p>
                               <span>Sunny Premium</span>
                             </div>
@@ -83,12 +91,12 @@ const Cart = () => {
                           </span>
                         </td>
                         <td className="py-3 px-5">
-                          <div className="w-[40px] h-[40px] flex items-center justify-center bg-white rounded-md border">
+                          <div className="w-[20px] md:w-[40px] h-[30px] md:h-[40px] flex items-center justify-center bg-white rounded-md border text-xs md:text-sm">
                             {item?.quantity}
                           </div>
                         </td>
                         <td className="py-3 px-5">
-                          <span className="text-gray-300">
+                          <span className="text-gray-300 text-xs md:text-sm">
                             AED {item?.priceNow * item?.quantity}
                           </span>
                         </td>
@@ -100,11 +108,11 @@ const Cart = () => {
             <div className="flex mt-10 gap-4">
               <Link
                 href="/products"
-                className="text-center bg-primary w-[150px] md:w-[270px] py-2 text-white font-medium"
+                className="text-center bg-primary px-2 md:px-5 py-2 text-white font-medium"
               >
                 Continue Shopping
               </Link>
-              <button className="bg-[#F3EFE5] w-[150px] md:w-[270px] py-2 text-gray-200 font-medium">
+              <button className="bg-[#F3EFE5] px-2 md:px-5 py-2 text-gray-200 font-medium">
                 Update Cart
               </button>
             </div>
