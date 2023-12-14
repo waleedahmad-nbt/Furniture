@@ -14,7 +14,7 @@ import Product from "@/app/assets/images/Seller/Product.jpeg";
 import Instagrampic from "@/app/assets/images/Seller/Instagram.svg"
 import Facebookpic from "@/app/assets/images/Seller/facebook.jpg"
 
-const Seller = () => {
+const Admin = () => {
   
   const [checkTab, setchecktab] = useState(0);
 
@@ -229,4 +229,4 @@ const Seller = () => {
   );
 };
 
-export default Seller;
+export default Admin;

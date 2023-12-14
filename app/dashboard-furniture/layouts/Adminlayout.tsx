@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 
-export default function Sellerlayout({
+export default function Adminlayout({
   children,
 }: {
   children: React.ReactNode;

@@ -38,9 +38,9 @@ const Header = () => {
         }
       };
 
-      window.addEventListener("click", closePopup);
+      document.body.addEventListener("click", closePopup);
       return () => {
-        window.removeEventListener("click", closePopup);
+        document.body.removeEventListener("click", closePopup);
       };
     }
   }, [showPopup]);
