@@ -1,11 +1,8 @@
 import "../../globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { Sidebar } from "./components";
 import { Header } from "./components";
 import ReduxProvider from "@/lib/store/ReduxProvider";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Dashboard - Admin",
@@ -20,7 +17,7 @@ export default function Adminlayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <ReduxProvider>
           <div className="relative">
             <Sidebar />

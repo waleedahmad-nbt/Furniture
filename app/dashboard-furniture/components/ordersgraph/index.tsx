@@ -1,8 +1,9 @@
 "use client"
 import React from "react";
-import "apexcharts/dist/apexcharts.css";
+import dynamic from "next/dynamic";
 
-import ApexCharts from "react-apexcharts";
+const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
+import "apexcharts/dist/apexcharts.css";
 
 const Ordersgraph = () => {
   const seriesData = [
@@ -62,7 +63,7 @@ const Ordersgraph = () => {
 
   return (
     <div id="chart">
-      <ApexCharts options={options} series={seriesData} type="line" height={350} />
+      <ApexCharts options={options} series={seriesData} type="line" width={'100%'} height={350} />
     </div>
   );
 };

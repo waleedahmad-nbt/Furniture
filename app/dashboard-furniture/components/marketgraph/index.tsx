@@ -1,5 +1,10 @@
 "use client";
-import ReactApexChart from "react-apexcharts";
+import React from "react";
+import dynamic from "next/dynamic";
+
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+});
 
 const Marketgraph = () => {
   const series = [
@@ -93,9 +98,10 @@ const Marketgraph = () => {
   return (
     <div id="chart">
       <ReactApexChart
-        options={options && options}
-        series={series && series}
+        options={options}
+        series={series}
         type="line"
+        width={'100%'}
         height={100}
       />
     </div>

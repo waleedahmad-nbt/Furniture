@@ -2,7 +2,7 @@
 import React, { Fragment } from "react";
 import { BsFillCalendarFill, BsThreeDots } from "react-icons/bs";
 import { SiSimpleanalytics } from "react-icons/si";
-import { Marketgraph } from "../../components";
+import Marketgraph from "../../components/marketgraph";
 import { FiArrowUpRight } from "react-icons/fi";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import Image from "next/image"; 
@@ -174,8 +174,8 @@ const Marketing = () => {
         <div className="p-5 bg-white rounded-xl">
           <p className="w-max">
             Sessions
-            <hr className="h-[1px] border-dashed border-[1px]" />
           </p>
+          <hr className="h-[1px] border-dashed border-[1px]" />
           <p className="text-2xl text-HeadingColours flex text-ubuntu-bold">
             309
             <span className="text-xs px-1 text-Primary flex items-center text-ubuntu-medium ">
@@ -187,8 +187,8 @@ const Marketing = () => {
         <div className="p-5 bg-white rounded-xl">
           <p className="w-max">
             Online store sessions
-            <hr className="h-[1px] border-dashed border-[1px]" />
           </p>
+          <hr className="h-[1px] border-dashed border-[1px]" />
           <p className="text-2xl text-HeadingColours flex text-ubuntu-bold">
             1.93%
             <span className="text-xs px-1 text-Primary flex items-center text-ubuntu-medium ">
@@ -200,8 +200,8 @@ const Marketing = () => {
         <div className="p-5 bg-white rounded-xl">
           <p className="w-max">
             Average order value
-            <hr className="h-[1px] border-dashed border-[1px]" />
           </p>
+          <hr className="h-[1px] border-dashed border-[1px]" />
           <p className="text-2xl text-HeadingColours flex text-ubuntu-bold">
             Rs 1,170.13
             <span className="text-xs px-1 text-Primary flex items-center text-ubuntu-medium ">
@@ -213,8 +213,8 @@ const Marketing = () => {
         <div className="p-5 bg-white rounded-xl">
           <p className="w-max">
             Total sales
-            <hr className="h-[1px] border-dashed border-[1px]" />
           </p>
+          <hr className="h-[1px] border-dashed border-[1px]" />
           <p className="text-2xl text-HeadingColours flex text-ubuntu-bold">
             Rs 160,904.00
             <span className="text-xs px-1 text-Primary flex items-center text-ubuntu-medium ">
@@ -226,8 +226,8 @@ const Marketing = () => {
         <div className="p-5 bg-white rounded-xl">
           <p className="w-max">
             Sales attributed to marketing
-            <hr className="h-[1px] border-dashed border-[1px]" />
           </p>
+          <hr className="h-[1px] border-dashed border-[1px]" />
           <p className="text-2xl text-HeadingColours flex text-ubuntu-bold">
             Rs 139,585.00
             <span className="text-xs px-1 text-Primary flex items-center text-ubuntu-medium ">
@@ -239,8 +239,8 @@ const Marketing = () => {
         <div className="p-5 bg-white rounded-xl">
           <p className="w-max">
             Orders attributed to marketing
-            <hr className="h-[1px] border-dashed border-[1px]" />
           </p>
+          <hr className="h-[1px] border-dashed border-[1px]" />
           <p className="text-2xl text-HeadingColours flex text-ubuntu-bold">
             127
             <span className="text-xs px-1 text-Primary flex items-center text-ubuntu-medium ">

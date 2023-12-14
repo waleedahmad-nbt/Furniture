@@ -249,10 +249,10 @@ const Products = () => {
           <button className="p-1 bg-[#E3E3E3] border-none hover:bg-[#D4D4D4] text-xs px-2 rounded text-ubuntu-regular">
             Import
           </button>
-          <Link href={'/dashboard/seller/products/new'}>
-          <button className="p-1 bg-HeadingColours text-white border-none hover:bg-black text-xs px-2 rounded-lg text-ubuntu-regular">
-            Add Product
-          </button>
+          <Link href={'/dashboard-furniture/admin/products/new'}>
+            <button className="p-1 bg-HeadingColours text-white border-none hover:bg-black text-xs px-2 rounded-lg text-ubuntu-regular">
+              Add Product
+            </button>
           </Link>
         </div>
       </div>

@@ -1,10 +1,10 @@
 'use client'
 
+import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
-// import ReactApexChart from 'react-apexcharts';
-import dynamic from 'next/dynamic'
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
+
 const PieChart = () => {
   const [series, setSeries] = useState([44, 55, 13, 33]);
   const options:any = {
@@ -40,7 +40,7 @@ const PieChart = () => {
     <div>
       <div className="chart-wrap">
         <div id="chart">
-          <ReactApexChart options={options} series={series} type="donut" width={380} />
+          <ReactApexChart options={options} series={series} type="donut" width={380} height={'auto'} />
         </div>
       </div>
     </div>

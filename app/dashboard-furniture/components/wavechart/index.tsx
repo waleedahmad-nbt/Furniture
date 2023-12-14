@@ -1,5 +1,8 @@
 "use client";
-import ReactApexChart  from 'react-apexcharts';
+
+import dynamic from 'next/dynamic';
+
+const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const Wavechart = () => {
   const series: any = [
@@ -101,6 +104,7 @@ const Wavechart = () => {
         options={options && options}
         series={series && series}
         type="line"
+        width={'100%'}
         height={350}
       />
     </div>

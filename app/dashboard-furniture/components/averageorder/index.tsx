@@ -1,6 +1,9 @@
 "use client";
 import React from "react";
-import ReactApexChart from "react-apexcharts";
+import dynamic from "next/dynamic";
+
+const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
+import "apexcharts/dist/apexcharts.css";
 
 const Averagegraph = () => {
   const series = [
@@ -98,6 +101,7 @@ const Averagegraph = () => {
         options={options}
         series={series}
         type="line"
+        width={'100%'}
         height={350}
       />
     </div>

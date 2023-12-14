@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 
-import ReactApexChart from "react-apexcharts";
+const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import "apexcharts/dist/apexcharts.css";
 
 function Hitmapgraph() {
@@ -88,6 +89,7 @@ function Hitmapgraph() {
         options={options}
         series={chartData.series}
         type="bar"
+        width={'100%'}
         height={380}
       />
     </div>

@@ -1,9 +1,9 @@
 'use client'
 import React from 'react';
-// import ReactApexChart from 'react-apexcharts';
-import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic';
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
+
 const Treemap = () => {
   const chartData = [
     { 
@@ -61,7 +61,7 @@ const Treemap = () => {
 
   return (
     <div id="chart">
-      <ReactApexChart options={options} series={chartData} type="treemap" height={350} />
+      <ReactApexChart options={options} series={chartData} type="treemap" width={'100%'} height={350} />
     </div>
   );
 };

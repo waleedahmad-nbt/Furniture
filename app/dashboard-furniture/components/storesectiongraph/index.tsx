@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
+import dynamic from "next/dynamic";
 
-import ApexCharts from "react-apexcharts"
+const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 import "apexcharts/dist/apexcharts.css";
 
 const StockPriceChart = () => {
@@ -37,6 +38,7 @@ const StockPriceChart = () => {
       options={options}
       series={series}
       type="area"
+      width={'100%'}
       height={options.chart.height}
     />
   );
