@@ -15,11 +15,11 @@ const SliderImage = ({ item, itemNumebr, setIndex, hover }: any) => {
       setWidth(img.current.scrollWidth);
     };
 
-    window.addEventListener("resize", resize);
+    document?.addEventListener("resize", resize);
     resize();
 
     return () => {
-      window.removeEventListener("resize", resize);
+      document?.removeEventListener("resize", resize);
     };
   }, [img]);
 
