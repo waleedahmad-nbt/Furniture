@@ -73,7 +73,7 @@ const Neworder = () => {
   return (
     <div className="w-full">
       <div className="w-3/5 m-auto py-6 ">
-        <h1 className="text-2xl text-HeadingColours text-ubuntu-bold flex items-center ">
+        <h1 className="text-2xl text-gray-900 font-bold flex items-center mb-4">
           <span>
             <GoArrowLeft className="hover:bg-gray-200 cursor-pointer rounded-md" />
           </span>
@@ -85,7 +85,7 @@ const Neworder = () => {
           }`}
         >
           <div className="bg-white w-1/3 rounded-2xl overflow-hidden">
-            <div className="py-2 text-ubuntu-medium flex justify-between items-center bg-[#F3F3F3] px-4 border-b-[1px]">
+            <div className="py-2 flex justify-between items-center bg-[#F3F3F3] px-4 border-b-[1px]">
               <h2 className="text-sm">Add custom item</h2>
               <p
                 onClick={() => setcheckitem(false)}
@@ -95,7 +95,7 @@ const Neworder = () => {
               </p>
             </div>
             <div className="py-2 px-4 w-full flex justify-between pb-10">
-              <div className="text-ubuntu-light space-y-1 w-[48%]">
+              <div className=" space-y-1 w-[48%]">
                 <label className="text-sm" htmlFor="Itemname">
                   Item name
                 </label>{" "}
@@ -107,7 +107,7 @@ const Neworder = () => {
                   onChange={handlecustomitem}
                 />
               </div>
-              <div className="text-ubuntu-light space-y-1 w-[24%]">
+              <div className=" space-y-1 w-[24%]">
                 <label className="text-sm" htmlFor="Price">
                   Price
                 </label>{" "}
@@ -120,7 +120,7 @@ const Neworder = () => {
                   onChange={handlecustomitem}
                 />
               </div>
-              <div className="text-ubuntu-light space-y-1 w-[24%]">
+              <div className=" space-y-1 w-[24%]">
                 <label className="text-sm" htmlFor="Quantity">
                   Quantity
                 </label>{" "}
@@ -133,29 +133,29 @@ const Neworder = () => {
                 />
               </div>
             </div>
-            <div className="px-4 py-2 space-x-2 text-ubuntu-light">
+            <div className="px-4 py-2 space-x-2 ">
               <input
                 type="checkbox"
-                className="text-HeadingColours focus:outline-none focus:ring-0 rounded-md"
+                className="text-gray-900 focus:outline-none focus:ring-0 rounded-md"
               />
               <span className="text-sm">Item is taxable</span>
             </div>
-            <div className="px-4 space-x-2 text-ubuntu-light">
+            <div className="px-4 space-x-2 ">
               <input
                 type="checkbox"
                 onClick={() => setrequireshop(!Requireshop)}
-                className="text-HeadingColours focus:outline-none focus:ring-0 rounded-md"
+                className="text-gray-900 focus:outline-none focus:ring-0 rounded-md"
               />
               <span className="text-sm">Item requires shipping</span>
             </div>
             <div
-              className={`py-1 text-ubuntu-light px-4 mt-4 space-y-2 text-sm w-full ${
+              className={`py-1  px-4 mt-4 space-y-2 text-sm w-full ${
                 Requireshop ? "block" : "hidden"
               }`}
             >
               <p>Item weight (optional)</p>
               <div className="flex w-4/6">
-                <div className="text-ubuntu-light space-y-1 w-[80%]">
+                <div className=" space-y-1 w-[80%]">
                   <input
                     className="rounded-lg h-8 w-full"
                     type="number"
@@ -174,16 +174,16 @@ const Neworder = () => {
               <p>Used to calculate shipping rates accurately</p>
             </div>
             <div className="bg-[#F3F3F3] border-t-[1px] py-2 flex justify-end px-4">
-              <div className=" space-x-3 text-ubuntu-light">
+              <div className=" space-x-3 ">
                 <button
                   onClick={() => setcheckitem(false)}
-                  className="bg-gray-200 px-2 rounded-lg py-1 text-sm text-HeadingColours opacity-90 hover:opacity-100 "
+                  className="bg-gray-200 px-2 rounded-lg py-1 text-sm text-gray-900 opacity-90 hover:opacity-100 "
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleOrderSubmit}
-                  className="bg-HeadingColours px-2 rounded-lg py-1 text-sm text-white opacity-90 hover:opacity-100 shadow-sm"
+                  className="bg-gray-900 px-2 rounded-lg py-1 text-sm text-white opacity-90 hover:opacity-100 shadow-sm"
                 >
                   Add Item
                 </button>
@@ -195,35 +195,35 @@ const Neworder = () => {
           <div className="col-span-2 ">
             <div className="bg-white px-4 border-[1px] py-5 rounded-xl w-full space-y-2">
               <div className="flex justify-between">
-                <p className="text-sm text-HeadingColours text-ubuntu-medium">
+                <p className="text-sm text-gray-900 font-bold">
                   Products
                 </p>
                 <p
                   onClick={() => setcheckitem(true)}
-                  className="text-xs cursor-pointer text-blue-600 hover:underline text-ubuntu-regular"
+                  className="text-xs cursor-pointer text-blue-600 hover:underline "
                 >
                   Add Custom Item
                 </p>
               </div>
               <div className="flex space-x-4">
                 <div className="h-8 w-5/6 border-[1px] flex items-center rounded-lg">
-                  <AiOutlineSearch className="ml-1 text-xl text-P_textColour" />
+                  <AiOutlineSearch className="ml-1 text-xl text-gray-300" />
                   <input
-                    className="outline-none bg-transparent w-full focus:ring-0 text-sm border-none text-ubuntu-regular"
+                    className="outline-none bg-transparent w-full focus:ring-0 text-sm border-none "
                     placeholder="Search Products"
                     type="text"
                   />
                 </div>
-                <button className="text-HeadingColours border-[1px] px-4 py-1 text-sm rounded-lg text-ubuntu-medium">
+                <button className="text-gray-900 border-[1px] px-4 py-1 text-sm rounded-lg font-bold">
                   Browse
                 </button>
               </div>
               <div
-                className={`text-HeadingColours py-4 ${
+                className={`text-gray-900 py-4 ${
                   orderItems.length > 0 ? "block" : "hidden"
                 }`}
               >
-                <div className="flex justify-between text-ubuntu-regular pb-2">
+                <div className="flex justify-between  pb-2">
                   <h2 className="text-sm">Product</h2>
                   <div className="w-2/5 flex justify-between">
                     <h2 className="w-1/2 text-sm">Quantity</h2>
@@ -241,9 +241,9 @@ const Neworder = () => {
                             <div className="border-[1px] w-max p-2 mt-2">
                               <Image src={""} alt="." />
                             </div>
-                            <div className="text-sm text-ubuntu-regular space-y-1">
+                            <div className="text-sm  space-y-1">
                               <p>{item.Itemname}</p>
-                              <p className="text-P_textColour">
+                              <p className="text-gray-300">
                                 Requires shipping
                               </p>
                               <p className="text-blue-600 hover:underline cursor-pointer">
@@ -251,7 +251,7 @@ const Neworder = () => {
                               </p>
                             </div>
                           </div>
-                          <div className="w-2/5 py-2 text-ubuntu-regular flex justify-between text-sm items-start">
+                          <div className="w-2/5 py-2  flex justify-between text-sm items-start">
                             <input
                               type="number"
                               value={item.Quantity}
@@ -264,7 +264,7 @@ const Neworder = () => {
                             <div className="p-1 rounded-md hover:bg-gray-200 h-max cursor-pointer">
                               <BsFillTrashFill
                                 onClick={() => handleDeleteitem(index)}
-                                className="text-P_textColour"
+                                className="text-gray-300"
                               />
                             </div>
                           </div>
@@ -275,51 +275,51 @@ const Neworder = () => {
               </div>
             </div>
             <div className=" bg-white mt-4 px-4 border-[1px] py-5 h-max rounded-xl w-full">
-              <h1 className="text-ubuntu-medium text-sm text-HeadingColours">
+              <h1 className="font-bold text-sm text-gray-900">
                 Payment
               </h1>
               <div className="bg-white mt-4 px-4 border-[1px] py-5 h-max rounded-xl w-full grid grid-cols-3">
                 <div className=" col-span-2 grid grid-cols-2">
                   <div className="space-y-3">
-                    <p className="text-ubuntu-medium text-sm">Subtotal</p>
-                    <p className="text-P_textColour text-ubuntu-regular text-sm">
+                    <p className="font-bold text-sm">Subtotal</p>
+                    <p className="text-gray-300 text-sm">
                       Add discount
                     </p>
-                    <p className="text-P_textColour text-ubuntu-regular text-sm">
+                    <p className="text-gray-300 text-sm">
                       Add Shiping or dilivery
                     </p>
-                    <p className="text-P_textColour text-ubuntu-regular text-sm">
+                    <p className="text-gray-300 text-sm">
                       Estimated tax
                     </p>
-                    <p className="text-ubuntu-medium text-sm">Total</p>
+                    <p className="font-bold text-sm">Total</p>
                   </div>
                   <div className="">
-                    <div className=" mt-8 space-y-3 text-P_textColour text-ubuntu-regular text-sm">
+                    <div className=" mt-8 space-y-3 text-gray-300 text-sm">
                       <p className="mt-1">---</p>
                       <p>---</p>
                       <p>Not calculated</p>
                     </div>
                   </div>
                 </div>
-                <div className="space-y-3  text-P_textColour text-ubuntu-regular text-sm flex flex-col items-end">
-                  <p className="text-HeadingColours">
+                <div className="space-y-3  text-gray-300  text-sm flex flex-col items-end">
+                  <p className="text-gray-900">
                     &nbsp;Rs.<span>{totalSubtotal}</span>
                   </p>
                   <p>&nbsp;Rs 0.00</p>
                   <p>&nbsp;Rs 0.00</p>
                   <p>&nbsp;Rs 0.00</p>
-                  <p className="text-HeadingColours text-ubuntu-medium">
+                  <p className="text-gray-900 font-bold">
                     &nbsp;Rs. <span>{totalSubtotal}</span>
                   </p>
                 </div>
               </div>
               <div className="border-b-[1px]">
-                <p className=" text-ubuntu-regular text-HeadingColours text-sm py-6">
+                <p className="  text-gray-900 text-sm py-6">
                   Add a product to calculate total and view payment options.
                 </p>
               </div>
               <div className="border-b-[1px]">
-                <p className=" text-ubuntu-regular text-HeadingColours text-sm py-6">
+                <p className="  text-gray-900 text-sm py-6">
                   Taxes may be estimates until the order is created. Learn
                   more about{" "}
                   <span className="text-blue-600 underline cursor-pointer">
@@ -332,28 +332,28 @@ const Neworder = () => {
           <div>
             <div className=" bg-white px-4 border-[1px] py-5 h-max rounded-xl w-full flex items-start justify-between">
               <div className="space-y-2">
-                <p className="text-ubuntu-medium text-sm text-HeadingColours">
+                <p className="font-bold text-sm text-gray-900">
                   Notes
                 </p>
-                <p className="text-sm text-ubuntu-regular text-P_textColour">
+                <p className="text-sm  text-gray-300">
                   No Notes
                 </p>
               </div>
               <span>
                 <div className="w-max h-max p-1 hover:bg-gray-200 rounded-md cursor-pointer">
-                  <HiOutlinePencil className="text-P_textColour" />
+                  <HiOutlinePencil className="text-gray-300" />
                 </div>
               </span>
             </div>
             <div className=" bg-white mt-4 px-4 border-[1px] py-5 h-max rounded-xl w-full flex items-start">
               <div className="space-y-2 w-full">
-                <p className="text-ubuntu-medium text-sm text-HeadingColours">
+                <p className="font-bold text-sm text-gray-900">
                   Customer
                 </p>
                 <div className="h-8 w-full border-[1px] flex items-center rounded-lg">
-                  <AiOutlineSearch className="ml-1 text-xl text-P_textColour" />
+                  <AiOutlineSearch className="ml-1 text-xl text-gray-300" />
                   <input
-                    className="outline-none w-full bg-transparent focus:ring-0 text-sm border-none text-ubuntu-regular"
+                    className="outline-none w-full bg-transparent focus:ring-0 text-sm border-none "
                     placeholder="Search Products"
                     type="text"
                   />
@@ -362,28 +362,28 @@ const Neworder = () => {
             </div>
             <div className=" bg-white mt-4 px-4 border-[1px] py-5 h-max rounded-xl w-full flex items-start justify-between">
               <div className="space-y-2">
-                <p className="text-ubuntu-medium text-sm text-HeadingColours">
+                <p className="font-bold text-sm text-gray-900">
                   Market
                 </p>
-                <p className="text-sm text-ubuntu-regular text-P_textColour leading-[1.7]">
+                <p className="text-sm  text-gray-300 leading-[1.7]">
                   Primary market <br />
                   Pakistan (PKR Rs)
                 </p>
               </div>
               <span>
                 <div className="w-max h-max p-1 hover:bg-gray-200 rounded-md cursor-pointer">
-                  <HiOutlinePencil className="text-P_textColour" />
+                  <HiOutlinePencil className="text-gray-300" />
                 </div>
               </span>
             </div>
             <div className=" bg-white mt-4 px-4 border-[1px] py-5 h-max rounded-xl w-full space-y-2">
               <div className="flex justify-between w-full">
-                <p className="text-ubuntu-medium text-sm text-HeadingColours">
+                <p className="font-bold text-sm text-gray-900">
                   Tags
                 </p>
                 <span>
                   <div className="w-max h-max p-1 hover:bg-gray-200 rounded-md cursor-pointer">
-                    <HiOutlinePencil className="text-P_textColour" />
+                    <HiOutlinePencil className="text-gray-300" />
                   </div>
                 </span>
               </div>

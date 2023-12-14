@@ -1,53 +1,35 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 
-interface DataRow {
-  orderNumber: string;
-  orderFlags: boolean;
-  date: string;
-  customer: string;
-  channel: string;
-  total: string;
-  paymentStatus: string;
-  fulfillmentStatus: string;
-  items: number;
-  deliveryStatus: string;
-  deliveryMethod: string;
-  tags: string[];
-}
+function Table({ data }: any) {
 
-const dataRows: DataRow[] = [
-  {
-    orderNumber: "12345",
-    orderFlags: true,
-    date: "2023-08-29",
-    customer: "John Doe",
-    channel: "Online",
-    total: "$150.00",
-    paymentStatus: "Paid",
-    fulfillmentStatus: "Shipped",
-    items: 3,
-    deliveryStatus: "In Transit",
-    deliveryMethod: "Standard",
-    tags: ["Urgent", "High Value"],
-  },
-  {
-    orderNumber: "67890",
-    orderFlags: false,
-    date: "2023-09-01",
-    customer: "Jane Smith",
-    channel: "Retail Store",
-    total: "$75.50",
-    paymentStatus: "Pending",
-    fulfillmentStatus: "Processing",
-    items: 2,
-    deliveryStatus: "Not Shipped",
-    deliveryMethod: "Express",
-    tags: ["Priority"],
-  },
-];
+  interface CheckboxState {
+    [productId: string]: boolean;
+  }
 
-function Table() {
+  const [checkboxes, setCheckboxes] = useState<CheckboxState>({});
+
+  const handleCheckboxChange = (productId: string) => {
+    setCheckboxes((prevCheckboxes) => {
+      const isChecked = prevCheckboxes[productId] ?? false; // Default to false if undefined
+      return {
+        ...prevCheckboxes,
+        [productId]: !isChecked,
+      };
+    });
+  };
+
+  const handleSelectAllChange = () => {
+    const updatedCheckboxes: CheckboxState = {};
+
+    data?.map((product: any) => {
+      const Id = product.id;
+      updatedCheckboxes[Id] = !checkboxes[Id] ? !checkboxes[Id] : false;
+    });
+
+    setCheckboxes(updatedCheckboxes);
+  };
+
   return (
     <div className="w-full overflow-x-auto">
       <table className="min-w-full border divide-y text-HeadingColours text-ubuntu-light divide-gray-200">
@@ -60,6 +42,7 @@ function Table() {
               <input
                 type="checkbox"
                 className="mr-2 focus:ring-0 focus:outline-none text-HeadingColours"
+                onChange={handleSelectAllChange}
               />
             </th>
             <th
@@ -131,7 +114,7 @@ function Table() {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {dataRows.map((rowData, index) => (
+          {data?.map((rowData: any, index: any) => (
             <tr
               key={index}
               className="bg-white cursor-pointer hover:bg-gray-100 transition"
@@ -139,8 +122,10 @@ function Table() {
               <td className="px-6 py-2 whitespace-nowrap">
                 <input
                   type="checkbox"
-                  className="mr-2 text-HeadingColours focus:ring-0 focus:outline-none"
+                  className="mr-2 focus:ring-0 focus:outline-none"
                   defaultChecked={rowData.orderFlags}
+                  checked={checkboxes[rowData?.id] ?? false}
+                  onChange={() => handleCheckboxChange(rowData?.id)}
                 />
               </td>
               <td className="px-6 text-xs py-2 whitespace-nowrap">
@@ -162,7 +147,7 @@ function Table() {
                 <div
                   className={` ${
                     rowData.paymentStatus === "Paid"
-                      ? "bg-green-600"
+                      ? "bg-green"
                       : rowData.paymentStatus === "Pending"
                       ? "bg-yellow-400"
                       : ""
@@ -175,7 +160,7 @@ function Table() {
                 <div
                   className={` ${
                     rowData.paymentStatus === "Paid"
-                      ? "bg-HeadingColours"
+                      ? "bg-gray-900"
                       : rowData.paymentStatus === "Pending"
                       ? "bg-orange-500"
                       : ""

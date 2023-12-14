@@ -50,8 +50,8 @@ const Sidebar = () => {
           <NavLink 
             end
             href={"/dashboard-furniture/admin"}
-            active="font-bold bg-white hover:bg-white"
-            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer"
+            active="bg-white hover:bg-white"
+            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
           >
             <GoHomeFill size={16}/>
             <span>Home</span>
@@ -61,8 +61,8 @@ const Sidebar = () => {
         <li className="text-sm">
           <SideLinks
             href={"/dashboard-furniture/admin/orders"}
-            active="font-bold bg-white hover:bg-white"
-            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer"
+            active="bg-white hover:bg-white"
+            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
             subLinks={ordersSubLink}
           >
             <CiHardDrive />
@@ -73,8 +73,8 @@ const Sidebar = () => {
         <li className="text-sm">
           <SideLinks 
             href={"/dashboard-furniture/admin/products"}
-            active="font-bold bg-white hover:bg-white"
-            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer"
+            active="bg-white hover:bg-white"
+            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
             subLinks={productsOptions}
           >
             <ImPriceTag size={14} />
@@ -84,8 +84,8 @@ const Sidebar = () => {
         <li className="text-sm">
           <SideLinks 
             href={"/dashboard-furniture/admin/customers"}
-            active="font-bold bg-white hover:bg-white"
-            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer"
+            active="bg-white hover:bg-white"
+            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
             subLinks={customerSubLink}
           >
             <BiSolidUser />
@@ -96,8 +96,8 @@ const Sidebar = () => {
         <li className="text-sm">
           <SideLinks 
             href={"/dashboard-furniture/admin/content"}
-            active="font-bold bg-white hover:bg-white"
-            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer"
+            active="bg-white hover:bg-white"
+            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
             subLinks={contentSubLink}
           >
             <AiFillPicture />
@@ -108,8 +108,8 @@ const Sidebar = () => {
         <li className="text-sm">
           <SideLinks 
             href={"/dashboard-furniture/admin/analytices"}
-            active="font-bold bg-white hover:bg-white"
-            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer"
+            active="bg-white hover:bg-white"
+            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
             subLinks={analyticsSubLink}
           >
             <SiSimpleanalytics />
@@ -120,8 +120,8 @@ const Sidebar = () => {
         <li className="text-sm">
           <SideLinks 
             href={"/dashboard-furniture/admin/marketing"}
-            active="font-bold bg-white hover:bg-white"
-            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer"
+            active="bg-white hover:bg-white"
+            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
             subLinks={marketsSubLink}
           >
             <SiCoinmarketcap />
@@ -133,8 +133,8 @@ const Sidebar = () => {
           <NavLink 
             end
             href={"/dashboard-furniture/admin/discounts"}
-            active="font-bold bg-white hover:bg-white"
-            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer"
+            active="bg-white hover:bg-white"
+            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
           >
             <TbDiscount2 />
             <span>Discounts</span>

@@ -245,15 +245,15 @@ const Discounts = () => {
   return (
     <div className="p-5">
       <div className="py-3 mb-2 flex justify-between items-center">
-        <h1 className="text-xl text-ubuntu-bold">Discounts</h1>
+        <h1 className="text-xl font-bold">Discounts</h1>
         <div className="flex justify-center gap-2 items-center">
-          <button className="p-1 bg-[#E3E3E3] border-none hover:bg-[#D4D4D4] text-xs px-2 rounded text-ubuntu-regular">
+          <button className="p-1 bg-[#E3E3E3] border-none hover:bg-[#D4D4D4] text-xs px-2 rounded">
             Export
           </button>
-          <Link href={'/dashboard/seller/products/new'}>
-          <button className="p-1 bg-HeadingColours text-white border-none hover:bg-black text-xs px-2 rounded-lg text-ubuntu-regular">
-            Create discount
-          </button>
+          <Link href={'/dashboard-furniture/admin/products/new'}>
+            <button className="p-1 bg-gray-900/80 hover:bg-gray-900/100 duration-100 text-white border-none hover:bg-black text-xs px-2 rounded-lg">
+              Create discount
+            </button>
           </Link>
         </div>
       </div>
@@ -261,28 +261,28 @@ const Discounts = () => {
       <div className="bg-white rounded-lg">
         <div className="flex justify-between items-center p-2">
           <div className="flex justify-center items-center gap-2">
-            <button onClick={() => changeValue(0, 'all')} className={`rounded-lg text-sm p-1 px-2 text-HeadingColours ${val===0 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
+            <button onClick={() => changeValue(0, 'all')} className={`rounded-lg text-sm p-1 px-2 text-gray-300 ${val===0 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
               All
             </button>
-            <button onClick={() => changeValue(1, 'Active')} className={`rounded-lg text-sm p-1 px-2 text-HeadingColours ${val===1 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
+            <button onClick={() => changeValue(1, 'Active')} className={`rounded-lg text-sm p-1 px-2 text-gray-300 ${val===1 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
               Active
             </button>
-            <button onClick={() => changeValue(2, 'Scheduled')} className={`rounded-lg text-sm p-1 px-2 text-HeadingColours ${val===2 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
+            <button onClick={() => changeValue(2, 'Scheduled')} className={`rounded-lg text-sm p-1 px-2 text-gray-300 ${val===2 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
             Scheduled
             </button>
-            <button onClick={() => changeValue(3, 'Expired')} className={`rounded-lg text-sm p-1 px-2 text-HeadingColours ${val===3 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
+            <button onClick={() => changeValue(3, 'Expired')} className={`rounded-lg text-sm p-1 px-2 text-gray-300 ${val===3 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
             Expired
             </button>
-            <button onClick={() => changeValue(4, 'all')} className={`rounded-lg text-sm p-1 px-2 text-HeadingColours ${val===4 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
+            <button onClick={() => changeValue(4, 'all')} className={`rounded-lg text-sm p-1 px-2 text-gray-300 ${val===4 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
               + 
             </button>
           </div>
           <div className="flex">
-            <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border text-HeadingColours bg-white hover:shadow-none">
+            <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border text-gray-300 bg-white hover:shadow-none">
               <BiSearch />
               <BsFilter />
             </button>
-            <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border text-HeadingColours bg-white hover:shadow-none">
+            <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border text-gray-300 bg-white hover:shadow-none">
             <BiSort />
             </button>
           </div>
@@ -339,14 +339,14 @@ const Discounts = () => {
                   <td className="px-6 py-3 flex items-center gap-2 text-xs">
                     <input type="checkbox" className="rounded" />
                     <div>
-                      <h1 className="text-ubuntu-bold mb-2 text-HeadingColours">{Title1}</h1>
+                      <h1 className="text-ubuntu-bold mb-2 text-gray-300">{Title1}</h1>
                       <p className="text-P_textColour">{Title2}</p>
                     </div>
                   </td>
                   {/* <td className="max-w-[300px] px-6 py-3  text-xs font-medium text-gray-900">
                   </td> */}
                   <td className="px-6 py-3 whitespace-nowrap text-xs text-gray-500">
-                    <div className={`p-1 px-2 rounded-lg w-max text-ubuntu-regular ${status === "Expired" ? "bg-[#EFEFEF] text-[#7C6361]" : "bg-[#E0F0FF] text-[#0E57A2]"}`}>
+                    <div className={`p-1 px-2 rounded-lg w-max ${status === "Expired" ? "bg-[#EFEFEF] text-[#7C6361]" : "bg-[#E0F0FF] text-[#0E57A2]"}`}>
                       {status}
                     </div>
                   </td>

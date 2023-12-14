@@ -1,12 +1,7 @@
 "use client";
 import { RootState } from "@/lib/store";
 import React, { useEffect, useState } from "react";
-import {
-  AiOutlineBars,
-  AiOutlineCheck,
-  AiOutlineCheckCircle,
-  AiOutlineSearch,
-} from "react-icons/ai";
+import { AiOutlineBars, AiOutlineCheck, AiOutlineCheckCircle, AiOutlineSearch } from "react-icons/ai";
 import { BiSearch, BiStore } from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
 import { HiOutlineBell } from "react-icons/hi";
@@ -16,7 +11,7 @@ const Header = () => {
 
   const User: any = useSelector((state: RootState) => state.user);
 
-  const [Notifaction, SetNotification] = useState(true);
+  const [notifaction, setNotification] = useState(true);
   const [viewuser, setViewuser] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
 
@@ -45,12 +40,13 @@ const Header = () => {
     }
   }, [showPopup]);
 
-  const handlenotifaction = () => {
+  const handleNotifaction = () => {
     setViewuser(true);
-    SetNotification(!Notifaction);
+    setNotification(!notifaction);
   };
+
   const handleViewuser = () => {
-    SetNotification(true);
+    setNotification(true);
     setViewuser(!viewuser);
   };
 
@@ -116,24 +112,24 @@ const Header = () => {
       <div className="text-white flex justify-end">
         <div className="flex space-x-4">
           <div
-            onClick={handlenotifaction}
+            onClick={handleNotifaction}
             className="bg-[rgba(48,48,48,0.71)] flex items-center justify-center w-max cursor-pointer hover:bg-[rgb(48,48,48)] rounded-md p-2"
           >
             <HiOutlineBell className="text-lg" />
           </div>
           <div
-            className={`absolute w-96 top-14 z-[1] duration-200 right-3 h-32 bg-white rounded-md shadow-lg ${
-              Notifaction ? "hidden" : "block"
+            className={`absolute w-96 top-14 z-[1] duration-200 right-3 h-32 text-black bg-white rounded-md shadow-lg ${
+              notifaction ? "hidden" : "block"
             }`}
           >
             <div className="p-2 flex justify-between items-center">
-              <p className="text-HeadingColours">Alert</p>
-              <div className="text-HeadingColours flex space-x-3">
+              <p>Alert</p>
+              <div className="flex space-x-3">
                 <AiOutlineBars className="cursor-pointer" />
                 <AiOutlineCheckCircle className="cursor-pointer" />
               </div>
             </div>
-            <div className="h-12 w-[93%] m-auto text-HeadingColours text-xs text-ubuntu-bold flex items-center justify-center bg-[rgb(250,250,250)] px-5">
+            <div className="h-12 w-[93%] m-auto text-xs text-ubuntu-bold flex items-center justify-center bg-[rgb(250,250,250)] px-5">
               Alerts about your store and account will show here
             </div>
           </div>
@@ -142,26 +138,26 @@ const Header = () => {
             className="bg-[rgb(48,48,48)] relative flex rounded-md items-center cursor-pointer"
           >
             <p className="p-2 text-xs">My Store</p>
-            <div className="bg-primary w-max p-2 rounded-md text-xs">{getInitials(User.userName)}</div>
+            <div className="bg-primary w-max p-2 rounded-md text-xs">{getInitials(User?.userName)}</div>
             <div
-              className={`absolute w-80 top-14 z-[1] p-2 duration-200 right-0 h-max bg-white rounded-md shadow-lg ${
+              className={`absolute w-80 top-14 z-[1] p-2 duration-200 right-0 h-max text-black bg-white rounded-md shadow-lg ${
                 viewuser ? "hidden" : "block"
               }`}
             >
               <div className="border-b-[1px] pb-1">
                 <div className="bg-[rgb(250,250,250)] flex items-center justify-between  p-2">
-                  <div className="flex space-x-2">
-                    <div className="bg-primary w-max p-1 rounded-md text-xs">
-                      {getInitials(User.userName)}
+                  <div className="flex items-center space-x-2">
+                    <div className="bg-primary w-max py-2 px-3 font-medium rounded-md text-xs">
+                      {getInitials(User?.userName)}
                     </div>
-                    <span className="text-HeadingColours text-sm">qshopin</span>
+                    <span className="text-sm capitalize">{User?.userName}</span>
                   </div>
-                  <AiOutlineCheck className="text-HeadingColours text-sm" />
+                  <AiOutlineCheck className="text-sm" />
                 </div>
                 <div className="flex items-center hover:bg-[rgb(250,250,250)] justify-between my-2 p-2">
                   <div className="flex items-center space-x-2">
-                    <BiStore className="text-HeadingColours text-lg" />
-                    <span className="text-HeadingColours text-xs">
+                    <BiStore className="text-lg" />
+                    <span className="text-xs">
                       All Stores
                     </span>
                   </div>
@@ -170,35 +166,35 @@ const Header = () => {
               <div className="pb-2 border-b-[1px]">
                 <div className="flex items-center hover:bg-[rgb(250,250,250)] justify-between my-2 p-2">
                   <div className="flex items-center px-2">
-                    <span className="text-HeadingColours text-xs">
+                    <span className="text-xs">
                       Help Center
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center hover:bg-[rgb(250,250,250)] justify-between my-2 p-2">
                   <div className="flex items-center px-2">
-                    <span className="text-HeadingColours text-xs">
+                    <span className="text-xs">
                       Changelog
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center hover:bg-[rgb(250,250,250)] justify-between my-2 p-2">
                   <div className="flex items-center px-2">
-                    <span className="text-HeadingColours text-xs">
+                    <span className="text-xs">
                       Community forums
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center hover:bg-[rgb(250,250,250)] justify-between my-2 p-2">
                   <div className="flex items-center px-2">
-                    <span className="text-HeadingColours text-xs">
+                    <span className="text-xs">
                       Hire a Do-buy Expert
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center hover:bg-[rgb(250,250,250)] justify-between my-2 p-2">
                   <div className="flex items-center px-2">
-                    <span className="text-HeadingColours text-xs">
+                    <span className="text-xs">
                       Keyboard shortcuts
                     </span>
                   </div>
@@ -206,22 +202,22 @@ const Header = () => {
               </div>
               <div className="flex items-center justify-between my-1 px-2 py-1">
                 <div className=" px-2">
-                  <h2 className="text-HeadingColours text-sm">Qshop in</h2>
-                  <span className="text-HeadingColours text-xs">
+                  <h2 className="text-sm">Qshop in</h2>
+                  <span className="text-xs">
                     info.qshopin1122@gmail.com
                   </span>
                 </div>
               </div>
               <div className="flex items-center justify-between my-1 px-2 py-1">
                 <div className=" px-2">
-                  <span className="text-HeadingColours text-xs">
+                  <span className="text-xs">
                     Manage Account
                   </span>
                 </div>
               </div>
               <div className="flex items-center justify-between my-1 px-2 py-1">
                 <div className=" px-2">
-                  <span className="text-HeadingColours text-xs">Log Out</span>
+                  <span className="text-xs">Log Out</span>
                 </div>
               </div>
             </div>

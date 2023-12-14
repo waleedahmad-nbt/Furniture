@@ -24,7 +24,7 @@ const activities:any = [
     sales: "0.00"
   },
   {
-    id: 1,
+    id: 2,
     activityHead: "Abandoned product browse",
     status: "Active",
     reach: 4,
@@ -34,7 +34,7 @@ const activities:any = [
     sales: "0.00"
   },
   {
-    id: 1,
+    id: 3,
     activityHead: "Abandoned product browse",
     status: "Active",
     reach: 4,
@@ -52,22 +52,20 @@ const Automations = () => {
     return classes.filter(Boolean).join(' ')
   }
   return (
-    <div className=" py-6 w-3/5 m-auto">
-      <div className="Orderbar w-full flex justify-between items-center mb-7">
+    <div className="py-6 w-3/5 m-auto">
+      <div className="w-full flex justify-between items-center mb-7">
         <div className="relative">
-          <h1 className="text-xl text-HeadingColours text-ubuntu-bold flex items-center">
+          <h1 className="text-xl font-bold flex items-center">
           Automations
           </h1>
         </div>
 
-        <div className=" space-x-3">
-          <button className="bg-HeadingColours px-2 rounded-lg py-1 text-sm text-white opacity-90 hover:opacity-100 ">
+        <div className="space-x-3">
+          <button className="px-2 rounded-lg py-1 text-sm text-white opacity-90 hover:opacity-100 ">
             Create automations
           </button>
         </div>
       </div>
-
-
 
       <div className="w-full mb-5 grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 mt-8">
         <div className="p-5 bg-white rounded-xl">
@@ -75,9 +73,9 @@ const Automations = () => {
             Reach
             <hr className="h-[1px] border-dashed border-[1px]" />
           </p>
-          <p className="text-2xl text-HeadingColours flex text-ubuntu-bold">
+          <p className="text-2xl flex font-bold">
             16
-            <span className="text-xs px-1 text-P_textColour flex items-center text-ubuntu-medium ">
+            <span className="text-xs px-1 text-green font-bold flex items-center">
                 ↑300%{" "}
             </span>{" "}
           </p>
@@ -87,9 +85,9 @@ const Automations = () => {
           Sessions
             <hr className="h-[1px] border-dashed border-[1px]" />
           </p>
-          <p className="text-2xl text-HeadingColours flex text-ubuntu-bold">
+          <p className="text-2xl flex font-bold">
             0
-            <span className="text-xs px-1 text-P_textColour flex items-center text-ubuntu-medium ">
+            <span className="text-xs px-1 text-green font-bold flex items-center">
             ↓100%{" "}
             </span>{" "}
           </p>
@@ -99,10 +97,10 @@ const Automations = () => {
           Orders
             <hr className="h-[1px] border-dashed border-[1px]" />
           </p>
-          <p className="text-2xl text-HeadingColours flex text-ubuntu-bold">
+          <p className="text-2xl flex font-bold">
             0
-            <span className="text-xs px-1 text-P_textColour flex items-center text-ubuntu-medium ">
-                —{" "}
+            <span className="text-xs px-1 text-green font-bold flex items-center">
+              —{" "}
             </span>{" "}
           </p>
         </div>
@@ -111,33 +109,31 @@ const Automations = () => {
           Sales
             <hr className="h-[1px] border-dashed border-[1px]" />
           </p>
-          <p className="text-2xl text-HeadingColours flex text-ubuntu-bold">
+          <p className="text-2xl flex font-bold">
           Rs0.00
-            <span className="text-xs px-1 text-P_textColour flex items-center text-ubuntu-medium ">
-                —{" "}
+            <span className="text-xs px-1 text-green font-bold flex items-center">
+              —{" "}
             </span>{" "}
           </p>
         </div>
       </div>
 
-
-
-      <div className="py-2 pb-6 px-4 mb-4 bg-white w-full rounded-xl text-HeadingColours text-ubuntu-regular">
+      <div className="py-2 pb-6 px-4 mb-4 bg-white w-full rounded-xl">
         <div className="flex justify-between border-b py-5">
           <p className="text-sm">Automations</p>
         </div>
-        <div className="flex justify-between items-center p-2  border-b py-3">
+        <div className="flex justify-between items-center border-b py-3">
           <div className="flex justify-center items-center gap-2">
-            <button className={`rounded-lg text-sm p-1 px-2 text-HeadingColours bg-[#EFEFEF] hover:bg-[#f3f3f3]`}>
+            <button className={`rounded-lg text-sm p-1 px-2 bg-[#EFEFEF] hover:bg-[#f3f3f3]`}>
               All automations
             </button>
           </div>
           <div className="flex">
-            <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border text-HeadingColours bg-white hover:shadow-none">
+            <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
               <BiSearch />
               <BsFilter />
             </button>
-            <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border text-HeadingColours bg-white hover:shadow-none">
+            <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
             <BiSort />
             </button>
           </div>
@@ -148,43 +144,43 @@ const Automations = () => {
               <tr>
                 <th
                   scope="col"
-                  className="pr-3 py-4 text-left text-xs font-medium text-HeadingColours uppercase tracking-wider"
+                  className="pr-3 py-4 text-left text-xs font-medium uppercase tracking-wider"
                 >
                   Automation
                 </th>
                 <th
                   scope="col"
-                  className="pr-3 py-4 text-right text-xs font-medium text-HeadingColours uppercase tracking-wider"
+                  className="pr-3 py-4 text-right text-xs font-medium uppercase tracking-wider"
                 >
                   Status
                 </th>
                 <th
                   scope="col"
-                  className="pr-3 py-4 text-right text-xs font-medium text-HeadingColours uppercase tracking-wider"
+                  className="pr-3 py-4 text-right text-xs font-medium uppercase tracking-wider"
                 >
                   Reach
                 </th>
                 <th
                   scope="col"
-                  className="pr-3 py-4 text-right text-xs font-medium text-HeadingColours uppercase tracking-wider"
+                  className="pr-3 py-4 text-right text-xs font-medium uppercase tracking-wider"
                 >
                   Sessions
                 </th>
                 <th
                   scope="col"
-                  className="pr-3 py-4 text-right text-xs font-medium text-HeadingColours uppercase tracking-wider"
+                  className="pr-3 py-4 text-right text-xs font-medium uppercase tracking-wider"
                 >
                   Orders
                 </th>
                 <th
                   scope="col"
-                  className="pr-3 py-4 text-right text-xs font-medium text-HeadingColours uppercase tracking-wider"
+                  className="pr-3 py-4 text-right text-xs font-medium uppercase tracking-wider"
                 >
                   Conversion rate
                 </th>
                 <th
                   scope="col"
-                  className="pr-3 py-4 text-right text-xs font-medium text-HeadingColours uppercase tracking-wider"
+                  className="pr-3 py-4 text-right text-xs font-medium uppercase tracking-wider"
                 >
                   Sales
                 </th>
@@ -194,7 +190,7 @@ const Automations = () => {
               {activities.map((product:any,i:any) => (
                 <tr key={i} className="">
                   <td className="pr-3 flex items-center py-3 whitespace-nowrap text-left w text-xs">
-                      <span className="m-1 text-ubuntu-bold p-0">{product.activityHead}</span> <br />
+                      <span className="m-1 font-bold p-0">{product.activityHead}</span> <br />
                   </td>
                   <td
                     className={`pr-3 text-right py-3 whitespace-nowrap text-xs `}
@@ -230,102 +226,91 @@ const Automations = () => {
                     className={`pr-3 text-right py-3 whitespace-nowrap text-xs `}
                   >
                     <Menu as="div" className="relative z-30 inline-block text-left">
-    <div>
-      <Menu.Button className=" text-lg text-ubuntu-bold inline-flex w-full justify-center gap-x-1.5 rounded-md bg-transparent px-2 py-1 font-semibold text-gray-900   hover:bg-[#E3E3E3]">
-        <BsThreeDots />
-      </Menu.Button>
-    </div>
+                      <div>
+                        <Menu.Button className=" text-lg inline-flex w-full justify-center gap-x-1.5 rounded-md bg-transparent px-2 py-1 font-semibold text-gray-900   hover:bg-[#E3E3E3]">
+                          <BsThreeDots />
+                        </Menu.Button>
+                      </div>
 
-    <Transition
-      as={Fragment}
-      enter="transition ease-out duration-100"
-      enterFrom="transform opacity-0 scale-95"
-      enterTo="transform opacity-100 scale-100"
-      leave="transition ease-in duration-75"
-      leaveFrom="transform opacity-100 scale-100"
-      leaveTo="transform opacity-0 scale-95"
-    >
-      <Menu.Items className="absolute right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-        <div className="py-1">
-          <Menu.Item>
-            {({ active }:any) => (
-              <a
-                href="#"
-                className={classNames(
-                  active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                  'block px-4 py-2 text-sm'
-                )}
-              >
-                Edit workflow
-              </a>
-            )}
-          </Menu.Item>
-          <Menu.Item>
-            {({ active }:any) => (
-              <a
-                href="#"
-                className={classNames(
-                  active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                  'block px-4 py-2 text-sm'
-                )}
-              >
-                Turn off automation
-              </a>
-            )}
-          </Menu.Item>
-          <Menu.Item>
-            {({ active }:any) => (
-              <a
-                href="#"
-                className={classNames(
-                  active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                  'block px-4 py-2 text-sm'
-                )}
-              >
-                Delete automation
-              </a>
-            )}
-          </Menu.Item>
-        </div>
-      </Menu.Items>
-    </Transition>
-  </Menu>
-
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                      >
+                        <Menu.Items className="absolute right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <div className="py-1">
+                            <Menu.Item>
+                              {({ active }:any) => (
+                                <a
+                                  href="#"
+                                  className={classNames(
+                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                    'block px-4 py-2 text-sm'
+                                  )}
+                                >
+                                  Edit workflow
+                                </a>
+                              )}
+                            </Menu.Item>
+                            <Menu.Item>
+                              {({ active }:any) => (
+                                <a
+                                  href="#"
+                                  className={classNames(
+                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                    'block px-4 py-2 text-sm'
+                                  )}
+                                >
+                                  Turn off automation
+                                </a>
+                              )}
+                            </Menu.Item>
+                            <Menu.Item>
+                              {({ active }:any) => (
+                                <a
+                                  href="#"
+                                  className={classNames(
+                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                    'block px-4 py-2 text-sm'
+                                  )}
+                                >
+                                  Delete automation
+                                </a>
+                              )}
+                            </Menu.Item>
+                          </div>
+                        </Menu.Items>
+                      </Transition>
+                    </Menu>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
           <span className="text-blue-600 text-xs underline cursor-pointer hover:text-blue-800">
-          View all installed marketing app activities
+            View all installed marketing app activities
           </span>
-
       </div>
 
-
-      <div className="mb-4 bg-white w-full rounded-xl text-HeadingColours text-ubuntu-regular">
-
+      <div className="mb-4 bg-white w-full rounded-xl">
         <div className="my-2">
           <div className="w-full border overflow-hidden rounded-lg flex">
-                  <Image className="w-[35%]" src={slider1} alt="" />
-                  <div className="w-[65%] p-5">
-                    <p className="text-ubuntu-bold my-2 text-sm">Automate your marketing</p>
-                    <p className="text-ubuntu-regular my-2 text-sm">Send customers the right message at the right time—automatically. Watch this video to learn how marketing automations deliver targeted messaging while saving you time. Then get started with pre-built automations templates.</p>
-                    <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border text-HeadingColours bg-white hover:shadow-none">
-                      Explore automation templates
-                    </button>
-                  </div>
+            <Image className="w-[35%]" src={slider1} alt="" />
+            <div className="w-[65%] p-5">
+              <p className="font-bold my-2 text-sm">Automate your marketing</p>
+              <p className="my-2 text-sm">Send customers the right message at the right time—automatically. Watch this video to learn how marketing automations deliver targeted messaging while saving you time. Then get started with pre-built automations templates.</p>
+              <button className="rounded-lg text-sm p-1 px-2 flex items-center shadow-sm border bg-white hover:shadow-none">
+                Explore automation templates
+              </button>
+            </div>
           </div>
         </div>
-              
-
-
       </div>
-
       <p className="text-center py-3 mt-4 text-sm">Learn more about <Link href="#" className="text-blue-600 underline">automations</Link></p>
-
-
-
     </div>
   );
 };

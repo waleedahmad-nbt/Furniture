@@ -230,16 +230,16 @@ const Customers = () => {
     <>
       <div className="p-5">
         <div className="py-3 mb-2 flex justify-between items-center">
-          <h1 className="text-xl text-ubuntu-bold">Customers</h1>
+          <h1 className="text-xl font-bold">Customers</h1>
           <div className="flex justify-center gap-2 items-center">
-            <button className="p-1 bg-[#E3E3E3] border-none hover:bg-[#D4D4D4] text-xs px-2 rounded text-ubuntu-regular">
+            <button className="p-1 bg-[#E3E3E3] border-none hover:bg-[#D4D4D4] text-xs px-2 rounded">
               Export
             </button>
-            <button className="p-1 bg-[#E3E3E3] border-none hover:bg-[#D4D4D4] text-xs px-2 rounded text-ubuntu-regular">
+            <button className="p-1 bg-[#E3E3E3] border-none hover:bg-[#D4D4D4] text-xs px-2 rounded">
               Import
             </button>
-            <Link href={'/dashboard/seller/products/new'}>
-            <button className="p-1 bg-HeadingColours text-white border-none hover:bg-black text-xs px-2 rounded-lg text-ubuntu-regular">
+            <Link href={'/dashboard-furniture/admin/products/new'}>
+            <button className="p-1 bg-gray-900/80 hover:bg-gray-900/100 duration-100 text-white text-xs px-2 rounded-lg">
               Add customer
             </button>
             </Link>
@@ -249,14 +249,14 @@ const Customers = () => {
         <div className="bg-[#F7F7F7] border shadow mb-5 rounded-lg">
           <div className="flex justify-between items-center p-3 text-sm">
             <div className="flex justify-center items-center gap-2">
-              <p className="text-P_textColour  text-ubuntu-regular"><span className="text-black">1294</span> customers</p>
-              <span className="text-P_textColour mx-2">|</span>
-              <p className="text-P_textColour  text-ubuntu-regular"><span className="text-black">100%</span> of your customer base</p>
+              <p><span className="text-black">1294</span> customers</p>
+              <span className="mx-2">|</span>
+              <p><span className="text-black">100%</span> of your customer base</p>
             </div>
             <div className="flex">
-              <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center  text-HeadingColours bg-transparent hover:bg-[#D4D4D4]">
-              Add filter
-              <FaAngleDown className="ml-2" />
+              <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center bg-transparent hover:bg-[#D4D4D4]">
+                Add filter
+                <FaAngleDown className="ml-2" />
               </button>
             </div>
           </div>
@@ -337,7 +337,7 @@ const Customers = () => {
                       {name}
                     </td>
                     <td className="px-6 py-1 whitespace-nowrap text-xs text-gray-500">
-                      <div className={`p-1 px-2 ${subscription==="subscribed" ? "bg-[#CDFEE1] text-[#415831]" :  subscription==="Not subscribed" ? "bg-[#EFEFEF] text-[#656C73]"  : "bg-transparent"} rounded-lg w-max text-ubuntu-regular `}>
+                      <div className={`py-1 px-2 ${subscription==="subscribed" ? "bg-[#CDFEE1] text-[#415831]" :  subscription==="Not subscribed" ? "bg-[#EFEFEF] text-[#656C73]"  : "bg-transparent"} rounded-lg w-max`}>
                         {subscription}
                       </div>
                     </td>

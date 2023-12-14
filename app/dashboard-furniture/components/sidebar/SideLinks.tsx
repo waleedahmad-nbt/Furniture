@@ -38,7 +38,7 @@ const SideLinks = (
                 <li className="text-xs" key={index}>
                   <Link 
                     href={item?.link} 
-                    className={`block py-2 px-8 rounded-md font-bold relative group
+                    className={`block py-1.5 px-8 rounded-md font-bold relative group
                     ${active ? "text-gray-900 bg-white active" : "text-[#616161] hover:bg-[#ffffff77] hover:text-gray-900"}`}
                   >
                     {item?.label}

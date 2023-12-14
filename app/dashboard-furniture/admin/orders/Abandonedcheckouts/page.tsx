@@ -14,7 +14,7 @@ const AbandonedCheckouts = () => {
     <div className="p-6">
       <div className="Orderbar w-full flex justify-between items-center mb-10">
         <div className="relative">
-          <h1 className="text-xl text-HeadingColours text-ubuntu-bold flex items-center">
+          <h1 className="text-xl text-gray-900 font-bold flex items-center">
             Abandoned Checkouts
           </h1>
         </div>
@@ -22,7 +22,7 @@ const AbandonedCheckouts = () => {
         <div className=" space-x-3">
           <button
             onClick={() => setExport(true)}
-            className="bg-HeadingColours px-2 rounded-lg py-1 text-sm text-white opacity-90 hover:opacity-100 "
+            className="bg-gray-900 px-2 rounded-lg py-1 text-sm text-white opacity-90 hover:opacity-100 "
           >
             Export
           </button>
@@ -44,7 +44,7 @@ const AbandonedCheckouts = () => {
             </h1>
           </div>
           <div className="py-6 px-2">
-            <p className="text-ubuntu-regular text-sm ">Export</p>
+            <p className="text-sm ">Export</p>
             <Radio name="type" label="Current page" className="rad" crossOrigin="anonymous" /> <br />
             <Radio name="type" label="All orders" className="rad" crossOrigin="anonymous" /> <br />
             <Radio
@@ -69,7 +69,7 @@ const AbandonedCheckouts = () => {
             <br />
           </div>
           <div className="py-0 px-2">
-            <p className="text-ubuntu-regular text-sm ">Export as</p>
+            <p className="text-sm ">Export as</p>
             <Radio
               name="Exportas"
               label="CSV for Excel, Numbers, or other spreadsheet programs"
@@ -88,17 +88,17 @@ const AbandonedCheckouts = () => {
         </div>
       </div>
       <div className="w-full rounded-t-xl bg-white flex justify-between items-center px-2 shadow-md mt-4 py-2">
-        <ul className="flex space-x-4 text-xs text-ubuntu-regular px-4 ">
+        <ul className="flex space-x-4 text-xs  px-4 ">
           <li
             onClick={(e: any) => setcurrentTab(e.target.innerText)}
-            className={`hover:bg-gray-200 px-2 py-1 rounded-lg cursor-pointer text-HeadingColours ${
-              currentTab === "All" ? "bg-gray-200" : ""
+            className={`hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer text-gray-900 ${
+              currentTab === "All" ? "bg-gray-blue/20" : ""
             }`}
           >
             All
           </li>
 
-          <li className="hover:bg-gray-200 px-2 py-1 rounded-lg cursor-pointer text-HeadingColours">
+          <li className="hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer text-gray-900">
             +
           </li>
         </ul>

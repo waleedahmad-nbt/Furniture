@@ -21,7 +21,7 @@ const checkoutData = [
 const Checkouttable = () => {
   return (
     <div className="w-full overflow-x-auto">
-      <table className="min-w-full border divide-y text-HeadingColours text-ubuntu-light divide-gray-200">
+      <table className="min-w-full border divide-y text-gray-900 divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
             <th
@@ -31,7 +31,7 @@ const Checkouttable = () => {
               <label className="flex items-center">
                 <input
                   type="checkbox"
-                  className="text-HeadingColours focus:ring-0 focus:outline-none mr-2"
+                  className="text-gray-900 focus:ring-0 focus:outline-none mr-2"
                 />
                 Checkouts
               </label>
@@ -85,7 +85,7 @@ const Checkouttable = () => {
                 {row.placedBy}
               </td>
               <td className="px-6 text-xs py-2 whitespace-nowrap">
-                <div className="w-[70%] py-1 px-1 rounded-md bg-gray-300">
+                <div className="w-[70%] py-1 px-1 rounded-md bg-gray-300 text-white text-center">
                   {row.recoveryStatus}
                 </div>
               </td>

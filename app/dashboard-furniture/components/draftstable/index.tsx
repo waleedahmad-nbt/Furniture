@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 
 interface TableRow {
+  id: string;
   draftOrder: string;
   date: string;
   customer: string;
@@ -11,6 +12,7 @@ interface TableRow {
 
 const tableData: TableRow[] = [
   {
+    id: "1",
     draftOrder: "D123",
     date: "2023-08-29",
     customer: "John Doe",
@@ -18,6 +20,7 @@ const tableData: TableRow[] = [
     total: "$150.00",
   },
   {
+    id: "2",
     draftOrder: "D456",
     date: "2023-09-01",
     customer: "Jane Smith",
@@ -28,6 +31,34 @@ const tableData: TableRow[] = [
 ];
 
 function Draftstable() {
+
+  interface CheckboxState {
+    [productId: string]: boolean;
+  }
+
+  const [checkboxes, setCheckboxes] = useState<CheckboxState>({});
+
+  const handleCheckboxChange = (productId: string) => {
+    setCheckboxes((prevCheckboxes) => {
+      const isChecked = prevCheckboxes[productId] ?? false; // Default to false if undefined
+      return {
+        ...prevCheckboxes,
+        [productId]: !isChecked,
+      };
+    });
+  };
+
+  const handleSelectAllChange = () => {
+    const updatedCheckboxes: CheckboxState = {};
+
+    tableData?.map((product: any) => {
+      const Id = product.id;
+      updatedCheckboxes[Id] = !checkboxes[Id] ? !checkboxes[Id] : false;
+    });
+
+    setCheckboxes(updatedCheckboxes);
+  };
+
   return (
     <div className="w-full overflow-x-auto">
       <table className="min-w-full border divide-y text-HeadingColours text-ubuntu-light divide-gray-200">
@@ -41,6 +72,7 @@ function Draftstable() {
                 <input
                   type="checkbox"
                   className="text-HeadingColours focus:ring-0 focus:outline-none mr-2"
+                  onChange={handleSelectAllChange}
                 />
                 Draft Order
               </label>
@@ -81,6 +113,8 @@ function Draftstable() {
                 <input
                   type="checkbox"
                   className="text-HeadingColours focus:ring-0 focus:outline-none"
+                  checked={checkboxes[row?.id] ?? false}
+                  onChange={() => handleCheckboxChange(row?.id)}
                 />{" "}
                 &nbsp; <span className="text-xs">#{row.draftOrder}</span>
               </td>
@@ -91,7 +125,7 @@ function Draftstable() {
                 {row.customer}
               </td>
               <td className="px-6 text-xs py-2 whitespace-nowrap">
-                <div className="w-[70%] py-1 px-1 rounded-md bg-gray-300">
+                <div className="w-[70%] py-1 px-1 rounded-md bg-gray-300 text-white text-center">
                   {row.status}
                 </div>
               </td>

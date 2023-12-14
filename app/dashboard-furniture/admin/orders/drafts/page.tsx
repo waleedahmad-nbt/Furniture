@@ -13,14 +13,14 @@ const Drafts = () => {
   const [currentTab, setcurrentTab] = useState("All");
 
   const handleorder = () => {
-    Router.push("/dashboard/seller/orders/drafts/new");
+    Router.push("/dashboard-furniture/admin/orders/drafts/new");
   };
 
   return (
     <div className="p-6">
       <div className="Orderbar w-full flex justify-between items-center mb-10">
         <div className="relative">
-          <h1 className="text-xl text-HeadingColours text-ubuntu-bold flex items-center">
+          <h1 className="text-xl text-gray-900 font-bold flex items-center">
             Drafts
           </h1>
         </div>
@@ -28,13 +28,13 @@ const Drafts = () => {
         <div className=" space-x-3">
           <button
             onClick={() => setExport(true)}
-            className="bg-gray-200 px-2 rounded-lg py-1 text-sm text-HeadingColours opacity-90 hover:opacity-100 "
+            className="bg-gray-100/30 px-2 rounded-lg py-1 text-sm text-gray-900 opacity-90 hover:opacity-100 "
           >
             Export
           </button>
           <button
             onClick={handleorder}
-            className="bg-HeadingColours px-2 rounded-lg py-1 text-sm text-white opacity-90 hover:opacity-100 shadow-sm"
+            className="bg-gray-900/80 hover:bg-gray-900/100 duration-100 text-white px-2 rounded-lg py-1 text-sm shadow-sm"
           >
             Create order
           </button>
@@ -46,11 +46,11 @@ const Drafts = () => {
         }`}
       >
         <div className="w-1/3 rounded-2xl bg-white overflow-hidden">
-          <div className="flex justify-between items-center text-lg bg-gray-200 text-HeadingColours p-4 border-b-[1px] border-P_textColour">
+          <div className="flex justify-between items-center text-lg bg-gray-200 text-gray-900 p-4 border-b-[1px] border-P_textColour">
             <h1 className="text-ubuntu-bold ">Export orders</h1>
             <h1
               onClick={() => setExport(false)}
-              className="text-ubuntu-medium cursor-pointer px-2 rounded-md hover:bg-gray-300"
+              className="font-medium cursor-pointer px-2 rounded-md hover:bg-gray-300"
             >
               x
             </h1>
@@ -100,48 +100,48 @@ const Drafts = () => {
         </div>
       </div>
       <div className="w-full rounded-t-xl bg-white flex justify-between items-center px-2 shadow-md mt-4 py-2">
-        <ul className="flex space-x-4 text-xs text-ubuntu-regular px-4 ">
+        <ul className="flex space-x-4 text-xs px-4 ">
           <li
             onClick={(e: any) => setcurrentTab(e.target.innerText)}
-            className={`hover:bg-gray-200 px-2 py-1 rounded-lg cursor-pointer text-HeadingColours ${
-              currentTab === "All" ? "bg-gray-200" : ""
+            className={`hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer text-gray-900 ${
+              currentTab === "All" ? "bg-gray-blue/20" : ""
             }`}
           >
             All
           </li>
           <li
             onClick={(e: any) => setcurrentTab(e.target.innerText)}
-            className={`hover:bg-gray-200 px-2 py-1 rounded-lg cursor-pointer text-HeadingColours ${
-              currentTab === "Open and invoice sent" ? "bg-gray-200" : ""
+            className={`hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer text-gray-900 ${
+              currentTab === "Open and invoice sent" ? "bg-gray-blue/20" : ""
             }`}
           >
             Open and invoice sent
           </li>
           <li
             onClick={(e: any) => setcurrentTab(e.target.innerText)}
-            className={`hover:bg-gray-200 px-2 py-1 rounded-lg cursor-pointer text-HeadingColours ${
-              currentTab === "Open" ? "bg-gray-200" : ""
+            className={`hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer text-gray-900 ${
+              currentTab === "Open" ? "bg-gray-blue/20" : ""
             }`}
           >
             Open
           </li>
           <li
             onClick={(e: any) => setcurrentTab(e.target.innerText)}
-            className={`hover:bg-gray-200 px-2 py-1 rounded-lg cursor-pointer text-HeadingColours ${
-              currentTab === "Invoice sent" ? "bg-gray-200" : ""
+            className={`hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer text-gray-900 ${
+              currentTab === "Invoice sent" ? "bg-gray-blue/20" : ""
             }`}
           >
             Invoice sent
           </li>
           <li
             onClick={(e: any) => setcurrentTab(e.target.innerText)}
-            className={`hover:bg-gray-200 px-2 py-1 rounded-lg cursor-pointer text-HeadingColours ${
-              currentTab === "Completed" ? "bg-gray-200" : ""
+            className={`hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer text-gray-900 ${
+              currentTab === "Completed" ? "bg-gray-blue/20" : ""
             }`}
           >
             Completed
           </li>
-          <li className="hover:bg-gray-200 px-2 py-1 rounded-lg cursor-pointer text-HeadingColours">
+          <li className="hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer text-gray-900">
             +
           </li>
         </ul>

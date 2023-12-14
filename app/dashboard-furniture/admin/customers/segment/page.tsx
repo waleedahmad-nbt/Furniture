@@ -67,12 +67,12 @@ const [value, setValue] = useState('')
     <>
       <div className="p-5">
         <div className="py-3 mb-2 flex justify-between items-center">
-          <h1 className="text-xl text-ubuntu-bold">Segments</h1>
+          <h1 className="text-xl font-bold">Segments</h1>
           <div className="flex justify-center gap-2 items-center">
-            <Link href={'/dashboard/seller/products/new'}>
-            <button className="p-1 bg-HeadingColours text-white border-none hover:bg-black text-xs px-2 rounded-lg text-ubuntu-regular">
-              Create segment
-            </button>
+            <Link href={'/dashboard-furniture/admin/products/new'}>
+              <button className="p-1 border-none bg-gray-900/80 hover:bg-gray-900/100 duration-100 text-white text-xs px-2 rounded-lg">
+                Create segment
+              </button>
             </Link>
           </div>
         </div>
@@ -83,7 +83,7 @@ const [value, setValue] = useState('')
               <div className="relative w-full">
                 <input
                   type="text"
-                  className="openSearch w-full text-sm text-ubuntu-regular border-none hover:bg-[#FAFAFA] rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:border-black"
+                  className="openSearch w-full text-sm border-none hover:bg-[#FAFAFA] rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:border-black"
                   placeholder="Search segments"
                   onChange={handleValue}
                 />
@@ -131,12 +131,12 @@ const [value, setValue] = useState('')
                       {name}
                     </td>
                     <td className="px-6 h-full whitespace-nowrap text-xs">
-                      <div className={`p-1 w-[100px] h-full text-right bg-[#7cade6] px-2 text-ubuntu-regular `}>
+                      <div className={`p-1 w-[100px] h-full text-right bg-[#7cade6] px-2`}>
                         {size}
                       </div>
                     </td>
                     <td
-                      className={`px-6 py-2 whitespace-nowrap text-xs `}
+                      className="px-6 py-2 whitespace-nowrap text-xs"
                     >
                       {activity}
                     </td>

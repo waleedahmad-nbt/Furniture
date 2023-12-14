@@ -31,9 +31,9 @@ const Admin = () => {
                 Sessions
               </p>
               <hr className="h-[1px] border-dashed border-[1px]" />
-              <p className="text-2xl text-HeadingColours flex text-ubuntu-bold">
+              <p className="text-2xl text-gray-900 font-bold flex">
                 309
-                <span className="text-xs px-1 text-Primary flex items-center text-ubuntu-medium ">
+                <span className="text-xs px-1 text-Primary flex items-center font-bold text-green">
                   <FiArrowUpRight /> 55%{" "}
                 </span>{" "}
               </p>
@@ -46,9 +46,9 @@ const Admin = () => {
                 Total Sales
               </p>
               <hr className="h-[1px] border-dashed border-[1px]" />
-              <p className="text-2xl text-HeadingColours flex text-ubuntu-bold">
+              <p className="text-2xl text-gray-900 font-bold flex">
                 PKR5.76K
-                <span className="text-xs px-1 text-Primary flex items-center text-ubuntu-medium ">
+                <span className="text-xs px-1 text-Primary flex items-center font-bold text-green">
                   <FiArrowUpRight /> 13%{" "}
                 </span>{" "}
               </p>
@@ -61,9 +61,9 @@ const Admin = () => {
                 Total Orders
               </p>
               <hr className="h-[1px] border-dashed border-[1px]" />
-              <p className="text-2xl text-HeadingColours flex text-ubuntu-bold">
+              <p className="text-2xl text-gray-900 font-bold flex">
                 4
-                <span className="text-xs px-1 flex items-center text-ubuntu-medium ">
+                <span className="text-xs px-1 flex items-center font-bold text-green">
                   ---
                 </span>{" "}
               </p>
@@ -78,9 +78,9 @@ const Admin = () => {
                 Conversation rate
               </p>
               <hr className="h-[1px] border-dashed border-[1px]" />
-              <p className="text-2xl text-HeadingColours flex text-ubuntu-bold">
+              <p className="text-2xl text-gray-900 font-bold flex">
                 0.97%
-                <span className="text-xs px-1 text-pricesAndDiscount flex items-center text-ubuntu-medium ">
+                <span className="text-xs px-1 text-pricesAndDiscount flex items-center font-bold text-secondary">
                   <FiArrowUpRight className="rotate-90" /> 55%{" "}
                 </span>{" "}
               </p>
@@ -90,35 +90,35 @@ const Admin = () => {
         </div>
         <div className="w-full mt-5 p-2 bg-white rounded-lg shadow-md">
           <div className="border-b-[1px] py-3 px-2 flex justify-between cursor-pointer">
-            <p className="text-ubuntu-medium text-HeadingColours text-base flex items-center">
+            <p className="font-bold text-base flex items-center">
               <CiHardDrive />
               &nbsp;&nbsp; 10 Orders &nbsp;
-              <span className="text-ubuntu-regular text-sm">to fulfill</span>
+              <span className="font-normal text-sm">to fulfill</span>
             </p>
-            <TbMathGreater className="text-sm text-P_textColour" />
+            <TbMathGreater className="text-sm text-gray-300" />
           </div>
           <div className="py-3 px-2 flex justify-between cursor-pointer">
-            <p className="text-ubuntu-medium text-HeadingColours text-base flex items-center">
+            <p className="font-bold text-base flex items-center">
               <BsCreditCard2Front />
               &nbsp;&nbsp; 50+ Payments &nbsp;
-              <span className="text-ubuntu-regular text-sm">to capture</span>
+              <span className="font-normal text-sm">to capture</span>
             </p>
-            <TbMathGreater className="text-sm text-P_textColour" />
+            <TbMathGreater className="text-sm text-gray-300" />
           </div>
         </div>
         <div className="w-full mt-5 p-4 bg-white rounded-lg shadow-md">
-          <p className="text-P_textColour text-xs text-ubuntu-regular">
+          <p className="text-gray-300 text-xs">
             In the last 14 days
           </p>
-          <h2 className="text-HeadingColours text-ubuntu-medium py-4">
+          <h2 className="text-gray-900 font-bold py-4">
             Visitors from these social sites are spending time in your store
           </h2>
-          <h2 className="text-HeadingColours py-4 text-sm text-ubuntu-regular">
+          <h2 className="text-gray-900 py-4 text-sm">
             Here’s how many pages they viewed and how long they stayed.
           </h2>
           <div className="flex justify-between py-3">
             <span>Product</span>
-            <h1 className="text-HeadingColours text-ubuntu-medium">
+            <h1 className="text-gray-900 font-bold">
               Aug 10–Aug 23
             </h1>
           </div>
@@ -137,7 +137,7 @@ const Admin = () => {
                     </Link>
                   </p>
                 </div>
-                <p className="text-sm px-2 text-HeadingColours">
+                <p className="text-sm px-2 text-gray-300">
                   2,015 views
                 </p>
               </div>
@@ -154,7 +154,7 @@ const Admin = () => {
                     </Link>
                   </p>
                 </div>
-                <p className="text-sm px-2 text-HeadingColours">580 views</p>
+                <p className="text-sm px-2 text-gray-300">580 views</p>
               </div>
               <div className="flex items-center justify-between border-b-[1px]">
                 <div className="space-x-6 p-4 flex items-center">
@@ -170,24 +170,24 @@ const Admin = () => {
                     </Link>
                   </p>
                 </div>
-                <p className="text-sm px-2 text-HeadingColours">516 views</p>
+                <p className="text-sm px-2 text-gray-300">516 views</p>
               </div>
             </div>
           </div>
         </div>
         <div className="w-full mt-5 p-4 bg-white rounded-lg shadow-md">
-          <p className="text-P_textColour text-xs text-ubuntu-regular">
+          <p className="text-xs">
             Since store launch
           </p>
-          <h2 className="text-HeadingColours text-ubuntu-medium py-4">
+          <h2 className="text-gray-300 font-bold py-4">
             Visitors from these social sites are spending time in your store
           </h2>
-          <h2 className="text-HeadingColours py-4 text-sm text-ubuntu-regular">
+          <h2 className="text-gray-300 py-4 text-sm">
             Here’s how many pages they viewed and how long they stayed.
           </h2>
           <div className="flex justify-between py-3">
             <span>Referrer</span>
-            <h1 className="text-HeadingColours text-ubuntu-medium">
+            <h1 className="text-gray-300 font-bold">
               Average length of stay
             </h1>
           </div>
@@ -205,7 +205,7 @@ const Admin = () => {
                     <p className="text-sm">Average page views: 3</p>
                   </div>
                 </div>
-                <p className="text-sm px-2 text-HeadingColours">half a minute</p>
+                <p className="text-sm px-2 text-gray-300">half a minute</p>
               </div>
               <div className="flex items-center justify-between border-b-[1px]">
                 <div className="space-x-6 p-4 flex items-center">
@@ -219,7 +219,7 @@ const Admin = () => {
                     <p className="text-sm">Average page views: 1.8</p>
                   </div>
                 </div>
-                <p className="text-sm px-2 text-HeadingColours">less than 20 seconds</p>
+                <p className="text-sm px-2 text-gray-300">less than 20 seconds</p>
               </div>
             </div>
           </div>

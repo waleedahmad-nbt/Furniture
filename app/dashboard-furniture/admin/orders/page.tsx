@@ -10,6 +10,55 @@ import { BsArrowDown, BsArrowUp } from "react-icons/bs";
 import { Radio } from "@material-tailwind/react";
 import { useRouter } from "next/navigation";
 
+interface DataRow {
+  id: string,
+  orderNumber: string;
+  orderFlags: boolean;
+  date: string;
+  customer: string;
+  channel: string;
+  total: string;
+  paymentStatus: string;
+  fulfillmentStatus: string;
+  items: number;
+  deliveryStatus: string;
+  deliveryMethod: string;
+  tags: string[];
+}
+
+const dataRows: DataRow[] = [
+  {
+    id: "1",
+    orderNumber: "12345",
+    orderFlags: true,
+    date: "2023-08-29",
+    customer: "John Doe",
+    channel: "Online",
+    total: "$150.00",
+    paymentStatus: "Paid",
+    fulfillmentStatus: "Shipped",
+    items: 3,
+    deliveryStatus: "In Transit",
+    deliveryMethod: "Standard",
+    tags: ["Urgent", "High Value"],
+  },
+  {
+    id: "2",
+    orderNumber: "67890",
+    orderFlags: false,
+    date: "2023-09-01",
+    customer: "Jane Smith",
+    channel: "Retail Store",
+    total: "$75.50",
+    paymentStatus: "Pending",
+    fulfillmentStatus: "Processing",
+    items: 2,
+    deliveryStatus: "Not Shipped",
+    deliveryMethod: "Express",
+    tags: ["Priority"],
+  },
+];
+
 const Orders = () => {
   const Router = useRouter();
   const [currentTab, setcurrentTab] = useState("All");
@@ -18,7 +67,23 @@ const Orders = () => {
   const [Export, setExport] = useState(false);
 
   const handleorder = () => {
-    Router.push("/dashboard/seller/orders/drafts/new");
+    Router.push("/dashboard-furniture/admin/orders/drafts/new");
+  };
+
+  const filter = (rows: any) => {
+    if(currentTab==="All"){
+      return rows;
+    }
+    else if(currentTab==="Unfulfilled"){
+      return rows.filter((e:any, i:any) => {
+        return e.fulfillmentStatus !== 'Processing'
+      })
+    }
+    else if(currentTab==="Unpaid"){
+      return rows.filter((e:any, i:any) => {
+          return e.paymentStatus === 'Pending'
+      })
+    }
   };
 
   return (
@@ -26,11 +91,11 @@ const Orders = () => {
       <div className="p-6 w-full">
         <div className="Orderbar w-full flex justify-between items-center mb-10">
           <div className="relative">
-            <h1 className="text-xl text-HeadingColours text-ubuntu-bold flex items-center">
+            <h1 className="text-xl font-bold text-gray-900 flex items-center">
               Orders:
               <span
                 onClick={() => setLocationbox(!Locationbox)}
-                className="px-2 py-1 cursor-pointer hover:bg-gray-200 rounded-lg flex items-center"
+                className="px-2 py-1 cursor-pointer hover:bg-gray-200 hover:text-white duration-100 ml-1 rounded-lg flex items-center"
               >
                 All locations &nbsp;
                 <MdExpandMore />
@@ -46,7 +111,7 @@ const Orders = () => {
                   onClick={(e: any) =>
                     setCureentlocationtab(e.target.innerText)
                   }
-                  className={`px-2 py-1 text-ubuntu-regular cursor-pointer rounded-md text-HeadingColours ${
+                  className={`px-2 py-1 text-ubuntu-regular cursor-pointer rounded-md text-gray-900 ${
                     cureentlocationtab == "All locations" ? "bg-gray-200" : ""
                   }`}
                 >
@@ -56,7 +121,7 @@ const Orders = () => {
                   onClick={(e: any) =>
                     setCureentlocationtab(e.target.innerText)
                   }
-                  className={`px-2 py-1 text-ubuntu-regular cursor-pointer rounded-md text-HeadingColours ${
+                  className={`px-2 py-1 text-ubuntu-regular cursor-pointer rounded-md text-gray-900 ${
                     cureentlocationtab == "73-C Cavalary ground Lahore"
                       ? "bg-gray-200"
                       : ""
@@ -68,7 +133,7 @@ const Orders = () => {
                   onClick={(e: any) =>
                     setCureentlocationtab(e.target.innerText)
                   }
-                  className={`px-2 py-1 text-ubuntu-regular cursor-pointer rounded-md text-HeadingColours ${
+                  className={`px-2 py-1 text-ubuntu-regular cursor-pointer rounded-md text-gray-900 ${
                     cureentlocationtab == "Miltary Accounts"
                       ? "bg-gray-200"
                       : ""
@@ -83,13 +148,13 @@ const Orders = () => {
           <div className=" space-x-3">
             <button
               onClick={() => setExport(true)}
-              className="bg-gray-200 px-2 rounded-lg py-1 text-sm text-HeadingColours opacity-90 hover:opacity-100 "
+              className="bg-gray-100/30 px-2 rounded-lg py-1 text-sm text-gray-900 opacity-90 hover:opacity-100 "
             >
               Export
             </button>
             <button
               onClick={handleorder}
-              className="bg-HeadingColours px-2 rounded-lg py-1 text-sm text-white opacity-90 hover:opacity-100 shadow-sm"
+              className="bg-gray-900/80 hover:bg-gray-900/100 duration-100 px-2 rounded-lg py-1 text-sm text-white shadow-sm"
             >
               Create order
             </button>
@@ -101,17 +166,17 @@ const Orders = () => {
           }`}
         >
           <div className="w-1/3 rounded-2xl bg-white overflow-hidden">
-            <div className="flex justify-between items-center text-lg bg-gray-200 text-HeadingColours p-4 border-b-[1px] border-P_textColour">
-              <h1 className="text-ubuntu-bold ">Export orders</h1>
+            <div className="flex justify-between items-center text-lg bg-gray-200 text-gray-900 p-4 border-b-[1px] border-P_textColour">
+              <h1 className="font-bold">Export orders</h1>
               <h1
                 onClick={() => setExport(false)}
-                className="text-ubuntu-medium cursor-pointer px-2 rounded-md hover:bg-gray-300"
+                className="font-medium cursor-pointer px-2 rounded-md hover:bg-gray-300"
               >
                 x
               </h1>
             </div>
             <div className="py-6 px-2">
-              <p className="text-ubuntu-regular text-sm ">Export</p>
+              <p className="text-sm">Export</p>
               <Radio name="type" label="Current page" className="rad" crossOrigin="anonymous"/>{" "}
               <br />
               <Radio name="type" label="All orders" className="rad" crossOrigin="anonymous"/> <br />
@@ -137,7 +202,7 @@ const Orders = () => {
               <br />
             </div>
             <div className="py-0 px-2">
-              <p className="text-ubuntu-regular text-sm ">Export as</p>
+              <p className="text-sm">Export as</p>
               <Radio
                 name="Exportas"
                 label="CSV for Excel, Numbers, or other spreadsheet programs"
@@ -158,14 +223,14 @@ const Orders = () => {
         <div className="w-full rounded-xl bg-white flex shadow-md">
           <div className="w-[8%] cursor-pointer flex items-center justify-center p-6 border-r-[1px]">
             <TbFileReport className="text-xl" />
-            &nbsp; <span className="text-sm text-ubuntu-regular">Today</span>
+            &nbsp; <span className="text-sm">Today</span>
           </div>
           <div className="w-[17%] border-r-[1px] flex items-center justify-center px-6">
             <div>
               <p className="w-max font-light text-sm">orders</p>
-              <p className="text-sm text-HeadingColours flex text-ubuntu-bold">
+              <p className="text-sm text-gray-900 font-bold flex">
                 309
-                <span className="text-xs px-1 text-Primary flex items-center text-ubuntu-medium ">
+                <span className="text-xs px-1 text-Primary flex items-center text-green">
                   <FiArrowUpRight /> 55%{" "}
                 </span>{" "}
               </p>
@@ -177,9 +242,9 @@ const Orders = () => {
           <div className="w-[17%] border-r-[1px] flex items-center justify-center px-6">
             <div>
               <p className="w-max font-light text-sm">Ordered items</p>
-              <p className="text-sm text-HeadingColours flex text-ubuntu-bold">
+              <p className="text-sm text-gray-900 font-bold flex">
                 1
-                <span className="text-xs px-1 text-Primary flex items-center text-ubuntu-medium ">
+                <span className="text-xs px-1 text-Primary flex items-center text-green">
                   <FiArrowUpRight /> 45%{" "}
                 </span>{" "}
               </p>
@@ -191,9 +256,9 @@ const Orders = () => {
           <div className="w-[17%] border-r-[1px] flex items-center justify-center px-6">
             <div>
               <p className="w-max font-light text-sm">Returned items</p>
-              <p className="text-sm text-HeadingColours flex text-ubuntu-bold">
+              <p className="text-sm text-gray-900 font-bold flex">
                 1
-                <span className="text-xs px-1 text-Primary flex items-center text-ubuntu-medium ">
+                <span className="text-xs px-1 text-Primary flex items-center text-green">
                   <FiArrowUpRight /> 45%{" "}
                 </span>{" "}
               </p>
@@ -205,9 +270,9 @@ const Orders = () => {
           <div className="w-[17%] border-r-[1px] flex items-center justify-center px-6">
             <div>
               <p className="w-max font-light text-sm">Fulfilled orders</p>
-              <p className="text-sm text-HeadingColours flex text-ubuntu-bold">
+              <p className="text-sm text-gray-900 font-bold flex">
                 6
-                <span className="text-xs px-1 text-Primary flex items-center text-ubuntu-medium ">
+                <span className="text-xs px-1 text-Primary flex items-center text-green">
                   <FiArrowUpRight /> 25%{" "}
                 </span>{" "}
               </p>
@@ -219,9 +284,9 @@ const Orders = () => {
           <div className="w-[23%] flex items-center justify-center">
             <div>
               <p className="w-max font-light text-sm">Time to fulfill</p>
-              <p className="text-sm text-HeadingColours flex text-ubuntu-bold">
+              <p className="text-sm text-gray-900 font-bold flex">
                 1 day 10 hr
-                <span className="text-xs px-1 text-Primary flex items-center text-ubuntu-medium ">
+                <span className="text-xs px-1 text-Primary flex items-center text-green">
                   <FiArrowUpRight /> 25%{" "}
                 </span>{" "}
               </p>
@@ -232,45 +297,45 @@ const Orders = () => {
           <ul className="flex space-x-4 text-xs text-ubuntu-regular px-4 ">
             <li
               onClick={(e: any) => setcurrentTab(e.target.innerText)}
-              className={`hover:bg-gray-200 px-2 py-1 rounded-lg cursor-pointer text-HeadingColours ${
-                currentTab === "All" ? "bg-gray-200" : ""
+              className={`hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer ${
+                currentTab === "All" ? "bg-gray-blue/20" : ""
               }`}
             >
               All
             </li>
             <li
               onClick={(e: any) => setcurrentTab(e.target.innerText)}
-              className={`hover:bg-gray-200 px-2 py-1 rounded-lg cursor-pointer text-HeadingColours ${
-                currentTab === "Unfulfilled" ? "bg-gray-200" : ""
+              className={`hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer ${
+                currentTab === "Unfulfilled" ? "bg-gray-blue/20" : ""
               }`}
             >
               Unfulfilled
             </li>
             <li
               onClick={(e: any) => setcurrentTab(e.target.innerText)}
-              className={`hover:bg-gray-200 px-2 py-1 rounded-lg cursor-pointer text-HeadingColours ${
-                currentTab === "Unpaid" ? "bg-gray-200" : ""
+              className={`hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer ${
+                currentTab === "Unpaid" ? "bg-gray-blue/20" : ""
               }`}
             >
               Unpaid
             </li>
             <li
               onClick={(e: any) => setcurrentTab(e.target.innerText)}
-              className={`hover:bg-gray-200 px-2 py-1 rounded-lg cursor-pointer text-HeadingColours ${
-                currentTab === "Open" ? "bg-gray-200" : ""
+              className={`hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer ${
+                currentTab === "Open" ? "bg-gray-blue/20" : ""
               }`}
             >
               Open
             </li>
             <li
               onClick={(e: any) => setcurrentTab(e.target.innerText)}
-              className={`hover:bg-gray-200 px-2 py-1 rounded-lg cursor-pointer text-HeadingColours ${
-                currentTab === "Closed" ? "bg-gray-200" : ""
+              className={`hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer ${
+                currentTab === "Closed" ? "bg-gray-blue/20" : ""
               }`}
             >
               Closed
             </li>
-            <li className="hover:bg-gray-200 px-2 py-1 rounded-lg cursor-pointer text-HeadingColours">
+            <li className="hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer">
               +
             </li>
           </ul>
@@ -285,7 +350,7 @@ const Orders = () => {
             </div>
           </div>
         </div>
-        <Table />
+        <Table data={filter(dataRows)}/>
       </div>
     </>
   );

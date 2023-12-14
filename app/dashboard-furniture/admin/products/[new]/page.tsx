@@ -69,12 +69,12 @@ const NewProduct = () => {
       <div className="w-full p-2">
         <div className="xl:w-[950px] w-full m-auto">
           <div className="p-5 flex items-center">
-            <Link href={'/dashboard/seller/products'}>
+            <Link href={'/dashboard-furniture/admin/products'}>
             <div className="p-1 cursor-pointer mr-3 rounded w-max bg-transparent hover:bg-gray-300">
               <BsArrowLeft />
             </div>
             </Link>
-            <p className="text-xl text-ubuntu-bold text-HeadingColours">
+            <p className="text-xl font-bold text-text-gray-300">
               Add products
             </p>
           </div>
@@ -204,7 +204,7 @@ const NewProduct = () => {
                     <div className=" relative w-full">
                       <input
                         type="number"
-                        className=" text w-full text-xs bg-gray-100 border border-gray-300 rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:border-black"
+                        className=" text w-full text-xs bg-gray-blue/20 border border-gray-300 rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:border-black"
                         disabled
                         placeholder="--"
                       />
@@ -215,7 +215,7 @@ const NewProduct = () => {
                     <div className=" relative w-full">
                       <input
                         type="number"
-                        className=" text w-full text-xs bg-gray-100 border border-gray-300 rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:border-black"
+                        className=" text w-full text-xs bg-gray-blue/20 border border-gray-300 rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:border-black"
                         disabled
                         placeholder="--"
                       />
@@ -259,7 +259,7 @@ const NewProduct = () => {
                       <input
                         type="number"
                         defaultValue={0}
-                        className=" text w-[100px] text-xs border border-gray-300 rounded-lg  py-2 focus:outline-none focus:border-black"
+                        className=" text w-[100px] text-xs border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:border-black"
                       />
                     </>
                   ) : (
@@ -276,7 +276,7 @@ const NewProduct = () => {
                       <input
                         type="number"
                         defaultValue={0}
-                        className=" text w-[100px] text-xs border border-gray-300 rounded-lg  py-2 focus:outline-none focus:border-black"
+                        className=" text w-[100px] text-xs border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:border-black"
                       />
                     </>
                   ) : (
@@ -321,7 +321,7 @@ const NewProduct = () => {
                         <div className=" relative w-full">
                           <input
                             type="text"
-                            className=" text w-full text-xs border border-gray-300 rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:border-black"
+                            className=" text w-full text-xs border border-gray-300 rounded-lg px-8 py-2 focus:outline-none focus:border-black"
                             placeholder="0.00"
                           />
                         </div>
@@ -333,7 +333,7 @@ const NewProduct = () => {
                         <div className=" relative w-full">
                           <input
                             type="text"
-                            className=" text w-full text-xsborder border-gray-300 rounded-lg pl-10 pr-8 py-1 focus:outline-none focus:border-black"
+                            className="text w-full text-xs border border-gray-300 rounded-lg px-5 py-2 focus:outline-none focus:border-black"
                           />
                         </div>
                       </div>
@@ -423,10 +423,10 @@ const NewProduct = () => {
 
               <div className="bg-white  rounded-lg border p-3 mb-20">
                   <p className="text-sm">Metafields</p>
-                  <div   className=" border-t relative flex justify-between cursor-pointer items-center text-xs mt-2 pt-2">
+                  <div className=" border-t relative flex justify-between cursor-pointer items-center text-xs mt-2 pt-2">
                     <div onClick={togglePopup} className="openDesc flex w-full justify-between cursor-pointer items-center">
                   <p className="openDesc text-sm" onClick={togglePopup}>short description</p>
-                  <div className="openDesc w-[60%] py-5 bg-gray-200 hover:bg-gray-300 rounded" onClick={togglePopup}></div>
+                  <div className="openDesc w-[60%] py-5 bg-gray-blue/40 hover:bg-gray-blue/70 rounded" onClick={togglePopup}></div>
                     </div>
                   {
                     showPopup ?
@@ -435,7 +435,7 @@ const NewProduct = () => {
                   <div className="relative flex openDesc justify-between cursor-default items-center text-xs ">
                   <p className="text-sm openDesc">short description</p>
                   <div className="flex openDesc justify-center  cursor-default items-center">
-                  <input type="text"  className="w-full mr-2 border openDesc py-2 bg-gray-200 hover:bg-gray-300 rounded-lg" />
+                  <input type="text"  className="w-full mr-2 border openDesc py-2 bg-gray-blue/20 hover:bg-gray-blue/70 rounded-lg" />
                   <p className="text-blue-600 cursor- openDesc">clear</p>
                   </div>
                 </div>

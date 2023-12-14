@@ -7,16 +7,16 @@ import Hitmaphraph from "../../components/hitmapgraph";
 const Analytices = () => {
   return (
     <div className="p-10">
-      <h1 className="text-xl text-HeadingColours text-ubuntu-bold flex items-center">
+      <h1 className="text-xl font-bold">
         Analytics
       </h1>
-      <div className="mt-5 text-HeadingColours flex justify-between">
+      <div className="mt-5 flex justify-between">
         <div className="flex space-x-2">
-          <div className="flex py-1 px-2 rounded-lg cursor-pointer text-xs shadow-sm bg-white w-max items-center text-ubuntu-regular">
+          <div className="flex py-1 px-2 rounded-lg cursor-pointer text-xs shadow-sm bg-white w-max items-center">
             <AiOutlineCalendar className="mr-1" />
             Today
           </div>
-          <div className="flex py-1 px-2 rounded-lg  cursor-pointer  text-xs shadow-sm bg-white w-max items-center text-ubuntu-regular">
+          <div className="flex py-1 px-2 rounded-lg  cursor-pointer text-xs shadow-sm bg-white w-max items-center">
             Compare:Yesterday
           </div>
         </div>
@@ -24,13 +24,13 @@ const Analytices = () => {
           <div>
             <input
               type="checkbox"
-              className="mr-2 focus:ring-0 focus:outline-none text-HeadingColours"
+              className="mr-2 focus:ring-0 focus:outline-none"
             />
-            <span className="text-ubuntu-regular text-xs border-b-4 border-dotted">
+            <span className="text-xs border-b-4 border-dotted">
               Auto-refresh
             </span>
           </div>
-          <div className="flex py-1 px-2 rounded-lg  cursor-pointer  text-xs shadow-sm bg-white w-max items-center text-ubuntu-regular">
+          <div className="flex py-1 px-2 rounded-lg  cursor-pointer  text-xs shadow-sm bg-white w-max items-center">
             Customize
           </div>
         </div>
