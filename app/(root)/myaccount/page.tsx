@@ -70,7 +70,7 @@ const MyAccount = () => {
       <h1 className="text-gray-900 font-medium text-3xl md:text-[48px] text-center my-7">
         My Account
       </h1>
-      <div className="bg-white px-10 py-10 rounded-sm flex flex-wrap gap-y-5 mb-16">
+      <div className="bg-white px-4 md:px-10 py-10 rounded-sm flex flex-wrap gap-y-5 mb-16">
         <div className="w-full md:w-[30%]">
           <AccountSideBar />
         </div>

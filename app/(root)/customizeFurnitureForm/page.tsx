@@ -313,7 +313,7 @@ const customizeFurnitureForm = () => {
               </div>
               <div
                 className={`absolute z-10  ${
-                  categoriesHeight ? `h-[260px] w-[205px]` : `h-[0px] w-[0px]`
+                  categoriesHeight ? `h-[260px]` : `h-[0px]`
                 } px-2 bg-cream right-10 top-14 overflow-y-auto transition-all duration-300`}
               >
                 {categories.map((item: any, index: any) => {
@@ -363,7 +363,7 @@ const customizeFurnitureForm = () => {
                 </div>
                 <div
                   className={`absolute  ${
-                    colorsHeight ? `h-[260px] w-[205px]` : `h-[0px] w-[0px]`
+                    colorsHeight ? `h-[260px]` : `h-[0px]`
                   } px-4 bg-white z-10 right-10 top-16 overflow-y-auto transition-all duration-300`}
                 >
                   {colors.map((item: any, index: any) => {
@@ -401,7 +401,7 @@ const customizeFurnitureForm = () => {
                 </div>
                 <div
                   className={`absolute  ${
-                    stuffsHeight ? `h-[260px] w-[205px]` : `h-[0px] w-[0px]`
+                    stuffsHeight ? `h-[260px]` : `h-[0px]`
                   } px-4 bg-white z-10 right-10 top-16 overflow-y-auto transition-all duration-300`}
                 >
                   {stuffs.map((item: any, index: any) => {
@@ -437,7 +437,7 @@ const customizeFurnitureForm = () => {
               </div>
               <div
                 className={`absolute z-10  ${
-                  materialsHeight ? `h-[180px] w-[205px]` : `h-[0px] w-[0px]`
+                  materialsHeight ? `h-[180px]` : `h-[0px]`
                 } px-2 bg-white z-10 right-10 top-14 overflow-y-auto transition-all duration-300`}
               >
                 {materials.map((item: any, index: any) => {

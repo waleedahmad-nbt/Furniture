@@ -151,9 +151,9 @@ const Navbar = () => {
 
   return (
     <div className="relative bg-gray-900 text-white">
-      <header className="border-b">
+      <header className="border-b hidden md:block">
         <div className="container">
-          <ul className="flex gap-8 py-2">
+          <ul className="flex gap-8 py-2 text-[16px]">
             <li>
               <NavLink href="/myorders">Track Order</NavLink>
             </li>
@@ -171,15 +171,24 @@ const Navbar = () => {
       </header>
       <div className="container">
         <nav>
-          <div className="flex gap-3 justify-start items-center py-5">
+          <div className="flex gap-3 justify-between md:justify-start items-center py-5">
+            <button
+              onClick={() => setMenuOpen(true)}
+              className="p-[10px] bg-gray-400 text-white shrink-0 flex items-center gap-2 md:hidden"
+            >
+              <Image src={Menu} alt="menu icon" />
+            </button>
             <Link href="/" className="shrink-0 cursor-pointer">
               <h1 className="text-primary text-xl font-black text-center">
                 Guideline
               </h1>
               <p className="text-sm text-white">group of companies</p>
             </Link>
-            <div className="grow shrink flex items-center px-5 lg:px-16 gap-3">
-              <button onClick={() => setMenuOpen(true)} className="p-[10px] bg-gray-400 text-white shrink-0 flex items-center gap-2">
+            <div className="grow shrink hidden md:flex items-center px-5 lg:px-16 gap-3">
+              <button
+                onClick={() => setMenuOpen(true)}
+                className="py-[5px] px-[10px] lg:p-[10px] bg-gray-400 text-white shrink-0 flex items-center gap-2"
+              >
                 <Image src={Menu} alt="menu icon" />
                 Menu
               </button>
@@ -187,21 +196,31 @@ const Navbar = () => {
                 <input
                   type="text"
                   placeholder="Search here..."
-                  className="grow py-2.5 px-3 w-full"
+                  className="grow h-[34px] lg:h-[44px] px-3 w-full"
                 />
-                <button className="bg-primary shrink-0 h-[44px] px-2.5">
+                <button className="bg-primary shrink-0 h-[34px] lg:h-[44px] px-2.5">
                   <Image src={search} alt="search" />
                 </button>
               </div>
-              <Link href="/customizeFurniture" className="p-[10px] bg-gray-400 text-white shrink-0">
+              <Link
+                href="/customizeFurniture"
+                className="py-[5px] px-[10px] lg:p-[10px] bg-gray-400 text-white shrink-0"
+              >
                 Customize furniture
               </Link>
             </div>
-            <div className="flex items-center gap-6">
-              <button className="shrink-0" onClick={showModal}>
-                <Image src={profile} alt="user" />
+            <div className="flex items-center gap-4 lg:gap-6">
+              <button className="shrink-0 hidden md:block" onClick={showModal}>
+                <Image
+                  src={profile}
+                  alt="user"
+                  className="w-[25px] lg:w-[35px]"
+                />
               </button>
-              <NavLink href="/cart" className="shrink-0 relative text-[26px]">
+              <NavLink
+                href="/cart"
+                className="shrink-0 relative text-[26px] text-2xl md:text-xl lg:text-3xl"
+              >
                 <BsCart2 />
                 {cartItems.length > 0 && (
                   <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full w-[20px] h-[20px] text-white bg-primary text-xs">
@@ -209,7 +228,10 @@ const Navbar = () => {
                   </span>
                 )}
               </NavLink>
-              <NavLink href="/wishlist" className="shrink-0 relative text-[24px]">
+              <NavLink
+                href="/wishlist"
+                className="shrink-0 relative text-[24px] hidden md:block text-xl lg:text-3xl"
+              >
                 <BsHeart />
                 {wishList.length > 0 && (
                   <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full w-[20px] h-[20px] text-white bg-primary text-xs">
@@ -220,14 +242,14 @@ const Navbar = () => {
             </div>
           </div>
         </nav>
-        <ul className="flex flex-wrap items-center justify-between gap-3">
+        <ul className="hidden md:flex flex-wrap items-center justify-between gap-3">
           {Links?.map((item: any, index: number) => (
             <li
               key={index}
-              className="hover:text-primary transition-all group pb-3"
+              className="hover:text-primary transition-all group pb-3 font-normal text-[12px] lg:text-[16px]"
             >
               <Link href={item?.link}>{item?.label}</Link>
-              <div className="absolute w-full min-h-[33vh] bottom-0 translate-y-[100%] left-0 bg-white z-50 hidden group-hover:block hover:block">
+              <div className="absolute w-full max-h-[0vh] overflow-hidden bottom-0 translate-y-[100%] left-0 bg-white z-50 group-hover:max-h-[100vh] group-hover:overflow-auto transition-all duration-500 hover:block">
                 <div className="container py-5">
                   <div className="flex items-center gap-5">
                     <h1 className="text-[14px] text-gray-300 font-bold">
@@ -294,7 +316,7 @@ const Navbar = () => {
         handleOk={handleOk}
         handleSignUpCancel={handleSignUpCancel}
       />
-      <SideBar menuOpen={menuOpen} setMenuOpen={setMenuOpen}/>
+      <SideBar menuOpen={menuOpen} setMenuOpen={setMenuOpen} showModal={showModal}/>
     </div>
   );
 };

@@ -88,8 +88,8 @@ const MyAddress = () => {
           My Address
         </h1>
         <div className="container bg-white py-10 mb-20">
-          <div className="bg-white px-10 py-10 rounded-sm flex flex-wrap gap-y-5 mb-16">
-            <div className="w-full md:w-[30%] pr-5">
+          <div className="bg-white px-0 md:px-10 py-10 rounded-sm flex flex-wrap gap-y-5 mb-16">
+            <div className="w-full md:w-[30%] pr-0 md:pr-5">
               <AccountSideBar />
             </div>
             <div className="w-full md:w-[70%] pl-0 md:pl-5">
@@ -108,13 +108,16 @@ const MyAddress = () => {
                     <h2 className="text-[16px] text-gray-300 font-medium">
                       Address
                     </h2>
-                    <h2 className="text-[16px] text-gray-300 font-medium">
-                      Phone Number
-                    </h2>
-                    <h2 className="text-[16px] text-gray-300 font-medium">
-                      Alternative Phone Number
-                    </h2>
+                    <div className="mt-10 sm:mt-0 md:mt-5 lg:mt-0">
+                      <h2 className="text-[16px] text-gray-300 font-medium">
+                        Phone Number
+                      </h2>
+                      <h2 className="text-[16px] text-gray-300 font-medium">
+                        Alternative Phone Number
+                      </h2>
+                    </div>
                   </div>
+
                   <div className="col-span-1 flex flex-col gap-y-2">
                     <p className="text-[14px] text-gray-200 font-normal">
                       Bangalore-560016
@@ -151,12 +154,14 @@ const MyAddress = () => {
                     <h2 className="text-[16px] text-gray-300 font-medium">
                       Address
                     </h2>
-                    <h2 className="text-[16px] text-gray-300 font-medium">
-                      Phone Number
-                    </h2>
-                    <h2 className="text-[16px] text-gray-300 font-medium">
-                      Alternative Phone Number
-                    </h2>
+                    <div className="mt-10 sm:mt-0 md:mt-5 lg:mt-0">
+                      <h2 className="text-[16px] text-gray-300 font-medium">
+                        Phone Number
+                      </h2>
+                      <h2 className="text-[16px] text-gray-300 font-medium">
+                        Alternative Phone Number
+                      </h2>
+                    </div>
                   </div>
                   <div className="col-span-1 flex flex-col gap-y-2">
                     <p className="text-[14px] text-gray-200 font-normal">

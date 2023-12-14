@@ -5,23 +5,22 @@ import React, { useEffect, useRef, useState } from "react";
 const SliderImage = ({ item, itemNumebr, setIndex, hover }: any) => {
   const [width, setWidth] = useState<number>(0);
   const img = useRef<any>(null);
+console.log(hover);
 
-  
   useEffect(() => {
     if (!img.current) {
       return;
     }
-    
+
     const resize = () => {
       setWidth(img.current.scrollWidth);
-      console.log(img.current.scrollWidth);
     };
 
-    document?.addEventListener("resize", resize);
+    window.addEventListener("resize", resize);
     resize();
 
     return () => {
-      document?.removeEventListener("resize", resize);
+      window.removeEventListener("resize", resize);
     };
   }, [img]);
 

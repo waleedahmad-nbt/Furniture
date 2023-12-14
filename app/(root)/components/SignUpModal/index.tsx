@@ -51,12 +51,12 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel }: any) => {
               ></div>
             </div>
             <div
-              className=" w-max px-10 md:w-[839px] rounded-lg text-left transform transition-all "
+              className=" px-0 md:px-10 rounded-lg text-left transform transition-all "
               role="dialog"
               aria-modal="true"
               aria-labelledby="modal-headline"
             >
-              <div className="relative min-h-[75vh] bg-white px-4 pt-10 pb-10 sm:p-6 text-gray-900">
+              <div className="relative w-full xs:w-[400px] sm:w-[500px] md:w-[768px] bg-white px-4 pt-10 pb-10 sm:p-6 text-gray-900">
                 <div
                   className="absolute top-5 right-5 cursor-pointer"
                   onClick={handleSignUpCancel}
@@ -64,7 +64,7 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel }: any) => {
                   <RxCross1 />
                 </div>
 
-                <div className="w-max mx-auto pb-10">
+                <div className=" w-auto md:w-max mx-auto pb-10">
                   <h1 className="text-left text-gray-900 text-2xl font-medium">
                     Sign Up Information
                   </h1>
@@ -74,7 +74,7 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel }: any) => {
                         Email <span className="text-red-500">*</span>
                       </label>
                       <input
-                        className="w-[368px] h-[48px] px-5 mt-2 border border-gray-100 rounded-md bg-white outline-none"
+                        className="w-full sm:w-[368px] h-[48px] px-5 mt-2 border border-gray-100 rounded-md bg-white outline-none"
                         type="text"
                         name="email"
                         id="email"
@@ -90,7 +90,7 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel }: any) => {
                         Password <span className="text-red-500">*</span>
                       </label>
                       <div
-                        className={`flex justify-between items-center w-[368px] h-[48px] px-5 mt-2 border ${
+                        className={`flex justify-between items-center w-full sm:w-[368px] h-[48px] px-5 mt-2 border ${
                           isValid ? "border-gray-100 " : "border-secondary"
                         } rounded-md`}
                       >
@@ -126,7 +126,7 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel }: any) => {
                         Re-enter The Password{" "}
                         <span className="text-red-500">*</span>
                       </label>
-                      <div className="flex justify-between items-center w-[368px] h-[48px] px-5 mt-2 border border-gray-100 rounded-md">
+                      <div className="flex justify-between items-center w-full sm:w-[368px] h-[48px] px-5 mt-2 border border-gray-100 rounded-md">
                         <input
                           className="bg-white h-full outline-none w-full"
                           type={reenterPassword ? "password" : "text"}
@@ -142,8 +142,8 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel }: any) => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between gap-3 mt-5 pr-16">
-                      <div>
+                    <div className="flex justify-between items-start gap-3 mt-5 pr-16">
+                      <div className=" mt-1">
                         <input
                           className="hidden"
                           type="checkbox"
@@ -164,8 +164,9 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel }: any) => {
                         </label>
                       </div>
                       <p className="text-[14px] text-gray-200">
-                        By using this form you agree with the storage <br /> and
-                        handling of your data by this website.
+                        By using this form you agree with the storage{" "}
+                        <br className="hidden md:block" /> and handling of your
+                        data by this website.
                       </p>
                     </div>
                   </form>

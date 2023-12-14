@@ -40,9 +40,9 @@ const Cart = () => {
 
       <div className="container">
         <div className="flex flex-wrap justify-between gap-y-5 mt-5 mb-16">
-          <div className="pr-2">
+          <div className="pr-2 w-full lg:w-[60%]">
             <h1 className="text-[20px] font-medium">Cart</h1>
-            <div className="bg-white rounded-sm mt-6">
+            <div className="bg-white w-full rounded-sm mt-6">
               <table className="text-left w-full">
                 <thead>
                   <tr>
@@ -56,7 +56,7 @@ const Cart = () => {
                     <th className="py-3 px-5 text-sm font-medium md:font-semibold">
                       Qty
                     </th>
-                    <th className="py-3 px-0 md:px-5 text-sm font-medium md:font-semibold">
+                    <th className="py-3 pr-1 md:px-5 text-sm font-medium md:font-semibold">
                       Sub Total
                     </th>
                   </tr>

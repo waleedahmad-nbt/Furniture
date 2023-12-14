@@ -30,12 +30,12 @@ const Modal = ({
             </div>
             {showSignIn && !forgotPassword && (
               <div
-                className=" w-max px-10 md:w-[839px]  rounded-lg text-left transform transition-all "
+                className=" px-0 md:px-10 rounded-lg text-left transform transition-all "
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="modal-headline"
               >
-                <div className="relative bg-white min-h-[75vh]  px-4 pt-10 pb-10 sm:p-6 text-gray-900">
+                <div className="relative w-full xs:w-[400px] sm:w-[500px] md:w-[768px]  bg-white min-h-[75vh]  px-4 pt-10 pb-10 sm:p-6 text-gray-900">
                   <div
                     className="absolute top-5 right-5 cursor-pointer"
                     onClick={handleCancel}
@@ -43,7 +43,7 @@ const Modal = ({
                     <RxCross1 />
                   </div>
 
-                  <div className="w-max mx-auto pb-10">
+                  <div className="w-full sm:w-max mx-auto pb-10">
                     <h1 className="text-left text-gray-900 text-2xl font-medium">
                       Registered Customers
                     </h1>
@@ -60,7 +60,7 @@ const Modal = ({
                           Email <span className="text-red-500">*</span>
                         </label>
                         <input
-                          className="w-[368px] h-[48px] px-5 mt-2 border border-gray-100 rounded-md bg-white outline-none"
+                          className=" w-full sm:w-[368px] h-[48px] px-5 mt-2 border border-gray-100 rounded-md bg-white outline-none"
                           type="text"
                           name="email"
                           id="email"
@@ -75,7 +75,7 @@ const Modal = ({
                         >
                           Password <span className="text-red-500">*</span>
                         </label>
-                        <div className="flex justify-between items-center w-[368px] h-[48px] px-5 mt-2 border border-gray-100 rounded-md">
+                        <div className="flex justify-between items-center w-full sm:w-[368px] h-[48px] px-5 mt-2 border border-gray-100 rounded-md">
                           <input
                             className="bg-white h-full w-full outline-none"
                             type={showPassword ? "password" : "text"}
@@ -89,8 +89,8 @@ const Modal = ({
                         </div>
                       </div>
 
-                      <div className="flex justify-between gap-3 mt-5 pr-16">
-                        <div>
+                      <div className="flex justify-between items-start gap-3 mt-5 pr-0 sm:pr-16">
+                        <div className="mt-1">
                           <input
                             className="hidden"
                             type="checkbox"
@@ -111,13 +111,14 @@ const Modal = ({
                           </label>
                         </div>
                         <p className="text-[14px] text-gray-200">
-                          By using this form you agree with the storage <br />{" "}
-                          and handling of your data by this website.
+                          By using this form you agree with the storage{" "}
+                          <br className="hidden md:block" /> and handling of
+                          your data by this website.
                         </p>
                       </div>
                     </form>
                     <div className="flex justify-between mt-5 pr-3">
-                      <button className="bg-primary text-white w-[172px] h-[40px] text-[14px]">
+                      <button className="bg-primary text-white w-auto px-10 sm:w-[172px] h-[40px] text-[14px]">
                         Sign In
                       </button>
                       <button
@@ -155,12 +156,12 @@ const Modal = ({
 
             {forgotPassword && !showSignIn && (
               <div
-                className="w-max px-10 md:w-[839px] rounded-lg text-left transform transition-all "
+                className="px-0 md:px-10 rounded-lg text-left transform transition-all "
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="modal-headline"
               >
-                <div className="relative bg-white min-h-[75vh] px-4 pt-10 pb-10 sm:p-6 sm:pb-4 text-gray-900">
+                <div className="relative w-full xs:w-[400px] sm:w-[500px] md:w-[768px] bg-white min-h-[75vh] px-4 pt-10 pb-10 sm:p-6 sm:pb-4 text-gray-900">
                   <div
                     className="absolute top-5 right-5 cursor-pointer"
                     onClick={() => {
@@ -172,7 +173,7 @@ const Modal = ({
                     <RxCross1 />
                   </div>
 
-                  <div className="w-max mx-auto pt-20">
+                  <div className=" w-full sm:w-max mx-auto pt-20">
                     <h1 className="text-left text-gray-900 text-2xl font-medium">
                       Forgot Password
                     </h1>
@@ -185,7 +186,7 @@ const Modal = ({
                         Email <span className="text-red-500">*</span>
                       </label>
                       <input
-                        className="w-[368px] h-[48px] px-5 mt-2 border border-[#D6D6D6] rounded-md bg-white outline-none"
+                        className="w-full sm:w-[368px] h-[48px] px-5 mt-2 border border-[#D6D6D6] rounded-md bg-white outline-none"
                         type="text"
                         name="email"
                         id="email"

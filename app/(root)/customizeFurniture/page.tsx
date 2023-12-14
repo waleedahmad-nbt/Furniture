@@ -63,11 +63,11 @@ const customizeFurniture = () => {
           </div>
 
           <div className="mt-10 flex flex-col items-center gap-2">
-            <div className="flex flex-col md:flex-row items-center gap-2">
+            <div className="flex flex-col sm:flex-row items-center gap-2">
               <div>
                 <Image src={joybird} alt="" />
               </div>
-              <div className="flex flex-col md:flex-row gap-2 ">
+              <div className="flex flex-col sm:flex-row gap-2 ">
                 <div>
                   <Image src={chair} alt="" />
                 </div>
@@ -76,21 +76,21 @@ const customizeFurniture = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col lg:flex-row gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <div className="relative ">
                 <Image src={blueSofa} alt="" />
-                <div className="absolute top-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-5">
-                  <div className="bg-[#3C3C3C] w-[200px] min-h-[100px] md:w-[356px] md:h-[159px] text-center px-2 border">
-                    <h1 className="text-white text-xl md:text-3xl mt-3">
+                <div className="absolute top-2 md:top-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 md:gap-4">
+                  <div className="bg-[#3C3C3C] pb-3 w-[200px] min-h-[100px] lg:w-[356px] md:min-h-[159px] text-center px-2 border">
+                    <h1 className="text-white text-sm lg:text-3xl mt-3">
                       Living <span className="text-primary">Room</span> <br />
                       Customize{" "}
                     </h1>
-                    <p className="text-white text-[10px] md:text-[14px] mt-3">
+                    <p className="text-white text-[10px] lg:text-[14px] mt-3">
                       Lorem Ipsum is simply dummy text of the printing and
                       typesetting industry. Lorem Ipsum has been
                     </p>
                   </div>
-                  <button className=" text-white bg-primary py-[8px] px-[16px] w-[172px] h-[40px]">
+                  <button className=" text-white bg-primary py-[8px] px-[10px] lg:px-[16px] w-[172px] h-[40px] text-[14px]">
                     Order Now
                   </button>
                 </div>
@@ -99,7 +99,7 @@ const customizeFurniture = () => {
                 <Image src={sofacmBed} alt="" />
               </div>
             </div>
-            <div className="flex flex-col md:flex-row items-center gap-2">
+            <div className="flex flex-col sm:flex-row items-center gap-2">
               <div>
                 <Image src={grayBed} alt="" />
               </div>
@@ -111,31 +111,32 @@ const customizeFurniture = () => {
         </div>
       </div>
 
-      <div className="relative container flex justify-end pb-10 px-10 ">
-        {/* <div className="pr-12"> */}
-        <Image src={livingRoomChair} alt="" className="" />
-        {/* </div> */}
-        <div
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, #F3EFE5, #F3EFE5, #F3EFE5, #F3EFE500)",
-          }}
-          className="absolute sm:h-[250px] md:h-[300px] lg:h-[380px] px-20 sm:left-[1%] md:left-[0%] hidden sm:flex items-start pt-7  "
-        >
-          <div>
-            <p className="uppercase text-primary font-medium">
-              Weekend discount
-            </p>
-            <h1 className="text-2xl md:text-3xl lg:text-5xl font-medium text-gray-300 mt-5">
-              Order Your <span className="text-primary">Customized</span> <br />
-              Furniture
-            </h1>
-            <p className="text-gray-200 text-[14px] mt-2">
-              Organizing never looked so good, Design yours today!..
-            </p>
-            <button className="text-white bg-primary py-[10px] px-[16px] w-[176px] mt-5">
-              Order Now
-            </button>
+      <div className="container my-10">
+        <div className="relative h-[300px]">
+          <div className="absolute h-full right-0 top-0 z-[-1]">
+            <Image
+              src={livingRoomChair}
+              alt="banner"
+              className="max-h-[300px] h-full object-cover"
+            />
+          </div>
+          <div className="Discount_Banner px-10 py-10 h-full flex items-center">
+            <div>
+              <p className="uppercase text-primary font-medium">
+                Weekend discount
+              </p>
+              <h1 className="text-2xl md:text-3xl lg:text-5xl font-medium text-gray-300 mt-5">
+                Order Your <span className="text-primary">Customized</span>{" "}
+                <br />
+                Furniture
+              </h1>
+              <p className="text-gray-200 text-[14px] mt-2">
+                Organizing never looked so good, Design yours today!..
+              </p>
+              <button className="text-white bg-primary py-[10px] px-[16px] w-[176px] mt-5">
+                Order Now
+              </button>
+            </div>
           </div>
         </div>
       </div>

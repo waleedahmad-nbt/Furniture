@@ -42,7 +42,7 @@ const MyOrders = () => {
         My Orders
       </h1>
       <div className="bg-white px-0 md:px-10 py-10 rounded-sm flex flex-wrap mb-16">
-        <div className="w-full md:w-[30%] pr-5 ms-5">
+        <div className="w-full md:w-[30%] pr-0 md:pr-5 ms-5">
           <AccountSideBar />
         </div>
         <div className="w-full md:w-[65%] pl-0 md:pl-5 pr-2 mt-5 md:mt-0">
