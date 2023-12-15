@@ -5,6 +5,9 @@ import { IoEyeOutline } from "react-icons/io5";
 import { FiEyeOff } from "react-icons/fi";
 import { FaCheck } from "react-icons/fa";
 import { publicRequest } from "@/requestMethods";
+import Image from "next/image";
+import loader from "@/app/assets/icons/loader.gif";
+import { useRouter } from "next/navigation";
 
 const Modal = ({
   showModal,
@@ -23,35 +26,35 @@ const Modal = ({
   const [loading, setLoading] = useState(false);
   const [formData, setFormData]: any = useState({});
 
+  const router = useRouter();
+
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  console.log(formData);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      try {
-        if (
-          formData.email &&
-          formData.password &&
-          formData.password == formData.confirmPassword
-        ) {
-          setLoading(true);
-          const res = await publicRequest.post(`/user/register`, {
-            email: formData.email,
-            password: formData.password,
-          });
-          console.log(res);
-          if (res) {
-            // setLoading(false);
-            // showModal();
-          }
+      if (formData.email && formData.password) {
+        setLoading(true);
+        const res: any = await publicRequest.post(`/user/login`, {
+          email: formData.email,
+          password: formData.password,
+        });
+        console.log(res);
+        if (res) {
+          setLoading(false);
+          setIsResponse(true);
+          setResMsg("");
+          handleCancel();
+          router.push("/");
         }
-      } catch (error) {
-        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      setLoading(false);
+      setIsResponse(false);
+      setResMsg(error.response.data);
     }
   };
 
@@ -89,7 +92,7 @@ const Modal = ({
                       If you have an account, sign in with your email address.
                     </p>
 
-                    <form>
+                    <form onSubmit={handleSubmit}>
                       <div className="flex flex-col">
                         <label
                           htmlFor="email"
@@ -99,7 +102,7 @@ const Modal = ({
                         </label>
                         <input
                           className=" w-full sm:w-[368px] h-[48px] px-5 mt-2 border border-gray-100 rounded-md bg-white outline-none"
-                          type="text"
+                          type="email"
                           name="email"
                           id="email"
                           placeholder="Type your email"
@@ -130,10 +133,15 @@ const Modal = ({
                       </div>
                       <div className="flex justify-between mt-5 pr-3">
                         <button
-                          className="bg-primary text-white w-auto px-10 sm:w-[172px] h-[40px] text-[14px]"
-                          onClick={handleSubmit}
+                          className="bg-primary flex justify-center items-center text-white w-[172px] h-[40px] text-[14px] cursor-pointer"
+                          type="submit"
                         >
-                          Sign In
+                          <p>{!loading ? "Sign In" : ""}</p>
+                          {loading ? (
+                            <Image src={loader} alt="" className="w-[30px]" />
+                          ) : (
+                            ""
+                          )}
                         </button>
                         <button
                           className="underline text-[14px]"
@@ -147,9 +155,16 @@ const Modal = ({
                       </div>
                     </form>
 
-                    <p className="text-primary text-[12px] mt-3">
-                      {isResponse ? " *Required Fields" : resMsg}
-                    </p>
+                    {isResponse ? (
+                      <p className="text-primary text-[12px] mt-3">
+                        *Required Fields
+                      </p>
+                    ) : (
+                      <p className="text-secondary text-[16px] mt-3">
+                        {resMsg}
+                      </p>
+                    )}
+
                     <h1 className="text-2xl font-medium mt-3">New Customers</h1>
                     <p className="text-gray-200 text-[12px] mt-2">
                       Creating an account has many benefits: check out faster,{" "}

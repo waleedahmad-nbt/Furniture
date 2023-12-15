@@ -16,6 +16,9 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
   const [isConfirmValid, setIsConfirmValid] = useState(true);
   const [loading, setLoading] = useState(false);
 
+  const [isResponse, setIsResponse] = useState(true);
+  const [resMsg, setResMsg] = useState("");
+
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -36,6 +39,8 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
         console.log(res);
         if (res) {
           setLoading(false);
+          setIsResponse(true);
+          setResMsg("");
           handleSignUpCancel();
           showModal();
         }
@@ -43,8 +48,10 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
       } else {
         setIsConfirmValid(false);
       }
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      setLoading(false);
+      setIsResponse(false);
+      setResMsg(error.response.data.error);
     }
   };
 
@@ -77,7 +84,7 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                   <h1 className="text-left text-gray-900 text-2xl font-medium">
                     Sign Up Information
                   </h1>
-                  <form>
+                  <form onSubmit={handleSubmit}>
                     <div className="flex flex-col">
                       <label htmlFor="email" className="mt-5 text-[12px] ms-5">
                         Email <span className="text-red-500">*</span>
@@ -147,6 +154,7 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                           type={reenterPassword ? "password" : "text"}
                           name="confirmPassword"
                           id="password"
+                          required
                           placeholder="Type your Password"
                           onChange={handleChange}
                         />
@@ -200,7 +208,6 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                         }`}
                         disabled={!isChecked}
                         type="submit"
-                        onClick={handleSubmit}
                       >
                         <p>{!loading ? "Create An Account" : ""}</p>
                         {loading ? (
@@ -212,9 +219,13 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                     </div>
                   </form>
 
-                  <p className="text-primary text-[12px] mt-3">
-                    *Required Fields
-                  </p>
+                  {isResponse ? (
+                    <p className="text-primary text-[12px] mt-3">
+                      *Required Fields
+                    </p>
+                  ) : (
+                    <p className="text-secondary text-[16px] mt-3">{resMsg}</p>
+                  )}
                 </div>
               </div>
             </div>
