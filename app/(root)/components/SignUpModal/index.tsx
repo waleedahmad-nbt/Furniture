@@ -22,6 +22,7 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  // console.log(formData);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -30,16 +31,19 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
         formData.email &&
         formData.password &&
         formData.password == formData.confirmPassword &&
-        formData.firstName && formData.lastName && formData.username
+        formData.firstName &&
+        formData.lastName &&
+        formData.username
       ) {
         setLoading(true);
         const res = await publicRequest.post(`/user/register`, {
           email: formData.email,
           password: formData.password,
           lastName: formData.lastName,
-          firstName: formData.firstName
+          firstName: formData.firstName,
+          username: formData.username,
         });
-        console.log(res);
+        // console.log(res);
         if (res) {
           setLoading(false);
           setIsResponse(true);
@@ -90,7 +94,10 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                   <form onSubmit={handleSubmit}>
                     <div className="grid grid-cols-2 gap-3 sm:w-[368px] mt-3">
                       <div>
-                        <label htmlFor="firstName" className="mt-5 text-[12px] ms-3">
+                        <label
+                          htmlFor="firstName"
+                          className="mt-5 text-[12px] ms-3"
+                        >
                           First Name <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -104,7 +111,10 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                         />
                       </div>
                       <div>
-                        <label htmlFor="lastName" className="mt-5 text-[12px] ms-3">
+                        <label
+                          htmlFor="lastName"
+                          className="mt-5 text-[12px] ms-3"
+                        >
                           Last Name <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -119,7 +129,10 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                       </div>
                     </div>
                     <div className="flex flex-col">
-                      <label htmlFor="username" className="mt-5 text-[12px] ms-3">
+                      <label
+                        htmlFor="username"
+                        className="mt-5 text-[12px] ms-3"
+                      >
                         User Name <span className="text-red-500">*</span>
                       </label>
                       <input

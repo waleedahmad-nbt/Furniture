@@ -8,6 +8,8 @@ import { publicRequest } from "@/requestMethods";
 import Image from "next/image";
 import loader from "@/app/assets/icons/loader.gif";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setLoginUser } from "@/lib/store/slices/Allslices";
 
 const Modal = ({
   showModal,
@@ -27,11 +29,12 @@ const Modal = ({
   const [formData, setFormData]: any = useState({});
 
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  console.log(formData);
+  // console.log(formData);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -42,12 +45,13 @@ const Modal = ({
           email: formData.email,
           password: formData.password,
         });
-        console.log(res);
+        // console.log(res);
         if (res) {
           setLoading(false);
           setIsResponse(true);
           setResMsg("");
           handleCancel();
+          dispatch(setLoginUser(res.data.data));
           router.push("/");
         }
       }

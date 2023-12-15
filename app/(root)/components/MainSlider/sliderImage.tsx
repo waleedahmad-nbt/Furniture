@@ -5,7 +5,6 @@ import React, { useEffect, useRef, useState } from "react";
 const SliderImage = ({ item, itemNumebr, setIndex, hover }: any) => {
   const [width, setWidth] = useState<number>(0);
   const img = useRef<any>(null);
-console.log(hover);
 
   useEffect(() => {
     if (!img.current) {
