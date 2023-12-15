@@ -29,12 +29,15 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
       if (
         formData.email &&
         formData.password &&
-        formData.password == formData.confirmPassword
+        formData.password == formData.confirmPassword &&
+        formData.firstName && formData.lastName && formData.username
       ) {
         setLoading(true);
         const res = await publicRequest.post(`/user/register`, {
           email: formData.email,
           password: formData.password,
+          lastName: formData.lastName,
+          firstName: formData.firstName
         });
         console.log(res);
         if (res) {
@@ -85,12 +88,61 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                     Sign Up Information
                   </h1>
                   <form onSubmit={handleSubmit}>
+                    <div className="grid grid-cols-2 gap-3 sm:w-[368px] mt-3">
+                      <div>
+                        <label htmlFor="firstName" className="mt-5 text-[12px] ms-3">
+                          First Name <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          className="w-full h-[48px] px-3 mt-1 border border-gray-100 rounded-md bg-white outline-none"
+                          type="text"
+                          name="firstName"
+                          id="firstName"
+                          required
+                          placeholder="First Name"
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="lastName" className="mt-5 text-[12px] ms-3">
+                          Last Name <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          className="w-full h-[48px] px-3 mt-1 border border-gray-100 rounded-md bg-white outline-none"
+                          type="text"
+                          name="lastName"
+                          id="lastName"
+                          required
+                          placeholder="Last Name"
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
                     <div className="flex flex-col">
-                      <label htmlFor="email" className="mt-5 text-[12px] ms-5">
+                      <label htmlFor="username" className="mt-5 text-[12px] ms-3">
+                        User Name <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        className="w-full sm:w-[368px] h-[48px] px-3 mt-1 border border-gray-100 rounded-md bg-white outline-none"
+                        type="text"
+                        name="username"
+                        id="username"
+                        required
+                        placeholder="User Name"
+                        onChange={handleChange}
+                      />
+                      {/* {!isEmail && (
+                        <p className="mt-3 text-secondary text-[12px] font-normal ms-3">
+                          Please enter a valid email address.
+                        </p>
+                      )} */}
+                    </div>
+                    <div className="flex flex-col">
+                      <label htmlFor="email" className="mt-5 text-[12px] ms-3">
                         Email <span className="text-red-500">*</span>
                       </label>
                       <input
-                        className="w-full sm:w-[368px] h-[48px] px-5 mt-2 border border-gray-100 rounded-md bg-white outline-none"
+                        className="w-full sm:w-[368px] h-[48px] px-3 mt-1 border border-gray-100 rounded-md bg-white outline-none"
                         type="email"
                         name="email"
                         id="email"
@@ -99,7 +151,7 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                         onChange={handleChange}
                       />
                       {/* {!isEmail && (
-                        <p className="mt-3 text-secondary text-[12px] font-normal ms-5">
+                        <p className="mt-3 text-secondary text-[12px] font-normal ms-3">
                           Please enter a valid email address.
                         </p>
                       )} */}
@@ -108,12 +160,12 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                     <div className="flex flex-col">
                       <label
                         htmlFor="password"
-                        className="mt-2 text-[12px] ms-5"
+                        className="mt-5 text-[12px] ms-3"
                       >
                         Password <span className="text-red-500">*</span>
                       </label>
                       <div
-                        className={`flex justify-between items-center w-full sm:w-[368px] h-[48px] px-5 mt-2 border ${"border-gray-100 "} rounded-md`}
+                        className={`flex justify-between items-center w-full sm:w-[368px] h-[48px] px-3 mt-1 border ${"border-gray-100 "} rounded-md`}
                       >
                         <input
                           className="bg-white h-full outline-none w-full"
@@ -130,7 +182,7 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                         </div>
                       </div>
                       {/* {!isValid && (
-                        <p className="mt-3 text-secondary text-[12px] font-normal ms-5">
+                        <p className="mt-3 text-secondary text-[12px] font-normal ms-3">
                           Password should be between 8-16 characters, contain{" "}
                           <br />
                           lowercase letters, at least one uppercase letter, a{" "}
@@ -143,12 +195,12 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                     <div className="flex flex-col">
                       <label
                         htmlFor="password"
-                        className="mt-4 text-[12px] ms-5"
+                        className="mt-5 text-[12px] ms-3"
                       >
                         Re-enter The Password{" "}
                         <span className="text-red-500">*</span>
                       </label>
-                      <div className="flex justify-between items-center w-full sm:w-[368px] h-[48px] px-5 mt-2 border border-gray-100 rounded-md">
+                      <div className="flex justify-between items-center w-full sm:w-[368px] h-[48px] px-3 mt-1 border border-gray-100 rounded-md">
                         <input
                           className="bg-white h-full outline-none w-full"
                           type={reenterPassword ? "password" : "text"}
@@ -165,7 +217,7 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                         </div>
                       </div>
                       {!isConfirmValid && (
-                        <p className="mt-3 text-secondary text-[12px] font-normal ms-5">
+                        <p className="mt-3 text-secondary text-[12px] font-normal ms-3">
                           Password is not correct
                         </p>
                       )}
