@@ -98,9 +98,9 @@ const products: any = [
 ]
 const Products = () => {
 
-  const [val, setVal] = useState(0)
-  const [category, setCategory] = useState('all')
-  const [data, setData] = useState([])
+  const [val, setVal] = useState<number>(0);
+  const [category, setCategory] = useState<string>('all');
+  const [data, setData] = useState([]);
 
   const changeValue = (i:any, type:any) => {
     setVal(i)
