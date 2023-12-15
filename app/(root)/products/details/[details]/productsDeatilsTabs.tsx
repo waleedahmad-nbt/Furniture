@@ -12,10 +12,10 @@ const ProductsDeatilsTabs = ({ product }: any) => {
 
   const imagesSlice =
     tab === Tabs[0]
-      ? product?.images?.slice(0, 3)
+      ? product?.Images?.slice(0, 3)
       : tab === Tabs[2]
-      ? product?.images?.slice(0, 2)
-      : product?.images.slice(0, 1);
+      ? product?.Images?.slice(0, 2)
+      : product?.Images?.slice(0, 1);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -43,13 +43,7 @@ const ProductsDeatilsTabs = ({ product }: any) => {
                 Description:
               </h2>
               <p className="text-gray-200">
-                The company reinterprets tradition by calling upon international
-                designers to work with them and developing new technologies and
-                materials to guarantee innovative and surprising results.
-                Passion is the engine that drives the brand – together with its
-                renowned creatives and high-profile collaborators – to search
-                for original solutions using advanced materials, methods, tools,
-                and technologies.
+                {product?.description}
               </p>
             </div>
           ) : tab === Tabs[1] ? (
@@ -280,7 +274,7 @@ const ProductsDeatilsTabs = ({ product }: any) => {
         <div>
           {imagesSlice?.map((item: any, index: number) => (
             <div className="w-full mb-10" key={index}>
-              <Image src={item} alt="product" className="w-full" />
+              <Image src={item} alt="product" className="w-full" width={100} height={100} />
             </div>
           ))}
         </div>
@@ -288,7 +282,7 @@ const ProductsDeatilsTabs = ({ product }: any) => {
         <>
           {imagesSlice?.map((item: any, index: number) => (
             <div className="w-full" key={index}>
-              <Image src={item} alt="product" className="w-full" />
+              <Image src={item} alt="product" className="w-full" width={100} height={100} />
             </div>
           ))}
         </>

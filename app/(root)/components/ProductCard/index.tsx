@@ -31,8 +31,8 @@ const ProductCard = ({ item, className, offer }: any) => {
         <h3 className="font-medium text-gray-300 mt-1">{item?.title}</h3>
       </Link>
       <div className="flex flex-items gap-3">
-        <span className="text-gray-500 line-through">${item?.priceWas}</span>
-        <span className="text-primary">${item?.priceNow}</span>
+        <span className="text-gray-500 line-through">${item?.price}</span>
+        <span className="text-primary">${item?.price}</span>
       </div>
       <p className="text-gray-300 text-[14px]">
         {item?.quantity > 0 ? (

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProductCard } from "../../../components";
 import Image from "next/image";
 import Link from "next/link";
@@ -31,8 +31,15 @@ import linkedin from "@/app/assets/icons/linkedin.svg";
 import mail from "@/app/assets/icons/mail.svg";
 import twitter from "@/app/assets/icons/twitter.svg";
 import ProductsDeatilsTabs from "./productsDeatilsTabs";
+import { useParams } from "next/navigation";
+import { publicRequest } from "@/requestMethods";
 
 const ProductDetails = () => {
+
+  const { details } = useParams();
+
+  console.log(details)
+
   const [formData, setFormData] = useState<any>({
     size: "",
     color: "",
@@ -43,7 +50,7 @@ const ProductDetails = () => {
     {
       _id: "1",
       name: "Rocket stool",
-      images: [Pro2, kitchen, bed],
+      Images: [Pro2, kitchen, bed],
       priceWas: "27.90",
       priceNow: "18.80",
       quantity: 2,
@@ -52,7 +59,7 @@ const ProductDetails = () => {
     {
       _id: "2",
       name: "Rocket stool",
-      images: [Pro2, Pro1],
+      Images: [Pro2, Pro1],
       priceWas: "27.90",
       priceNow: "18.80",
       quantity: 0,
@@ -61,7 +68,7 @@ const ProductDetails = () => {
     {
       _id: "3",
       name: "Rocket stool",
-      images: [Pro2],
+      Images: [Pro2],
       priceWas: "27.90",
       priceNow: "18.80",
       quantity: 5,
@@ -70,7 +77,7 @@ const ProductDetails = () => {
     {
       _id: "4",
       name: "Rocket stool",
-      images: [Pro1],
+      Images: [Pro1],
       priceWas: "27.90",
       priceNow: "18.80",
       quantity: 2,
@@ -79,7 +86,7 @@ const ProductDetails = () => {
     {
       _id: "5",
       name: "Rocket stool",
-      images: [Pro1],
+      Images: [Pro1],
       priceWas: "27.90",
       priceNow: "18.80",
       quantity: 2,
@@ -89,7 +96,7 @@ const ProductDetails = () => {
 
   const data = {
     name: "The BonBaron Bean Bag Chair – Sherpa",
-    images: [sofa, sofa1, sofa2, sofa3],
+    Images: [sofa, sofa1, sofa2, sofa3],
     colors: [
       "#D76C66",
       "#7584DE",
@@ -119,6 +126,23 @@ const ProductDetails = () => {
 
   const [product, setProduct] = useState<any>(data);
 
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const res = await publicRequest.get(`/product/${details}`);
+  
+        console.log(res);
+        if(res.status === 200) {
+          setProduct(res.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    getProducts();
+  }, [])  
+
   function SamplePrevArrow(props: any) {
     const { className, onClick } = props;
     return <FaAngleLeft className={className} onClick={onClick} />;
@@ -133,7 +157,7 @@ const ProductDetails = () => {
     customPaging: function (i: any) {
       return (
         <div className="w-[117px] h-[117px] rounded-lg overflow-hidden hidden md:block">
-          <Image src={product.images[i]} alt="img" className="w-full h-full" />
+          <Image src={product?.Images[i]} alt="img" className="w-full h-full" width={100} height={100} />
         </div>
       );
     },
@@ -151,7 +175,7 @@ const ProductDetails = () => {
       setFormData((prev: any) => {
         return {
           ...prev,
-          amount: prev.amount < 100 ? prev.amount + 1 : prev.amount,
+          amount: prev.amount < product?.qty ? prev.amount + 1 : prev.amount,
         };
       });
     } else if (type === "minus") {
@@ -188,16 +212,16 @@ const ProductDetails = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-14 my-10">
           <div className="w-full">
             <Slider {...settings} className="Product_Details mb-[150px]">
-              {product?.images?.map((item: any, index: number) => (
+              {product?.Images?.map((item: any, index: number) => (
                 <div className={`relative w-full h-full`} key={index}>
-                  <Image src={item} alt="img" className="w-full" />
+                  <Image src={item} alt="img" className="w-full min-h-[613px]" width={100} height={100} />
                 </div>
               ))}
             </Slider>
           </div>
           <div className="-mt-28 md:-mt-0">
             <h1 className="text-[24px] font-medium text-gray-900">
-              {product?.name}
+              {product?.title}
             </h1>
             <div className="flex my-4">
               {Array.from({ length: 4 })?.map((_, index) => (
@@ -212,7 +236,7 @@ const ProductDetails = () => {
               <Image src={star} alt="product" width={24} height={24} />
             </div>
             <h2 className="text-[24px] font-medium text-gray-900 mb-4">
-              AED 904.18
+              AED {product?.price}
             </h2>
             <p className="font-medium text-gray-900 my-4">Sizes</p>
             <div className="flex flex-wrap gap-2">
