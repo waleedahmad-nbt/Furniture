@@ -4,6 +4,7 @@ import { RxCross1 } from "react-icons/rx";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiEyeOff } from "react-icons/fi";
 import { FaCheck } from "react-icons/fa";
+import { publicRequest } from "@/requestMethods";
 
 const Modal = ({
   showModal,
@@ -15,7 +16,44 @@ const Modal = ({
   const [showSignIn, setSignIn] = useState(true);
   const [showPassword, setShowPasswords] = useState(true);
   const [forgotPassword, setForgotPassword] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
+
+  const [isResponse, setIsResponse] = useState(true);
+  const [resMsg, setResMsg] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData]: any = useState({});
+
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      try {
+        if (
+          formData.email &&
+          formData.password &&
+          formData.password == formData.confirmPassword
+        ) {
+          setLoading(true);
+          const res = await publicRequest.post(`/user/register`, {
+            email: formData.email,
+            password: formData.password,
+          });
+          console.log(res);
+          if (res) {
+            // setLoading(false);
+            // showModal();
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -65,6 +103,7 @@ const Modal = ({
                           name="email"
                           id="email"
                           placeholder="Type your email"
+                          onChange={handleChange}
                         />
                       </div>
 
@@ -82,57 +121,34 @@ const Modal = ({
                             name="password"
                             id="password"
                             placeholder="Type your Password"
+                            onChange={handleChange}
                           />
                           <div onClick={() => setShowPasswords(!showPassword)}>
                             {showPassword ? <IoEyeOutline /> : <FiEyeOff />}
                           </div>
                         </div>
                       </div>
-
-                      <div className="flex justify-between items-start gap-3 mt-5 pr-0 sm:pr-16">
-                        <div className="mt-1">
-                          <input
-                            className="hidden"
-                            type="checkbox"
-                            name=""
-                            id="checkInp"
-                            checked={isChecked}
-                            onChange={() => setIsChecked(!isChecked)}
-                          />
-                          <label
-                            htmlFor="checkInp"
-                            className={`${
-                              isChecked
-                                ? "bg-primary rounded-none "
-                                : "bg-white border border-gray-100 rounded-sm "
-                            }text-white flex justify-center items-center w-[20px] h-[20px]`}
-                          >
-                            <FaCheck />
-                          </label>
-                        </div>
-                        <p className="text-[14px] text-gray-200">
-                          By using this form you agree with the storage{" "}
-                          <br className="hidden md:block" /> and handling of
-                          your data by this website.
-                        </p>
+                      <div className="flex justify-between mt-5 pr-3">
+                        <button
+                          className="bg-primary text-white w-auto px-10 sm:w-[172px] h-[40px] text-[14px]"
+                          onClick={handleSubmit}
+                        >
+                          Sign In
+                        </button>
+                        <button
+                          className="underline text-[14px]"
+                          onClick={() => {
+                            setForgotPassword(true);
+                            setSignIn(!showSignIn);
+                          }}
+                        >
+                          Forgot Password
+                        </button>
                       </div>
                     </form>
-                    <div className="flex justify-between mt-5 pr-3">
-                      <button className="bg-primary text-white w-auto px-10 sm:w-[172px] h-[40px] text-[14px]">
-                        Sign In
-                      </button>
-                      <button
-                        className="underline text-[14px]"
-                        onClick={() => {
-                          setForgotPassword(true);
-                          setSignIn(!showSignIn);
-                        }}
-                      >
-                        Forgot Password
-                      </button>
-                    </div>
+
                     <p className="text-primary text-[12px] mt-3">
-                      *Required Fields
+                      {isResponse ? " *Required Fields" : resMsg}
                     </p>
                     <h1 className="text-2xl font-medium mt-3">New Customers</h1>
                     <p className="text-gray-200 text-[12px] mt-2">

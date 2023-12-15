@@ -315,8 +315,13 @@ const Navbar = () => {
         showSignUp={showSignUp}
         handleOk={handleOk}
         handleSignUpCancel={handleSignUpCancel}
+        showModal={showModal}
       />
-      <SideBar menuOpen={menuOpen} setMenuOpen={setMenuOpen} showModal={showModal}/>
+      <SideBar
+        menuOpen={menuOpen}
+        setMenuOpen={setMenuOpen}
+        showModal={showModal}
+      />
     </div>
   );
 };

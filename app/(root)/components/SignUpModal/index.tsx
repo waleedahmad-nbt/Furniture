@@ -4,39 +4,48 @@ import { RxCross1 } from "react-icons/rx";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiEyeOff } from "react-icons/fi";
 import { FaCheck } from "react-icons/fa";
-
-const SignUpModal = ({ isSignUpOpen, handleSignUpCancel }: any) => {
+import { publicRequest, userRequest } from "@/requestMethods";
+import Image from "next/image";
+import loader from "@/app/assets/icons/loader.gif";
+import axios from "axios";
+const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
   const [showPassword, setShowPasswords] = useState(true);
   const [reenterPassword, setReenterPasswords] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
+  const [formData, setFormData]: any = useState({});
+  const [isConfirmValid, setIsConfirmValid] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const [password, setPassword] = useState("");
-  const [isValid, setIsValid] = useState(true);
-
-  const handlePasswordChange = (e: any) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-    validatePassword(newPassword);
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const validatePassword = (password: any) => {
-    // Define your validation criteria
-    const hasLowerCase = /[a-z]/.test(password);
-    const hasUpperCase = /[A-Z]/.test(password);
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    const hasNumber = /\d/.test(password);
-    const isLengthValid = password.length >= 8 && password.length <= 16;
-
-    // Check if all criteria are met
-    const isValidPassword =
-      hasLowerCase &&
-      hasUpperCase &&
-      hasSpecialChar &&
-      hasNumber &&
-      isLengthValid;
-
-    // Update the state to reflect the validation status
-    setIsValid(isValidPassword);
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      if (
+        formData.email &&
+        formData.password &&
+        formData.password == formData.confirmPassword
+      ) {
+        setLoading(true);
+        const res = await publicRequest.post(`/user/register`, {
+          email: formData.email,
+          password: formData.password,
+        });
+        console.log(res);
+        if (res) {
+          setLoading(false);
+          handleSignUpCancel();
+          showModal();
+        }
+        setIsConfirmValid(true);
+      } else {
+        setIsConfirmValid(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -75,11 +84,18 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel }: any) => {
                       </label>
                       <input
                         className="w-full sm:w-[368px] h-[48px] px-5 mt-2 border border-gray-100 rounded-md bg-white outline-none"
-                        type="text"
+                        type="email"
                         name="email"
                         id="email"
+                        required
                         placeholder="Type your email"
+                        onChange={handleChange}
                       />
+                      {/* {!isEmail && (
+                        <p className="mt-3 text-secondary text-[12px] font-normal ms-5">
+                          Please enter a valid email address.
+                        </p>
+                      )} */}
                     </div>
 
                     <div className="flex flex-col">
@@ -90,24 +106,23 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel }: any) => {
                         Password <span className="text-red-500">*</span>
                       </label>
                       <div
-                        className={`flex justify-between items-center w-full sm:w-[368px] h-[48px] px-5 mt-2 border ${
-                          isValid ? "border-gray-100 " : "border-secondary"
-                        } rounded-md`}
+                        className={`flex justify-between items-center w-full sm:w-[368px] h-[48px] px-5 mt-2 border ${"border-gray-100 "} rounded-md`}
                       >
                         <input
                           className="bg-white h-full outline-none w-full"
                           type={showPassword ? "password" : "text"}
                           name="password"
                           id="password"
-                          value={password}
-                          onChange={handlePasswordChange}
+                          // value={password}
+                          // onChange={handlePasswordChange}
+                          onChange={handleChange}
                           placeholder="Type your Password"
                         />
                         <div onClick={() => setShowPasswords(!showPassword)}>
                           {showPassword ? <IoEyeOutline /> : <FiEyeOff />}
                         </div>
                       </div>
-                      {!isValid && (
+                      {/* {!isValid && (
                         <p className="mt-3 text-secondary text-[12px] font-normal ms-5">
                           Password should be between 8-16 characters, contain{" "}
                           <br />
@@ -115,7 +130,7 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel }: any) => {
                           <br />
                           special character, and at least one number.
                         </p>
-                      )}
+                      )} */}
                     </div>
 
                     <div className="flex flex-col">
@@ -130,9 +145,10 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel }: any) => {
                         <input
                           className="bg-white h-full outline-none w-full"
                           type={reenterPassword ? "password" : "text"}
-                          name="password"
+                          name="confirmPassword"
                           id="password"
                           placeholder="Type your Password"
+                          onChange={handleChange}
                         />
                         <div
                           onClick={() => setReenterPasswords(!reenterPassword)}
@@ -140,6 +156,11 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel }: any) => {
                           {reenterPassword ? <IoEyeOutline /> : <FiEyeOff />}
                         </div>
                       </div>
+                      {!isConfirmValid && (
+                        <p className="mt-3 text-secondary text-[12px] font-normal ms-5">
+                          Password is not correct
+                        </p>
+                      )}
                     </div>
 
                     <div className="flex justify-between items-start gap-3 mt-5 pr-16">
@@ -165,16 +186,32 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel }: any) => {
                       </div>
                       <p className="text-[14px] text-gray-200">
                         By using this form you agree with the storage{" "}
-                        <br className="hidden md:block" /> and handling of your
+                        <br className="hidden sm:block" /> and handling of your
                         data by this website.
                       </p>
                     </div>
+
+                    <div className="flex justify-between mt-5">
+                      <button
+                        className={`bg-primary flex justify-center items-center text-white w-[172px] h-[40px] text-[14px]${
+                          isChecked
+                            ? "cursor-pointer opacity-100"
+                            : "cursor-not-allowed opacity-40"
+                        }`}
+                        disabled={!isChecked}
+                        type="submit"
+                        onClick={handleSubmit}
+                      >
+                        <p>{!loading ? "Create An Account" : ""}</p>
+                        {loading ? (
+                          <Image src={loader} alt="" className="w-[30px]" />
+                        ) : (
+                          ""
+                        )}
+                      </button>
+                    </div>
                   </form>
-                  <div className="flex justify-between mt-5">
-                    <button className="bg-primary text-white w-[172px] h-[40px] text-[14px]">
-                      Create An Account
-                    </button>
-                  </div>
+
                   <p className="text-primary text-[12px] mt-3">
                     *Required Fields
                   </p>
