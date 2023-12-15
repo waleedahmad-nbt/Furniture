@@ -66,9 +66,9 @@ const MultiProductView = ({ item }: any) => {
           </button>
         </div>
         <Link href="/products/details/dummy">
-          {item?.images?.length > 0 && item?.images?.map((img: any, index: number) => (
-            <div className={`mx-auto duration-200 ${index === activeIndex ? "relative opacity-100 visible" : "absolute inset-0 opacity-0 invisible pointer-events-none"}`} key={index}>
-              <Image src={img} alt="product"/>
+          {item?.Images?.length > 0 && item?.Images?.map((img: any, index: number) => (
+            <div className={`mx-auto duration-200 flex items-center justify-center ${index === activeIndex ? "relative opacity-100 visible" : "absolute inset-0 opacity-0 invisible pointer-events-none"}`} key={index}>
+              <Image src={img} alt="product" width={100} height={100} />
             </div>
           ))}
         </Link>
@@ -82,7 +82,7 @@ const MultiProductView = ({ item }: any) => {
         </div>
       </div>
       <div className="flex gap-2 mt-1">
-        {item?.images?.length > 1 && item?.images?.map((item: any, index: number) => (
+        {item?.Images?.length > 1 && item?.Images?.map((item: any, index: number) => (
           <div 
             className={`flex h-[4px] w-full cursor-pointer ${activeIndex === index ? "bg-gray-300" : "bg-gray-100 opacity-40"}`}
             key={index}

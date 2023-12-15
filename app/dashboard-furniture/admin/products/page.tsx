@@ -5,128 +5,52 @@ import image from "@/app/assets/images/Seller/Product.jpeg";
 import { BiSearch, BiSort } from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
 import Link from "next/link";
+import { publicRequest } from "@/requestMethods";
 
-const products: any = [
-  {
-    id: 1,
-    image: image,
-    name: "This is first test product.",
-    status: "Active",
-    stock: 10,
-    sales: 2,
-    market: 2,
-    type: "",
-    vender: "Qshopin",
-  },
-  {
-    id: 2,
-    image: image,
-    name: "This is second test product.",
-    status: "Active",
-    stock: 5,
-    sales: 2,
-    market: 2,
-    type: "",
-    vender: "Qshopin",
-  },
-  {
-    id: 3,
-    image: image,
-    name: "Product B",
-    status: "Draft",
-    stock: 5,
-    sales: 2,
-    market: 2,
-    type: "",
-    vender: "Qshopin",
-  },
-  {
-    id: 4,
-    image: image,
-    name: "Product B",
-    status: "Draft",
-    stock: 5,
-    sales: 2,
-    market: 2,
-    type: "",
-    vender: "Qshopin",
-  },
-  {
-    id: 5,
-    image: image,
-    name: "Product B",
-    status: "Draft",
-    stock: 5,
-    sales: 2,
-    market: 2,
-    type: "",
-    vender: "Qshopin",
-  },
-  {
-    id: 6,
-    image: image,
-    name: "Product B",
-    status: "Active",
-    stock: 5,
-    sales: 2,
-    market: 2,
-    type: "",
-    vender: "Qshopin",
-  },
-  {
-    id: 7,
-    image: image,
-    name: "Product B",
-    status: "Active",
-    stock: 5,
-    sales: 2,
-    market: 2,
-    type: "",
-    vender: "Qshopin",
-  },
-  {
-    id: 8,
-    image: image,
-    name: "Product B",
-    status: "Draft",
-    stock: 5,
-    sales: 2,
-    market: 2,
-    type: "",
-    vender: "Qshopin",
-  },
-]
 const Products = () => {
 
   const [val, setVal] = useState<number>(0);
   const [category, setCategory] = useState<string>('all');
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any>([]);
+
+  useEffect(() => {
+
+    const getProducts = async () => {
+      try {
+        const res = await publicRequest.get(`/product`);
+  
+        console.log(res);
+        if(res.status === 200) {
+          setData(res.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    getProducts();
+  }, [])  
 
   const changeValue = (i:any, type:any) => {
     setVal(i)
     setCategory(type)
   }
   
-  useEffect(() => {
-    setData([])
+  const filter = (rows: any) => {
     if(category==="all"){
-      setData(products)
+      return rows;
     }
     else if(category==="Active"){
-      setData(
-        products.filter((e:any, i:any) => {
-          return e.status === 'Active'
-        })
-      )
+      return rows.filter((e:any, i:any) => {
+        return e.status === 'Active'
+      })
     }
     else if(category==="Draft"){
-      setData(
-        products.filter((e:any, i:any) => {
-          return e.status === 'Draft'
-        })
-      )
+      return rows.filter((e:any, i:any) => {
+        return e.status === 'Draft'
+      })
     }
-  },[category])
+  };
 
   interface CheckboxState {
     [productId: string]: boolean;
@@ -147,8 +71,8 @@ const Products = () => {
   const handleSelectAllChange = () => {
     const updatedCheckboxes: CheckboxState = {};
 
-    products.map((product: any) => {
-      const Id = product.id;
+    data.map((product: any) => {
+      const Id = product?._id;
       updatedCheckboxes[Id] = !checkboxes[Id] ? !checkboxes[Id] : false;
     });
 
@@ -217,19 +141,19 @@ const Products = () => {
                   scope="col"
                   className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Product
+                  Image
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Status
+                  Name
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Inventory
+                  Category
                 </th>
                 <th
                   scope="col"
@@ -239,15 +163,15 @@ const Products = () => {
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Sales channels
+                  Quantity
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Markets
+                  Price
                 </th>
                 <th
                   scope="col"
@@ -264,22 +188,27 @@ const Products = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {data && data?.map((product: any, i: number) => {
-                const { id, image, name, status, stock, sales, market, type, vender} = product;
+              {data && filter(data)?.map((product: any, i: number) => {
+                const { _id, Images, title, status, qty, inStock, category, price, type, vender} = product;
                 return (
                   <tr key={i}>
                     <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
-                      <input type="checkbox" className="rounded" checked={checkboxes[id] ?? false} onChange={() => handleCheckboxChange(id)} id={id} />
+                      <input type="checkbox" className="rounded" checked={checkboxes[_id] ?? false} onChange={() => handleCheckboxChange(_id)} id={_id} />
                     </td>
                     <td className="px-6">
                       <Image
                         className="h-[50px] w-max"
-                        src={image}
+                        src={Images[0]}
+                        width={100}
+                        height={50}
                         alt=""
                       />
                     </td>
                     <td className="max-w-[300px] px-6 py-4  text-xs font-medium text-gray-900">
-                      {name}
+                      {title}
+                    </td>
+                    <td className="max-w-[300px] px-6 py-4  text-xs font-medium text-gray-900">
+                      {category}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
                       <div className={`p-1 px-2 rounded-lg w-max text-ubuntu-regular ${status === "Active" ? "bg-[#CDFEE1] text-[#083D25]" : "bg-[#E0F0FF] text-[#0E57A2]"}`}>
@@ -288,16 +217,13 @@ const Products = () => {
                     </td>
                     <td
                       className={`px-6 py-4 whitespace-nowrap text-xs ${
-                        stock <= 5 ? "text-red-700" : "text-gray-500"
+                        qty <= 5 ? "text-red-700" : "text-gray-500"
                       }`}
                     >
-                      {stock} in stock
+                      {qty} in stock
                     </td>
                     <td className="px-6 py-4 text-right whitespace-nowrap text-xs text-gray-500">
-                      {sales}
-                    </td>
-                    <td className="px-6 py-4 text-right whitespace-nowrap text-xs text-gray-500">
-                      {market}
+                      PKR {price}
                     </td>
                     <td className="px-6 py-4 text-right whitespace-nowrap text-xs text-gray-500">
                       {type}

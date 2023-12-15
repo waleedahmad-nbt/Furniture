@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { PaginationContainer, ProductCard } from "../components";
@@ -16,6 +16,7 @@ import kitchen from "@/app/assets/products/kitchen.png";
 import Pro1 from "@/app/assets/products/table_02.png";
 import Pro2 from "@/app/assets/products/table_03.png";
 import arrowL from "@/app/assets/icons/arrow-left.svg";
+import { publicRequest } from "@/requestMethods";
 
 const Products = () => {
   const [tab, setTab] = useState<string>("");
@@ -55,62 +56,25 @@ const Products = () => {
 
   const options = ["Bathroom", "Home Office"];
 
-  const products = [
-    {
-      _id: "1",
-      name: "Rocket stool",
-      images: [Pro2, kitchen, bed],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 2,
-      status: "new",
-    },
-    {
-      _id: "2",
-      name: "Rocket stool",
-      images: [Pro2, Pro1],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 0,
-      status: "sale",
-    },
-    {
-      _id: "3",
-      name: "Rocket stool",
-      images: [Pro2],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 5,
-      status: "new",
-    },
-    {
-      _id: "4",
-      name: "Rocket stool",
-      images: [Pro1],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 2,
-      status: "new",
-    },
-    {
-      _id: "5",
-      name: "Rocket stool",
-      images: [Pro1],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 2,
-      status: "new",
-    },
-    {
-      _id: "6",
-      name: "Rocket stool",
-      images: [Pro1],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 2,
-      status: "new",
-    },
-  ];
+  const [products, setProducts] = useState<any>([]);
+
+  useEffect(() => {
+
+    const getProducts = async () => {
+      try {
+        const res = await publicRequest.get(`/product`);
+  
+        console.log(res);
+        if(res.status === 200) {
+          setProducts(res.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    getProducts();
+  }, []) 
 
   const newArrival = [
     {
