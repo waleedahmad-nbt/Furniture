@@ -17,6 +17,10 @@ const ProductsDeatilsTabs = ({ product }: any) => {
       ? product?.Images?.slice(0, 2)
       : product?.Images?.slice(0, 1);
 
+  
+  const features = product?.features;
+  console.log(product?.colors)
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
       <div>
@@ -52,47 +56,67 @@ const ProductsDeatilsTabs = ({ product }: any) => {
               <div className="flex border-b py-5">
                 <div className="w-1/2">Brand</div>
                 <div className="w-1/2 flex justify-end text-gray-100">
-                  Kettal
+                  {features?.brand}
                 </div>
               </div>
               <div className="flex border-b py-5">
                 <div className="w-1/2">Collection</div>
                 <div className="w-1/2 flex justify-end text-gray-100">
-                  Jean-Marie Massaud
+                  {product?.category}
                 </div>
               </div>
               <div className="flex border-b py-5">
                 <div className="w-1/2">Color</div>
-                <div className="w-1/2 flex justify-end text-gray-100">
-                  Brown Sugar
+                <div className="w-1/2 flex gap-3 justify-end text-gray-100">
+                  {product?.colors?.map((item: string, index: any) => (
+                    <button
+                      className="rounded-full border border-gray-900 p-1"
+                      key={index}
+                    >
+                      <span
+                        className="block rounded-full w-[18px] h-[18px]"
+                        style={{ backgroundColor: item }}
+                      ></span>
+                    </button>
+                  ))}
                 </div>
               </div>
               <div className="flex border-b py-5">
                 <div className="w-1/2">Materials</div>
-                <div className="w-1/2 flex justify-end text-gray-100">Wood</div>
+                <div className="w-1/2 flex justify-end text-gray-100">
+                  {features?.materials?.map((item: string, index: number) => (
+                    <span key={index}>
+                      &nbsp;
+                      {item}
+                      {index !== product.features.materials.length - 1 && ','}
+                    </span>
+                  ))}
+                </div>
               </div>
               <div className="flex border-b py-5">
                 <div className="w-1/2">General dimensions</div>
                 <div className="w-1/2 flex justify-end text-gray-100">
-                  32″ H 21″ W 19″ D
+                  {features?.gDimensions?.height ? (features?.gDimensions?.height + " H") : ""}
+                  {features?.gDimensions?.width ? (" " + features?.gDimensions?.width + " W") : ""}
                 </div>
               </div>
               <div className="flex border-b py-5">
                 <div className="w-1/2">Product weight</div>
                 <div className="w-1/2 flex justify-end text-gray-100">
-                  20.72 lbs
+                  {features?.weight}
                 </div>
               </div>
               <div className="flex border-b py-5">
                 <div className="w-1/2">Box dimensions</div>
                 <div className="w-1/2 flex justify-end text-gray-100">
-                  37" H 21" W 24" D
+                  {features?.bDimensions?.height ? (features?.bDimensions?.height + " H") : ""}
+                  {features?.bDimensions?.width ? (" " + features?.bDimensions?.width + " W") : ""}
                 </div>
               </div>
               <div className="flex border-b py-5">
                 <div className="w-1/2">Warranty</div>
                 <div className="w-1/2 flex justify-end text-gray-100">
-                  20.72 lbs
+                  {features?.warrenty}
                 </div>
               </div>
             </div>

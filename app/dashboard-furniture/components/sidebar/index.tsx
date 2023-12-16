@@ -9,11 +9,12 @@ import { TbDiscount2 } from "react-icons/tb";
 import { GoHomeFill } from "react-icons/go";
 import { ImPriceTag } from "react-icons/im";
 import { AiFillPicture } from "react-icons/ai";
+import { RiContactsFill, RiDoubleQuotesR, RiGroupFill } from "react-icons/ri";
 
 const Sidebar = () => {
 
   const productsOptions = [
-    { label: "Collections", link: "/dashboard-furniture/admin/products/collection" },
+    { label: "Categories", link: "/dashboard-furniture/admin/products/collection" },
     { label: "Inventory", link: "/dashboard-furniture/admin/products/inventory" },
     { label: "Purchase products", link: "/dashboard-furniture/admin/products/purchase" },
     { label: "Transfers", link: "/dashboard-furniture/admin/products/transfer" },
@@ -68,6 +69,18 @@ const Sidebar = () => {
             <CiHardDrive />
             <span>Orders</span>
           </SideLinks>
+        </li>
+
+        <li className="text-sm">
+          <NavLink 
+            end
+            href={"/dashboard-furniture/admin/quotes"}
+            active="bg-white hover:bg-white"
+            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
+          >
+            <RiDoubleQuotesR />
+            <span>Quotes</span>
+          </NavLink>
         </li>
 
         <li className="text-sm">
@@ -138,6 +151,28 @@ const Sidebar = () => {
           >
             <TbDiscount2 />
             <span>Discounts</span>
+          </NavLink>
+        </li>
+        <li className="text-sm">
+          <NavLink 
+            end
+            href={"/dashboard-furniture/admin/contacts"}
+            active="bg-white hover:bg-white"
+            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
+          >
+            <RiContactsFill />
+            <span>Contacts</span>
+          </NavLink>
+        </li>
+        <li className="text-sm">
+          <NavLink 
+            end
+            href={"/dashboard-furniture/admin/team"}
+            active="bg-white hover:bg-white"
+            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
+          >
+            <RiGroupFill />
+            <span>Team</span>
           </NavLink>
         </li>
       </ul>

@@ -1,10 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import image from "@/app/assets/images/Seller/Product.jpeg";
 import { BiSearch, BiSort } from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
 import Link from "next/link";
+import { publicRequest } from "@/requestMethods";
+import { FiEdit3, FiTrash, FiX } from "react-icons/fi";
 
 const Collection = () => {
   const [products, setProducts] = useState([
@@ -54,6 +56,64 @@ const Collection = () => {
 
   const [val, setVal] = useState(0)
   const [category, setCategory] = useState('all');
+  const [editCatId, setEditCatId] = useState<string>("");
+
+  const [formData, setFormData] = useState<any>({});
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData((prev: any) => { return { ...prev, [name]: value } });
+  }
+
+  const [categories, setCategories] = useState<any>([]);
+
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const res = await publicRequest.get(`/category`);
+  
+        if(res.status === 200) {
+          console.log(res);
+          setCategories(res.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    getCategories();
+  }, [])
+
+  const updateCategory = async () => {
+    try {
+      const res = await publicRequest.put(`/category/edit/${editCatId}`, formData);
+
+      if(res.status === 201) {
+        setCategories((prev: any) => {
+          return prev.map((item: any) =>
+            item._id === editCatId ? res.data.data : item
+          );
+        });        
+        setEditCatId("");
+        setFormData({});
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const deleteCat = async (_id: string) => {
+    try {
+      const res = await publicRequest.delete(`/category/delete/${_id}`);
+
+      console.log(res);
+      if(res.status === 200) {
+        setCategories((prev: any) => prev.filter((item: any) => item?._id !== _id)); 
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const changeValue = ( i: any, type: any ) => {
     setVal(i)
@@ -89,7 +149,7 @@ const Collection = () => {
   return (
     <div className="p-5">
       <div className="py-3 mb-2 flex justify-between items-center">
-        <h1 className="text-xl font-bold">Collections</h1>
+        <h1 className="text-xl font-bold">Categories</h1>
         <div className="flex justify-center gap-2 items-center">
           <button className="p-1 border-none bg-gray-900/80 hover:bg-gray-900/100 duration-100 text-white text-xs px-2 rounded-lg">
             Create collection
@@ -150,39 +210,103 @@ const Collection = () => {
                 >
                   Product conditions
                 </th>
+                <th
+                  scope="col"
+                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {products?.map(( product: any, i: number ) => (
+              {categories?.map(( category: any, i: number ) => (
                 <tr key={i}>
                   <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
                     <input
                       type="checkbox"
                       className="rounded"
-                      checked={checkboxes[product?.id] ?? false}
-                      onChange={() => handleCheckboxChange(product?.id)}
-                      id={product?.id}
+                      checked={checkboxes[category?._id] ?? false}
+                      onChange={() => handleCheckboxChange(category?._id)}
+                      id={category?._id}
                     />
                   </td>
                   <td>
                     <Image
                       className="h-[50px] w-max"
-                      src={product.image}
+                      src={category?.image}
+                      width={100}
+                      height={100}
                       alt=""
                     />
                   </td>
                   <td className="max-w-[300px] px-6 py-4  text-xs font-medium text-gray-900">
-                    {product.name}
+                    {editCatId === category?._id ? (
+                      <input
+                        type="text"
+                        id="category"
+                        name="category"
+                        value={formData?.category}
+                        onChange={handleChange}
+                        className="py-1 px-3 outline-none border rounded-md"
+                      />
+                    ) : (
+                      <>
+                        {category?.category}
+                      </>
+                    )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-end w text-xs text-gray-500">
                     <div className="p-1 px-2 rounded-lg w-max text-end">
-                      {product.Products}
+                      {category?.quantity || 0}
                     </div>
                   </td>
                   <td
                     className={`px-6 py-4 whitespace-nowrap text-xs`}
                   >
-                    {product.ProductCondition}
+                    {editCatId === category?._id ? (
+                      <textarea
+                        id="description"
+                        name="description"
+                        value={formData?.description}
+                        onChange={handleChange}
+                        className="py-1 px-3 outline-none border rounded-md"
+                      />
+                    ) : (
+                      <>
+                        {category?.description}
+                      </>
+                    )}
+                  </td>
+                  <td className={`px-6 py-4 whitespace-nowrap text-xs`}>
+                    <div className="flex gap-2 text-base items-center">
+                      {editCatId === category?._id ? (
+                        <>
+                          <button
+                            onClick={() => {
+                              setEditCatId("");
+                              setFormData({});
+                            }} 
+                            className="duration-150 bg-gray-300 px-3 py-1 text-xs text-white rounded-md"
+                          >cancel</button>
+                          <button
+                            onClick={() => updateCategory()} 
+                            className="duration-150 bg-primary px-3 py-1 text-xs text-white rounded-md"
+                          >update</button>
+                        </>
+                      )
+                      : (
+                        <>
+                          <button onClick={() => deleteCat(category?._id)} className="text-gray-300 hover:text-gray-900 duration-150"><FiTrash /></button>
+                          <button
+                            onClick={() => {
+                              setEditCatId(category?._id);
+                              setFormData(category);
+                            }} 
+                            className="text-gray-300 hover:text-gray-900 duration-150"
+                          ><FiEdit3 /></button>
+                        </>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}

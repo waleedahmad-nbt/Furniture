@@ -15,6 +15,9 @@ import Hitmaphraph from "./hitmapgraph";
 import Returningcoustmer from "./returningcoustmerrate";
 import PieChart from "./pieChart";
 import Treemap from "./treemap";
+import ViewQuote from "./viewQuote";
+import ViewContact from "./viewContact";
+import AddTeam from "./addTeam";
 
 export {
   Header,
@@ -34,4 +37,7 @@ export {
   Returningcoustmer,
   PieChart,
   Treemap,
+  ViewQuote,
+  ViewContact,
+  AddTeam,
 };

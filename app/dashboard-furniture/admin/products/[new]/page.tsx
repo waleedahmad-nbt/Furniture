@@ -34,6 +34,14 @@ const NewProduct = () => {
   };
 
   const handleSubmit = () => {
+    
+    const Data = {
+      title: "",
+      quantity: 0,
+      weight: "",
+      images: [],
+    }
+
     console.log(formData);
   }
   
@@ -117,6 +125,52 @@ const NewProduct = () => {
     );
   }
 
+  const [boxSizes, setBoxSizes] = useState<any>({
+    heightFeets: "",
+    heightInches: "",
+    widthFeets: "",
+    widthInches: "",
+  })
+  const [boxArray, setBoxArray] = useState<any>([]);
+  const [errorBoxes, setErrorBoxes] = useState<any>({});
+
+  const sizeBox = (e: any) => {
+    const { name, value } = e.target;
+
+    setBoxSizes((prev: any) => { return { ...prev, [name]: value } })
+  }
+
+  const validateBox = () => {
+    let errors: any = {};
+
+    if (!boxSizes.heightFeets && !boxSizes.heightInches) {
+      errors.height = "Height is required";
+    }
+
+    if (!boxSizes.widthFeets && !boxSizes.widthInches) {
+      errors.width = "Width is required";
+    }
+
+    setErrorBoxes(errors);
+
+    return Object.keys(errors).length === 0;
+  };
+
+  const submitBox = (e: any) => {
+    e.preventDefault();
+    if(validateBox()) {
+      setBoxArray((prev: any) => [ ...prev, boxSizes ]);
+    }
+  };
+
+  const deleteBox = (index: number) => {
+    setBoxArray(
+      boxArray.filter((e: any, i: any) => {
+        return i !== index;
+      })
+    );
+  }
+
   const handleImage = (event: any, index: number) => {
     const file = event.target.files && event.target.files[0];
 
@@ -134,6 +188,18 @@ const NewProduct = () => {
       });
     }
   };
+
+  const formatSize = (sz: any) => {
+    const formated =
+      (sz?.heightFeets && sz?.heightFeets + "' ") +
+      (sz?.heightInches && sz?.heightInches + "''") +
+      ((sz?.heightInches || sz?.heightFeets) && " H  ") +
+      (sz?.widthFeets && sz?.widthFeets + "' ") +
+      (sz?.widthInches && sz?.widthInches + "''") +
+      ((sz?.widthInches || sz?.widthFeets) && " W");
+  
+    return formated;
+  };  
 
   return (
     <>
@@ -228,7 +294,7 @@ const NewProduct = () => {
 
               <div className="bg-white rounded-lg border p-3 mb-3">
                 <p className="text-sm mb-5">Pricing</p>
-                <div className="w-full grid md:grid-cols-3 grid-cols-1 gap-2">
+                <div className="w-full grid md:grid-cols-2 grid-cols-1 gap-10">
                   <div>
                     <p className="text-xs mb-1">Price</p>
                     <div className=" relative w-full">
@@ -236,10 +302,27 @@ const NewProduct = () => {
                         type="number"
                         className=" text w-full text-xs border border-gray-300 rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:border-black"
                         placeholder="0.00"
+                        name="price"
+                        id="price"
+                        onChange={handleChange}
                       />
                       <div className="absolute text-xs inset-y-0 left-0 flex items-center pl-3 ">
                         Rs
                       </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-xs mb-1">Warranty</p>
+                    <div className="w-full">
+                      <input
+                        type="text"
+                        className=" text w-full text-xs border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:border-black"
+                        placeholder="2 years"
+                        name="warranty"
+                        id="warranty"
+                        onChange={handleChange}
+                      />
                     </div>
                   </div>
                 </div>
@@ -253,6 +336,9 @@ const NewProduct = () => {
                     type="number"
                     className="mb-2 w-[120px] inline-block text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
                     placeholder="0.0"
+                    name="qty"
+                    id="qty"
+                    onChange={handleChange}
                   />
                 </div>
                 <p className="text-sm mb-5">Shipping</p>
@@ -265,13 +351,103 @@ const NewProduct = () => {
                   id="weight"
                   onChange={handleChange}
                 />
+                <select
+                  id="weightUnit"
+                  className="bg-gray-50 m-1 border inline-block px-2 py-2 text-gray-900 text-sm rounded-lg w-[70px] p-2.5"
+                  name="weightUnit"
+                  onChange={handleChange}
+                >
+                  <option selected>Kg</option>
+                  <option value="lb">lb</option>
+                  <option value="oz">oz</option>
+                  <option value="g">g</option>
+                </select>
+                <div className="mt-3">
+                  <p className="text-sm mb-1 mt-2">Box Dimensions</p>
+                  <form onSubmit={submitBox}>
+                    <p className="text-xs mb-1 mt-2">Height</p>
+                    <div className="grid grid-cols-2 gap-x-4 my-2">
+                      <div>
+                        <input
+                          type="number"
+                          name="heightFeets"
+                          id="heightFeets"
+                          onChange={sizeBox}
+                          placeholder="Feets"
+                          className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
+                        />
+                      </div>
+                      <div>
+                        <input
+                          type="number"
+                          name="heightInches"
+                          id="heightInches"
+                          onChange={sizeBox}
+                          placeholder="Inches"
+                          className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
+                        />
+                      </div>
+                    </div>
+                    {errorBoxes.height && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errorBoxes.height}
+                      </p>
+                    )}
+                    <p className="text-xs mb-1 mt-2">Width</p>
+                    <div className="grid grid-cols-2 gap-x-4 my-2">
+                      <div>
+                        <input
+                          type="number"
+                          name="widthFeets"
+                          id="widthFeets"
+                          onChange={sizeBox}
+                          placeholder="Feets"
+                          className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
+                        />
+                      </div>
+                      <div>
+                        <input
+                          type="number"
+                          name="widthInches"
+                          id="widthInches"
+                          onChange={sizeBox}
+                          placeholder="Inches"
+                          className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
+                        />
+                      </div>
+                    </div>
+                    {errorBoxes.width && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errorBoxes.width}
+                      </p>
+                    )}
+                    <div className="flex justify-end">
+                      <button type="submit" className="bg-gray-900 text-xs text-white px-6 py-2 rounded-lg mt-2">+ Add Box Dimensions</button>
+                    </div>
+                  </form>
+                  <div className="flex flex-wrap">
+                    {boxArray &&
+                      boxArray?.map((e: any, i: any) => {
+                        return (
+                          <span className="bg-gray-blue/30 relative h-max rounded m-1 text-sm p-1 flex justify-center items-center px-2" key={i}>
+                            {formatSize(e)}
+                            <HiXMark
+                              size={18}
+                              onClick={() => deleteBox(i)}
+                              className="cursor-pointer absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-gray-blue/30 rounded-full p-1"
+                            />
+                          </span>
+                        );
+                      })}
+                  </div>
+                </div>
               </div>
 
               <div className="bg-white rounded-lg border p-3 mb-3">
                 <p className="text-sm mb-5">Variants</p>
 
                 <div>
-                  <p className="mb-1 mt-2">Colors</p>
+                  <p className="text-sm mb-1 mt-2">Colors</p>
                   <form onSubmit={submitColor} className="w-1/2">
                     <input
                       type="color"
@@ -297,7 +473,7 @@ const NewProduct = () => {
                   </div>
                 </div>
                 <div className="mt-3">
-                  <p className="mb-1 mt-2">Sizes</p>
+                  <p className="text-sm mb-1 mt-2">Sizes</p>
                   <form onSubmit={submitSize}>
                     <p className="text-xs mb-1 mt-2">Height</p>
                     <div className="grid grid-cols-2 gap-x-4 my-2">
@@ -364,8 +540,7 @@ const NewProduct = () => {
                       sizesArray?.map((e: any, i: any) => {
                         return (
                           <span className="bg-gray-blue/30 relative h-max rounded m-1 text-sm p-1 flex justify-center items-center px-2" key={i}>
-                            {e?.heightFeets && e?.heightFeets + "'"}{e?.heightInches && e?.heightInches + "''"}H&nbsp;&nbsp;
-                            {e?.widthFeets && e?.widthFeets + "'"}{e?.widthInches && e?.widthInches + "''"}W
+                            {formatSize(e)}
                             <HiXMark
                               size={18}
                               onClick={() => deleteSize(i)}
@@ -386,9 +561,11 @@ const NewProduct = () => {
               <div className=" bg-white rounded-lg border p-3 mb-3">
                 <p className="text-sm mb-2">Status</p>
                 <select
-                  id="countries"
+                  id="status"
                   className="bg-gray-50 border px-2 py-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                   defaultValue="Active"
+                  name="status"
+                  onChange={handleChange}
                 >
                   <option>Active</option>
                   <option value="Draft">Draft</option>
@@ -396,15 +573,46 @@ const NewProduct = () => {
               </div>
 
               <div className=" bg-white rounded-lg border p-3 mb-3">
-                <p className="text-sm ">Product category</p>
-                <select
-                  id="countries"
-                  className="bg-gray-50 border px-2 py-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-2"
-                  defaultValue="Active"
-                >
-                  <option>Active</option>
-                  <option value="Draft">Draft</option>
-                </select>
+                <p className="text-sm">Product organization</p>
+                <div>
+                  <p className="text-xs mt-3">Product category</p>
+                  <select
+                    id="category"
+                    className="bg-gray-50 border px-2 py-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-1"
+                    defaultValue="Active"
+                    name="category"
+                    onChange={handleChange}
+                  >
+                    <option>Category 1</option>
+                    <option value="Category 2">Category 2</option>
+                  </select>
+                </div>
+                <div>
+                  <p className="text-xs mt-3">Material</p>
+                  <select
+                    id="material"
+                    className="bg-gray-50 border px-2 py-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-1"
+                    defaultValue="Material"
+                    name="material"
+                    onChange={handleChange}
+                  >
+                    <option>Material 1</option>
+                    <option value="Material 2">Material 2</option>
+                  </select>
+                </div>
+                <div className="mt-3">
+                  <p className="text-xs">Brand</p>
+                  <select
+                    className="bg-gray-50 border px-2 py-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-1"
+                    defaultValue="Brand"
+                    id="brand"
+                    name="brand"
+                    onChange={handleChange}
+                  >
+                    <option>Brand</option>
+                    <option value="Brand 2">Brand 2</option>
+                  </select>
+                </div>
               </div>
 
               <button onClick={handleSubmit} className="w-full bg-gray-900/70 hover:bg-gray-900/100 text-white py-2 rounded-lg">Add Product</button>

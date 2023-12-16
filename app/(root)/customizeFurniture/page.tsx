@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import joybird from "@/app/assets/images/joybird.png";
 import blueSofa from "@/app/assets/images/blueSofa.png";
@@ -8,6 +9,7 @@ import grayBed from "@/app/assets/images/grayBed.png";
 import yellowSofa from "@/app/assets/images/yellowSofa.png";
 
 import livingRoomChair from "@/app/assets/images/livingRoomChair.png";
+// import { PhotoAlbum } from "react-photo-album";
 
 const customizeFurniture = () => {
   let furnitureArr = [
@@ -24,6 +26,34 @@ const customizeFurniture = () => {
     { title: "Curtain", class: "" },
     { title: "Living Room", class: "" },
   ];
+
+  // const photos: any = [
+  //   { 
+  //     src: "https://th.bing.com/th/id/R.f4953cce2951742830b35c054950d18a?rik=8jHISgKjLQtyfg&pid=ImgRaw&r=0",
+  //     height: 1080,
+  //     width: Math.floor(Math.random() * (2000 - 100 + 1) + 100)
+  //   },
+  //   { 
+  //     src: "https://th.bing.com/th/id/R.f4953cce2951742830b35c054950d18a?rik=8jHISgKjLQtyfg&pid=ImgRaw&r=0",
+  //     height: 1080,
+  //     width: Math.floor(Math.random() * (2000 - 100 + 1) + 100)
+  //   },
+  //   { 
+  //     src: "https://th.bing.com/th/id/R.f4953cce2951742830b35c054950d18a?rik=8jHISgKjLQtyfg&pid=ImgRaw&r=0",
+  //     height: 1080,
+  //     width: Math.floor(Math.random() * (2000 - 100 + 1) + 100)
+  //   },
+  //   { 
+  //     src: "https://th.bing.com/th/id/R.f4953cce2951742830b35c054950d18a?rik=8jHISgKjLQtyfg&pid=ImgRaw&r=0",
+  //     height: 1080,
+  //     width: Math.floor(Math.random() * (2000 - 100 + 1) + 100)
+  //   },
+  //   { 
+  //     src: "https://th.bing.com/th/id/R.f4953cce2951742830b35c054950d18a?rik=8jHISgKjLQtyfg&pid=ImgRaw&r=0",
+  //     height: 1080,
+  //     width: Math.floor(Math.random() * (2000 - 100 + 1) + 100)
+  //   },
+  // ]; 
 
   return (
     <>
@@ -62,6 +92,10 @@ const customizeFurniture = () => {
             </div>
           </div>
 
+          {/* <div>
+            <PhotoAlbum layout="rows" photos={photos} />
+          </div> */}
+          
           <div className="mt-10 flex flex-col items-center gap-2">
             <div className="flex flex-col sm:flex-row items-center gap-2">
               <div>

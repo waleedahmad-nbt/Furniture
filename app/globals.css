@@ -232,3 +232,11 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 input[type="color"]::-webkit-color-swatch {
   border-radius: 5px;
 }
+
+.text_auto_wrap {
+  @apply overflow-hidden text-ellipsis;
+  
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}

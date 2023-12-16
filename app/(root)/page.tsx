@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Slider from "react-slick";
@@ -30,21 +30,32 @@ import star from "@/app/assets/icons/star.svg";
 import starFill from "@/app/assets/icons/star_fill.svg";
 
 import Banner from "@/app/assets/banners/banner_02.png";
+import { publicRequest } from "@/requestMethods";
 
 export default function Home() {
   const tabs = ["Bedroom", "Dining Room", "Living Room"];
 
   const [activeTab, setActiveTab] = useState<string>(tabs[0]);
-  // test
-  const cats = [
-    { title: "Bedroom", image: mirror, quantity: "12" },
-    { title: "Dining room", image: table, quantity: "12" },
-    { title: "Home office", image: desk, quantity: "12" },
-    { title: "Kitchen", image: kitchen, quantity: "12" },
-    { title: "Living room", image: chair, quantity: "12" },
-    { title: "Bed room", image: bed, quantity: "12" },
-  ];
 
+  const [categories, setCategories] = useState<any>([]);
+
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const res = await publicRequest.get(`/category`);
+  
+        if(res.status === 200) {
+          console.log(res);
+          setCategories(res.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    getCategories();
+  }, [])
+  
   const products = [
     {
       name: "Rocket stool",
@@ -222,16 +233,16 @@ export default function Home() {
           </p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 my-14">
-          {cats?.map((item: any, index: number) => (
+          {categories?.map((item: any, index: number) => (
             <div key={index}>
-              <div className="bg-cream h-[170px] flex items-center justify-center">
-                <Image src={item?.image} alt="product" className="mx-auto" />
+              <div className="bg-cream h-[170px]">
+                <Image src={item?.image} alt="product" className="w-full h-full" width={100} height={100} />
               </div>
               <h3 className="text-center font-medium text-gray-300 mt-3">
-                {item?.title}
+                {item?.category}
               </h3>
               <p className="text-center text-gray-300 text-[14px]">
-                {item?.quantity} Products
+                {item?.quantity || 0} Products
               </p>
             </div>
           ))}
