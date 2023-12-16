@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 
 import brownSofa from "@/app/assets/images/brownSofa.png";
@@ -17,8 +19,28 @@ import david from "@/app/assets/images/david.png";
 
 import arrowIcon from "@/app/assets/icons/ArrowIcon.svg";
 import { Features } from "../components";
+import { useEffect, useState } from "react";
+import { publicRequest } from "@/requestMethods";
 
 const aboutUs = () => {
+  const [team, setTeam] = useState([]);
+
+  const fetchTeam = async () => {
+    try {
+      const res = await publicRequest.get("/team");
+      console.log(res.data.data);
+      if (res) {
+        setTeam(res.data.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTeam();
+  }, []);
+
   return (
     <>
       <div className="aboutUsBg">
@@ -142,80 +164,54 @@ const aboutUs = () => {
           </div>
 
           <div className="mt-20 flex justify-center flex-wrap gap-10">
-            <div className=" w-max">
-              <div className="relative">
-                <Image src={sarah} alt="" className="rounded-md" />
-                <div className="absolute z-10 px-4 py-2 w-[100%] bg-[#4D4D4D] top-[33%] right-[42.5%] -rotate-90">
-                  <ul className="text-primary flex gap-5 ">
-                    <li>Facebook</li>
-                    <li>Twitter</li>
-                    <li>Linkedin</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="mt-5">
-                <h1 className="text-[#4D4D4D] text-2xl text-center">
-                  Sarah Johnson
-                </h1>
-                <p className="text-[#ABBED1] text-center">Furniture Artist</p>
-              </div>
-            </div>
-            <div className=" w-max">
-              <div className="relative">
-                <Image src={michel} alt="" className="rounded-md" />
-                <div className="absolute z-10 px-4 py-2 w-[100%] bg-[#4D4D4D] top-[33%] right-[42.5%] -rotate-90">
-                  <ul className="text-primary flex gap-5 ">
-                    <li>Facebook</li>
-                    <li>Twitter</li>
-                    <li>Linkedin</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="mt-5">
-                <h1 className="text-[#4D4D4D] text-2xl text-center">
-                  Michel Lee
-                </h1>
-                <p className="text-[#ABBED1] text-center">
-                  Business Development Officer{" "}
-                </p>
-              </div>
-            </div>
-            <div className=" w-max">
-              <div className="relative">
-                <Image src={emily} alt="" className="rounded-md" />
-                <div className="absolute z-10 px-4 py-2 w-[100%] bg-[#4D4D4D] top-[33%] right-[42.5%] -rotate-90">
-                  <ul className="text-primary flex gap-5 ">
-                    <li>Facebook</li>
-                    <li>Twitter</li>
-                    <li>Linkedin</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="mt-5">
-                <h1 className="text-[#4D4D4D] text-2xl text-center">
-                  Emily Chen
-                </h1>
-                <p className="text-[#ABBED1] text-center">Tourist Guider </p>
-              </div>
-            </div>
-            <div className=" w-max">
-              <div className="relative">
-                <Image src={david} alt="" className="rounded-md" />
-                <div className="absolute z-10 px-4 py-2 w-[100%] bg-[#4D4D4D] top-[33%] right-[42.5%] -rotate-90">
-                  <ul className="text-primary flex gap-5 ">
-                    <li>Facebook</li>
-                    <li>Twitter</li>
-                    <li>Linkedin</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="mt-5">
-                <h1 className="text-[#4D4D4D] text-2xl text-center">
-                  David Adams
-                </h1>
-                <p className="text-[#ABBED1] text-center">News Reporter</p>
-              </div>
-            </div>
+            {team &&
+              team.map((e: any, i: any) => {
+                return (
+                  <div className=" w-max">
+                    <div className="relative">
+                      <div className="w-[270px] h-[349px]">
+                        <Image
+                          src={e.image}
+                          alt=""
+                          className="w-full h-full object-fill rounded-md"
+                          width={100}
+                          height={100}
+                        />
+                      </div>
+                      <div className="absolute z-10 px-4 py-2 w-[100%] bg-[#4D4D4D] top-[33%] right-[42.5%] -rotate-90">
+                        <ul className="text-primary flex gap-5 ">
+                          <li>
+                            <a href={e.socials?.facebook} target="_blank">
+                              {" "}
+                              Facebook{" "}
+                            </a>
+                          </li>
+                          <li>
+                            <a href={e.socials?.twitter} target="_blank">
+                              {" "}
+                              Twitter{" "}
+                            </a>
+                          </li>
+                          <li>
+                            <a href={e.socials?.linkedin} target="_blank">
+                              {" "}
+                              Linkedin{" "}
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div className="mt-5">
+                      <h1 className="text-[#4D4D4D] text-2xl text-center">
+                        {e.name}
+                      </h1>
+                      <p className="text-[#ABBED1] text-center">
+                        {e.designation}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>

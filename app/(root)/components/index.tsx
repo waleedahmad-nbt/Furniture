@@ -11,6 +11,7 @@ import SignUpModal from "./SignUpModal";
 import NavLink from "./NavLink";
 import AccountSideBar from "./AccountSideBar";
 import MainSlider from "./MainSlider";
+import Logout from "./Logout";
 
 export {
   Navbar,
@@ -26,4 +27,5 @@ export {
   NavLink,
   AccountSideBar,
   MainSlider,
+  Logout,
 };

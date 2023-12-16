@@ -2,24 +2,24 @@
 import { useState } from "react";
 import Image from "next/image";
 import { AccountSideBar, NavLink } from "../components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { userRequest } from "@/requestMethods";
+import { changeUserName } from "@/lib/store/slices/Allslices";
 
 const MyAccount = () => {
+  const dispatch = useDispatch();
+
   const userData = useSelector((state: any) => state.user);
-  console.log(userData);
+    // localStorage.setItem("token", JSON.stringify(userData.token));
 
   const fields = {
-    firstName: "",
-    lastName: "",
-    displayName: "",
-    email: "",
-    oldPassword: "",
-    newPassword: "",
-    repeatPassword: "",
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    username: userData.username,
   };
 
   const [formData, setFormData] = useState<any>(fields);
-  const [formErrors, setFormErrors] = useState<any>({});
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -28,45 +28,75 @@ const MyAccount = () => {
       return { ...prev, [name]: value };
     });
   };
-  console.log(formData);
 
-  function isValidEmail(email: any) {
-    // Use a regular expression to check the email format
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    return emailRegex.test(email);
-  }
-
-  const validateForm = () => {
-    let errors: any = {};
-
-    if (!formData.firstName) {
-      errors.firstName = "First Name is required";
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      const res = await userRequest.put(`/user/edit/${userData._id}`, formData);
+      console.log(res.data.data);
+      if (res) {
+        dispatch(
+          changeUserName({
+            firstName: res.data.data.firstName,
+            lastname: res.data.data.lastname,
+            username: res.data.data.username,
+          })
+        );
+      }
+    } catch (error) {
+      console.error(error);
     }
-
-    if (!formData.lastName) {
-      errors.lastName = "Last Name is required";
-    }
-
-    if (!formData.displayName) {
-      errors.displayName = "Display Name is required";
-    }
-
-    if (!formData.email) {
-      errors.email = "Email is required";
-    } else if (!isValidEmail(formData.email)) {
-      errors.email = "Invalid email format";
-    }
-
-    setFormErrors(errors);
-
-    return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e: any) => {
+  const [password, setPassword]: any = useState({});
+  const [passwordErrVal, setPasswordErrVal] = useState("");
+  const [passwordResVal, setPasswordResVal] = useState("");
+  const [isPassword, setIsPassword] = useState(false);
+
+  const handleChangePassword = (e: any) => {
+    const { name, value } = e.target;
+
+    setPassword((prev: any) => {
+      return { ...prev, [name]: value };
+    });
+  };
+
+  console.log(password);
+
+  const passwordSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (validateForm()) {
-      console.log("submit");
+    if (password.newPassword == password.repeatPassword) {
+      try {
+        const res = await userRequest.put(
+          `/user/change-password/${userData._id}`,
+          {
+            currentPassword: password.currentPassword,
+            newPassword: password.newPassword,
+          }
+        );
+        // console.log(res.data.data.message);
+        if (res) {
+          setPassword({
+            currentPassword: "",
+            newPassword: "",
+            repeatPassword: "",
+          });
+          setIsPassword(true);
+          setPasswordResVal(res.data.data.message);
+          setTimeout(() => {
+            setIsPassword(false);
+            setPasswordResVal("");
+          }, 1000);
+        }
+      } catch (error: any) {
+        // console.error(error.response.data);
+        setIsPassword(true);
+        setPasswordErrVal(error.response.data);
+      }
+    } else {
+      setIsPassword(true);
+      setPasswordErrVal("Passwords do not match");
     }
   };
 
@@ -83,6 +113,7 @@ const MyAccount = () => {
                 <AccountSideBar
                   profileImage={e.profileImage}
                   username={e.username}
+                  email={e.email}
                 />
               </div>
 
@@ -104,15 +135,10 @@ const MyAccount = () => {
                         className="w-full border px-3 py-2 outline-none focus:border-primary text-gray-200"
                         name="firstName"
                         id="firstName"
-                        placeholder="First name"
+                        placeholder="First Name"
                         onChange={handleChange}
-                        value={formData.firstName}
+                        defaultValue={e.firstName}
                       />
-                      {formErrors.firstName && (
-                        <p className="text-red-500 text-xs mt-1">
-                          {formErrors.firstName}
-                        </p>
-                      )}
                     </div>
                     <div>
                       <label
@@ -126,15 +152,10 @@ const MyAccount = () => {
                         className="w-full border px-3 py-2 outline-none focus:border-primary text-gray-200"
                         name="lastName"
                         id="lastName"
-                        placeholder="Last name"
+                        placeholder="Last Name"
                         onChange={handleChange}
-                        value={formData.lastName}
+                        defaultValue={e.lastName}
                       />
-                      {formErrors.lastName && (
-                        <p className="text-red-500 text-xs mt-1">
-                          {formErrors.lastName}
-                        </p>
-                      )}
                     </div>
                   </div>
                   <div className="mt-5">
@@ -147,17 +168,13 @@ const MyAccount = () => {
                     <input
                       type="text"
                       className="w-full border px-3 py-2 outline-none focus:border-primary text-gray-200"
-                      name="displayName"
+                      name="username"
                       id="displayName"
-                      placeholder="Display name"
+                      placeholder="Display Name"
                       onChange={handleChange}
-                      value={formData.displayName}
+                      defaultValue={e.username}
                     />
-                    {formErrors.displayName && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {formErrors.displayName}
-                      </p>
-                    )}
+
                     <p className="text-gray-200 text-[12px] mt-2">
                       <i>
                         This will be how your name will be displayed in the
@@ -182,15 +199,31 @@ const MyAccount = () => {
                       onChange={handleChange}
                       value={formData.email}
                     />
-                    {formErrors.email && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {formErrors.email}
-                      </p>
-                    )}
                   </div>
-                  <h2 className="text-gray-900 font-medium text-[20px] mt-10">
-                    Password
-                  </h2>
+                  <button
+                    type="submit"
+                    className="bg-primary text-white font-medium px-3 py-2 md:px-8 md:py-3 mt-5"
+                  >
+                    Save changes
+                  </button>
+                </form>
+
+                <h2 className="text-gray-900 font-medium text-[20px] mt-10">
+                  Password
+                </h2>
+                {isPassword ? (
+                  <div className="mt-2">
+                    <p className="text-secondary text-xl">
+                      {passwordErrVal ? passwordErrVal : ""}
+                    </p>
+                    <p className="text-green text-xl">
+                      {passwordResVal ? passwordResVal : ""}
+                    </p>
+                  </div>
+                ) : (
+                  ""
+                )}
+                <form onSubmit={passwordSubmit}>
                   <div className="mt-5">
                     <label
                       htmlFor="oldPassword"
@@ -201,17 +234,12 @@ const MyAccount = () => {
                     <input
                       type="password"
                       className="w-full border px-3 py-2 outline-none focus:border-primary text-gray-200"
-                      name="oldPassword"
+                      name="currentPassword"
                       id="oldPassword"
                       placeholder="Old password"
-                      onChange={handleChange}
-                      value={formData.oldPassword}
+                      onChange={handleChangePassword}
+                      value={password.currentPassword}
                     />
-                    {formErrors.oldPassword && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {formErrors.oldPassword}
-                      </p>
-                    )}
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
                     <div>
@@ -227,14 +255,9 @@ const MyAccount = () => {
                         name="newPassword"
                         id="newPassword"
                         placeholder="New password"
-                        onChange={handleChange}
-                        value={formData.newPassword}
+                        onChange={handleChangePassword}
+                        value={password.newPassword}
                       />
-                      {formErrors.newPassword && (
-                        <p className="text-red-500 text-xs mt-1">
-                          {formErrors.newPassword}
-                        </p>
-                      )}
                     </div>
                     <div>
                       <label
@@ -249,21 +272,16 @@ const MyAccount = () => {
                         name="repeatPassword"
                         id="repeatPassword"
                         placeholder="Repeat new password"
-                        onChange={handleChange}
-                        value={formData.repeatPassword}
+                        onChange={handleChangePassword}
+                        value={password.repeatPassword}
                       />
-                      {formErrors.repeatPassword && (
-                        <p className="text-red-500 text-xs mt-1">
-                          {formErrors.repeatPassword}
-                        </p>
-                      )}
                     </div>
                   </div>
                   <button
                     type="submit"
                     className="bg-primary text-white font-medium px-3 py-2 md:px-8 md:py-3 mt-5"
                   >
-                    Save changes
+                    Change Password
                   </button>
                 </form>
               </div>

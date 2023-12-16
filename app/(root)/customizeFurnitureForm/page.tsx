@@ -28,6 +28,7 @@ import graypair from "@/app/assets/images/grayPair.png";
 import sofacmBed from "@/app/assets/images/sofacmBed.png";
 import grayBed from "@/app/assets/images/grayBed.png";
 import yellowSofa from "@/app/assets/images/yellowSofa.png";
+import { publicRequest } from "@/requestMethods";
 
 const customizeFurnitureForm = () => {
   const categories = [
@@ -166,12 +167,18 @@ const customizeFurnitureForm = () => {
   }, [stuff]);
 
   useEffect(() => {
-    setFormData({ ...formData, material: material });
+    setFormData({ ...formData, materialType: material });
   }, [material]);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     console.log(formData, "formData");
+    try {
+      const res = await publicRequest.post(`/quote/add`, formData);
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -246,9 +253,10 @@ const customizeFurnitureForm = () => {
                   Email
                 </label>
                 <input
-                  type="text"
-                  name="name"
+                  type="email"
+                  name="email"
                   id="name"
+                  required
                   className="h-[46px] border border-[#DCDCDC] mt-2  ps-4 w-full outline-primary"
                   placeholder="xyz@gmail.com"
                   onChange={handleChanging}
@@ -463,7 +471,7 @@ const customizeFurnitureForm = () => {
               </label>
 
               <textarea
-                name="note"
+                name="description"
                 id="note"
                 className="w-full h-[149px] ps-5 pt-5 outline-primary"
                 placeholder="Note about your orders"
@@ -498,7 +506,10 @@ const customizeFurnitureForm = () => {
               <span className="text-primary">Terms & Condition</span>
             </p>
 
-            <button className="text-white bg-primary py-[8px] px-[18px] w-[178px] h-[40px] mt-10">
+            <button
+              className="text-white bg-primary py-[8px] px-[18px] w-[178px] h-[40px] mt-10"
+              type="submit"
+            >
               Submit
             </button>
           </form>

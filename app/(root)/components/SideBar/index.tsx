@@ -15,9 +15,11 @@ import { NavLink, SignInModal, SignUpModal } from "../index";
 import { BsHeart } from "react-icons/bs";
 import { RootState } from "@/lib/store";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 const SideBar = ({ menuOpen, setMenuOpen, showModal }: any) => {
   const [searchInp, setSearchInp] = useState(false);
+  const userData = useSelector((state: any) => state.user);
 
   // const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -67,6 +69,17 @@ const SideBar = ({ menuOpen, setMenuOpen, showModal }: any) => {
     "Best Selling Products",
   ];
 
+  let token = localStorage.getItem("token");
+  const router = useRouter();
+  const myAccount = () => {
+    if (token) {
+      router.push("/myaccount");
+    } else {
+      setMenuOpen(false);
+      showModal();
+    }
+  };
+
   return (
     <>
       {menuOpen && (
@@ -115,19 +128,37 @@ const SideBar = ({ menuOpen, setMenuOpen, showModal }: any) => {
               </Link>
             </div>
             <div className="flex items-center gap-4 lg:gap-6">
-              <button
-                className="shrink-0"
-                onClick={() => {
-                  setMenuOpen(false);
-                  showModal();
-                }}
-              >
-                <Image
-                  src={profile}
-                  alt="user"
-                  className="w-[25px] lg:w-[35px]"
-                />
-              </button>
+              {token ? (
+                <Link href="/myaccount">
+                  <div className="cursor-pointer block md:hidden w-[30px]">
+                    <Image
+                      src={userData.profileImage}
+                      alt="user"
+                      className="w-full h-full"
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+                </Link>
+              ) : (
+                <button
+                  className="block md:hidden"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    showModal();
+                  }}
+                >
+                  <div className="w-[25px] h-[25px]">
+                    <Image
+                      src={profile}
+                      alt="user"
+                      width={100}
+                      height={100}
+                      className="w-full h-full"
+                    />
+                  </div>
+                </button>
+              )}
 
               <NavLink
                 href="/wishlist"
@@ -221,10 +252,11 @@ const SideBar = ({ menuOpen, setMenuOpen, showModal }: any) => {
               <li className="flex items-center justify-between cursor-pointer w-full p-3">
                 <span className="capitalize">Compare</span>
               </li>
-              <li className="flex items-center justify-between cursor-pointer w-full p-3">
-                <Link href="/myaccount" className="capitalize">
-                  My Account
-                </Link>
+              <li
+                className="flex items-center justify-between cursor-pointer w-full p-3"
+                onClick={myAccount}
+              >
+                My Account
               </li>
               <li className="flex items-center justify-between cursor-pointer w-full p-3">
                 <Link href="/contactus" className="capitalize">

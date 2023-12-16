@@ -58,7 +58,21 @@ export const Allslice = createSlice({
       state.wishList = state.wishList.filter((item: any) => item._id !== idToRemove);
     },
     setLoginUser: (state, action: PayloadAction<object>) => {
-      state.user = action.payload;
+    state.user = action.payload;
+     localStorage.setItem("token", JSON.stringify(action.payload));
+
+    },
+    changeUserName: (state, action: PayloadAction<object>) => {
+      // Update state.user with new values
+      state.user = {
+        ...state.user,
+        ...action.payload
+      };
+      console.log(state.user);
+      
+    },
+    setLogOutUser: (state) => {
+      state.user = {};
     },
 
 
@@ -108,7 +122,8 @@ export const {
   addToWhislist,
   removeWishList,
   setLoginUser,
-
+  changeUserName,
+  setLogOutUser,
 
   AssignAuthTrue,
   AssignAuthFalse,
