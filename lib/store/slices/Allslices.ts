@@ -75,8 +75,6 @@ export const Allslice = createSlice({
       state.user = {};
     },
 
-
-
     AssignsideTrue: (state) => {
       state.siebarcheck = true;
     },

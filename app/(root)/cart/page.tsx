@@ -14,6 +14,8 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   const cartItems: any = useSelector((state: RootState) => state.cart);
+  console.log(cartItems);
+  // console.log(cartItems[0].Images[0].src);
 
   const removeItem = (id: string) => {
     const filterCart = cartItems.filter((product: any) => product._id === id);
@@ -74,9 +76,11 @@ const Cart = () => {
                           <div className="flex items-center gap-3">
                             <div className="flex items-center justify-center h-[74px] max-w-[100px] shrink-0">
                               <Image
-                                src={item?.images[0]}
+                                src={item?.Images[0].src}
                                 alt="product"
                                 className="shrink-0 max-h-full w-auto"
+                                width={100}
+                                height={100}
                               />
                             </div>
                             <div className="text-gray-300 text-xs md:text-sm hidden xs:block">
@@ -97,7 +101,7 @@ const Cart = () => {
                         </td>
                         <td className="py-3 px-5">
                           <span className="text-gray-300 text-xs md:text-sm">
-                            AED {item?.priceNow * item?.quantity}
+                            AED {item?.price * item?.quantity}
                           </span>
                         </td>
                       </tr>

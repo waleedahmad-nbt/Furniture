@@ -219,49 +219,49 @@ const Navbar = () => {
               </Link>
             </div>
             <div className="flex items-center gap-4 lg:gap-6">
-                {token ? (
-                  <div className="relative cursor-pointer group">
-                    <div className="hidden md:block w-[25px] lg:w-[30px]">
-                      <Image
-                        src={userData.profileImage}
-                        alt="user"
-                        className="w-full h-full"
-                        width={100}
-                        height={100}
-                      />
-                    </div>
-                    <div className="w-[150px] hidden md:flex flex-col gap-2 py-3 min-h-[100px] absolute bg-white left-0 text-gray-300 rounded-md z-50 top-[150%] opacity-0 group-hover:top-[100%] group-hover:opacity-100 duration-300 shadow-xl">
-                      <Link href="/myaccount">
-                        <div className="flex items-center justify-between px-3 gap-2 text-xl hover:bg-primary py-2 hover:text-white duration-300 w-full cursor-pointer">
-                          <p className="text-[16px]">Profile</p>
-                          <CgProfile />
-                        </div>
-                      </Link>
+              {token ? (
+                <div className="relative cursor-pointer group py-5">
+                  <div className="hidden md:block w-[25px] lg:w-[30px]">
+                    <Image
+                      src={userData.profileImage}
+                      alt="user"
+                      className="w-full h-full"
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+                  <div className="w-[150px] hidden -z-10 md:flex flex-col gap-2 py-3 min-h-[100px] absolute bg-white left-0 text-gray-300 rounded-md group-hover:z-50 -bottom-[30%] translate-y-[100%] opacity-0 group-hover:bottom-[0%] group-hover:opacity-100 duration-300 shadow-2xl">
+                    <Link href="/myaccount">
                       <div className="flex items-center justify-between px-3 gap-2 text-xl hover:bg-primary py-2 hover:text-white duration-300 w-full cursor-pointer">
-                        <p className="text-[16px]">Settings</p>
-                        <IoSettingsOutline />
+                        <p className="text-[16px]">Profile</p>
+                        <CgProfile />
                       </div>
-                      <div
-                        className="flex items-center justify-between px-3 gap-2 text-xl hover:bg-primary py-2 hover:text-white duration-300 w-full cursor-pointer"
-                        onClick={() => setLogout(true)}
-                      >
-                        <p className="text-[16px]">Logout</p>
-                        <IoMdLogOut />
-                      </div>
+                    </Link>
+                    <div className="flex items-center justify-between px-3 gap-2 text-xl hover:bg-primary py-2 hover:text-white duration-300 w-full cursor-pointer">
+                      <p className="text-[16px]">Settings</p>
+                      <IoSettingsOutline />
+                    </div>
+                    <div
+                      className="flex items-center justify-between px-3 gap-2 text-xl hover:bg-primary py-2 hover:text-white duration-300 w-full cursor-pointer"
+                      onClick={() => setLogout(true)}
+                    >
+                      <p className="text-[16px]">Logout</p>
+                      <IoMdLogOut />
                     </div>
                   </div>
-                ) : (
-                  <button
-                    className="shrink-0 hidden md:block"
-                    onClick={showModal}
-                  >
-                    <Image
-                      src={profile}
-                      alt="user"
-                      className="w-[25px] lg:w-[35px]"
-                    />
-                  </button>
-                )}
+                </div>
+              ) : (
+                <button
+                  className="shrink-0 hidden md:block"
+                  onClick={showModal}
+                >
+                  <Image
+                    src={profile}
+                    alt="user"
+                    className="w-[25px] lg:w-[35px]"
+                  />
+                </button>
+              )}
               <NavLink
                 href="/cart"
                 className="shrink-0 relative text-[26px] text-2xl md:text-xl lg:text-3xl"
@@ -347,6 +347,7 @@ const Navbar = () => {
           ))}
         </ul>
       </div>
+
       <SignInModal
         isModalOpen={isModalOpen}
         showModal={showModal}

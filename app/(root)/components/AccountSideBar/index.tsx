@@ -7,15 +7,17 @@ import user from "@/app/assets/users/user_01.png";
 import camera from "@/app/assets/icons/camera.svg";
 import Link from "next/link";
 import { FiX } from "react-icons/fi";
+import { useSelector } from "react-redux";
 
-const AccountSideBar = ({ profileImage, username, email }: any) => {
+const AccountSideBar = () => {
   const [logout, setLogout] = useState<boolean>(false);
+  const userData = useSelector((state: any) => state.user);
 
   return (
     <div className="bg-cream pt-10 pb-5 px-5">
       <div className="w-[82px] h-[82px] mx-auto mb-2 relative">
         <Image
-          src={profileImage}
+          src={userData?.profileImage}
           alt="user"
           className="w-full h-full rounded-full overflow-hidden"
           width={10}
@@ -26,7 +28,7 @@ const AccountSideBar = ({ profileImage, username, email }: any) => {
         </span>
       </div>
       <h2 className="text-gray-900 font-medium text-[20px] text-center mb-10">
-        {username}
+        {userData?.username}
       </h2>
       <ul>
         <li className="font-semibold mb-5 text-gray-200">

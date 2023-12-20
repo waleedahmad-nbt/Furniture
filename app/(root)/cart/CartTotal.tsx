@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 import { RootState } from "@/lib/store";
@@ -10,7 +10,10 @@ import { FaAngleDown } from "react-icons/fa6";
 const CartTotal = () => {
   const cartItems: any = useSelector((state: RootState) => state.cart);
 
-  const totalPrice = cartItems.reduce((total: any, item: any) => total + (+item.priceNow), 0);
+  const totalPrice = cartItems.reduce(
+    (total: any, item: any) => total + +item.price,
+    0
+  );
 
   const shipping = useRef<any>(null);
   const [toggleShipping, setToggleShipping] = useState<boolean>(false);
@@ -21,7 +24,7 @@ const CartTotal = () => {
     city: "",
     district: "",
     ward: "",
-  }
+  };
 
   const [formData, setFormData] = useState<any>(fields);
   const [promoCode, setPromoCode] = useState<string>("");
@@ -31,7 +34,7 @@ const CartTotal = () => {
     { label: "china", value: "china" },
     { label: "USA", value: "USA" },
     { label: "US", value: "US" },
-  ]
+  ];
 
   const customStyles = {
     option: (provided: any) => ({
@@ -52,16 +55,16 @@ const CartTotal = () => {
       borderRadius: "10px",
       boxShadow: "none",
       padding: "5px",
-      borderColor: state.isFocused ? '#FF6F00' : '',
-      '&:hover': {
+      borderColor: state.isFocused ? "#FF6F00" : "",
+      "&:hover": {
         border: "1px solid #FF6F00",
-      }
+      },
     }),
   };
 
   // Function to check if all fields are filled
   const areAllFieldsFilled = () => {
-    return Object.values(formData).every(value => value !== "");
+    return Object.values(formData).every((value) => value !== "");
   };
 
   return (
@@ -72,15 +75,20 @@ const CartTotal = () => {
         <p>AED {totalPrice?.toFixed(2)}</p>
       </div>
 
-      <div 
-        className={`flex items-center justify-between px-5 py-2 rounded-md group cursor-pointer select-none ${toggleShipping ? "text-gray-900 active" : "bg-white text-[#555555]"}`}
+      <div
+        className={`flex items-center justify-between px-5 py-2 rounded-md group cursor-pointer select-none ${
+          toggleShipping ? "text-gray-900 active" : "bg-white text-[#555555]"
+        }`}
         onClick={() => setToggleShipping(!toggleShipping)}
       >
         <p>Free Shipping</p>
         <FaAngleDown className="mt-1 group-[.active]:rotate-180" />
       </div>
 
-      <div className="px-5 overflow-hidden duration-300" style={{ height: toggleShipping ? "max-content" : "0" }}>
+      <div
+        className="px-5 overflow-hidden duration-300"
+        style={{ height: toggleShipping ? "max-content" : "0" }}
+      >
         <div className="py-4" ref={shipping}>
           <div>
             <Select
@@ -88,7 +96,7 @@ const CartTotal = () => {
               styles={customStyles}
               options={options}
               components={{
-                IndicatorSeparator: () => null
+                IndicatorSeparator: () => null,
               }}
               value={formData.country}
               onChange={(country: any) =>
@@ -105,7 +113,7 @@ const CartTotal = () => {
               options={options}
               placeholder="Select City"
               components={{
-                IndicatorSeparator: () => null
+                IndicatorSeparator: () => null,
               }}
               value={formData.city}
               onChange={(city: any) =>
@@ -122,7 +130,7 @@ const CartTotal = () => {
               placeholder="Select District"
               options={options}
               components={{
-                IndicatorSeparator: () => null
+                IndicatorSeparator: () => null,
               }}
               value={formData.district}
               onChange={(district: any) =>
@@ -139,7 +147,7 @@ const CartTotal = () => {
               placeholder="Select Ward"
               options={options}
               components={{
-                IndicatorSeparator: () => null
+                IndicatorSeparator: () => null,
               }}
               value={formData.ward}
               onChange={(ward: any) =>
@@ -153,19 +161,33 @@ const CartTotal = () => {
             <span className="text-[#555555]">Fee Shipping:</span>
             <p>AED 0</p>
           </div>
-          <button disabled={!areAllFieldsFilled()} className={`w-full py-2 font-medium ${areAllFieldsFilled() ? "bg-gray-200 text-white" : "bg-[#F3EFE5] text-gray-200"}`}>Update</button>
+          <button
+            disabled={!areAllFieldsFilled()}
+            className={`w-full py-2 font-medium ${
+              areAllFieldsFilled()
+                ? "bg-gray-200 text-white"
+                : "bg-[#F3EFE5] text-gray-200"
+            }`}
+          >
+            Update
+          </button>
         </div>
       </div>
 
       <div
-        className={`flex items-center mt-2 justify-between px-5 py-2 rounded-md group cursor-pointer select-none ${togglePromo ? "text-gray-900 active" : "bg-white text-[#555555]"}`}
+        className={`flex items-center mt-2 justify-between px-5 py-2 rounded-md group cursor-pointer select-none ${
+          togglePromo ? "text-gray-900 active" : "bg-white text-[#555555]"
+        }`}
         onClick={() => setTogglePromo(!togglePromo)}
       >
         <p>Apply Promo Code</p>
         <FaAngleDown className="mt-1 group-[.active]:rotate-180" />
       </div>
 
-      <div className="px-5 overflow-hidden duration-300" style={{ height: togglePromo ? "max-content" : "0" }}>
+      <div
+        className="px-5 overflow-hidden duration-300"
+        style={{ height: togglePromo ? "max-content" : "0" }}
+      >
         <div className="my-4">
           <input
             type="text"
@@ -175,7 +197,9 @@ const CartTotal = () => {
             onChange={(e) => setPromoCode(e.target.value)}
           />
         </div>
-        <button className="bg-[#F3EFE5] w-full py-2 text-gray-200 font-medium mb-4">Apply</button>
+        <button className="bg-[#F3EFE5] w-full py-2 text-gray-200 font-medium mb-4">
+          Apply
+        </button>
       </div>
 
       <div className="flex items-center justify-between px-5 font-medium my-6">
@@ -183,9 +207,11 @@ const CartTotal = () => {
         <p>AED {totalPrice?.toFixed(2)}</p>
       </div>
 
-      <button className="bg-primary w-full py-2 text-white font-medium">Payment Process</button>
+      <button className="bg-primary w-full py-2 text-white font-medium">
+        Payment Process
+      </button>
     </div>
-  )
-}
+  );
+};
 
-export default CartTotal
+export default CartTotal;

@@ -29,19 +29,25 @@ const MyAddress = () => {
     }),
   };
 
-  const options = [
-    { label: "pakistan", value: "pakistan" },
-    { label: "china", value: "china" },
+  const countryOptions = [
+    { label: "Pakistan", value: "pakistan" },
+    { label: "China", value: "china" },
     { label: "USA", value: "USA" },
     { label: "US", value: "US" },
   ];
 
+  const cityOptions = [
+    { label: "Lahore", value: "pakistan" },
+    { label: "Peshawer", value: "china" },
+    { label: "Islamabad", value: "USA" },
+    { label: "karachi", value: "US" },
+  ];
+
   const fields = {
-    firstName: "",
-    lastName: "",
-    displayName: "",
-    phoneNumber: "",
     address: "",
+    officeAddress: "",
+    phoneNumber: "",
+    alternativePhoneNumber: "",
     country: "",
     city: "",
   };
@@ -56,6 +62,8 @@ const MyAddress = () => {
       return { ...prev, [name]: value };
     });
   };
+
+  console.log(formData);
 
   const validateForm = () => {
     let errors: any = {};
@@ -190,89 +198,6 @@ const MyAddress = () => {
                 </h2>
                 <div className="mt-5">
                   <form onSubmit={handleSubmit}>
-                    <div className="flex flex-col md:flex-row gap-5">
-                      <div className="flex w-full flex-col gap-2">
-                        <label
-                          htmlFor="firstName"
-                          className="text-[16px] font-medium text-gray-300"
-                        >
-                          First Name *
-                        </label>
-                        <input
-                          type="text"
-                          name="firstName"
-                          id="firstName"
-                          className="w-full md:w-[100%] h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
-                          placeholder="First Name"
-                          onChange={handleChange}
-                        />
-                        {formErrors.firstName && (
-                          <p className="text-red-500 text-xs mt-1">
-                            {formErrors.firstName}
-                          </p>
-                        )}
-                      </div>
-                      <div className="flex  w-full flex-col gap-2">
-                        <label
-                          htmlFor="lastName"
-                          className="text-[16px] font-medium text-gray-300"
-                        >
-                          Last Name *
-                        </label>
-                        <input
-                          type="text"
-                          name="lastName"
-                          id="lastName"
-                          className="w-full md:w-[100%] h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
-                          placeholder="Last Name"
-                          onChange={handleChange}
-                        />
-                        {formErrors.lastName && (
-                          <p className="text-red-500 text-xs mt-1">
-                            {formErrors.lastName}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col gap-2 mt-5">
-                      <label
-                        htmlFor="displayName"
-                        className="text-[16px] font-medium text-gray-300"
-                      >
-                        Display Name
-                      </label>
-                      <input
-                        type="text"
-                        name="displayName"
-                        id="displayName"
-                        className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
-                        placeholder="Display Name"
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <p className="text-[12px] text-gray-200 mt-5">
-                      This will be how your name will be displayed in the
-                      account section and in reviews
-                    </p>
-
-                    <div className="flex flex-col gap-2 mt-5">
-                      <label
-                        htmlFor="alternativePhoneNumber"
-                        className="text-[16px] font-medium text-gray-300"
-                      >
-                        Alternative Phone Number
-                      </label>
-                      <input
-                        type="number"
-                        name="alternativePhoneNumber"
-                        id="alternativePhoneNumber"
-                        className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
-                        placeholder="Alternative Phone Number"
-                        onChange={handleChange}
-                      />
-                    </div>
-
                     <div className="flex flex-col gap-2 mt-5">
                       <label
                         htmlFor="address"
@@ -290,6 +215,57 @@ const MyAddress = () => {
                       />
                     </div>
 
+                    <div className="flex flex-col gap-2 mt-5">
+                      <label
+                        htmlFor="address"
+                        className="text-[16px] font-medium text-gray-300"
+                      >
+                        Office Address
+                      </label>
+                      <input
+                        type="text"
+                        name="officeAddress"
+                        id="address"
+                        className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
+                        placeholder="Address"
+                        onChange={handleChange}
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-2 mt-5">
+                      <label
+                        htmlFor="phoneNumber"
+                        className="text-[16px] font-medium text-gray-300"
+                      >
+                        Phone Number
+                      </label>
+                      <input
+                        type="text"
+                        name="phoneNumber"
+                        id="phoneNumber"
+                        className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
+                        placeholder="Phone Number"
+                        onChange={handleChange}
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-2 mt-5">
+                      <label
+                        htmlFor="alternativePhoneNumber"
+                        className="text-[16px] font-medium text-gray-300"
+                      >
+                        Alternative Phone Number
+                      </label>
+                      <input
+                        type="text"
+                        name="alternativePhoneNumber"
+                        id="alternativePhoneNumber"
+                        className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
+                        placeholder="Alternative Phone Number"
+                        onChange={handleChange}
+                      />
+                    </div>
+
                     <div className="flex flex-col md:flex-row gap-5 mt-5">
                       <div className="flex w-full flex-col gap-2">
                         <label
@@ -302,14 +278,14 @@ const MyAddress = () => {
                           className="w-full"
                           id="country"
                           styles={customStyles}
-                          options={options}
+                          options={countryOptions}
                           components={{
                             IndicatorSeparator: () => null,
                           }}
                           value={formData.country}
                           onChange={(country: any) =>
                             setFormData((prev: any) => {
-                              return { ...prev, country: country };
+                              return { ...prev, country: country.value };
                             })
                           }
                         />
@@ -326,14 +302,14 @@ const MyAddress = () => {
                           className="w-full"
                           id="city"
                           styles={customStyles}
-                          options={options}
+                          options={cityOptions}
                           components={{
                             IndicatorSeparator: () => null,
                           }}
                           value={formData.city}
                           onChange={(city: any) =>
                             setFormData((prev: any) => {
-                              return { ...prev, city: city };
+                              return { ...prev, city: city.value };
                             })
                           }
                         />

@@ -12,6 +12,7 @@ import NavLink from "./NavLink";
 import AccountSideBar from "./AccountSideBar";
 import MainSlider from "./MainSlider";
 import Logout from "./Logout";
+import AuthGuard from "./AuthGuard";
 
 export {
   Navbar,
@@ -28,4 +29,5 @@ export {
   AccountSideBar,
   MainSlider,
   Logout,
+  AuthGuard,
 };

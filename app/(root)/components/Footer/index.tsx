@@ -5,6 +5,7 @@ import Twitter from "@/app/assets/icons/Twitter.svg";
 import Youtube from "@/app/assets/icons/Youtube.svg";
 import AppStore from "@/app/assets/images/App Store Logo.png";
 import PlayStore from "@/app/assets/images/Play Store Logo.png";
+import { NavLink } from "../index";
 
 const Footer = () => {
   return (
@@ -88,22 +89,22 @@ const Footer = () => {
               <h1 className="font-semibold">Pages</h1>
               <div className="flex flex-col gap-3 mt-6">
                 <p className="hover:text-primary duration-150 cursor-pointer">
-                  Home
+                  <NavLink href="/">Home</NavLink>
                 </p>
                 <p className="hover:text-primary duration-150 cursor-pointer">
-                  About us
+                  <NavLink href="/aboutus">About Us</NavLink>
                 </p>
                 <p className="hover:text-primary duration-150 cursor-pointer">
-                  Contact us
+                  <NavLink href="/contactus">Contact us</NavLink>
                 </p>
                 <p className="hover:text-primary duration-150 cursor-pointer">
-                  My Account
+                  <NavLink href="/myaccount">My Account</NavLink>
                 </p>
                 <p className="hover:text-primary duration-150 cursor-pointer">
-                  Cart
+                  <NavLink href="/cart">Cart</NavLink>
                 </p>
                 <p className="hover:text-primary duration-150 cursor-pointer">
-                  Wishlist
+                  <NavLink href="/wishlist">Wishlist</NavLink>
                 </p>
               </div>
             </div>

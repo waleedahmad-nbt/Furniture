@@ -58,7 +58,7 @@ const Modal = ({
     } catch (error: any) {
       setLoading(false);
       setIsResponse(false);
-      setResMsg(error.response.data);
+      setResMsg(error?.response.data);
     }
   };
 

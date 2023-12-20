@@ -36,21 +36,25 @@ const MyOrders = () => {
     },
   ];
 
+  let token = localStorage.getItem("token");
+
   return (
     <div className="container">
       <h1 className="text-gray-900 font-medium text-3xl md:text-[48px] text-center my-7">
         My Orders
       </h1>
-      <div className="bg-white px-0 md:px-10 py-10 rounded-sm flex flex-wrap mb-16">
-        <div className="w-full md:w-[30%] pr-0 md:pr-5 ms-5">
-          <AccountSideBar />
-        </div>
-        <div className="w-full md:w-[65%] pl-0 md:pl-5 pr-2 mt-5 md:mt-0">
+      <div className="bg-white px-5 md:px-10 py-10 rounded-sm flex flex-col lg:flex-row justify-center gap-5 mb-16">
+        {token && (
+          <div className="w-full lg:w-[30%] pr-0 md:pr-5">
+            <AccountSideBar />
+          </div>
+        )}
+        <div className="w-full lg:w-[65%] pl-0 md:pl-5 pr-2 mt-5 md:mt-0">
           <h2 className="text-gray-900 font-medium text-[20px] ps-5 md:ps-0">
             Orders
           </h2>
-          <div className="bg-[#FCFCFC] rounded-md mt-6">
-            <table className="text-left w-full">
+          <div className="bg-[#FCFCFC] rounded-md mt-6 overflow-x-auto">
+            <table className="text-left w-full table-auto">
               <thead>
                 <tr>
                   <th></th>
@@ -93,9 +97,9 @@ const MyOrders = () => {
                         </div>
                       </td>
                       <td className="py-3 ps-5">
-                        <span className="text-gray-300 text-xs md:text-sm">
+                        <p className="text-gray-300 text-xs md:text-sm">
                           AED {item?.priceNow}
-                        </span>
+                        </p>
                       </td>
                       <td className="py-3 px-5">
                         <div className="w-[20px] md:w-[40px] h-[30px] md:h-[40px] flex items-center justify-center bg-white rounded-md border text-xs md:text-sm">
