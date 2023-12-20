@@ -1,4 +1,5 @@
 "use client"
+import { useState } from "react";
 import Image from "next/image";
 import joybird from "@/app/assets/images/joybird.png";
 import blueSofa from "@/app/assets/images/blueSofa.png";
@@ -9,51 +10,58 @@ import grayBed from "@/app/assets/images/grayBed.png";
 import yellowSofa from "@/app/assets/images/yellowSofa.png";
 
 import livingRoomChair from "@/app/assets/images/livingRoomChair.png";
-// import { PhotoAlbum } from "react-photo-album";
 
 const customizeFurniture = () => {
+
+  const [filterValue, setFilterValue] = useState<string>("All");
+
   let furnitureArr = [
-    { title: "All", class: "active" },
-    { title: "Bed", class: "" },
-    { title: "Sofa", class: "" },
-    { title: "Dressing table", class: "" },
-    { title: "Wardrobe", class: "" },
-    { title: "Bean bag", class: "" },
-    { title: "Living Room", class: "" },
-    { title: "TV units", class: "" },
-    { title: "Coffee table", class: "" },
-    { title: "Office furniture", class: "" },
-    { title: "Curtain", class: "" },
-    { title: "Living Room", class: "" },
+    { title: "All" },
+    { title: "Bed" },
+    { title: "Sofa" },
+    { title: "Dressing table" },
+    { title: "Wardrobe" },
+    { title: "Bean bag" },
+    { title: "Living Room" },
+    { title: "TV units" },
+    { title: "Coffee table" },
+    { title: "Office furniture" },
+    { title: "Curtain" },
+    { title: "Living Room" },
   ];
 
-  // const photos: any = [
-  //   { 
-  //     src: "https://th.bing.com/th/id/R.f4953cce2951742830b35c054950d18a?rik=8jHISgKjLQtyfg&pid=ImgRaw&r=0",
-  //     height: 1080,
-  //     width: Math.floor(Math.random() * (2000 - 100 + 1) + 100)
-  //   },
-  //   { 
-  //     src: "https://th.bing.com/th/id/R.f4953cce2951742830b35c054950d18a?rik=8jHISgKjLQtyfg&pid=ImgRaw&r=0",
-  //     height: 1080,
-  //     width: Math.floor(Math.random() * (2000 - 100 + 1) + 100)
-  //   },
-  //   { 
-  //     src: "https://th.bing.com/th/id/R.f4953cce2951742830b35c054950d18a?rik=8jHISgKjLQtyfg&pid=ImgRaw&r=0",
-  //     height: 1080,
-  //     width: Math.floor(Math.random() * (2000 - 100 + 1) + 100)
-  //   },
-  //   { 
-  //     src: "https://th.bing.com/th/id/R.f4953cce2951742830b35c054950d18a?rik=8jHISgKjLQtyfg&pid=ImgRaw&r=0",
-  //     height: 1080,
-  //     width: Math.floor(Math.random() * (2000 - 100 + 1) + 100)
-  //   },
-  //   { 
-  //     src: "https://th.bing.com/th/id/R.f4953cce2951742830b35c054950d18a?rik=8jHISgKjLQtyfg&pid=ImgRaw&r=0",
-  //     height: 1080,
-  //     width: Math.floor(Math.random() * (2000 - 100 + 1) + 100)
-  //   },
-  // ]; 
+  const photos: any = [
+    { src: joybird, category: "Bed" },
+    { src: joybird, category: "Bed" },
+    { src: joybird, category: "Bed" },
+    { src: joybird, category: "Bed" },
+    { src: joybird, category: "Bed" },
+    { src: blueSofa, category: "Bed" },
+    { src: blueSofa, category: "Bed" },
+    { src: blueSofa, category: "Bed" },
+    { src: blueSofa, category: "Bed" },
+    { src: blueSofa, category: "Sofa" },
+    { src: yellowSofa, category: "Sofa" },
+    { src: yellowSofa, category: "Sofa" },
+    { src: yellowSofa, category: "Sofa" },
+    { src: graypair, category: "Sofa" },
+    { src: graypair, category: "Sofa" },
+    { src: graypair, category: "Sofa" },
+    { src: joybird, category: "Sofa" },
+    { src: joybird, category: "Sofa" },
+    { src: joybird, category: "Sofa" },
+    { src: joybird, category: "Sofa" },
+  ]; 
+
+  const filter = (rows: any) => {
+
+    if(!filterValue || filterValue === "All") {
+      return rows;
+    }
+
+    const filtered = rows.filter((item: any) => item.category === filterValue);
+    return filtered;
+  };
 
   return (
     <>
@@ -79,11 +87,15 @@ const customizeFurniture = () => {
           <div>
             <div className="flex flex-wrap gap-2 justify-center mt-5">
               {furnitureArr.map((item: any, index: any) => {
-                // console.log(item);
-
                 return (
-                  <div key={index} className={`group ${item.class}`}>
-                    <div className="border px-3 py-1 group-[.active]:bg-primary group-[.active]:text-white text-gray-200 font-normal">
+                  <div
+                    key={index}
+                    className={`group ${filterValue === item.title ? "active" : ""}`}
+                  >
+                    <div
+                      onClick={() => setFilterValue(item.title)}
+                      className="border px-3 py-1 group-[.active]:bg-primary group-[.active]:text-white text-gray-200 font-normal cursor-pointer"
+                    >
                       {item.title}
                     </div>
                   </div>
@@ -91,55 +103,19 @@ const customizeFurniture = () => {
               })}
             </div>
           </div>
-
-          {/* <div>
-            <PhotoAlbum layout="rows" photos={photos} />
-          </div> */}
           
           <div className="mt-10 flex flex-col items-center gap-2">
-            <div className="flex flex-col sm:flex-row items-center gap-2">
-              <div>
-                <Image src={joybird} alt="" />
-              </div>
-              <div className="flex flex-col sm:flex-row gap-2 ">
-                <div>
-                  <Image src={chair} alt="" />
-                </div>
-                <div>
-                  <Image src={graypair} alt="" />
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-2">
-              <div className="relative ">
-                <Image src={blueSofa} alt="" />
-                <div className="absolute top-2 md:top-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 md:gap-4">
-                  <div className="bg-[#3C3C3C] pb-3 w-[200px] min-h-[100px] lg:w-[356px] md:min-h-[159px] text-center px-2 border">
-                    <h1 className="text-white text-sm lg:text-3xl mt-3">
-                      Living <span className="text-primary">Room</span> <br />
-                      Customize{" "}
-                    </h1>
-                    <p className="text-white text-[10px] lg:text-[14px] mt-3">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been
-                    </p>
+            <div className="Grid_Gallery">
+              {filter(photos)?.map((item: any, index: number) => {
+
+                const groupId = Math.floor(index / 11);
+
+                return (
+                  <div style={{ "--n": groupId } as React.CSSProperties} key={index}>
+                    <Image src={item.src} alt="" width={500} height={500} className="w-full h-full"/>
                   </div>
-                  <button className=" text-white bg-primary py-[8px] px-[10px] lg:px-[16px] w-[172px] h-[40px] text-[14px]">
-                    Order Now
-                  </button>
-                </div>
-              </div>
-              <div>
-                <Image src={sofacmBed} alt="" />
-              </div>
-            </div>
-            <div className="flex flex-col sm:flex-row items-center gap-2">
-              <div>
-                <Image src={grayBed} alt="" />
-              </div>
-              <div>
-                <Image src={yellowSofa} alt="" />
-              </div>
+                )
+              })}
             </div>
           </div>
         </div>
