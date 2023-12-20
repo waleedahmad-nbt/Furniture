@@ -7,6 +7,7 @@ import { BsFilter } from "react-icons/bs";
 import Link from "next/link";
 import { publicRequest } from "@/requestMethods";
 import { FiEdit3, FiTrash, FiX } from "react-icons/fi";
+import { AddCategory } from "@/app/dashboard-furniture/components";
 
 const Collection = () => {
   const [products, setProducts] = useState([
@@ -55,7 +56,9 @@ const Collection = () => {
   ]);
 
   const [val, setVal] = useState(0)
+  const [updating, setUpdating] = useState<string>("");
   const [category, setCategory] = useState('all');
+  const [addCategory, setAddCategory] = useState<boolean>(false);
   const [editCatId, setEditCatId] = useState<string>("");
 
   const [formData, setFormData] = useState<any>({});
@@ -85,6 +88,7 @@ const Collection = () => {
   }, [])
 
   const updateCategory = async () => {
+    setUpdating(editCatId);
     try {
       const res = await publicRequest.put(`/category/edit/${editCatId}`, formData);
 
@@ -96,6 +100,7 @@ const Collection = () => {
         });        
         setEditCatId("");
         setFormData({});
+        setUpdating("");
       }
     } catch (error) {
       console.error(error);
@@ -103,12 +108,14 @@ const Collection = () => {
   }
 
   const deleteCat = async (_id: string) => {
+    setUpdating(_id);
     try {
       const res = await publicRequest.delete(`/category/delete/${_id}`);
 
       console.log(res);
       if(res.status === 200) {
         setCategories((prev: any) => prev.filter((item: any) => item?._id !== _id)); 
+        setUpdating("");
       }
     } catch (error) {
       console.error(error);
@@ -151,8 +158,8 @@ const Collection = () => {
       <div className="py-3 mb-2 flex justify-between items-center">
         <h1 className="text-xl font-bold">Categories</h1>
         <div className="flex justify-center gap-2 items-center">
-          <button className="p-1 border-none bg-gray-900/80 hover:bg-gray-900/100 duration-100 text-white text-xs px-2 rounded-lg">
-            Create collection
+          <button onClick={() => setAddCategory(true)} className="p-1 border-none bg-gray-900/80 hover:bg-gray-900/100 duration-100 text-white text-xs px-2 rounded-lg">
+            Create category
           </button>
         </div>
       </div>
@@ -208,7 +215,13 @@ const Collection = () => {
                   scope="col"
                   className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Product conditions
+                  Description
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Sub-Categories
                 </th>
                 <th
                   scope="col"
@@ -278,6 +291,11 @@ const Collection = () => {
                     )}
                   </td>
                   <td className={`px-6 py-4 whitespace-nowrap text-xs`}>
+                    {category?.subCategories?.map((item: any, index: number) => (
+                      <React.Fragment key={index}>{index !== 0 && ", "}{item}</React.Fragment>
+                    ))}
+                  </td>
+                  <td className={`px-6 py-4 whitespace-nowrap text-xs`}>
                     <div className="flex gap-2 text-base items-center">
                       {editCatId === category?._id ? (
                         <>
@@ -289,14 +307,18 @@ const Collection = () => {
                             className="duration-150 bg-gray-300 px-3 py-1 text-xs text-white rounded-md"
                           >cancel</button>
                           <button
-                            onClick={() => updateCategory()} 
-                            className="duration-150 bg-primary px-3 py-1 text-xs text-white rounded-md"
-                          >update</button>
+                            onClick={() => updateCategory()}  
+                            className="duration-150 px-3 relative py-1 text-xs text-white rounded-md bg-primary"
+                          >
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                              {updating === category?._id && <div className="Loader w-[15px] border-[2px] border-gray-900"></div>}
+                            </div>
+                            <span className={updating === category?._id ? "opacity-0" : ""}>update</span>
+                          </button>
                         </>
                       )
                       : (
                         <>
-                          <button onClick={() => deleteCat(category?._id)} className="text-gray-300 hover:text-gray-900 duration-150"><FiTrash /></button>
                           <button
                             onClick={() => {
                               setEditCatId(category?._id);
@@ -304,6 +326,15 @@ const Collection = () => {
                             }} 
                             className="text-gray-300 hover:text-gray-900 duration-150"
                           ><FiEdit3 /></button>
+                          <button
+                            onClick={() => deleteCat(category?._id)}
+                            className="text-gray-300 hover:text-gray-900 duration-150 relative"
+                          >
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                              {updating === category?._id && <div className="Loader w-[15px] border-[2px] border-gray-900"></div>}
+                            </div>
+                            <span className={updating === category?._id ? "opacity-0" : ""}><FiTrash /></span>
+                          </button>
                         </>
                       )}
                     </div>
@@ -314,8 +345,10 @@ const Collection = () => {
           </table>
         </div>
       </div>
+
+      {addCategory && <AddCategory handleClose={() => setAddCategory(false)} />}
       
-      <p className="text-center py-3 mt-4 text-sm">Learn more about <Link href="#" className="text-blue-600 underline">collections</Link></p>
+      <p className="text-center py-3 mt-4 text-sm">Learn more about <Link href="#" className="text-blue-600 underline">category</Link></p>
     </div>
   );
 };

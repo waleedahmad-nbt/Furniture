@@ -18,6 +18,7 @@ import Treemap from "./treemap";
 import ViewQuote from "./viewQuote";
 import ViewContact from "./viewContact";
 import AddTeam from "./addTeam";
+import AddCategory from "./addCategory";
 
 export {
   Header,
@@ -40,4 +41,5 @@ export {
   ViewQuote,
   ViewContact,
   AddTeam,
+  AddCategory,
 };

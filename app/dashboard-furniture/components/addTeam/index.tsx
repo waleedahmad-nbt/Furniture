@@ -6,6 +6,8 @@ import { FiX } from "react-icons/fi";
 
 const AddTeam = ({ team, handleClose }: any) => {
 
+  const [updating, setUpdating] = useState<boolean>(false);
+
   const fields = {
     name: team?.name || "",
     designation: team?.designation || "",
@@ -48,9 +50,9 @@ const AddTeam = ({ team, handleClose }: any) => {
       errors.name = "Name is required";
     }
 
-    // if (!formData.image) {
-    //   errors.image = "Image is required";
-    // }
+    if (!formData.image) {
+      errors.image = "Image is required";
+    }
 
     if (!formData.designation) {
       errors.designation = "Designation is required";
@@ -64,26 +66,29 @@ const AddTeam = ({ team, handleClose }: any) => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const Data = {
-      name: formData?.name,
-      designation: formData?.designation,
-      image: formData?.image,
-      socials: {
-        facebook: formData?.socials?.facebook,
-        twitter: formData?.socials?.twitter,
-        linkedin: formData?.socials?.linkedin,
-      }
-    }
-
+    
     if(validateForm()) {
+      setUpdating(true);
+
+      const data = new FormData();
+      data.append("name", formData?.name);
+      data.append("designation", formData?.designation);
+      data.append("image", formData?.image);
+      
+      // Append socials individually
+      data.append("socials[facebook]", formData?.socials?.facebook);
+      data.append("socials[twitter]", formData?.socials?.twitter);
+      data.append("socials[linkedin]", formData?.socials?.linkedin);
+
       if(team) {
 
         try {
-          const res = await publicRequest.put(`/team/edit/${team?._id}`, { ...Data, image: 'https://th.bing.com/th/id/R.f4953cce2951742830b35c054950d18a?rik=8jHISgKjLQtyfg&pid=ImgRaw&r=0' });
+          const res = await publicRequest.put(`/team/edit/${team?._id}`, data);
     
           console.log(res);
           if(res.status === 201) {
             handleClose();
+            setUpdating(false);
           }
         } catch (error) {
           console.error(error);
@@ -92,7 +97,7 @@ const AddTeam = ({ team, handleClose }: any) => {
       } else {
 
         try {
-          const res = await publicRequest.post(`/team/add`, { ...Data, image: 'https://th.bing.com/th/id/R.f4953cce2951742830b35c054950d18a?rik=8jHISgKjLQtyfg&pid=ImgRaw&r=0' });
+          const res = await publicRequest.post(`/team/add`, data);
     
           console.log(res);
           if(res.status === 201) {
@@ -246,8 +251,13 @@ const AddTeam = ({ team, handleClose }: any) => {
                     </p>
                   )}
                 </div>
-                <button type="submit" className="w-full py-2 bg-gray-900 text-white rounded-md">
-                  {team ? "Edit Member" : "Add Member"}
+                <button
+                  type="submit" className="w-full py-2 bg-gray-900 text-white rounded-md relative"
+                >
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    {updating && <div className="Loader w-[15px] border-[2px] border-primary"></div>}
+                  </div>
+                  <span className={updating ? "opacity-0" : ""}>{team ? "Edit Member" : "Add Member"}</span>
                 </button>
               </div>
             </div>

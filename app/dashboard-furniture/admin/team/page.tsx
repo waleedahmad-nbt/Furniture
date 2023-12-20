@@ -11,6 +11,7 @@ import Image from "next/image";
 const Team = () => {
 
   const [val, setVal] = useState<number>(0);
+  const [updating, setUpdating] = useState<string>("");
   const [editTeam, setEditTeam] = useState<any>({});
   const [category, setCategory] = useState<string>('all');
   const [data, setData] = useState<any>([]);
@@ -35,12 +36,14 @@ const Team = () => {
   }, [])
 
   const deleteQuote = async (_id: string) => {
+    setUpdating(_id);
     try {
       const res = await publicRequest.delete(`/team/delete/${_id}`);
 
       console.log(res);
       if(res.status === 200) {
         setData((prev: any) => prev.filter((item: any) => item?._id !== _id)); 
+        setUpdating("");
       }
     } catch (error) {
       console.error(error);
@@ -206,7 +209,15 @@ const Team = () => {
                           }} 
                           className="text-gray-300 hover:text-gray-900 duration-150"
                         ><FiEye /></button>
-                        <button onClick={() => deleteQuote(_id)} className="text-gray-300 hover:text-gray-900 duration-150"><FiTrash /></button>
+                        <button
+                          onClick={() => deleteQuote(_id)}
+                          className="text-gray-300 hover:text-gray-900 duration-150 relative"
+                        >
+                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                            {updating === _id && <div className="Loader w-[15px] border-[2px] border-gray-900"></div>}
+                          </div>
+                          <span className={updating === _id ? "opacity-0" : ""}><FiTrash /></span>
+                        </button>
                       </div>
                     </td>
                   </tr>

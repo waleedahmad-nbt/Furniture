@@ -159,7 +159,7 @@ const Products = () => {
                   scope="col"
                   className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Products
+                  Status
                 </th>
                 <th
                   scope="col"
@@ -169,7 +169,7 @@ const Products = () => {
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
                   Price
                 </th>
@@ -177,13 +177,7 @@ const Products = () => {
                   scope="col"
                   className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Type
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Vendor
+                  Actions
                 </th>
               </tr>
             </thead>
@@ -222,14 +216,11 @@ const Products = () => {
                     >
                       {qty} in stock
                     </td>
-                    <td className="px-6 py-4 text-right whitespace-nowrap text-xs text-gray-500">
+                    <td className="px-6 py-4 text-left whitespace-nowrap text-xs text-gray-500">
                       PKR {price}
                     </td>
-                    <td className="px-6 py-4 text-right whitespace-nowrap text-xs text-gray-500">
-                      {type}
-                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
-                      {vender}
+                      No Action
                     </td>
                   </tr>
                 )})}

@@ -9,20 +9,47 @@ import { BsArrowLeft } from "react-icons/bs";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import Image from "next/image";
+import { publicRequest } from "@/requestMethods";
 
 const NewProduct = () => {
 
   const fields = {
     title: "",
+    description: "",
     quantity: 0,
     weight: "",
     images: [],
+    category: "",
+    subCategory: "",
+    status: "",
+    material: "",
+    brand: "",
+    warranty: "",
   }
 
   const [colors, setColors] = useState<string[]>([]);
+  const [submit, setSubmit] = useState<boolean>(false);
   const [value, setValue] = useState<string>("");
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [formData, setFormData] = useState<any>(fields);
+  const [categories, setCategories] = useState<any>([]);
+
+  useEffect(() => {
+
+    const getCatgories = async () => {
+      try {
+        const res = await publicRequest.get(`/category`);
+  
+        if(res.status === 200) {
+          setCategories(res.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    getCatgories();
+  }, []) 
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -32,17 +59,122 @@ const NewProduct = () => {
   const handleDescriptionChange = (value: any) => {
     setFormData((prev: any) => { return { ...prev, description: value } })
   };
+  const [formErrors, setFormErrors] = useState<any>({});
 
-  const handleSubmit = () => {
-    
-    const Data = {
-      title: "",
-      quantity: 0,
-      weight: "",
-      images: [],
-    }
+  const validateForm = () => {
+    let errors: any = {};
 
     console.log(formData);
+
+    if (!formData.title) {
+      errors.title = "Category is required";
+    }
+    if (!formData.description) {
+      errors.description = "Description is required";
+    }
+    if (!formData.category) {
+      errors.category = "Category is required";
+    }
+    if (!formData.subCategory) {
+      errors.subCategory = "Sub-Category is required";
+    }
+    if (!formData.price) {
+      errors.price = "Price is required";
+    }
+    if (!formData.status) {
+      errors.status = "Status is required";
+    }
+    if (!formData.warranty) {
+      errors.warranty = "Warranty is required";
+    }
+    if (!formData.qty) {
+      errors.qty = "Quantity is required";
+    }
+    if (!formData.weight) {
+      errors.weight = "Weight is required";
+    }
+    if (!formData.material) {
+      errors.material = "Material is required";
+    }
+    if (!formData.brand) {
+      errors.brand = "Brand is required";
+    }
+    // for(let i = 0; i <= 4; i++) {
+    //   if (!formData.images[i]) {
+    //     errors[`images[${i}]`] = "Image is required";
+    //   }
+    // }
+    if(sizesArray.length <= 0) {
+      errors.sizes = "At least one Size is required";
+    }
+    if(boxArray.length <= 0) {
+      errors.boxSizes = "At least one Size is required";
+    }
+    if(colors.length <= 0) {
+      errors.colors = "At least one Size is required";
+    }
+
+    setFormErrors(errors);
+
+    return Object.keys(errors).length === 0;
+  }
+
+  const handleSubmit = async () => {
+    if(validateForm()) {
+      setSubmit(true);
+
+      const data: any = new FormData();
+      data.append("title", formData?.title);
+      data.append("category", formData?.category);
+      data.append("description", formData?.description);
+      data.append("subCategory", formData?.subCategory);
+      data.append("status", formData?.status);
+      data.append("price", formData?.price);
+      data.append("qty", formData?.qty);
+
+      formData?.images?.forEach((img: any, index: number) => {
+        data.append(`pic${index + 1}`, img);
+      });
+
+      colors?.forEach((size: any, index: number) => {
+        data.append(`colors[${index}]`, size);
+      });
+      
+      boxArray.forEach((size: any, index: number) => {
+        data.append(`features[gDimensions][${index}][height]`, size.height);
+        data.append(`features[gDimensions][${index}][width]`, size.width);
+      });
+      boxArray.forEach((size: any, index: number) => {
+        data.append(`features[bDimensions][${index}][height]`, size.height);
+        data.append(`features[bDimensions][${index}][width]`, size.width);
+      });
+
+      // materials?.forEach((size: any, index: number) => {
+      //   data.append(`features[materials][${index}]`, size);
+      // });
+
+      data.append("features[brand]", formData?.brand);
+      data.append("features[warranty]", formData?.warranty);
+      data.append("weight", formData?.weight);
+
+      for (const pair of data.entries()) {
+        console.log(pair[0], pair[1]);
+      }
+
+      try {
+        const res = await publicRequest.post(`/product/add`, data);
+  
+        console.log(res);
+        if(res.status === 201) {
+          alert("Protfolio Created.");
+          setSubmit(false);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      console.log("valid error", formErrors)
+    }
   }
   
   useEffect(() => {
@@ -159,7 +291,7 @@ const NewProduct = () => {
   const submitBox = (e: any) => {
     e.preventDefault();
     if(validateBox()) {
-      setBoxArray((prev: any) => [ ...prev, boxSizes ]);
+      setBoxArray((prev: any) => [ ...prev, { height: getHeight(boxSizes), width: getWidth(boxSizes) } ]);
     }
   };
 
@@ -184,10 +316,28 @@ const NewProduct = () => {
       reader.readAsDataURL(file);
   
       setFormData((prev: any) => { 
-        return { ...prev, images: { ...prev.images, [index]: file } };
+        return { ...prev, images: [ ...prev.images, file ] };
       });
     }
   };
+
+  const getHeight = (sz: any) => {
+    const formated =
+      (sz?.heightFeets && sz?.heightFeets + "'") +
+      (sz?.heightInches && sz?.heightInches + "''") +
+      ((sz?.heightInches || sz?.heightFeets) && " H");
+
+    return formated;
+  }
+
+  const getWidth = (sz: any) => {
+    const formated =
+      (sz?.widthFeets && sz?.widthFeets + "'") +
+      (sz?.widthInches && sz?.widthInches + "''") +
+      ((sz?.widthInches || sz?.widthFeets) && " W");
+
+    return formated;
+  }
 
   const formatSize = (sz: any) => {
     const formated =
@@ -199,7 +349,17 @@ const NewProduct = () => {
       ((sz?.widthInches || sz?.widthFeets) && " W");
   
     return formated;
-  };  
+  };
+
+  const filterSubs = (cats: any) => {
+    if(formData?.category) {
+      const selectedCategory = formData?.category;
+      return cats.find((item: any) => item.category === selectedCategory)?.subCategories || [];
+    } else {
+      console.log("subcats")
+      return [];
+    }
+  }
 
   return (
     <>
@@ -357,7 +517,7 @@ const NewProduct = () => {
                   name="weightUnit"
                   onChange={handleChange}
                 >
-                  <option selected>Kg</option>
+                  <option value="Kg">Kg</option>
                   <option value="lb">lb</option>
                   <option value="oz">oz</option>
                   <option value="g">g</option>
@@ -430,7 +590,7 @@ const NewProduct = () => {
                       boxArray?.map((e: any, i: any) => {
                         return (
                           <span className="bg-gray-blue/30 relative h-max rounded m-1 text-sm p-1 flex justify-center items-center px-2" key={i}>
-                            {formatSize(e)}
+                            {e.height + " " + e.width}
                             <HiXMark
                               size={18}
                               onClick={() => deleteBox(i)}
@@ -567,7 +727,7 @@ const NewProduct = () => {
                   name="status"
                   onChange={handleChange}
                 >
-                  <option>Active</option>
+                  <option value="Active">Active</option>
                   <option value="Draft">Draft</option>
                 </select>
               </div>
@@ -579,13 +739,30 @@ const NewProduct = () => {
                   <select
                     id="category"
                     className="bg-gray-50 border px-2 py-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-1"
-                    defaultValue="Active"
                     name="category"
                     onChange={handleChange}
                   >
-                    <option>Category 1</option>
-                    <option value="Category 2">Category 2</option>
+                    <option value="">Select a category</option>
+                    {categories?.map((item: any, index: number) => (
+                      <option key={index} value={item?.category}>{item?.category}</option>
+                    ))}
                   </select>
+
+                  {formData?.category && 
+                    <>
+                      <p className="text-xs mt-3">Sub-Category</p>
+                      <select
+                        id="subCategory"
+                        className="bg-gray-50 border px-2 py-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-1"
+                        name="subCategory"
+                        onChange={handleChange}
+                      >
+                        {filterSubs(categories)?.map((item: any, index: number) => (
+                          <option key={index} value={item}>{item}</option>
+                        ))}
+                      </select>
+                    </>
+                  }
                 </div>
                 <div>
                   <p className="text-xs mt-3">Material</p>
@@ -609,13 +786,22 @@ const NewProduct = () => {
                     name="brand"
                     onChange={handleChange}
                   >
-                    <option>Brand</option>
+                    <option value="">Select a brand</option>
+                    <option value="Brand 2">Brand</option>
                     <option value="Brand 2">Brand 2</option>
                   </select>
                 </div>
               </div>
 
-              <button onClick={handleSubmit} className="w-full bg-gray-900/70 hover:bg-gray-900/100 text-white py-2 rounded-lg">Add Product</button>
+              <button
+                onClick={handleSubmit}
+                className="w-full bg-gray-900/70 hover:bg-gray-900/100 text-white py-2 rounded-lg relative"
+              >
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                  {submit && <div className="Loader w-[15px] border-[2px] border-primary"></div>}
+                </div>
+                <span className={submit ? "opacity-0" : ""}>Add Product</span>
+              </button>
 
             </div>
 
