@@ -12,7 +12,7 @@ let item = "dummy";
 export const userRequest = axios.create({
   baseURL: BASE_URL,
   headers: {
-    token: item?.token,
+    token: item,
   },
 });
 
