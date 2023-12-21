@@ -1,34 +1,46 @@
 import Image from "next/image";
-
-import User from "@/app/assets/users/user.png";
 import starFill from "@/app/assets/icons/star_fill.svg";
-import like from "@/app/assets/icons/like.svg";
-import messages from "@/app/assets/icons/messages.svg";
+import star from "@/app/assets/icons/star.svg";
 
-const ProductComment = () => {
+const ProductComment = ({ item }: any) => {
+
+  const formatDateString = (dateString: string): string => {
+    const options: any = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+  };
+
   return (
     <div className="mb-10">
-      <div className="flex items-center gap-3">
-        <Image src={User} alt="product" width={48} height={48} className="rounded-full"/>
-        <div>
-          <p className="text-gray-900 font-medium">Ralph Edwards</p>
-          <span className="block my-1 text-[12px] text-[#858585]">October 20, 2020</span>
-          <div className="flex gap-1">
-            {Array.from({ length: 5 })?.map((_, index) => (
-              <Image src={starFill} alt="product" width={18} height={18} key={index}/>
-            ))}
+      <div className="flex justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <Image src={item?.reviewByDetails?.profilePic} alt="product" width={48} height={48} className="rounded-full"/>
+          <div>
+            <p className="text-gray-900 font-medium">{item?.reviewByDetails?.firstName + " " + item?.reviewByDetails?.lastName}</p>
+            <div className="flex gap-1">
+              {Array.from({ length: 5 }, (_, index) => {
+                return (
+                  <p>
+                    {item.rating >= index + 1 ? (
+                      <Image
+                        src={starFill}
+                        alt="product"
+                        width={18}
+                        height={18}
+                        key={index}
+                      />
+                    ) : (
+                      <Image src={star} alt="product" width={18} height={18} />
+                    )}
+                  </p>
+                );
+              })}
+            </div>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row items-end md:items-center gap-3">
-          <div className="text-primary bg-[#F3EFE5] px-5 py-1 font-medium text-[12px] rounded-md shrink-0">Purchased by 247 supplier</div>
-          <div className="text-primary bg-[#F3EFE5] px-5 py-1 font-medium text-[12px] rounded-md shrink-0">Gold color</div>
-        </div>
+        <span className="block text-[12px] text-[#858585]">{formatDateString(item?.createdAt)}</span>
       </div>
-      <p className="text-gray-400 mt-2 mb-5">Watch the movie very loud, very sharp. Paper wrap - protect the environment. There is a stamp on fragile goods, but the more it is - the more the courier will throw ...: D</p>
-      <div className="flex gap-8 px-5 py-2 items-center">
-        <button className="flex items-center gap-1 text-gray-100"><Image src={like} alt="icon" width={24} height={24}/>Like</button>
-        <button className="flex items-center gap-1 text-gray-100"><Image src={messages} alt="icon" width={24} height={24}/>Reply</button>
-      </div>
+      <p className="text-gray-400 mt-2 mb-5">{item?.description}</p>
     </div>
   )
 }

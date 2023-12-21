@@ -12,6 +12,7 @@ const persistConfig = {
     "cart", 
     "wishList",
     "user",
+    "recentViews",
   ]
 };
 

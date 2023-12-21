@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ProductCard } from "../../../components";
+import { ProductCard, RecentViewed } from "../../../components";
 import Image from "next/image";
 import Link from "next/link";
 import Slider from "react-slick";
@@ -38,61 +38,11 @@ const ProductDetails = () => {
 
   const { details } = useParams();
 
-  console.log(details)
-
   const [formData, setFormData] = useState<any>({
     size: "",
     color: "",
     amount: 1,
   });
-
-  const newArrival = [
-    {
-      _id: "1",
-      name: "Rocket stool",
-      Images: [Pro2, kitchen, bed],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 2,
-      status: "sale",
-    },
-    {
-      _id: "2",
-      name: "Rocket stool",
-      Images: [Pro2, Pro1],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 0,
-      status: "sale",
-    },
-    {
-      _id: "3",
-      name: "Rocket stool",
-      Images: [Pro2],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 5,
-      status: "sale",
-    },
-    {
-      _id: "4",
-      name: "Rocket stool",
-      Images: [Pro1],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 2,
-      status: "sale",
-    },
-    {
-      _id: "5",
-      name: "Rocket stool",
-      Images: [Pro1],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 2,
-      status: "new",
-    },
-  ];
 
   const data = {
     name: "The BonBaron Bean Bag Chair – Sherpa",
@@ -131,7 +81,6 @@ const ProductDetails = () => {
       try {
         const res = await publicRequest.get(`/product/${details}`);
   
-        console.log(res);
         if(res.status === 200) {
           setProduct(res.data.data);
         }
@@ -214,7 +163,7 @@ const ProductDetails = () => {
             <Slider {...settings} className="Product_Details mb-[150px]">
               {product?.Images?.map((item: any, index: number) => (
                 <div className={`relative w-full h-full`} key={index}>
-                  <Image src={item} alt="img" className="w-full min-h-[613px]" width={100} height={100} />
+                  <Image src={item} alt="img" className="w-full h-[613px] object-cover" width={100} height={100} />
                 </div>
               ))}
             </Slider>
@@ -369,23 +318,7 @@ const ProductDetails = () => {
       </div>
 
       <div className="container my-10">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl md:text-[38px] text-gray-300 font-semibold md:font-bold">Recently View</h1>
-          <Link
-            href="#"
-            className="flex items-center gap-3 bg-primary px-2 py-1 w-max text-white uppercase text-[14px]"
-          >
-            <span>view all</span>
-            <Image src={arrowL} alt="icon" />
-          </Link>
-        </div>
-        <div className="w-full my-10">
-          <div className="relative grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-6">
-            {newArrival?.map((item: any, index: number) => (
-              <ProductCard item={item} key={index} />
-            ))}
-          </div>
-        </div>
+        <RecentViewed />
       </div>
     </>
   );

@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
-import { addToCart, addToWhislist, removeWishList } from "@/lib/store/slices/Allslices";
+import { addToCart, addToWhislist, removeWishList, setRecentViews, setUpdateRecentViews } from "@/lib/store/slices/Allslices";
 
 import cart from "@/app/assets/icons/cart_dark.svg";
 import zoom from "@/app/assets/icons/zoom.svg";
@@ -13,6 +13,33 @@ import Link from "next/link";
 
 const MultiProductView = ({ item }: any) => {
   const dispatch = useDispatch();
+
+  const recentViews: any = useSelector((state: RootState) => state.recentViews);
+
+  const getCurrentDateTime = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const day = now.getDate();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+  
+    // Format the date and time as YYYY-MM-DD HH:MM:SS
+    const formattedDateTime = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')} ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  
+    return formattedDateTime;
+  };
+
+  const addRecent = () => {
+    const exist = recentViews.find((pro: any) => pro?._id === item?._id)
+
+    if(!exist && recentViews?.length < 20) {
+      dispatch(setRecentViews({ ...item, time: getCurrentDateTime() }));
+    }else {
+      dispatch(setUpdateRecentViews({ id: item?._id, updatedTime: getCurrentDateTime() }));
+    }
+  }
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
   // const bgColor = item?.status === "sale" ? "bg-secondary" : "bg-primary";
@@ -65,7 +92,7 @@ const MultiProductView = ({ item }: any) => {
             <Image src={cart} alt="product"/>
           </button>
         </div>
-        <Link href={`/products/details/${item?._id}`}>
+        <Link href={`/products/details/${item?._id}`} onClick={addRecent}>
           {item?.Images?.length > 0 && item?.Images?.map((img: any, index: number) => (
             <div className={`mx-auto duration-200 transition-opacity ${index === activeIndex ? "relative opacity-100 visible" : "absolute inset-0 opacity-0 invisible pointer-events-none"}`} key={index}>
               {img !== null && <Image src={img} alt="product" width={100} height={100} className="w-auto h-auto" />}

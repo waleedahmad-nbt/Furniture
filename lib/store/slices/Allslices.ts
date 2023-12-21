@@ -14,6 +14,7 @@ interface AuthState {
   user: Object;
   category: string;
   categoryId: string;
+  recentViews: Array<object>;
 
 
   Authcheck: boolean;
@@ -32,6 +33,7 @@ const initialState: AuthState = {
   user: {},
   category: "",
   categoryId:"",
+  recentViews: [],
 
   
   orderItems: [],
@@ -81,11 +83,21 @@ export const Allslice = createSlice({
     },
     setCategory: (state, action: PayloadAction<string>) => {
       state.category = action.payload;
-      },
-
+    },
     setCategoryId: (state, action: PayloadAction<string>) => {
       state.categoryId =   action.payload;
-        },
+    },
+    setRecentViews: (state, action: PayloadAction<object>) => {
+      state.recentViews =   [ ...state.recentViews, action.payload];
+    },
+    setUpdateRecentViews: (state, action: PayloadAction<{ id: any; updatedTime: any }>) => {
+      const { id, updatedTime } = action.payload;
+      
+      // Use map to create a new array with the updated item
+      state.recentViews = state.recentViews.map((item: any) =>
+        item._id === id ? { ...item, time: updatedTime } : item
+      );
+    },    
 
 
 
@@ -138,6 +150,8 @@ export const {
   setLogOutUser,
   setCategory,
   setCategoryId,
+  setRecentViews,
+  setUpdateRecentViews,
 
   AssignAuthTrue,
   AssignAuthFalse,

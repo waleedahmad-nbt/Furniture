@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { PaginationContainer, ProductCard } from "../components";
+import { PaginationContainer, RecentViewed } from "../components";
 
 import { FaAngleDown, FaList, FaSlidersH } from "react-icons/fa";
 import { CgMenuGridO } from "react-icons/cg";
@@ -11,11 +10,6 @@ import MultiRangeSlider from "multi-range-slider-react";
 import angle from "@/app/assets/icons/angle-right.svg";
 import check from "@/app/assets/icons/check.svg";
 
-import bed from "@/app/assets/products/bed.png";
-import kitchen from "@/app/assets/products/kitchen.png";
-import Pro1 from "@/app/assets/products/table_02.png";
-import Pro2 from "@/app/assets/products/table_03.png";
-import arrowL from "@/app/assets/icons/arrow-left.svg";
 import { RootState } from "@/lib/store";
 import { publicRequest } from "@/requestMethods";
 import { useSelector } from "react-redux";
@@ -26,14 +20,12 @@ const Products = () => {
   const categoryId: any = useSelector((state: RootState) => state.categoryId);
   const [options, setoptions] = useState([]);
   const [products, setProducts] = useState<any>([]);
-  // const [colors, setColors] = useState([]);
 
   useEffect(() => {
     const sendQuery = async () => {
       try {
         const res = await publicRequest.get(`/product?cat=${category}`);
         if (res.status === 200) {
-          console.log(res.data.data);
           setProducts(res.data.data);
         }
       } catch (error) {
@@ -117,54 +109,6 @@ const Products = () => {
     getProducts();
   }, []);
 
-  const newArrival = [
-    {
-      _id: "1",
-      name: "Rocket stool",
-      images: [Pro2, kitchen, bed],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 2,
-      status: "sale",
-    },
-    {
-      _id: "2",
-      name: "Rocket stool",
-      images: [Pro2, Pro1],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 0,
-      status: "sale",
-    },
-    {
-      _id: "3",
-      name: "Rocket stool",
-      images: [Pro2],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 5,
-      status: "sale",
-    },
-    {
-      _id: "4",
-      name: "Rocket stool",
-      images: [Pro1],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 2,
-      status: "sale",
-    },
-    {
-      _id: "5",
-      name: "Rocket stool",
-      images: [Pro1],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 2,
-      status: "new",
-    },
-  ];
-
   const [minPrice, setMinPrice] = useState<number>(100);
   const [maxPrice, setMaxPrice] = useState<number>(9999);
 
@@ -199,9 +143,7 @@ const Products = () => {
 
   const fetchProductByColor = async (color: any) => {
     try {
-      const res = await publicRequest.get(
-        `/product?cat=${category}&subcat=${tab}&color=${color}`
-      );
+      const res = await publicRequest.get(`/product?cat=${category}&subcat=${tab}&color=${color}`);
       if (res.status === 200) {
         console.log(res.data.data, "colorr");
         setProducts(res.data.data);
@@ -436,23 +378,7 @@ const Products = () => {
       </div>
 
       <div className="container my-10">
-        <div className="flex items-center justify-between">
-          <h1 className="text-[38px] text-gray-300 font-bold">Recently View</h1>
-          <Link
-            href="#"
-            className="flex items-center gap-3 bg-primary px-2 py-1 text-white uppercase text-[14px]"
-          >
-            <span>view all</span>
-            <Image src={arrowL} alt="icon" width={15} height={15} />
-          </Link>
-        </div>
-        <div className="w-full my-10">
-          <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {newArrival?.map((item: any, index: number) => (
-              <ProductCard item={item} key={index} />
-            ))}
-          </div>
-        </div>
+        <RecentViewed />
       </div>
     </>
   );

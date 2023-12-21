@@ -5,8 +5,40 @@ import { MultiProductView } from "..";
 import star from "@/app/assets/icons/star.svg";
 import starFill from "@/app/assets/icons/star_fill.svg";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { setRecentViews, setUpdateRecentViews } from "@/lib/store/slices/Allslices";
+import { RootState } from "@/lib/store";
 
 const ProductCard = ({ item, className, offer }: any) => {
+  const dispatch = useDispatch();
+
+  const recentViews: any = useSelector((state: RootState) => state.recentViews);
+
+  const getCurrentDateTime = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1; // Months are zero-indexed, so we add 1
+    const day = now.getDate();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+  
+    // Format the date and time as YYYY-MM-DD HH:MM:SS
+    const formattedDateTime = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')} ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  
+    return formattedDateTime;
+  };
+
+  const addRecent = () => {
+    const exist = recentViews.find((pro: any) => pro?._id === item?._id)
+
+    if(!exist && recentViews?.length < 20) {
+      dispatch(setRecentViews({ ...item, time: getCurrentDateTime() }));
+    } else {
+      dispatch(setUpdateRecentViews({ id: item?._id, updatedTime: getCurrentDateTime() }));
+    }
+  }
+
   return (
     <div className={className}>
       <div className="h-[203px]">
@@ -27,7 +59,7 @@ const ProductCard = ({ item, className, offer }: any) => {
         </div>
         <span className="text-gray-500 text-[14px]">3</span>
       </div>
-      <Link href="/products/details/">
+      <Link href={`/products/details/${item?._id}`} onClick={addRecent}>
         <h3 className="font-medium text-gray-300 mt-1">{item?.title}</h3>
       </Link>
       <div className="flex flex-items gap-3">

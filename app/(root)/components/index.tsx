@@ -14,6 +14,7 @@ import MainSlider from "./MainSlider";
 import Logout from "./Logout";
 import AuthGuard from "./AuthGuard";
 import FurniturePortfolio from "./FurniturePortfolio";
+import RecentViewed from "./RecentViewed";
 
 export {
   Navbar,
@@ -32,4 +33,5 @@ export {
   Logout,
   AuthGuard,
   FurniturePortfolio,
+  RecentViewed,
 };

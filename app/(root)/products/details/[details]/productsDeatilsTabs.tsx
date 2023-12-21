@@ -1,13 +1,10 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-
-import star from "@/app/assets/icons/star.svg";
-import starFill from "@/app/assets/icons/star_fill.svg";
-import { ProductComment } from "../../../components";
+import Reviews from "./reviews";
 
 const ProductsDeatilsTabs = ({ product }: any) => {
-  const Tabs = ["Description", "Features", "Comment"];
+  const Tabs = ["Description", "Features", "Reviews"];
   const [tab, setTab] = useState<string>(Tabs[0]);
 
   const imagesSlice =
@@ -19,7 +16,6 @@ const ProductsDeatilsTabs = ({ product }: any) => {
 
   
   const features = product?.features;
-  console.log(product?.colors)
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -121,175 +117,7 @@ const ProductsDeatilsTabs = ({ product }: any) => {
               </div>
             </div>
           ) : (
-            tab === Tabs[2] && (
-              <div>
-                <h2 className="font-medium text-gray-900 my-4 mr-10">Review</h2>
-                <div className="flex gap-6">
-                  <div className="text-center">
-                    <p className="text-[20px]">4.5</p>
-                    <span className="block mb-2">832 review</span>
-                    <div className="flex mb-4">
-                      {Array.from({ length: 4 })?.map((_, index) => (
-                        <Image
-                          src={starFill}
-                          alt="product"
-                          width={24}
-                          height={24}
-                          key={index}
-                        />
-                      ))}
-                      <Image src={star} alt="product" width={24} height={24} />
-                    </div>
-                  </div>
-
-                  <div className="grow">
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center">
-                        {Array.from({ length: 5 })?.map((_, index) => (
-                          <Image
-                            src={starFill}
-                            alt="product"
-                            width={18}
-                            height={18}
-                            key={index}
-                          />
-                        ))}
-                      </div>
-                      <div className="relative grow hidden sm:block md:hidden lg:block">
-                        <span className="block h-[8px] w-full bg-[#E3E4E4] rounded-md"></span>
-                        <span
-                          className={`block absolute inset-0 w-[50%] bg-[#3CB242] rounded-md`}
-                        ></span>
-                      </div>
-                      <p className="text-[12px] min-w-[80px]">750 Stars</p>
-                    </div>
-                    <div className="flex items-center gap-3 my-3">
-                      <div className="flex items-center">
-                        {Array.from({ length: 4 })?.map((_, index) => (
-                          <Image
-                            src={starFill}
-                            alt="product"
-                            width={18}
-                            height={18}
-                            key={index}
-                          />
-                        ))}
-                        <Image
-                          src={star}
-                          alt="product"
-                          width={18}
-                          height={18}
-                        />
-                      </div>
-                      <div className="relative grow hidden sm:block md:hidden lg:block">
-                        <span className="block h-[8px] w-full bg-[#E3E4E4] rounded-md"></span>
-                        <span
-                          className={`block absolute inset-0 w-[50%] bg-[#3CB242] rounded-md`}
-                        ></span>
-                      </div>
-                      <p className="text-[12px] min-w-[80px]">52 Stars</p>
-                    </div>
-                    <div className="flex items-center gap-3 my-3">
-                      <div className="flex items-center">
-                        {Array.from({ length: 3 })?.map((_, index) => (
-                          <Image
-                            src={starFill}
-                            alt="product"
-                            width={18}
-                            height={18}
-                            key={index}
-                          />
-                        ))}
-                        <Image
-                          src={star}
-                          alt="product"
-                          width={18}
-                          height={18}
-                        />
-                        <Image
-                          src={star}
-                          alt="product"
-                          width={18}
-                          height={18}
-                        />
-                      </div>
-                      <div className="relative grow hidden sm:block md:hidden lg:block">
-                        <span className="block h-[8px] w-full bg-[#E3E4E4] rounded-md"></span>
-                        <span
-                          className={`block absolute inset-0 w-[50%] bg-[#3CB242] rounded-md`}
-                        ></span>
-                      </div>
-                      <p className="text-[12px] min-w-[80px]">24 Stars</p>
-                    </div>
-                    <div className="flex items-center gap-3 my-3">
-                      <div className="flex items-center">
-                        {Array.from({ length: 2 })?.map((_, index) => (
-                          <Image
-                            src={starFill}
-                            alt="product"
-                            width={18}
-                            height={18}
-                            key={index}
-                          />
-                        ))}
-                        {Array.from({ length: 3 })?.map((_, index) => (
-                          <Image
-                            src={star}
-                            alt="product"
-                            width={18}
-                            height={18}
-                            key={index}
-                          />
-                        ))}
-                      </div>
-                      <div className="relative grow hidden sm:block md:hidden lg:block">
-                        <span className="block h-[8px] w-full bg-[#E3E4E4] rounded-md"></span>
-                        <span
-                          className={`block absolute inset-0 w-[50%] bg-[#3CB242] rounded-md`}
-                        ></span>
-                      </div>
-                      <p className="text-[12px] min-w-[80px]">6 Stars</p>
-                    </div>
-                    <div className="flex items-center gap-3 my-3">
-                      <div className="flex items-center">
-                        <Image
-                          src={starFill}
-                          alt="product"
-                          width={18}
-                          height={18}
-                        />
-                        {Array.from({ length: 4 })?.map((_, index) => (
-                          <Image
-                            src={star}
-                            alt="product"
-                            width={18}
-                            height={18}
-                            key={index}
-                          />
-                        ))}
-                      </div>
-                      <div className="relative grow hidden sm:block md:hidden lg:block">
-                        <span className="block h-[8px] w-full bg-[#E3E4E4] rounded-md"></span>
-                        <span
-                          className={`block absolute inset-0 w-[50%] bg-[#3CB242] rounded-md`}
-                        ></span>
-                      </div>
-                      <p className="text-[12px] min-w-[80px]">0 Stars</p>
-                    </div>
-                  </div>
-                </div>
-
-                <h2 className="font-medium text-gray-900 my-4 mr-10">
-                  Comment
-                </h2>
-
-                <div>
-                  {Array.from({ length: 3 })?.map((_, index) => (
-                    <ProductComment />
-                  ))}
-                </div>
-              </div>
-            )
+            tab === Tabs[2] && (<Reviews id={product?._id} />)
           )}
         </div>
       </div>
@@ -298,7 +126,7 @@ const ProductsDeatilsTabs = ({ product }: any) => {
         <div>
           {imagesSlice?.map((item: any, index: number) => (
             <div className="w-full mb-10" key={index}>
-              <Image src={item} alt="product" className="w-full" width={100} height={100} />
+              <Image src={item} alt="product" className="w-full h-full" width={100} height={100} />
             </div>
           ))}
         </div>
@@ -306,7 +134,7 @@ const ProductsDeatilsTabs = ({ product }: any) => {
         <>
           {imagesSlice?.map((item: any, index: number) => (
             <div className="w-full" key={index}>
-              <Image src={item} alt="product" className="w-full" width={100} height={100} />
+              <Image src={item} alt="product" className="w-full h-full" width={100} height={100} />
             </div>
           ))}
         </>

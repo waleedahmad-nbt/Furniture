@@ -214,6 +214,12 @@ const Products = () => {
                   scope="col"
                   className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
+                  Reviews
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
                   Actions
                 </th>
               </tr>
@@ -255,6 +261,9 @@ const Products = () => {
                     </td>
                     <td className="px-6 py-4 text-left whitespace-nowrap text-xs text-gray-500">
                       PKR {price}
+                    </td>
+                    <td className="px-6 py-4 text-left whitespace-nowrap text-xs text-gray-500">
+                      <Link href={`/dashboard-furniture/admin/products/reviews/${_id}`} className="bg-gray-900/80 hover:bg-gray-900/100 px-2 text-white py-1 rounded-md">Reviews</Link>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
                       <div className="flex gap-2 text-base items-center">
