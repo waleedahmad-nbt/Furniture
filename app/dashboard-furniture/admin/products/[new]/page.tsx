@@ -22,9 +22,10 @@ const NewProduct = () => {
     category: "",
     subCategory: "",
     status: "",
-    material: "",
+    materials: "",
     brand: "",
     warranty: "",
+    weightUnit: "Kg"
   }
 
   const [colors, setColors] = useState<string[]>([]);
@@ -139,23 +140,24 @@ const NewProduct = () => {
       colors?.forEach((size: any, index: number) => {
         data.append(`colors[${index}]`, size);
       });
-      
-      boxArray.forEach((size: any, index: number) => {
-        data.append(`features[gDimensions][${index}][height]`, size.height);
-        data.append(`features[gDimensions][${index}][width]`, size.width);
-      });
-      boxArray.forEach((size: any, index: number) => {
-        data.append(`features[bDimensions][${index}][height]`, size.height);
-        data.append(`features[bDimensions][${index}][width]`, size.width);
-      });
 
-      // materials?.forEach((size: any, index: number) => {
-      //   data.append(`features[materials][${index}]`, size);
-      // });
+      sizesArray.forEach((size: any, index: number) => {
+        data.append(`sizes[${index}]`, formatSize(size));
+      });
+            
+      data.append(`features[gDimensions][height]`, boxArray[0].height);
+      data.append(`features[gDimensions][width]`, boxArray[0].width);
+
+      data.append(`features[bDimensions][height]`, boxArray[0].height);
+      data.append(`features[bDimensions][width]`, boxArray[0].width);
+
+      sizesArray?.forEach((size: any, index: number) => {
+        data.append(`features[materials][${index}]`, formatSize(size));
+      });
 
       data.append("features[brand]", formData?.brand);
       data.append("features[warranty]", formData?.warranty);
-      data.append("weight", formData?.weight);
+      data.append("weight", formData?.weight + " " + formData?.weightUnit);
 
       for (const pair of data.entries()) {
         console.log(pair[0], pair[1]);
@@ -359,6 +361,15 @@ const NewProduct = () => {
       console.log("subcats")
       return [];
     }
+  }
+
+  const handleMaterials = (e: any) => {
+    const { value } = e.target;
+    setFormData((prev: any) => { return { ...prev, materials: [ ...prev.materials, value ] } })
+  }
+
+  const deleteMaterials = (value: any) => {
+    setFormData((prev: any) => { return { ...prev, materials: prev.materials.filter((item: any) => item !== value) } });
   }
 
   return (
@@ -771,11 +782,27 @@ const NewProduct = () => {
                     className="bg-gray-50 border px-2 py-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-1"
                     defaultValue="Material"
                     name="material"
-                    onChange={handleChange}
+                    onChange={handleMaterials}
                   >
-                    <option>Material 1</option>
+                    <option>Select A Material</option>
+                    <option value="Material 1">Material 1</option>
                     <option value="Material 2">Material 2</option>
                   </select>
+                  <div className="flex flex-wrap items-center">
+                    {formData.materials &&
+                      formData?.materials?.map((e: any, i: any) => {
+                        return (
+                          <span className="bg-gray-blue/30 relative mt-4 h-max rounded mx-1 text-sm p-1 flex justify-center items-center px-2" key={i}>
+                            {e}
+                            <HiXMark
+                              size={18}
+                              onClick={() => deleteMaterials(e)}
+                              className="cursor-pointer absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-gray-blue/30 rounded-full p-1"
+                            />
+                          </span>
+                        );
+                      })}
+                  </div>
                 </div>
                 <div className="mt-3">
                   <p className="text-xs">Brand</p>
