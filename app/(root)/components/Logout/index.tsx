@@ -4,7 +4,7 @@ import { FiX } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setLogOutUser } from "@/lib/store/slices/Allslices";
+import { setLoginUser } from "@/lib/store/slices/Allslices";
 
 const Logout = ({ setLogout, logout }: any) => {
   const userData = useSelector((state: any) => state.user);
@@ -14,7 +14,7 @@ const Logout = ({ setLogout, logout }: any) => {
   const loggingOut = () => {
     // Remove the 'token' item from local storage
     localStorage.removeItem("token");
-    dispatch(setLogOutUser());
+    dispatch(setLoginUser({}));
     setLogout(false);
     router.push("/");
   };

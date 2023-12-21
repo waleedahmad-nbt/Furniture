@@ -78,9 +78,6 @@ export const Allslice = createSlice({
       console.log(state.user);
       
     },
-    setLogOutUser: (state) => {
-      state.user = {};
-    },
     setCategory: (state, action: PayloadAction<string>) => {
       state.category = action.payload;
     },
@@ -147,7 +144,6 @@ export const {
   removeWishList,
   setLoginUser,
   changeUserName,
-  setLogOutUser,
   setCategory,
   setCategoryId,
   setRecentViews,
