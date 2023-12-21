@@ -293,7 +293,7 @@ const ProductDetails = () => {
 
             <div className="flex gap-2 mt-1">
               <p className="px-2 flex flex-col justify-center items-center gap-6">
-                10
+                10  
                 <span className="text-[#858585]">Day</span>
               </p>
               :

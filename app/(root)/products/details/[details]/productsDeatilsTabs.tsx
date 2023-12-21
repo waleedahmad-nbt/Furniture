@@ -14,8 +14,8 @@ const ProductsDeatilsTabs = ({ product }: any) => {
       ? product?.Images?.slice(0, 2)
       : product?.Images?.slice(0, 1);
 
-  
   const features = product?.features;
+
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -42,9 +42,7 @@ const ProductsDeatilsTabs = ({ product }: any) => {
               <h2 className="font-medium text-gray-900 my-4 mr-10">
                 Description:
               </h2>
-              <p className="text-gray-200">
-                {product?.description}
-              </p>
+              <p className="text-gray-200">{product?.description}</p>
             </div>
           ) : tab === Tabs[1] ? (
             <div>
@@ -84,7 +82,7 @@ const ProductsDeatilsTabs = ({ product }: any) => {
                     <span key={index}>
                       &nbsp;
                       {item}
-                      {index !== product.features.materials.length - 1 && ','}
+                      {index !== product.features.materials.length - 1 && ","}
                     </span>
                   ))}
                 </div>
@@ -92,8 +90,12 @@ const ProductsDeatilsTabs = ({ product }: any) => {
               <div className="flex border-b py-5">
                 <div className="w-1/2">General dimensions</div>
                 <div className="w-1/2 flex justify-end text-gray-100">
-                  {features?.gDimensions?.height ? (features?.gDimensions?.height + " H") : ""}
-                  {features?.gDimensions?.width ? (" " + features?.gDimensions?.width + " W") : ""}
+                  {features?.gDimensions?.height
+                    ? features?.gDimensions?.height + " H"
+                    : ""}
+                  {features?.gDimensions?.width
+                    ? " " + features?.gDimensions?.width + " W"
+                    : ""}
                 </div>
               </div>
               <div className="flex border-b py-5">
@@ -105,8 +107,12 @@ const ProductsDeatilsTabs = ({ product }: any) => {
               <div className="flex border-b py-5">
                 <div className="w-1/2">Box dimensions</div>
                 <div className="w-1/2 flex justify-end text-gray-100">
-                  {features?.bDimensions?.height ? (features?.bDimensions?.height + " H") : ""}
-                  {features?.bDimensions?.width ? (" " + features?.bDimensions?.width + " W") : ""}
+                  {features?.bDimensions?.height
+                    ? features?.bDimensions?.height + " H"
+                    : ""}
+                  {features?.bDimensions?.width
+                    ? " " + features?.bDimensions?.width + " W"
+                    : ""}
                 </div>
               </div>
               <div className="flex border-b py-5">

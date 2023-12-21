@@ -1,22 +1,26 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
+import Image from "next/image";
 import { AccountSideBar } from "../components";
 import { AuthGuard } from "@/app/(root)/components/index";
 import { useSelector } from "react-redux";
 import { userRequest } from "@/requestMethods";
+import loader from "@/app/assets/icons/loader.gif";
 
 const MyAddress = () => {
   const [userAddress, setUserAddress]: any = useState([]);
   const [filterAddrs, setFilterAddrs]: any = useState("");
   // console.log(filterAddrs);
 
+  const [loading, setLoading] = useState(false);
+
   const userData = useSelector((state: any) => state.user);
 
   const fetchUseraddress = async () => {
     try {
       const res = await userRequest.get(`/address/${userData._id}`);
-      console.log(res, "fetching address");
+      // console.log(res, "fetching address");
       if (res) {
         setUserAddress(res.data.data);
       }
@@ -93,7 +97,7 @@ const MyAddress = () => {
     });
   };
 
-  console.log(formData);
+  // console.log(formData);
 
   const validateForm = () => {
     let errors: any = {};
@@ -114,11 +118,12 @@ const MyAddress = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     // console.log("hello");
-
+    setLoading(true);
     try {
       const res = await userRequest.post(`/address/add`, formData);
       if (res) {
         fetchUseraddress();
+        setLoading(false);
       }
     } catch (error) {
       console.error(error);
@@ -359,8 +364,16 @@ const MyAddress = () => {
                         </div>
                       </div>
 
-                      <button className="bg-primary text-white font-medium px-3 py-2 md:px-8 md:py-3 mt-5">
-                        Save changes
+                      <button
+                        className="bg-primary flex justify-center items-center text-white w-[172px] h-[40px] text-[14px] cursor-pointer mt-5"
+                        type="submit"
+                      >
+                        <p>{!loading ? "Save Changes" : ""}</p>
+                        {loading ? (
+                          <Image src={loader} alt="" className="w-[30px]" />
+                        ) : (
+                          ""
+                        )}
                       </button>
                     </form>
                   </div>
