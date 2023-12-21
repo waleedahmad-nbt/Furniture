@@ -1,3 +1,4 @@
+"use client"
 import axios from "axios";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -6,7 +7,7 @@ export const publicRequest = axios.create({
   baseURL: BASE_URL,
 });
 
-let item = localStorage.getItem("token") || "";
+let item = typeof window !== 'undefined' ? localStorage.getItem("token") || "" : "";
 item ? JSON.parse(item) : "";
 
 export const userRequest = axios.create({
