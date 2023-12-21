@@ -13,6 +13,7 @@ import AccountSideBar from "./AccountSideBar";
 import MainSlider from "./MainSlider";
 import Logout from "./Logout";
 import AuthGuard from "./AuthGuard";
+import FurniturePortfolio from "./FurniturePortfolio";
 
 export {
   Navbar,
@@ -30,4 +31,5 @@ export {
   MainSlider,
   Logout,
   AuthGuard,
+  FurniturePortfolio,
 };

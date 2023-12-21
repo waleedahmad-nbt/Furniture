@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import { AccountSideBar } from "../components";
+import { AuthGuard } from "@/app/(root)/components/index";
 
 const MyAddress = () => {
   const customStyles = {
@@ -91,241 +92,243 @@ const MyAddress = () => {
 
   return (
     <>
-      <div>
-        <h1 className="text-3xl text-[#1F1F1F] md:text-5xl text-center font-medium py-10">
-          My Address
-        </h1>
-        <div className="container bg-white py-10 mb-20">
-          <div className="bg-white px-0 md:px-10 py-10 rounded-sm flex flex-wrap gap-y-5 mb-16">
-            <div className="w-full md:w-[30%] pr-0 md:pr-5">
-              <AccountSideBar />
-            </div>
-            <div className="w-full md:w-[70%] pl-0 md:pl-5">
-              <div className="">
-                <h2 className="text-[20px] text-gray-900 font-medium">
-                  Home Address
-                </h2>
-                <div className="grid grid-cols-2 mt-5">
-                  <div className="col-span-1 flex flex-col gap-y-3">
-                    <h2 className="text-[16px] text-gray-300 font-medium">
-                      County
-                    </h2>
-                    <h2 className="text-[16px] text-gray-300 font-medium">
-                      City
-                    </h2>
-                    <h2 className="text-[16px] text-gray-300 font-medium">
-                      Address
-                    </h2>
-                    <div className="mt-10 sm:mt-0 md:mt-5 lg:mt-0">
-                      <h2 className="text-[16px] text-gray-300 font-medium">
-                        Phone Number
-                      </h2>
-                      <h2 className="text-[16px] text-gray-300 font-medium">
-                        Alternative Phone Number
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="col-span-1 flex flex-col gap-y-2">
-                    <p className="text-[14px] text-gray-200 font-normal">
-                      Bangalore-560016
-                    </p>
-                    <p className="text-[14px] text-gray-200 font-normal">
-                      Akshya Nagar{" "}
-                    </p>
-                    <p className="text-[14px] text-gray-200 font-normal">
-                      Akshya Nagar 1st Block 1st Cross, Rammurthy nagar,
-                      Bangalore-560016{" "}
-                    </p>
-                    <p className="text-[14px] text-gray-200 font-normal">
-                      353656756 5745{" "}
-                    </p>
-                    <p className="text-[14px] text-gray-200 font-normal">
-                      4545645 756{" "}
-                    </p>
-                  </div>
-                </div>
+      <AuthGuard>
+        <div>
+          <h1 className="text-3xl text-[#1F1F1F] md:text-5xl text-center font-medium py-10">
+            My Address
+          </h1>
+          <div className="container bg-white py-10 mb-20">
+            <div className="bg-white px-0 md:px-10 py-10 rounded-sm flex flex-wrap gap-y-5 mb-16">
+              <div className="w-full md:w-[30%] pr-0 md:pr-5">
+                <AccountSideBar />
               </div>
-
-              <div className="mt-10">
-                <h2 className="text-[20px] text-gray-900 font-medium">
-                  Office Address
-                </h2>
-                <div className="grid grid-cols-2 mt-5">
-                  <div className="col-span-1 flex flex-col gap-y-3">
-                    <h2 className="text-[16px] text-gray-300 font-medium">
-                      County
-                    </h2>
-                    <h2 className="text-[16px] text-gray-300 font-medium">
-                      City
-                    </h2>
-                    <h2 className="text-[16px] text-gray-300 font-medium">
-                      Address
-                    </h2>
-                    <div className="mt-10 sm:mt-0 md:mt-5 lg:mt-0">
+              <div className="w-full md:w-[70%] pl-0 md:pl-5">
+                <div className="">
+                  <h2 className="text-[20px] text-gray-900 font-medium">
+                    Home Address
+                  </h2>
+                  <div className="grid grid-cols-2 mt-5">
+                    <div className="col-span-1 flex flex-col gap-y-3">
                       <h2 className="text-[16px] text-gray-300 font-medium">
-                        Phone Number
+                        County
                       </h2>
                       <h2 className="text-[16px] text-gray-300 font-medium">
-                        Alternative Phone Number
+                        City
                       </h2>
-                    </div>
-                  </div>
-                  <div className="col-span-1 flex flex-col gap-y-2">
-                    <p className="text-[14px] text-gray-200 font-normal">
-                      Bangalore-560016
-                    </p>
-                    <p className="text-[14px] text-gray-200 font-normal">
-                      Akshya Nagar{" "}
-                    </p>
-                    <p className="text-[14px] text-gray-200 font-normal">
-                      Akshya Nagar 1st Block 1st Cross, Rammurthy nagar,
-                      Bangalore-560016{" "}
-                    </p>
-                    <p className="text-[14px] text-gray-200 font-normal">
-                      353656756 5745{" "}
-                    </p>
-                    <p className="text-[14px] text-gray-200 font-normal">
-                      4545645 756{" "}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-10">
-                <h2 className="text-[20px] text-gray-900 font-medium">
-                  Add New Address
-                </h2>
-                <div className="mt-5">
-                  <form onSubmit={handleSubmit}>
-                    <div className="flex flex-col gap-2 mt-5">
-                      <label
-                        htmlFor="address"
-                        className="text-[16px] font-medium text-gray-300"
-                      >
+                      <h2 className="text-[16px] text-gray-300 font-medium">
                         Address
-                      </label>
-                      <input
-                        type="text"
-                        name="address"
-                        id="address"
-                        className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
-                        placeholder="Address"
-                        onChange={handleChange}
-                      />
-                    </div>
-
-                    <div className="flex flex-col gap-2 mt-5">
-                      <label
-                        htmlFor="address"
-                        className="text-[16px] font-medium text-gray-300"
-                      >
-                        Office Address
-                      </label>
-                      <input
-                        type="text"
-                        name="officeAddress"
-                        id="address"
-                        className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
-                        placeholder="Address"
-                        onChange={handleChange}
-                      />
-                    </div>
-
-                    <div className="flex flex-col gap-2 mt-5">
-                      <label
-                        htmlFor="phoneNumber"
-                        className="text-[16px] font-medium text-gray-300"
-                      >
-                        Phone Number
-                      </label>
-                      <input
-                        type="text"
-                        name="phoneNumber"
-                        id="phoneNumber"
-                        className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
-                        placeholder="Phone Number"
-                        onChange={handleChange}
-                      />
-                    </div>
-
-                    <div className="flex flex-col gap-2 mt-5">
-                      <label
-                        htmlFor="alternativePhoneNumber"
-                        className="text-[16px] font-medium text-gray-300"
-                      >
-                        Alternative Phone Number
-                      </label>
-                      <input
-                        type="text"
-                        name="alternativePhoneNumber"
-                        id="alternativePhoneNumber"
-                        className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
-                        placeholder="Alternative Phone Number"
-                        onChange={handleChange}
-                      />
-                    </div>
-
-                    <div className="flex flex-col md:flex-row gap-5 mt-5">
-                      <div className="flex w-full flex-col gap-2">
-                        <label
-                          htmlFor="country"
-                          className="text-[16px] font-medium text-gray-300"
-                        >
-                          Country
-                        </label>
-                        <Select
-                          className="w-full"
-                          id="country"
-                          styles={customStyles}
-                          options={countryOptions}
-                          components={{
-                            IndicatorSeparator: () => null,
-                          }}
-                          value={formData.country}
-                          onChange={(country: any) =>
-                            setFormData((prev: any) => {
-                              return { ...prev, country: country.value };
-                            })
-                          }
-                        />
-                      </div>
-
-                      <div className="flex w-full flex-col gap-2 ">
-                        <label
-                          htmlFor="city"
-                          className="text-[16px] font-medium text-gray-300"
-                        >
-                          City
-                        </label>
-                        <Select
-                          className="w-full"
-                          id="city"
-                          styles={customStyles}
-                          options={cityOptions}
-                          components={{
-                            IndicatorSeparator: () => null,
-                          }}
-                          value={formData.city}
-                          onChange={(city: any) =>
-                            setFormData((prev: any) => {
-                              return { ...prev, city: city.value };
-                            })
-                          }
-                        />
+                      </h2>
+                      <div className="mt-10 sm:mt-0 md:mt-5 lg:mt-0">
+                        <h2 className="text-[16px] text-gray-300 font-medium">
+                          Phone Number
+                        </h2>
+                        <h2 className="text-[16px] text-gray-300 font-medium">
+                          Alternative Phone Number
+                        </h2>
                       </div>
                     </div>
 
-                    <button className="bg-primary text-white font-medium px-3 py-2 md:px-8 md:py-3 mt-5">
-                      Save changes
-                    </button>
-                  </form>
+                    <div className="col-span-1 flex flex-col gap-y-2">
+                      <p className="text-[14px] text-gray-200 font-normal">
+                        Bangalore-560016
+                      </p>
+                      <p className="text-[14px] text-gray-200 font-normal">
+                        Akshya Nagar{" "}
+                      </p>
+                      <p className="text-[14px] text-gray-200 font-normal">
+                        Akshya Nagar 1st Block 1st Cross, Rammurthy nagar,
+                        Bangalore-560016{" "}
+                      </p>
+                      <p className="text-[14px] text-gray-200 font-normal">
+                        353656756 5745{" "}
+                      </p>
+                      <p className="text-[14px] text-gray-200 font-normal">
+                        4545645 756{" "}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-10">
+                  <h2 className="text-[20px] text-gray-900 font-medium">
+                    Office Address
+                  </h2>
+                  <div className="grid grid-cols-2 mt-5">
+                    <div className="col-span-1 flex flex-col gap-y-3">
+                      <h2 className="text-[16px] text-gray-300 font-medium">
+                        County
+                      </h2>
+                      <h2 className="text-[16px] text-gray-300 font-medium">
+                        City
+                      </h2>
+                      <h2 className="text-[16px] text-gray-300 font-medium">
+                        Address
+                      </h2>
+                      <div className="mt-10 sm:mt-0 md:mt-5 lg:mt-0">
+                        <h2 className="text-[16px] text-gray-300 font-medium">
+                          Phone Number
+                        </h2>
+                        <h2 className="text-[16px] text-gray-300 font-medium">
+                          Alternative Phone Number
+                        </h2>
+                      </div>
+                    </div>
+                    <div className="col-span-1 flex flex-col gap-y-2">
+                      <p className="text-[14px] text-gray-200 font-normal">
+                        Bangalore-560016
+                      </p>
+                      <p className="text-[14px] text-gray-200 font-normal">
+                        Akshya Nagar{" "}
+                      </p>
+                      <p className="text-[14px] text-gray-200 font-normal">
+                        Akshya Nagar 1st Block 1st Cross, Rammurthy nagar,
+                        Bangalore-560016{" "}
+                      </p>
+                      <p className="text-[14px] text-gray-200 font-normal">
+                        353656756 5745{" "}
+                      </p>
+                      <p className="text-[14px] text-gray-200 font-normal">
+                        4545645 756{" "}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-10">
+                  <h2 className="text-[20px] text-gray-900 font-medium">
+                    Add New Address
+                  </h2>
+                  <div className="mt-5">
+                    <form onSubmit={handleSubmit}>
+                      <div className="flex flex-col gap-2 mt-5">
+                        <label
+                          htmlFor="address"
+                          className="text-[16px] font-medium text-gray-300"
+                        >
+                          Address
+                        </label>
+                        <input
+                          type="text"
+                          name="address"
+                          id="address"
+                          className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
+                          placeholder="Address"
+                          onChange={handleChange}
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-2 mt-5">
+                        <label
+                          htmlFor="address"
+                          className="text-[16px] font-medium text-gray-300"
+                        >
+                          Office Address
+                        </label>
+                        <input
+                          type="text"
+                          name="officeAddress"
+                          id="address"
+                          className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
+                          placeholder="Address"
+                          onChange={handleChange}
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-2 mt-5">
+                        <label
+                          htmlFor="phoneNumber"
+                          className="text-[16px] font-medium text-gray-300"
+                        >
+                          Phone Number
+                        </label>
+                        <input
+                          type="text"
+                          name="phoneNumber"
+                          id="phoneNumber"
+                          className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
+                          placeholder="Phone Number"
+                          onChange={handleChange}
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-2 mt-5">
+                        <label
+                          htmlFor="alternativePhoneNumber"
+                          className="text-[16px] font-medium text-gray-300"
+                        >
+                          Alternative Phone Number
+                        </label>
+                        <input
+                          type="text"
+                          name="alternativePhoneNumber"
+                          id="alternativePhoneNumber"
+                          className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
+                          placeholder="Alternative Phone Number"
+                          onChange={handleChange}
+                        />
+                      </div>
+
+                      <div className="flex flex-col md:flex-row gap-5 mt-5">
+                        <div className="flex w-full flex-col gap-2">
+                          <label
+                            htmlFor="country"
+                            className="text-[16px] font-medium text-gray-300"
+                          >
+                            Country
+                          </label>
+                          <Select
+                            className="w-full"
+                            id="country"
+                            styles={customStyles}
+                            options={countryOptions}
+                            components={{
+                              IndicatorSeparator: () => null,
+                            }}
+                            value={formData.country}
+                            onChange={(country: any) =>
+                              setFormData((prev: any) => {
+                                return { ...prev, country: country.value };
+                              })
+                            }
+                          />
+                        </div>
+
+                        <div className="flex w-full flex-col gap-2 ">
+                          <label
+                            htmlFor="city"
+                            className="text-[16px] font-medium text-gray-300"
+                          >
+                            City
+                          </label>
+                          <Select
+                            className="w-full"
+                            id="city"
+                            styles={customStyles}
+                            options={cityOptions}
+                            components={{
+                              IndicatorSeparator: () => null,
+                            }}
+                            value={formData.city}
+                            onChange={(city: any) =>
+                              setFormData((prev: any) => {
+                                return { ...prev, city: city.value };
+                              })
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      <button className="bg-primary text-white font-medium px-3 py-2 md:px-8 md:py-3 mt-5">
+                        Save changes
+                      </button>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </AuthGuard>
     </>
   );
 };

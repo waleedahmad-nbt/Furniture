@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -20,16 +20,21 @@ import profile from "@/app/assets/icons/profile-circle.svg";
 import { BsCart2 } from "react-icons/bs";
 import { BsHeart } from "react-icons/bs";
 import search from "@/app/assets/icons/search.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
-
+import { setCategory, setCategoryId } from "@/lib/store/slices/Allslices";
 import { NavLink, SideBar, SignInModal, SignUpModal, Logout } from "../index";
+import { publicRequest } from "@/requestMethods";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const [logout, setLogout] = useState<boolean>(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [cats, setCats] = useState([]);
+  const [filterValue, setFilterValue] = useState<string>("  ");
+  const allCats = [{ category: "Home" }, ...cats];
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -55,6 +60,21 @@ const Navbar = () => {
   const handleSignUpCancel = () => {
     setIsSignUpOpen(false);
   };
+
+  async function fetchCats() {
+    try {
+      const res = await publicRequest.get("/category");
+      if (res) {
+        setCats(res.data.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchCats();
+  }, []);
 
   const homeMenu: any = [
     {
@@ -230,7 +250,7 @@ const Navbar = () => {
                       height={100}
                     />
                   </div>
-                  <div className="w-[150px] hidden -z-10 md:flex flex-col gap-2 py-3 min-h-[100px] absolute bg-white left-0 text-gray-300 rounded-md group-hover:z-50 -bottom-[30%] translate-y-[100%] opacity-0 group-hover:bottom-[0%] group-hover:opacity-100 duration-300 shadow-2xl">
+                  <div className="w-[150px] hidden -z-10 md:flex flex-col gap-2 py-3 min-h-[100px] absolute bg-white right-[70%] text-gray-300 rounded-md group-hover:z-50 -bottom-[30%] translate-y-[100%] opacity-0 group-hover:bottom-[0%] group-hover:opacity-100 duration-300 shadow-2xl">
                     <Link href="/myaccount">
                       <div className="flex items-center justify-between px-3 gap-2 text-xl hover:bg-primary py-2 hover:text-white duration-300 w-full cursor-pointer">
                         <p className="text-[16px]">Profile</p>
@@ -287,13 +307,22 @@ const Navbar = () => {
             </div>
           </div>
         </nav>
-        <ul className="hidden md:flex flex-wrap items-center justify-between gap-3">
-          {Links?.map((item: any, index: number) => (
+        <ul className="hidden md:flex flex-wrap items-center justify-start gap-5  ">
+          {allCats?.map((item: any, index: number) => (
             <li
+              onClick={() => {
+                setFilterValue(item.category);
+                dispatch(setCategory(item.category));
+                dispatch(setCategoryId(item._id));
+              }}
               key={index}
-              className="hover:text-primary transition-all group pb-3 font-normal text-[12px] lg:text-[16px]"
+              className={`hover:text-primary transition-all group pb-3 font-normal text-[12px] lg:text-[16px] ${
+                filterValue === item.category ? "text-primary" : "text-white"
+              }`}
             >
-              <Link href={item?.link}>{item?.label}</Link>
+              <Link href={item.category == "Home" ? "/" : "/products"}>
+                {item?.category}
+              </Link>
               <div className="absolute w-full max-h-[0vh] overflow-hidden bottom-0 translate-y-[100%] left-0 bg-white z-50 group-hover:max-h-[100vh] group-hover:overflow-auto transition-all duration-500 hover:block">
                 <div className="container py-5">
                   <div className="flex items-center gap-5">
@@ -304,7 +333,7 @@ const Navbar = () => {
                       Every week you can find the best discount here
                     </span>
                   </div>
-                  <div className="flex items-center justify-around flex-wrap mt-5">
+                  {/* <div className="flex items-center justify-around flex-wrap mt-5">
                     {item?.subMenu.map((e: any, i: any) => {
                       return (
                         <div
@@ -340,7 +369,7 @@ const Navbar = () => {
                         </div>
                       );
                     })}
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </li>

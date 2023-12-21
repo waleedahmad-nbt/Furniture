@@ -14,18 +14,78 @@ const ContactForm = () => {
   };
 
   const [formData, setFormData] = useState<any>(fields);
-
+  const [errors, setErrors] = useState<any>({});
   const handleChange = (e: any) => {
     const { name, value } = e.target;
 
     setFormData((prev: any) => {
       return { ...prev, [name]: value };
     });
+
+    setErrors((prev: any) => {
+      return { ...prev, [name]: "" };
+    });
   };
-  console.log(formData);
+  // console.log(formData);
+
+  // const validateForm = () => {
+  //   // // Validate email format
+  //   // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   // if (formData.email && !emailRegex.test(formData.email)) {
+  //   //   newErrors.email = "Please enter a valid email address.";
+  //   // }
+
+  //   // if (
+  //   //   !formData.firstName &&
+  //   //   !formData.lastName &&
+  //   //   !formData.companyName &&
+  //   //   !formData.phone &&
+  //   //   !formData.description
+  //   // ) {
+  //   //   newErrors.firstName = "Please enter a your firstname.";
+  //   //   newErrors.lastName = "Please enter a your lastname.";
+  //   //   newErrors.companyName = "Please enter a your companyName.";
+  //   //   newErrors.phone = "Please enter a your phone number.";
+  //   //   newErrors.description = "Please enter some description.";
+  //   // }
+
+  //   // setErrors(newErrors);
+  //   // return newErrors;
+
+  // };
+
+  const validateForm = () => {
+    const newErrors: any = {};
+    // Validate email format
+
+    // Validate each field
+    Object.keys(formData).forEach((key) => {
+      if (!formData[key]) {
+        newErrors[key] = `Please enter ${key.toLowerCase()}.`;
+      }
+    });
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (
+      (!formData.email && !emailRegex.test(formData.email)) ||
+      (formData.email && !emailRegex.test(formData.email))
+    ) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+
+    console.log(newErrors, "newErrors");
+    console.log(Object.keys);
+    console.log(Object.keys(newErrors));
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // Return true if no errors
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    // Validate the form
+    if (!validateForm()) {
+      return;
+    }
     try {
       const res = await publicRequest.post(`/contact/add`, formData);
       console.log(res);
@@ -52,7 +112,6 @@ const ContactForm = () => {
                 First Name
               </label>
               <input
-                required
                 name="firstName"
                 id="firstName"
                 value={formData.firstName}
@@ -61,13 +120,15 @@ const ContactForm = () => {
                 className="h-[46px] border border-[#DCDCDC] mt-2 rounded-md ps-4 w-full outline-primary"
                 onChange={handleChange}
               />
+              {errors.firstName && (
+                <div className="text-secondary">{errors.firstName}</div>
+              )}
             </div>
             <div className="flex-[0_0_100%] sm:flex-[0_0_50%] sm:pl-2.5">
               <label htmlFor="lastName" className="text-[#4D4D4D]">
                 Last Name
               </label>
               <input
-                required
                 name="lastName"
                 id="lastName"
                 value={formData.lastName}
@@ -76,6 +137,9 @@ const ContactForm = () => {
                 className="h-[46px] border border-[#DCDCDC] mt-2 rounded-md ps-4 w-full outline-primary"
                 onChange={handleChange}
               />
+              {errors.lastName && (
+                <div className="text-secondary">{errors.lastName}</div>
+              )}
             </div>
           </div>
           <div className="flex-[0_0_100%]">
@@ -87,11 +151,13 @@ const ContactForm = () => {
               id="companyName"
               type="text"
               value={formData.companyName}
-              required
               placeholder="Company Name"
               className="h-[46px] border border-[#DCDCDC] mt-2 rounded-md ps-4 w-full outline-primary"
               onChange={handleChange}
             />
+            {errors.companyName && (
+              <div className="text-secondary">{errors.companyName}</div>
+            )}
           </div>
           <div className="flex flex-wrap gap-y-5">
             <div className="flex-[0_0_100%] sm:flex-[0_0_50%] sm:pr-2.5">
@@ -103,11 +169,13 @@ const ContactForm = () => {
                 id="workEmail"
                 type="email"
                 value={formData.email}
-                required
                 placeholder="Email"
                 className="w-full outline-primary h-[46px] border border-[#DCDCDC] mt-2 rounded-md ps-4"
                 onChange={handleChange}
               />
+              {errors.email && (
+                <div className="text-secondary">{errors.email}</div>
+              )}
             </div>
             <div className="flex-[0_0_100%] sm:flex-[0_0_50%] sm:pl-2.5 ">
               <label htmlFor="phone" className="text-[#4D4D4D]">
@@ -118,11 +186,13 @@ const ContactForm = () => {
                 id="phone"
                 type="text"
                 value={formData.phone}
-                required
                 placeholder="+1(123) 356 7886"
                 onChange={handleChange}
                 className="w-full h-[46px] border border-[#DCDCDC] mt-2 rounded-md ps-4 outline-primary"
               />
+              {errors.phone && (
+                <div className="text-secondary">{errors.phone}</div>
+              )}
             </div>
           </div>
           <div className="flex-[0_0_100%]">
@@ -134,10 +204,12 @@ const ContactForm = () => {
               name="description"
               id="description"
               value={formData.description}
-              required
               placeholder="Please, let us know more about you and the project "
               className="w-full h-[116px] text-gray-300 border border-[#DCDCDC] mt-2 rounded-md p-4 outline-primary"
             ></textarea>
+            {errors.description && (
+              <div className="text-secondary">{errors.description}</div>
+            )}
           </div>
           <div className="flex flex-wrap gap-5 justify-between items-center">
             <button

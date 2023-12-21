@@ -16,9 +16,48 @@ import kitchen from "@/app/assets/products/kitchen.png";
 import Pro1 from "@/app/assets/products/table_02.png";
 import Pro2 from "@/app/assets/products/table_03.png";
 import arrowL from "@/app/assets/icons/arrow-left.svg";
+import { RootState } from "@/lib/store";
 import { publicRequest } from "@/requestMethods";
+import { useSelector } from "react-redux";
 
 const Products = () => {
+  const category: any = useSelector((state: any) => state.category);
+  const categoryId: any = useSelector((state: any) => state.categoryId);
+  const [options, setoptions] = useState([]);
+  const [products, setProducts] = useState<any>([]);
+  // const [colors, setColors] = useState([]);
+
+  useEffect(() => {
+    const sendQuery = async () => {
+      try {
+        const res = await publicRequest.get(`/product?cat=${category}`);
+        if (res.status === 200) {
+          // console.log(res.data.data);
+          // console.log(res.data.data[0].colors, "colors");
+          setProducts(res.data.data);
+          // settingColors(res.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const searchCategories = async () => {
+      try {
+        const res = await publicRequest.get(`/category/${categoryId}`);
+        if (res.status === 200) {
+          // console.log(res.data.data);
+          setoptions(res.data.data.subCategories);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    sendQuery();
+    searchCategories();
+  }, [category]);
+
   const [tab, setTab] = useState<string>("");
   const [pageData, setPageData] = useState<any>({
     start: 0,
@@ -26,16 +65,21 @@ const Products = () => {
   });
 
   const colors = [
-    "#D76C66",
-    "#7584DE",
-    "#292929",
-    "#B0D7E8",
-    "#9D763B",
-    "#D19D4A",
-    "#E7AF96",
-    "#BABABA",
-    "#D76C66",
-    "#A3CAAB",
+    "D76C66",
+    "7584DE",
+    "292929",
+    "B0D7E8",
+    "9D763B",
+    "D19D4A",
+    "E7AF96",
+    "BABABA",
+    "D76C66",
+    "A3CAAB",
+    "ccc",
+    "fff",
+    "000",
+    "kkk",
+    "cacaca",
   ];
   const cats = [
     { label: "Adidas", quantity: 10 },
@@ -54,27 +98,24 @@ const Products = () => {
     status: "",
   });
 
-  const options = ["Bathroom", "Home Office"];
-
-  const [products, setProducts] = useState<any>([]);
+  // const options = ["Bathroom", "Home Office"];
 
   useEffect(() => {
-
     const getProducts = async () => {
       try {
         const res = await publicRequest.get(`/product`);
-  
-        console.log(res);
-        if(res.status === 200) {
-          setProducts(res.data.data);
+
+        if (res.status === 200) {
+          // console.log(res.data.data);
+          // setProducts(res.data.data);
         }
       } catch (error) {
         console.error(error);
       }
-    }
+    };
 
     getProducts();
-  }, []) 
+  }, []);
 
   const newArrival = [
     {
@@ -132,6 +173,38 @@ const Products = () => {
     setMaxPrice(e.maxValue);
   };
 
+  const fetchProductBySubCat = async (subCat: any) => {
+    // console.log(subCat, "aaa");
+
+    try {
+      const res = await publicRequest.get(
+        `/product?cat=${category}&subcat=${subCat}`
+      );
+      if (res.status === 200) {
+        console.log(res.data.data, "subCat");
+        console.log(res.data.data[0].colors, "colors");
+        setProducts(res.data.data);
+        // setColors(res.data.data.colors);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchProductByColor = async (color: any) => {
+    try {
+      const res = await publicRequest.get(
+        `/product?cat=${category}&color=${color}`
+      );
+      if (res.status === 200) {
+        console.log(res.data.data, "colorr");
+        setProducts(res.data.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <div className="bg-[url('/products_Banner.png')] bg-no-repeat bg-center bg-cover">
@@ -161,7 +234,10 @@ const Products = () => {
             <div className="flex flex-wrap gap-2 my-3">
               {options?.map((item: any, index: number) => (
                 <button
-                  onClick={() => setTab(item)}
+                  onClick={() => {
+                    fetchProductBySubCat(item);
+                    setTab(item);
+                  }}
                   className="bg-white flex items-center gap-2 px-3 py-2 shrink-0"
                   key={index}
                 >
@@ -216,20 +292,19 @@ const Products = () => {
                   {colors?.map((item: any, index: any) => (
                     <button
                       className={`rounded-full border p-[5px] ${
-                        filters.color === item
-                          ? "border-primary"
-                          : "border-transparent"
+                        filters.color === item ? "border-primary" : ""
                       }`}
                       key={index}
-                      onClick={() =>
+                      onClick={() => {
                         setFilters((prev: any) => {
                           return { ...prev, color: item };
-                        })
-                      }
+                        });
+                        fetchProductByColor(item);
+                      }}
                     >
                       <span
                         className="block rounded-full w-[18px] h-[18px]"
-                        style={{ backgroundColor: item }}
+                        style={{ backgroundColor: `#${item}` }}
                       ></span>
                     </button>
                   ))}
@@ -342,7 +417,7 @@ const Products = () => {
             className="flex items-center gap-3 bg-primary px-2 py-1 w-max text-white uppercase text-[14px]"
           >
             <span>view all</span>
-            <Image src={arrowL} alt="icon" />
+            <Image src={arrowL} alt="icon" width={100} height={100} />
           </Link>
         </div>
         <div className="w-full my-10">

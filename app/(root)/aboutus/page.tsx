@@ -157,7 +157,7 @@ const aboutUs = () => {
                 Meet Our <span className="text-primary">Creative</span> Experts
               </h1>
             </div>
-            <div className="bg-primary text-white text-[12px] py-[14px] w-[170px] px-5 rounded-md flex justify-between items-center">
+            <div className="bg-primary text-white text-[12px] py-[14px] w-[170px] px-5 rounded-md flex justify-between items-center cursor-pointer">
               <p>EXPLORE TEAM</p>
               <Image src={arrowIcon} alt="" />
             </div>

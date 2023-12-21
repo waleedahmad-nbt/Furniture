@@ -27,7 +27,7 @@ const ProductCard = ({ item, className, offer }: any) => {
         </div>
         <span className="text-gray-500 text-[14px]">3</span>
       </div>
-      <Link href="/products/details/dummy">
+      <Link href="/products/details/">
         <h3 className="font-medium text-gray-300 mt-1">{item?.title}</h3>
       </Link>
       <div className="flex flex-items gap-3">

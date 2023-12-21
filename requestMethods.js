@@ -1,8 +1,4 @@
-"use client";
 import axios from "axios";
-
-let item = localStorage.getItem("token") || null;
-item ? JSON.parse(item) : null;
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -10,12 +6,17 @@ export const publicRequest = axios.create({
   baseURL: BASE_URL,
 });
 
-export const userRequest = axios.create({
-  baseURL: BASE_URL,
-  headers: {
-    token: item?.token,
-  },
-});
+export const userRequest = () => {
+  let item = localStorage.getItem("token") || null;
+  item ? JSON.parse(item) : null;
+
+  return axios.create({
+    baseURL: BASE_URL,
+    headers: {
+      token: item?.token,
+    },
+  });
+};
 
 // -------GET PRODUCTS--------------------------------------------------------
 // @description       Get all products

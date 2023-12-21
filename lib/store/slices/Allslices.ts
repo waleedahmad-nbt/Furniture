@@ -12,6 +12,9 @@ interface AuthState {
   cart: Array<object>;
   wishList: Array<object>;
   user: Object;
+  category: string;
+  categoryId: string;
+
 
   Authcheck: boolean;
   Wishlists: object[]; // You can specify a more specific type here if needed
@@ -27,6 +30,8 @@ const initialState: AuthState = {
   cart: [],
   wishList: [],
   user: {},
+  category: "",
+  categoryId:"",
 
   
   orderItems: [],
@@ -74,6 +79,15 @@ export const Allslice = createSlice({
     setLogOutUser: (state) => {
       state.user = {};
     },
+    setCategory: (state, action: PayloadAction<string>) => {
+      state.category = action.payload;
+      },
+
+    setCategoryId: (state, action: PayloadAction<string>) => {
+      state.categoryId =   action.payload;
+        },
+
+
 
     AssignsideTrue: (state) => {
       state.siebarcheck = true;
@@ -122,6 +136,8 @@ export const {
   setLoginUser,
   changeUserName,
   setLogOutUser,
+  setCategory,
+  setCategoryId,
 
   AssignAuthTrue,
   AssignAuthFalse,
