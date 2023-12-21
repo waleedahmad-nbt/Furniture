@@ -9,7 +9,7 @@ import { FiEdit3, FiEye, FiTrash } from "react-icons/fi";
 
 const PortFolio = () => {
 
-  const [updating, setUpdating] = useState<boolean>(false);
+  const [updating, setUpdating] = useState<string>("");
   const [editPortId, setEditPortId] = useState<any>({});
   const [data, setData] = useState<any>([]);
 
@@ -54,7 +54,7 @@ const PortFolio = () => {
   const updatePortfolio = async () => {
 
     if(validateForm()) {
-      setUpdating(true);
+      setUpdating(editPortId);
       const data = new FormData();  
       data.append("image", formData.image);
       data.append("category", formData.category);
@@ -71,7 +71,7 @@ const PortFolio = () => {
           });        
           setEditPortId("");
           setFormData({});
-          setUpdating(false);
+          setUpdating("");
         }
       } catch (error) {
         console.error(error);
@@ -80,13 +80,13 @@ const PortFolio = () => {
   }
 
   const deletePortfolio = async (_id: string) => {
-    setUpdating(true);
+    setUpdating(_id);
     try {
       const res = await publicRequest.delete(`portfolio/delete/${_id}`);
 
       if(res.status === 200) {
         setData((prev: any) => prev.filter((item: any) => item?._id !== _id));
-        setUpdating(false);
+        setUpdating("");
       }
     } catch (error) {
       console.error(error);
@@ -99,6 +99,32 @@ const PortFolio = () => {
     const { name, value } = e.target;
     setFormData((prev: any) => { return { ...prev, [name]: value } });
   }
+
+  const [showSearch, setShowSearch] = useState<boolean>(false);
+  const [searchVal, setSearchVal] = useState<string>("");
+  const [category, setCategory] = useState('all');
+
+  const filter = (rows: any) => {
+    let result = rows;
+    if(category==="all"){
+      result = rows;
+    }
+    else if(category==="Active"){
+      result = rows.filter((e:any, i:any) => {
+        return e.status === 'Active'
+      })
+    }
+    else if(category==="Draft"){
+      result = rows.filter((e:any, i:any) => {
+        return e.status === 'Draft'
+      })
+    }
+
+    return result.filter((row: any) =>
+      ['category'].some((col) =>
+        row[col]?.toString().toLowerCase().indexOf(searchVal.toLowerCase()) > -1)
+    );
+  };
 
   return (
     <div className="p-5">
@@ -131,12 +157,25 @@ const PortFolio = () => {
             </button>
           </div>
           <div className="flex">
+            <div className="flex h-max items-center shadow-sm border bg-white hover:shadow-none rounded-md">
+              <div className={`overflow-hidden duration-200 h-[14px] py-1 ${showSearch ? "w-max" : "w-[0px]"}`}>
+                <input
+                  type="text"
+                  id="filter"
+                  value={searchVal}
+                  onChange={(e: any) => setSearchVal(e.target.value)}
+                  className={`duration-150 px-3 mx-2 text-xs rounded-md outline-none`}
+                />
+              </div>
+              <label htmlFor="filter" onClick={() => setShowSearch(!showSearch)}>
+                <div className="rounded-lg text-sm px-1 py-1 flex items-center">
+                  <BiSearch />
+                  <BsFilter />
+                </div>
+              </label>
+            </div>
             <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
-              <BiSearch />
-              <BsFilter />
-            </button>
-            <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
-            <BiSort />
+              <BiSort />
             </button>
           </div>
         </div>
@@ -177,7 +216,7 @@ const PortFolio = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {data && data?.map((item: any, i: number) => {
+              {data && filter(data)?.map((item: any, i: number) => {
                 const { _id, image, description, category } = item;
                 return (
                   <tr key={i}>
@@ -254,9 +293,9 @@ const PortFolio = () => {
                               className="duration-150 px-3 relative py-1 text-xs text-white rounded-md bg-primary"
                             >
                               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                                {updating && <div className="Loader w-[15px] border-[2px] border-gray-900"></div>}
+                                {updating === _id && <div className="Loader w-[15px] border-[2px] border-gray-900"></div>}
                               </div>
-                              <span className={updating ? "opacity-0" : ""}>update</span>
+                              <span className={updating === _id ? "opacity-0" : ""}>update</span>
                             </button>
                           </>
                         )
@@ -274,9 +313,9 @@ const PortFolio = () => {
                               className="text-gray-300 hover:text-gray-900 duration-150 relative"
                             >
                               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                                {updating && <div className="Loader w-[15px] border-[2px] border-gray-900"></div>}
+                                {updating === _id && <div className="Loader w-[15px] border-[2px] border-gray-900"></div>}
                               </div>
-                              <span className={updating ? "opacity-0" : ""}><FiTrash /></span>
+                              <span className={updating === _id ? "opacity-0" : ""}><FiTrash /></span>
                             </button>
                           </>
                         )}

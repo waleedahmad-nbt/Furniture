@@ -153,6 +153,31 @@ const Collection = () => {
     setCheckboxes(updatedCheckboxes);
   };
 
+  const [showSearch, setShowSearch] = useState<boolean>(false);
+  const [searchVal, setSearchVal] = useState<string>("");
+
+  const filter = (rows: any) => {
+    let result = rows;
+    if(category==="all"){
+      result = rows;
+    }
+    else if(category==="Active"){
+      result = rows.filter((e:any, i:any) => {
+        return e.status === 'Active'
+      })
+    }
+    else if(category==="Draft"){
+      result = rows.filter((e:any, i:any) => {
+        return e.status === 'Draft'
+      })
+    }
+
+    return result.filter((row: any) =>
+      ['category'].some((col) =>
+        row[col]?.toString().toLowerCase().indexOf(searchVal.toLowerCase()) > -1)
+    );
+  };
+
   return (
     <div className="p-5">
       <div className="py-3 mb-2 flex justify-between items-center">
@@ -175,12 +200,25 @@ const Collection = () => {
             </button>
           </div>
           <div className="flex">
+            <div className="flex h-max items-center shadow-sm border bg-white hover:shadow-none rounded-md">
+              <div className={`overflow-hidden duration-200 h-[14px] py-1 ${showSearch ? "w-max" : "w-[0px]"}`}>
+                <input
+                  type="text"
+                  id="filter"
+                  value={searchVal}
+                  onChange={(e: any) => setSearchVal(e.target.value)}
+                  className={`duration-150 px-3 mx-2 text-xs rounded-md outline-none`}
+                />
+              </div>
+              <label htmlFor="filter" onClick={() => setShowSearch(!showSearch)}>
+                <div className="rounded-lg text-sm px-1 py-1 flex items-center">
+                  <BiSearch />
+                  <BsFilter />
+                </div>
+              </label>
+            </div>
             <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
-              <BiSearch />
-              <BsFilter />
-            </button>
-            <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
-            <BiSort />
+              <BiSort />
             </button>
           </div>
         </div>
@@ -232,7 +270,7 @@ const Collection = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {categories?.map(( category: any, i: number ) => (
+              {filter(categories)?.map(( category: any, i: number ) => (
                 <tr key={i}>
                   <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
                     <input

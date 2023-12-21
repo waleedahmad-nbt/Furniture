@@ -19,10 +19,11 @@ import arrowL from "@/app/assets/icons/arrow-left.svg";
 import { RootState } from "@/lib/store";
 import { publicRequest } from "@/requestMethods";
 import { useSelector } from "react-redux";
+import { RiFilterOffFill } from "react-icons/ri";
 
 const Products = () => {
-  const category: any = useSelector((state: any) => state.category);
-  const categoryId: any = useSelector((state: any) => state.categoryId);
+  const category: any = useSelector((state: RootState) => state.category);
+  const categoryId: any = useSelector((state: RootState) => state.categoryId);
   const [options, setoptions] = useState([]);
   const [products, setProducts] = useState<any>([]);
   // const [colors, setColors] = useState([]);
@@ -77,10 +78,11 @@ const Products = () => {
     "A3CAAB",
     "ccc",
     "fff",
-    "000",
+    "000000",
     "kkk",
     "cacaca",
   ];
+
   const cats = [
     { label: "Adidas", quantity: 10 },
     { label: "Balmain", quantity: 39 },
@@ -165,26 +167,32 @@ const Products = () => {
     },
   ];
 
-  const [minPrice, setMinPrice] = useState<number>(29);
-  const [maxPrice, setMaxPrice] = useState<number>(929);
+  const [minPrice, setMinPrice] = useState<number>(100);
+  const [maxPrice, setMaxPrice] = useState<number>(9999);
 
   const handleInput2 = (e: any) => {
     setMinPrice(e.minValue);
     setMaxPrice(e.maxValue);
+
+    filterPrice(e.minValue, e.maxValue);
   };
 
-  const fetchProductBySubCat = async (subCat: any) => {
-    // console.log(subCat, "aaa");
-
+  const filterPrice = async (min: number, max: number) => {
     try {
-      const res = await publicRequest.get(
-        `/product?cat=${category}&subcat=${subCat}`
-      );
+      const res = await publicRequest.get(`/product?cat=${category}&subcat=${tab}&min=${min}&max=${max}`);
       if (res.status === 200) {
-        console.log(res.data.data, "subCat");
-        console.log(res.data.data[0].colors, "colors");
         setProducts(res.data.data);
-        // setColors(res.data.data.colors);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const fetchProductBySubCat = async (subCat: any) => {
+    try {
+      const res = await publicRequest.get(`/product?cat=${category}&subcat=${subCat}`);
+      if (res.status === 200) {
+        setProducts(res.data.data);
       }
     } catch (error) {
       console.error(error);
@@ -194,7 +202,7 @@ const Products = () => {
   const fetchProductByColor = async (color: any) => {
     try {
       const res = await publicRequest.get(
-        `/product?cat=${category}&color=${color}`
+        `/product?cat=${category}&subcat=${tab}&color=${color}`
       );
       if (res.status === 200) {
         console.log(res.data.data, "colorr");
@@ -235,8 +243,13 @@ const Products = () => {
               {options?.map((item: any, index: number) => (
                 <button
                   onClick={() => {
-                    fetchProductBySubCat(item);
-                    setTab(item);
+                    if(tab === item) {
+                      fetchProductBySubCat("");
+                      setTab("");
+                    } else {
+                      fetchProductBySubCat(item);
+                      setTab(item);
+                    }
                   }}
                   className="bg-white flex items-center gap-2 px-3 py-2 shrink-0"
                   key={index}
@@ -289,6 +302,21 @@ const Products = () => {
               <div className="bg-[#FAFAFA] px-5 py-7">
                 <p className="text-gray-900 font-bold">Filter by Color</p>
                 <div className="flex flex-wrap mt-4 gap-4">
+                  <button
+                    className={`rounded-full border p-[5px] flex items-center justify-center ${
+                      filters.color === "" ? "border-primary" : ""
+                    }`}
+                    onClick={() => {
+                      setFilters((prev: any) => {
+                        return { ...prev, color: "" };
+                      });
+                      fetchProductByColor("");
+                    }}
+                  >
+                    <span
+                      className="block rounded-full w-[18px] h-[18px]"
+                    ><RiFilterOffFill /></span>
+                  </button>
                   {colors?.map((item: any, index: any) => (
                     <button
                       className={`rounded-full border p-[5px] ${
@@ -314,8 +342,8 @@ const Products = () => {
                 <p className="text-gray-900 font-bold">Filter by Price</p>
                 <div className="w-full mt-4 mb-1">
                   <MultiRangeSlider
-                    min={29}
-                    max={929}
+                    min={100}
+                    max={9999}
                     step={5}
                     minValue={minPrice}
                     maxValue={maxPrice}
@@ -332,8 +360,8 @@ const Products = () => {
                   />
                 </div>
                 <div className="flex flex-wrap items-center justify-between text-gray-200">
-                  <span>Min. Price: $29</span>
-                  <span>Max. Price: $929</span>
+                  <span>Min. Price: ${minPrice}</span>
+                  <span>Max. Price: ${maxPrice}</span>
                 </div>
               </div>
               <div className="bg-[#FAFAFA] px-5 py-7 mt-7">
@@ -414,10 +442,10 @@ const Products = () => {
           <h1 className="text-[38px] text-gray-300 font-bold">Recently View</h1>
           <Link
             href="#"
-            className="flex items-center gap-3 bg-primary px-2 py-1 w-max text-white uppercase text-[14px]"
+            className="flex items-center gap-3 bg-primary px-2 py-1 text-white uppercase text-[14px]"
           >
             <span>view all</span>
-            <Image src={arrowL} alt="icon" width={100} height={100} />
+            <Image src={arrowL} alt="icon" width={15} height={15} />
           </Link>
         </div>
         <div className="w-full my-10">

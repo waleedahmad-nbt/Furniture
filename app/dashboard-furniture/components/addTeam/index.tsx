@@ -76,9 +76,9 @@ const AddTeam = ({ team, handleClose }: any) => {
       data.append("image", formData?.image);
       
       // Append socials individually
-      data.append("socials[facebook]", formData?.socials?.facebook);
-      data.append("socials[twitter]", formData?.socials?.twitter);
-      data.append("socials[linkedin]", formData?.socials?.linkedin);
+      data.append("socials[facebook]", formData?.facebook);
+      data.append("socials[twitter]", formData?.twitter);
+      data.append("socials[linkedin]", formData?.linkedin);
 
       if(team) {
 

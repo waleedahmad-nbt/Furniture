@@ -15,7 +15,7 @@ const MultiProductView = ({ item }: any) => {
   const dispatch = useDispatch();
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const bgColor = item?.status === "sale" ? "bg-secondary" : "bg-primary";
+  // const bgColor = item?.status === "sale" ? "bg-secondary" : "bg-primary";
   
   const cartItems: any = useSelector((state: RootState) => state.cart);
   const wishList: any = useSelector((state: RootState) => state.wishList);
@@ -45,11 +45,11 @@ const MultiProductView = ({ item }: any) => {
   return (
     <>
       <div className={`bg-white flex items-center justify-center relative group overflow-hidden h-full`}>
-        {item?.status && (
+        {/* {item?.status && (
           <span className={`absolute top-2 left-3 rounded-2xl px-2 uppercase py-1 text-white font-bold text-[10px] z-10 ${bgColor}`}>
             {item?.status}
           </span>
-        )}
+        )} */}
         <div className="absolute top-2 right-3 z-10">
           <button
             onClick={handleWishList}
@@ -68,7 +68,7 @@ const MultiProductView = ({ item }: any) => {
         <Link href={`/products/details/${item?._id}`}>
           {item?.Images?.length > 0 && item?.Images?.map((img: any, index: number) => (
             <div className={`mx-auto duration-200 transition-opacity ${index === activeIndex ? "relative opacity-100 visible" : "absolute inset-0 opacity-0 invisible pointer-events-none"}`} key={index}>
-              <Image src={img} alt="product" width={100} height={100} className="w-auto h-auto" />
+              {img !== null && <Image src={img} alt="product" width={100} height={100} className="w-auto h-auto" />}
             </div>
           ))}
         </Link>

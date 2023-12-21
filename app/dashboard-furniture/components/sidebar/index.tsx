@@ -10,6 +10,7 @@ import { GoHomeFill } from "react-icons/go";
 import { ImPriceTag } from "react-icons/im";
 import { AiFillPicture } from "react-icons/ai";
 import { RiContactsFill, RiDoubleQuotesR, RiGroupFill } from "react-icons/ri";
+import { FaUsers } from "react-icons/fa";
 
 const Sidebar = () => {
 
@@ -119,18 +120,6 @@ const Sidebar = () => {
 
         <li className="text-sm">
           <SideLinks 
-            href={"/dashboard-furniture/admin/content"}
-            active="bg-white hover:bg-white"
-            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
-            subLinks={contentSubLink}
-          >
-            <AiFillPicture />
-            <span>Content</span>
-          </SideLinks>
-        </li>
-
-        <li className="text-sm">
-          <SideLinks 
             href={"/dashboard-furniture/admin/analytices"}
             active="bg-white hover:bg-white"
             className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
@@ -182,7 +171,7 @@ const Sidebar = () => {
             active="bg-white hover:bg-white"
             className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
           >
-            <RiGroupFill />
+            <FaUsers />
             <span>Team</span>
           </NavLink>
         </li>

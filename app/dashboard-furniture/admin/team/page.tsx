@@ -23,7 +23,6 @@ const Team = () => {
       try {
         const res = await publicRequest.get(`/team`);
   
-        console.log(res);
         if(res.status === 200) {
           setData(res.data.data);
         }
@@ -40,7 +39,6 @@ const Team = () => {
     try {
       const res = await publicRequest.delete(`/team/delete/${_id}`);
 
-      console.log(res);
       if(res.status === 200) {
         setData((prev: any) => prev.filter((item: any) => item?._id !== _id)); 
         setUpdating("");
@@ -55,20 +53,29 @@ const Team = () => {
     setCategory(type)
   }
   
+  const [showSearch, setShowSearch] = useState<boolean>(false);
+  const [searchVal, setSearchVal] = useState<string>("");
+
   const filter = (rows: any) => {
+    let result = rows;
     if(category==="all"){
-      return rows;
+      result = rows;
     }
     else if(category==="Active"){
-      return rows.filter((e:any, i:any) => {
+      result = rows.filter((e:any, i:any) => {
         return e.status === 'Active'
       })
     }
     else if(category==="Draft"){
-      return rows.filter((e:any, i:any) => {
+      result = rows.filter((e:any, i:any) => {
         return e.status === 'Draft'
       })
     }
+
+    return result.filter((row: any) =>
+      ['name', 'designation'].some((col) =>
+        row[col]?.toString().toLowerCase().indexOf(searchVal.toLowerCase()) > -1)
+    );
   };
 
   interface CheckboxState {
@@ -101,7 +108,7 @@ const Team = () => {
   return (
     <div className="p-5">
       <div className="py-3 mb-2 flex justify-between items-center">
-        <h1 className="text-xl font-bold">Quotes</h1>
+        <h1 className="text-xl font-bold">Teams</h1>
         <button
           className="p-1 bg-gray-900/80 hover:bg-gray-900/100 duration-100 text-white border border-none text-xs px-2 rounded-lg" 
           onClick={() => setAddTeam(true)}
@@ -121,10 +128,23 @@ const Team = () => {
             </button>
           </div>
           <div className="flex">
-            <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
-              <BiSearch />
-              <BsFilter />
-            </button>
+            <div className="flex h-max items-center shadow-sm border bg-white hover:shadow-none rounded-md">
+              <div className={`overflow-hidden duration-200 h-[14px] py-1 ${showSearch ? "w-max" : "w-[0px]"}`}>
+                <input
+                  type="text"
+                  id="filter"
+                  value={searchVal}
+                  onChange={(e: any) => setSearchVal(e.target.value)}
+                  className={`duration-150 px-3 mx-2 text-xs rounded-md outline-none`}
+                />
+              </div>
+              <label htmlFor="filter" onClick={() => setShowSearch(!showSearch)}>
+                <div className="rounded-lg text-sm px-1 py-1 flex items-center">
+                  <BiSearch />
+                  <BsFilter />
+                </div>
+              </label>
+            </div>
             <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
             <BiSort />
             </button>
@@ -173,7 +193,7 @@ const Team = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {data && data?.map((team: any, i: number) => {
+              {data && filter(data)?.map((team: any, i: number) => {
                 const { _id, name, designation, image, socials} = team;
                 return (
                   <tr key={i}>
@@ -182,7 +202,7 @@ const Team = () => {
                     </td>
                     <td className="px-6">
                       <Image
-                        className="h-[50px] w-max"
+                        className="h-[50px] w-[70px]"
                         src={image}
                         width={100}
                         height={50}

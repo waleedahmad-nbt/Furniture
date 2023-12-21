@@ -53,20 +53,29 @@ const Quotes = () => {
     setCategory(type)
   }
   
+  const [showSearch, setShowSearch] = useState<boolean>(false);
+  const [searchVal, setSearchVal] = useState<string>("");
+
   const filter = (rows: any) => {
+    let result = rows;
     if(category==="all"){
-      return rows;
+      result = rows;
     }
     else if(category==="Active"){
-      return rows.filter((e:any, i:any) => {
+      result = rows.filter((e:any, i:any) => {
         return e.status === 'Active'
       })
     }
     else if(category==="Draft"){
-      return rows.filter((e:any, i:any) => {
+      result = rows.filter((e:any, i:any) => {
         return e.status === 'Draft'
       })
     }
+
+    return result.filter((row: any) =>
+      ['name', 'phone', 'category'].some((col) =>
+        row[col]?.toString().toLowerCase().indexOf(searchVal.toLowerCase()) > -1)
+    );
   };
 
   interface CheckboxState {
@@ -113,10 +122,23 @@ const Quotes = () => {
             </button>
           </div>
           <div className="flex">
-            <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
-              <BiSearch />
-              <BsFilter />
-            </button>
+            <div className="flex h-max items-center shadow-sm border bg-white hover:shadow-none rounded-md">
+              <div className={`overflow-hidden duration-200 h-[14px] py-1 ${showSearch ? "w-max" : "w-[0px]"}`}>
+                <input
+                  type="text"
+                  id="filter"
+                  value={searchVal}
+                  onChange={(e: any) => setSearchVal(e.target.value)}
+                  className={`duration-150 px-3 mx-2 text-xs rounded-md outline-none`}
+                />
+              </div>
+              <label htmlFor="filter" onClick={() => setShowSearch(!showSearch)}>
+                <div className="rounded-lg text-sm px-1 py-1 flex items-center">
+                  <BiSearch />
+                  <BsFilter />
+                </div>
+              </label>
+            </div>
             <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
             <BiSort />
             </button>
@@ -177,7 +199,7 @@ const Quotes = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {data && data?.map((quote: any, i: number) => {
+              {data && filter(data)?.map((quote: any, i: number) => {
                 const { _id, name, phone, email, category, city, country, description} = quote;
                 return (
                   <tr key={i}>

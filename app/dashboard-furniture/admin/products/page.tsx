@@ -6,12 +6,16 @@ import { BiSearch, BiSort } from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
 import Link from "next/link";
 import { publicRequest } from "@/requestMethods";
+import { FiTrash } from "react-icons/fi";
 
 const Products = () => {
 
   const [val, setVal] = useState<number>(0);
   const [category, setCategory] = useState<string>('all');
   const [data, setData] = useState<any>([]);
+  const [updating, setUpdating] = useState<string>("");
+  const [showSearch, setShowSearch] = useState<boolean>(false);
+  const [searchVal, setSearchVal] = useState<string>("");
 
   useEffect(() => {
 
@@ -37,19 +41,25 @@ const Products = () => {
   }
   
   const filter = (rows: any) => {
+    let result = rows;
     if(category==="all"){
-      return rows;
+      result = rows;
     }
     else if(category==="Active"){
-      return rows.filter((e:any, i:any) => {
+      result = rows.filter((e:any, i:any) => {
         return e.status === 'Active'
       })
     }
     else if(category==="Draft"){
-      return rows.filter((e:any, i:any) => {
+      result = rows.filter((e:any, i:any) => {
         return e.status === 'Draft'
       })
     }
+
+    return result.filter((row: any) =>
+      ['title'].some((col) =>
+        row[col]?.toString().toLowerCase().indexOf(searchVal.toLowerCase()) > -1)
+    );
   };
 
   interface CheckboxState {
@@ -78,6 +88,20 @@ const Products = () => {
 
     setCheckboxes(updatedCheckboxes);
   };
+
+  const deleteProduct = async (_id: string) => {
+    setUpdating(_id);
+    try {
+      const res = await publicRequest.delete(`/product/delete/${_id}`);
+
+      if(res.status === 200) {
+        setData((prev: any) => prev.filter((item: any) => item?._id !== _id));
+        setUpdating("");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className="p-5">
@@ -118,11 +142,24 @@ const Products = () => {
             </button>
           </div>
           <div className="flex">
-            <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
-              <BiSearch />
-              <BsFilter />
-            </button>
-            <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
+            <div className="flex h-max items-center shadow-sm border bg-white hover:shadow-none rounded-md">
+              <div className={`overflow-hidden duration-200 h-[14px] py-1 ${showSearch ? "w-max" : "w-[0px]"}`}>
+                <input
+                  type="text"
+                  id="filter"
+                  value={searchVal}
+                  onChange={(e: any) => setSearchVal(e.target.value)}
+                  className={`duration-150 px-3 mx-2 text-xs rounded-md outline-none`}
+                />
+              </div>
+              <label htmlFor="filter" onClick={() => setShowSearch(!showSearch)}>
+                <div className="rounded-lg text-sm px-1 py-1 flex items-center">
+                  <BiSearch />
+                  <BsFilter />
+                </div>
+              </label>
+            </div>
+            <button className="rounded-lg text-sm py-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
             <BiSort />
             </button>
           </div>
@@ -191,7 +228,7 @@ const Products = () => {
                     </td>
                     <td className="px-6">
                       <Image
-                        className="h-[50px] w-max"
+                        className="h-[50px] w-[70px]"
                         src={Images[0]}
                         width={100}
                         height={50}
@@ -220,7 +257,17 @@ const Products = () => {
                       PKR {price}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
-                      No Action
+                      <div className="flex gap-2 text-base items-center">
+                        <button
+                          onClick={() => deleteProduct(_id)}
+                          className="text-gray-300 hover:text-gray-900 duration-150 relative"
+                        >
+                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                            {updating === _id && <div className="Loader w-[15px] border-[2px] border-gray-900"></div>}
+                          </div>
+                          <span className={updating === _id ? "opacity-0" : ""}><FiTrash /></span>
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 )})}

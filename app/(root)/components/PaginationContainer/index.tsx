@@ -6,15 +6,12 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 const PaginationContainer = ({ items, setStats }: any) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Number of items to display per page
+  const itemsPerPage = 10; 
 
-  // Calculate the indexes of the items to display on the current page
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  // Slice the items array to get the items for the current page
   const currentItems = items?.slice(startIndex, endIndex);
-
   const totalPages = Math.ceil(items?.length / itemsPerPage);
 
   const handlePageChange = (newPage: any) => {
@@ -22,11 +19,11 @@ const PaginationContainer = ({ items, setStats }: any) => {
   };
 
   useEffect(() => {
-    const resultsStart = Math.min(startIndex + 1, items.length);
-    const resultsEnd = Math.min(endIndex, items.length);
+    const resultsStart = Math.min(startIndex + 1, items?.length);
+    const resultsEnd = Math.min(endIndex, items?.length);
 
     setStats(resultsStart, resultsEnd);
-  }, [currentPage]);
+  }, [currentPage, items]);
 
   return (
     <>

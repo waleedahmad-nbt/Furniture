@@ -94,17 +94,17 @@ const NewProduct = () => {
     if (!formData.weight) {
       errors.weight = "Weight is required";
     }
-    if (!formData.material) {
+    if (formData.materials.length <= 0) {
       errors.material = "Material is required";
     }
     if (!formData.brand) {
       errors.brand = "Brand is required";
     }
-    // for(let i = 0; i <= 4; i++) {
-    //   if (!formData.images[i]) {
-    //     errors[`images[${i}]`] = "Image is required";
-    //   }
-    // }
+    for(let i = 0; i < 4; i++) {
+      if (!formData.images[i]) {
+        errors[`images[${i}]`] = "Image is required";
+      }
+    }
     if(sizesArray.length <= 0) {
       errors.sizes = "At least one Size is required";
     }
@@ -115,6 +115,7 @@ const NewProduct = () => {
       errors.colors = "At least one Size is required";
     }
 
+    console.log("vlid error", errors);
     setFormErrors(errors);
 
     return Object.keys(errors).length === 0;
@@ -159,23 +160,18 @@ const NewProduct = () => {
       data.append("features[warranty]", formData?.warranty);
       data.append("weight", formData?.weight + " " + formData?.weightUnit);
 
-      for (const pair of data.entries()) {
-        console.log(pair[0], pair[1]);
-      }
-
       try {
         const res = await publicRequest.post(`/product/add`, data);
   
         console.log(res);
         if(res.status === 201) {
-          alert("Protfolio Created.");
+          alert("Product Created.");
           setSubmit(false);
+          setFormData(fields);
         }
       } catch (error) {
         console.error(error);
       }
-    } else {
-      console.log("valid error", formErrors)
     }
   }
   
@@ -308,20 +304,26 @@ const NewProduct = () => {
   const handleImage = (event: any, index: number) => {
     const file = event.target.files && event.target.files[0];
 
+    console.log(index)
+  
     if (file) {
       const reader = new FileReader();
   
       reader.onload = (e: ProgressEvent<FileReader>) => {
         const result = e.target?.result as string;
+  
       };
-  
+    
       reader.readAsDataURL(file);
-  
-      setFormData((prev: any) => { 
-        return { ...prev, images: [ ...prev.images, file ] };
+
+      setFormData((prev: any) => {
+        const updatedImages = [...prev.images];
+        updatedImages[index] = file;
+
+        return { ...prev, images: updatedImages };
       });
     }
-  };
+  };  
 
   const getHeight = (sz: any) => {
     const formated =
@@ -358,7 +360,6 @@ const NewProduct = () => {
       const selectedCategory = formData?.category;
       return cats.find((item: any) => item.category === selectedCategory)?.subCategories || [];
     } else {
-      console.log("subcats")
       return [];
     }
   }
@@ -768,6 +769,7 @@ const NewProduct = () => {
                         name="subCategory"
                         onChange={handleChange}
                       >
+                        <option>Select A sub-category</option>
                         {filterSubs(categories)?.map((item: any, index: number) => (
                           <option key={index} value={item}>{item}</option>
                         ))}
