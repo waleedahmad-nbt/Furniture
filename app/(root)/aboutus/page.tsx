@@ -168,7 +168,7 @@ const aboutUs = () => {
               team.map((e: any, i: any) => {
                 return (
                   <div className=" w-max">
-                    <div className="relative group overflow-hidden">
+                    <div className="relative overflow-hidden">
                       <div className="w-[270px] h-[349px]">
                         <Image
                           src={e.image}
@@ -178,21 +178,21 @@ const aboutUs = () => {
                           height={100}
                         />
                       </div>
-                      <div className="absolute z-10 px-4 py-2 w-[100%] bg-[#4D4D4D] top-[33%] right-[56.5%] group-hover:right-[42.5%] -rotate-90 duration-300">
+                      <div className="absolute z-10 px-4 py-2 w-[100%] bg-[#4D4D4D] top-[33%] right-[42.5%] -rotate-90 duration-300">
                         <ul className="text-primary flex gap-5 ">
-                          <li className="cursor-pointer">
+                          <li className="cursor-pointer hover:text-orange-300 duration-300">
                             <a href={e.socials?.facebook} target="_blank">
                               {" "}
                               Facebook{" "}
                             </a>
                           </li>
-                          <li className="cursor-pointer">
+                          <li className="cursor-pointer hover:text-orange-300 duration-300">
                             <a href={e.socials?.twitter} target="_blank">
                               {" "}
                               Twitter{" "}
                             </a>
                           </li>
-                          <li className="cursor-pointer">
+                          <li className="cursor-pointer hover:text-orange-300 duration-300">
                             <a href={e.socials?.linkedin} target="_blank">
                               {" "}
                               Linkedin{" "}

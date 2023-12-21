@@ -6,17 +6,15 @@ export const publicRequest = axios.create({
   baseURL: BASE_URL,
 });
 
-export const userRequest = () => {
-  let item = localStorage.getItem("token") || null;
-  item ? JSON.parse(item) : null;
+let item = localStorage.getItem("token") || "";
+item ? JSON.parse(item) : "";
 
-  return axios.create({
-    baseURL: BASE_URL,
-    headers: {
-      token: item?.token,
-    },
-  });
-};
+export const userRequest = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    token: item?.token,
+  },
+});
 
 // -------GET PRODUCTS--------------------------------------------------------
 // @description       Get all products

@@ -33,10 +33,8 @@ const Products = () => {
       try {
         const res = await publicRequest.get(`/product?cat=${category}`);
         if (res.status === 200) {
-          // console.log(res.data.data);
-          // console.log(res.data.data[0].colors, "colors");
+          console.log(res.data.data);
           setProducts(res.data.data);
-          // settingColors(res.data.data);
         }
       } catch (error) {
         console.error(error);
@@ -109,7 +107,7 @@ const Products = () => {
 
         if (res.status === 200) {
           // console.log(res.data.data);
-          // setProducts(res.data.data);
+          setProducts(res.data.data);
         }
       } catch (error) {
         console.error(error);

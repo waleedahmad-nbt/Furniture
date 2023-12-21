@@ -1,10 +1,34 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { AccountSideBar } from "../components";
 import { AuthGuard } from "@/app/(root)/components/index";
+import { useSelector } from "react-redux";
+import { userRequest } from "@/requestMethods";
 
 const MyAddress = () => {
+  const [userAddress, setUserAddress]: any = useState([]);
+  const [filterAddrs, setFilterAddrs]: any = useState("");
+  // console.log(filterAddrs);
+
+  const userData = useSelector((state: any) => state.user);
+
+  const fetchUseraddress = async () => {
+    try {
+      const res = await userRequest.get(`/address/${userData._id}`);
+      console.log(res, "fetching address");
+      if (res) {
+        setUserAddress(res.data.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUseraddress();
+  }, []);
+
   const customStyles = {
     option: (provided: any) => ({
       ...provided,
@@ -31,22 +55,27 @@ const MyAddress = () => {
   };
 
   const countryOptions = [
-    { label: "Pakistan", value: "pakistan" },
-    { label: "China", value: "china" },
+    { label: "Pakistan", value: "Pakistan" },
+    { label: "China", value: "China" },
     { label: "USA", value: "USA" },
     { label: "US", value: "US" },
   ];
 
   const cityOptions = [
-    { label: "Lahore", value: "pakistan" },
-    { label: "Peshawer", value: "china" },
-    { label: "Islamabad", value: "USA" },
-    { label: "karachi", value: "US" },
+    { label: "Lahore", value: "Lahore" },
+    { label: "Peshawer", value: "Peshawer" },
+    { label: "Islamabad", value: "Islamabad" },
+    { label: "Karachi", value: "Karachi" },
   ];
 
+  const addressOptions = [
+    { label: "Home Address", value: "Home Address" },
+    { label: "Office Address", value: "Office Address" },
+  ];
   const fields = {
+    userId: userData._id,
+    addressType: "",
     address: "",
-    officeAddress: "",
     phoneNumber: "",
     alternativePhoneNumber: "",
     country: "",
@@ -82,12 +111,41 @@ const MyAddress = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+    // console.log("hello");
 
-    if (validateForm()) {
-      console.log("submit");
+    try {
+      const res = await userRequest.post(`/address/add`, formData);
+      if (res) {
+        fetchUseraddress();
+      }
+    } catch (error) {
+      console.error(error);
     }
+  };
+
+  const filterAddress = (addressType: any) => {
+    const filterAdd = userAddress.find((item: any, index: any) => {
+      return item.addressType === addressType;
+    });
+    setFilterAddrs(filterAdd);
+
+    // Update the fields object with default values
+    setFormData((prev: any) => {
+      return {
+        ...prev,
+        addressType: filterAdd ? filterAdd.addressType : "",
+        address: filterAdd ? filterAdd.address : "",
+        phoneNumber: filterAdd ? filterAdd.phoneNumber : "",
+        alternativePhoneNumber: filterAdd
+          ? filterAdd.alternativePhoneNumber
+          : "",
+        country: filterAdd ? filterAdd.country : "",
+        city: filterAdd ? filterAdd.city : "",
+      };
+    });
+    // console.log(filterAdd, "filterAdd ");
   };
 
   return (
@@ -103,103 +161,88 @@ const MyAddress = () => {
                 <AccountSideBar />
               </div>
               <div className="w-full md:w-[70%] pl-0 md:pl-5">
-                <div className="">
-                  <h2 className="text-[20px] text-gray-900 font-medium">
-                    Home Address
-                  </h2>
-                  <div className="grid grid-cols-2 mt-5">
-                    <div className="col-span-1 flex flex-col gap-y-3">
-                      <h2 className="text-[16px] text-gray-300 font-medium">
-                        County
-                      </h2>
-                      <h2 className="text-[16px] text-gray-300 font-medium">
-                        City
-                      </h2>
-                      <h2 className="text-[16px] text-gray-300 font-medium">
-                        Address
-                      </h2>
-                      <div className="mt-10 sm:mt-0 md:mt-5 lg:mt-0">
-                        <h2 className="text-[16px] text-gray-300 font-medium">
-                          Phone Number
-                        </h2>
-                        <h2 className="text-[16px] text-gray-300 font-medium">
-                          Alternative Phone Number
-                        </h2>
-                      </div>
-                    </div>
+                <div className="flex flex-col justify-start gap-10">
+                  {userAddress &&
+                    userAddress.map((item: any, index: any) => {
+                      return (
+                        <div key={index}>
+                          <h2 className="text-[20px] text-gray-900 font-medium">
+                            {item.addressType}
+                          </h2>
+                          <div className="grid grid-cols-2 mt-5">
+                            <div className="col-span-1 flex flex-col gap-y-3">
+                              <h2 className="text-[16px] text-gray-300 font-medium">
+                                County
+                              </h2>
+                              <h2 className="text-[16px] text-gray-300 font-medium">
+                                City
+                              </h2>
+                              <h2 className="text-[16px] text-gray-300 font-medium">
+                                Address
+                              </h2>
+                              <div className="">
+                                <h2 className="text-[16px] text-gray-300 font-medium">
+                                  Phone Number
+                                </h2>
+                                <h2 className="text-[16px] text-gray-300 font-medium">
+                                  Alternative Phone Number
+                                </h2>
+                              </div>
+                            </div>
 
-                    <div className="col-span-1 flex flex-col gap-y-2">
-                      <p className="text-[14px] text-gray-200 font-normal">
-                        Bangalore-560016
-                      </p>
-                      <p className="text-[14px] text-gray-200 font-normal">
-                        Akshya Nagar{" "}
-                      </p>
-                      <p className="text-[14px] text-gray-200 font-normal">
-                        Akshya Nagar 1st Block 1st Cross, Rammurthy nagar,
-                        Bangalore-560016{" "}
-                      </p>
-                      <p className="text-[14px] text-gray-200 font-normal">
-                        353656756 5745{" "}
-                      </p>
-                      <p className="text-[14px] text-gray-200 font-normal">
-                        4545645 756{" "}
-                      </p>
-                    </div>
-                  </div>
+                            <div className="col-span-1 flex flex-col gap-y-2">
+                              <p className="text-[14px] text-gray-200 font-normal">
+                                {item.country}
+                              </p>
+                              <p className="text-[14px] text-gray-200 font-normal">
+                                {item.city}
+                              </p>
+                              <p className="text-[14px] text-gray-200 font-normal">
+                                {item.address}
+                              </p>
+                              <p className="text-[14px] text-gray-200 font-normal">
+                                {item.phoneNumber}
+                              </p>
+                              <p className="text-[14px] text-gray-200 font-normal">
+                                {item.alternativePhoneNumber}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                 </div>
 
                 <div className="mt-10">
-                  <h2 className="text-[20px] text-gray-900 font-medium">
-                    Office Address
-                  </h2>
-                  <div className="grid grid-cols-2 mt-5">
-                    <div className="col-span-1 flex flex-col gap-y-3">
-                      <h2 className="text-[16px] text-gray-300 font-medium">
-                        County
-                      </h2>
-                      <h2 className="text-[16px] text-gray-300 font-medium">
-                        City
-                      </h2>
-                      <h2 className="text-[16px] text-gray-300 font-medium">
-                        Address
-                      </h2>
-                      <div className="mt-10 sm:mt-0 md:mt-5 lg:mt-0">
-                        <h2 className="text-[16px] text-gray-300 font-medium">
-                          Phone Number
-                        </h2>
-                        <h2 className="text-[16px] text-gray-300 font-medium">
-                          Alternative Phone Number
-                        </h2>
-                      </div>
-                    </div>
-                    <div className="col-span-1 flex flex-col gap-y-2">
-                      <p className="text-[14px] text-gray-200 font-normal">
-                        Bangalore-560016
-                      </p>
-                      <p className="text-[14px] text-gray-200 font-normal">
-                        Akshya Nagar{" "}
-                      </p>
-                      <p className="text-[14px] text-gray-200 font-normal">
-                        Akshya Nagar 1st Block 1st Cross, Rammurthy nagar,
-                        Bangalore-560016{" "}
-                      </p>
-                      <p className="text-[14px] text-gray-200 font-normal">
-                        353656756 5745{" "}
-                      </p>
-                      <p className="text-[14px] text-gray-200 font-normal">
-                        4545645 756{" "}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-10">
-                  <h2 className="text-[20px] text-gray-900 font-medium">
-                    Add New Address
-                  </h2>
                   <div className="mt-5">
                     <form onSubmit={handleSubmit}>
+                      <div className="flex items-center gap-10 ">
+                        <h2 className="text-[20px] text-gray-900 font-medium">
+                          Add New Address
+                        </h2>
+                        <div className="flex flex-col gap-2">
+                          <Select
+                            className="w-[250px] h-[40px]"
+                            id="country"
+                            styles={customStyles}
+                            options={addressOptions}
+                            components={{
+                              IndicatorSeparator: () => null,
+                            }}
+                            // value={formData.addressType}
+                            onChange={(addressType: any) => {
+                              setFormData((prev: any) => {
+                                filterAddress(addressType.value);
+                                return {
+                                  ...prev,
+                                  addressType: addressType.value,
+                                };
+                              });
+                            }}
+                            placeholder="Select your Address"
+                          />
+                        </div>
+                      </div>
                       <div className="flex flex-col gap-2 mt-5">
                         <label
                           htmlFor="address"
@@ -213,23 +256,7 @@ const MyAddress = () => {
                           id="address"
                           className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
                           placeholder="Address"
-                          onChange={handleChange}
-                        />
-                      </div>
-
-                      <div className="flex flex-col gap-2 mt-5">
-                        <label
-                          htmlFor="address"
-                          className="text-[16px] font-medium text-gray-300"
-                        >
-                          Office Address
-                        </label>
-                        <input
-                          type="text"
-                          name="officeAddress"
-                          id="address"
-                          className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
-                          placeholder="Address"
+                          defaultValue={filterAddrs ? filterAddrs.address : ""}
                           onChange={handleChange}
                         />
                       </div>
@@ -247,6 +274,9 @@ const MyAddress = () => {
                           id="phoneNumber"
                           className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
                           placeholder="Phone Number"
+                          defaultValue={
+                            filterAddrs ? filterAddrs.phoneNumber : ""
+                          }
                           onChange={handleChange}
                         />
                       </div>
@@ -264,6 +294,11 @@ const MyAddress = () => {
                           id="alternativePhoneNumber"
                           className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
                           placeholder="Alternative Phone Number"
+                          defaultValue={
+                            filterAddrs
+                              ? filterAddrs.alternativePhoneNumber
+                              : ""
+                          }
                           onChange={handleChange}
                         />
                       </div>
@@ -284,7 +319,10 @@ const MyAddress = () => {
                             components={{
                               IndicatorSeparator: () => null,
                             }}
-                            value={formData.country}
+                            placeholder={
+                              filterAddrs ? filterAddrs.country : "Country"
+                            }
+                            // value={formData.country}
                             onChange={(country: any) =>
                               setFormData((prev: any) => {
                                 return { ...prev, country: country.value };
@@ -308,7 +346,10 @@ const MyAddress = () => {
                             components={{
                               IndicatorSeparator: () => null,
                             }}
-                            value={formData.city}
+                            placeholder={
+                              filterAddrs ? filterAddrs.city : "City"
+                            }
+                            // value={formData.city}
                             onChange={(city: any) =>
                               setFormData((prev: any) => {
                                 return { ...prev, city: city.value };
