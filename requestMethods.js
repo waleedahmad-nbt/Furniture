@@ -7,7 +7,7 @@ export const publicRequest = axios.create({
 });
 
 let item = "dummy";
-item ? JSON.parse(item) : "";
+// item ? JSON.parse(item) : "";
 
 export const userRequest = axios.create({
   baseURL: BASE_URL,
