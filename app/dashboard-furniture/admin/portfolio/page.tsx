@@ -103,6 +103,11 @@ const PortFolio = () => {
   const [showSearch, setShowSearch] = useState<boolean>(false);
   const [searchVal, setSearchVal] = useState<string>("");
   const [category, setCategory] = useState('all');
+  const [sortOrder, setSortOrder] = useState<any>('');
+
+  const toggleSortOrder = () => {
+    setSortOrder((prevSortOrder: any) => (prevSortOrder === 'asc' ? 'desc' : 'asc'));
+  };
 
   const filter = (rows: any) => {
     let result = rows;
@@ -120,10 +125,27 @@ const PortFolio = () => {
       })
     }
 
+    if(sortOrder) {
+      result = sortByColumn(result);
+    }
+
     return result.filter((row: any) =>
       ['category'].some((col) =>
         row[col]?.toString().toLowerCase().indexOf(searchVal.toLowerCase()) > -1)
     );
+  };
+
+  const sortByColumn = (data: any[]) => {
+    return data.slice().sort((a, b) => {
+      const valueA = a['category']?.toString().toLowerCase();
+      const valueB = b['category']?.toString().toLowerCase();
+
+      if (sortOrder === 'asc') {
+        return valueA.localeCompare(valueB);
+      } else {
+        return valueB.localeCompare(valueA);
+      }
+    });
   };
 
   return (
@@ -164,7 +186,7 @@ const PortFolio = () => {
                   id="filter"
                   value={searchVal}
                   onChange={(e: any) => setSearchVal(e.target.value)}
-                  className={`duration-150 px-3 mx-2 text-xs rounded-md outline-none`}
+                  className={`duration-150 pr-3 mx-2 text-xs rounded-md outline-none`}
                 />
               </div>
               <label htmlFor="filter" onClick={() => setShowSearch(!showSearch)}>
@@ -174,7 +196,7 @@ const PortFolio = () => {
                 </div>
               </label>
             </div>
-            <button className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
+            <button onClick={toggleSortOrder} className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
               <BiSort />
             </button>
           </div>

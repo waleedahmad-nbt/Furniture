@@ -6,7 +6,6 @@ import { publicRequest } from "@/requestMethods";
 
 import star from "@/app/assets/icons/star.svg";
 import starFill from "@/app/assets/icons/star_fill.svg";
-import like from "@/app/assets/icons/like.svg";
 import messages from "@/app/assets/icons/messages.svg";
 
 const ProductReviews = () => {
@@ -15,6 +14,8 @@ const ProductReviews = () => {
 
   const [product, setProduct] = useState<any>({});
   const [reviews, setReviews] = useState<any>({});
+  const [replyId, setReplyId] = useState<string>("");
+  const [replyVal, setReplyVal] = useState<string>("");
 
   useEffect(() => {
     const getProductsReview = async () => {
@@ -72,17 +73,24 @@ const ProductReviews = () => {
                 ))}
                 <Image src={star} alt="product" width={24} height={24} />
               </div>
-              <h2 className="text-[24px] font-medium text-gray-900 mb-4">
+              <h2 className="text-[24px] font-medium text-gray-900 mb-1">
                 AED {product?.price}
               </h2>
+              <p className="text-gray-300">
+                {product?.qty > 0 ? (
+                  <span className="text-green">In Stock</span>
+                ) : (
+                  <span className="text-secondary">Out Of Stock</span>
+                )}
+              </p>
             </div>
           </div>
         </div>
 
         <div className="w-full bg-white rounded-lg shadow-md mt-4">
           <div className="p-4">
-            {reviews?.reviews.length > 0 && reviews?.reviews?.map((item: any, index: number) => (
-              <div className="mb-10" key={index}>
+            {reviews?.reviews?.length > 0 ? reviews?.reviews?.map((item: any, index: number) => (
+              <div className="mb-6" key={index}>
                 <div className="flex justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <Image src={item?.reviewByDetails?.profilePic} alt="product" width={48} height={48} className="rounded-full"/>
@@ -111,13 +119,26 @@ const ProductReviews = () => {
                   </div>
                   <span className="block text-[12px] text-[#858585]">{formatDateString(item?.createdAt)}</span>
                 </div>
-                <p className="text-gray-400 mt-2 mb-5">{item?.description}</p>
-                <div className="flex gap-8 px-5 py-2 items-center">
-                  <button className="flex items-center gap-1 text-gray-100"><Image src={like} alt="icon" width={24} height={24}/>Like</button>
-                  <button className="flex items-center gap-1 text-gray-100"><Image src={messages} alt="icon" width={24} height={24}/>Reply</button>
+                <p className="text-gray-400 mt-2 mb-3">{item?.description}</p>
+                <button
+                  onClick={() => setReplyId((prev: string) => prev === item?._id ? "" : item?._id)}
+                  className="flex items-center gap-1 text-gray-100 mb-3"
+                ><Image src={messages} alt="icon" width={24} height={24}/>Reply</button>
+                <div className={`bg-white duration-150 overflow-hidden ${replyId === item?._id ? "h-[177px]" : "h-0"}`}>
+                  <textarea
+                    className="w-full h-full resize-none px-4 py-3 outline-none border focus:border-primary overflow-y-hidden"
+                    placeholder="Write your reply here...."
+                    value={replyVal}
+                    onChange={(e: any) => setReplyVal(e.target.value)}
+                  >
+                  </textarea>
                 </div>
               </div>
-            ))}
+            )) : (
+              <div>
+                <p>No Reviews</p>
+              </div>
+            )}
           </div>
         </div>
 

@@ -42,7 +42,7 @@ const ProductsDeatilsTabs = ({ product }: any) => {
               <h2 className="font-medium text-gray-900 my-4 mr-10">
                 Description:
               </h2>
-              <p className="text-gray-200">{product?.description}</p>
+              <div className="text-gray-200" dangerouslySetInnerHTML={{ __html: product?.description }}></div>
             </div>
           ) : tab === Tabs[1] ? (
             <div>

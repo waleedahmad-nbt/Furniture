@@ -6,23 +6,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import {
-  Features,
-  MainSlider,
-  MultiProductView,
-  ProductCard,
-} from "./components";
+import { Features, MainSlider, MultiProductView, ProductCard } from "./components";
 
 import arrowL from "@/app/assets/icons/arrow-left.svg";
-import mirror from "@/app/assets/products/mirror.png";
-import table from "@/app/assets/products/table.png";
-import desk from "@/app/assets/products/desk.png";
-import chair from "@/app/assets/products/chair.png";
-import bed from "@/app/assets/products/bed.png";
-import kitchen from "@/app/assets/products/kitchen.png";
-
-import Pro1 from "@/app/assets/products/table_02.png";
-import Pro2 from "@/app/assets/products/table_03.png";
 
 import sofa1 from "@/app/assets/banners/sofa_01.png";
 import sofa2 from "@/app/assets/banners/sofa_02.png";
@@ -38,6 +24,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<string>(tabs[0]);
 
   const [categories, setCategories] = useState<any>([]);
+  const [products, setProducts] = useState<any>([]);
 
   useEffect(() => {
     const getCategories = async () => {
@@ -45,7 +32,6 @@ export default function Home() {
         const res = await publicRequest.get(`/category`);
   
         if(res.status === 200) {
-          console.log(res);
           setCategories(res.data.data);
         }
       } catch (error) {
@@ -55,100 +41,22 @@ export default function Home() {
 
     getCategories();
   }, [])
-  
-  const products = [
-    {
-      name: "Rocket stool",
-      Images: [Pro2, kitchen, bed],
-      priceWas: "27.90",
-      price: "18.80",
-      quantity: 2,
-      status: "sale",
-    },
-    {
-      name: "Rocket stool",
-      Images: [Pro2, Pro1],
-      priceWas: "27.90",
-      price: "18.80",
-      quantity: 0,
-      status: "sale",
-    },
-    {
-      name: "Rocket stool",
-      Images: [Pro2],
-      priceWas: "27.90",
-      price: "18.80",
-      quantity: 5,
-      status: "sale",
-    },
-    {
-      name: "Rocket stool",
-      Images: [Pro1],
-      priceWas: "27.90",
-      price: "18.80",
-      quantity: 2,
-      status: "sale",
-    },
-    {
-      name: "Rocket stool",
-      Images: [Pro1],
-      priceWas: "27.90",
-      price: "18.80",
-      quantity: 2,
-      status: "sale",
-    },
-    {
-      name: "Rocket stool",
-      Images: [Pro1],
-      priceWas: "27.90",
-      price: "18.80",
-      quantity: 2,
-      status: "sale",
-    },
-  ];
 
-  const newArrival = [
-    {
-      name: "Rocket stool",
-      Images: [Pro2, kitchen, bed],
-      priceWas: "27.90",
-      price: "18.80",
-      quantity: 2,
-      status: "sale",
-    },
-    {
-      name: "Rocket stool",
-      Images: [Pro2, Pro1],
-      priceWas: "27.90",
-      price: "18.80",
-      quantity: 0,
-      status: "sale",
-    },
-    {
-      name: "Rocket stool",
-      Images: [Pro2],
-      priceWas: "27.90",
-      price: "18.80",
-      quantity: 5,
-      status: "sale",
-    },
-    {
-      name: "Rocket stool",
-      Images: [Pro1],
-      priceWas: "27.90",
-      price: "18.80",
-      quantity: 2,
-      status: "sale",
-    },
-    {
-      name: "Rocket stool",
-      Images: [Pro1],
-      priceWas: "27.90",
-      price: "18.80",
-      quantity: 2,
-      status: "sale",
-    },
-  ];
+  useEffect(() => {
+    const getNewArrival = async () => {
+      try {
+        const res = await publicRequest.get(`/product`);
+  
+        if(res.status === 200) {
+          setProducts(res.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    getNewArrival();
+  }, [])
 
   const settings = {
     dots: true,
@@ -197,9 +105,7 @@ export default function Home() {
                 Trending Furniture
               </span>
               <h1 className="text-4xl md:text-3xl lg:text-5xl font-medium">
-                Great Furniture
-                <br />
-                Sale
+                Great Furniture <br /> Sale
               </h1>
               <p className="border-l-[3px] border-gray-300 my-10 pl-5">
                 Limited time
@@ -351,14 +257,14 @@ export default function Home() {
       <div className="container my-10">
         <div className="flex flex-wrap justify-center gap-5">
           <ProductCard
-            item={newArrival[0]}
+            item={products[0]}
             className="shrink-0 w-[213px]"
             offer
           />
           <div className="grow p-5 pb-7 border-[5px] border-primary h-max">
             <div className="flex flex-wrap gap-6">
               <div className="w-full h-full sm:w-[266px] sm:h-[262px] shrink-0">
-                <MultiProductView item={newArrival[0]} />
+                <MultiProductView item={products[0]} />
               </div>
               <div className="grow">
                 <div className="flex mt-3 gap-1">
@@ -416,7 +322,7 @@ export default function Home() {
             </div>
           </div>
           <ProductCard
-            item={newArrival[1]}
+            item={products[1]}
             className="shrink-0 w-[213px]"
             offer
           />
@@ -481,8 +387,8 @@ export default function Home() {
           </Link>
         </div>
         <div className="w-full my-10">
-          <div className="relative flex flex-wrap gap-y-10 gap-x-5 justify-center items-center">
-            {newArrival?.map((item: any, index: number) => (
+          <div className="relative flex flex-wrap gap-y-10 gap-x-5 items-center">
+            {products?.map((item: any, index: number) => (
               <ProductCard
                 item={item}
                 key={index}

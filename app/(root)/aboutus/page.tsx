@@ -202,7 +202,7 @@ const aboutUs = () => {
                       </div>
                     </div>
                     <div className="mt-5">
-                      <h1 className="text-[#4D4D4D] text-2xl text-center">
+                      <h1 className="text-[#4D4D4D] text-2xl text-center capitalize">
                         {e.name}
                       </h1>
                       <p className="text-[#ABBED1] text-center">

@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ProductCard, RecentViewed } from "../../../components";
+import { RecentViewed } from "../../../components";
 import Image from "next/image";
-import Link from "next/link";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -10,14 +9,7 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { GoHeart } from "react-icons/go";
 
-import arrowL from "@/app/assets/icons/arrow-left.svg";
 import angle from "@/app/assets/icons/angle-right.svg";
-
-import bed from "@/app/assets/products/bed.png";
-import kitchen from "@/app/assets/products/kitchen.png";
-import Pro1 from "@/app/assets/products/table_02.png";
-import Pro2 from "@/app/assets/products/table_03.png";
-
 import sofa from "@/app/assets/products/sofa.png";
 import sofa1 from "@/app/assets/products/sofa_01.png";
 import sofa2 from "@/app/assets/products/sofa_02.png";
@@ -29,7 +21,7 @@ import starFill from "@/app/assets/icons/star_fill.svg";
 import facebook from "@/app/assets/icons/facebook.svg";
 import linkedin from "@/app/assets/icons/linkedin.svg";
 import mail from "@/app/assets/icons/mail.svg";
-import twitter from "@/app/assets/icons/twitter.svg";
+import twitter from "@/app/assets/icons/twitter_outline.svg";
 import ProductsDeatilsTabs from "./productsDeatilsTabs";
 import { useParams } from "next/navigation";
 import { publicRequest } from "@/requestMethods";

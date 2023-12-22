@@ -1,65 +1,14 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import joybird from "@/app/assets/images/joybird.png";
-import blueSofa from "@/app/assets/images/blueSofa.png";
-import chair from "@/app/assets/images/desingedChair.png";
-import graypair from "@/app/assets/images/grayPair.png";
-import sofacmBed from "@/app/assets/images/sofacmBed.png";
-import grayBed from "@/app/assets/images/grayBed.png";
-import yellowSofa from "@/app/assets/images/yellowSofa.png";
-
 import livingRoomChair from "@/app/assets/images/livingRoomChair.png";
 
 const FurniturePortfolio = ({ response }: any) => {
-  // console.log(response);
-
   const allCategories = [{ category: "All" }, ...response];
-  // console.log(allCategories);
 
   const [filterValue, setFilterValue] = useState<string>("All");
 
-  // let furnitureArr = [
-  //   { title: "All" },
-  //   { title: "Bed" },
-  //   { title: "Sofa" },
-  //   { title: "Dressing table" },
-  //   { title: "Wardrobe" },
-  //   { title: "Bean bag" },
-  //   { title: "Living Room" },
-  //   { title: "TV units" },
-  //   { title: "Coffee table" },
-  //   { title: "Office furniture" },
-  //   { title: "Curtain" },
-  //   { title: "Living Room" },
-  // ];
-
-  // const photos: any = [
-  //   { src: joybird, category: "Beds" },
-  //   { src: joybird, category: "Beds" },
-  //   { src: joybird, category: "Beds" },
-  //   { src: joybird, category: "Beds" },
-  //   { src: joybird, category: "Beds" },
-  //   { src: blueSofa, category: "Beds" },
-  //   { src: blueSofa, category: "Beds" },
-  //   { src: blueSofa, category: "Beds" },
-  //   { src: blueSofa, category: "Bed" },
-  //   { src: blueSofa, category: "Sofa" },
-  //   { src: yellowSofa, category: "Sofa" },
-  //   { src: yellowSofa, category: "Sofa" },
-  //   { src: yellowSofa, category: "Sofa" },
-  //   { src: graypair, category: "Sofa" },
-  //   { src: graypair, category: "Sofa" },
-  //   { src: graypair, category: "Sofa" },
-  //   { src: joybird, category: "Sofa" },
-  //   { src: joybird, category: "Sofa" },
-  //   { src: joybird, category: "Sofa" },
-  //   { src: joybird, category: "Sofa" },
-  // ];
-
   const filter = (rows: any) => {
-    console.log(rows);
-
     if (!filterValue || filterValue === "All") {
       return rows;
     }

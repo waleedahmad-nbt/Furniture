@@ -67,7 +67,7 @@ const ProductCard = ({ item, className, offer }: any) => {
         <span className="text-primary">${item?.price}</span>
       </div>
       <p className="text-gray-300 text-[14px]">
-        {item?.quantity > 0 ? (
+        {item?.qty > 0 ? (
           <span className="text-green">In Stock</span>
         ) : (
           <span className="text-secondary">Out Of Stock</span>
