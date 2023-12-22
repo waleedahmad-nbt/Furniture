@@ -57,12 +57,19 @@ input[type="number"] {
 
 .Product_Slider .slick-track {
   display: flex !important;
-  gap: 10px;
-  justify-content: space-between;
+  min-width: 100% !important;
+}
+
+.Product_Slider .slick-list {
+  margin: 0 -16px;
 }
 
 .Product_Slider .slick-slide {
-  width: max-content !important;
+  padding: 0 16px;
+}
+
+.Product_Slider.c_hidden .slick-slide.slick-cloned {
+  display: none;
 }
 
 .Product_Slider .slick-dots li button {

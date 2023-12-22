@@ -17,6 +17,7 @@ import starFill from "@/app/assets/icons/star_fill.svg";
 
 import Banner from "@/app/assets/banners/banner_02.png";
 import { publicRequest } from "@/requestMethods";
+import { FaSleigh } from "react-icons/fa";
 
 export default function Home() {
   const tabs = ["Bedroom", "Dining Room", "Living Room"];
@@ -148,7 +149,7 @@ export default function Home() {
                 {item?.category}
               </h3>
               <p className="text-center text-gray-300 text-[14px]">
-                {item?.quantity || 0} Products
+                {item?.products || 0} Products
               </p>
             </div>
           ))}
@@ -182,10 +183,10 @@ export default function Home() {
           </Link>
         </div>
         <div className="w-full my-10">
-          <Slider {...settings} className="Product_Slider">
+          <Slider {...settings} className={`Product_Slider ${products?.length <= 5 ? "c_hidden" : ""}`}>
             {products?.map((item: any, index: number) => (
               <div
-                className={`relative min-w-[213px] max-w-full w-full sm:max-w-[213px]`}
+                className={`relative w-full`}
                 key={index}
               >
                 <div className="">
