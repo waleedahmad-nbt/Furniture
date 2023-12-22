@@ -305,7 +305,7 @@ const Collection = () => {
                   </td>
                   <td>
                     <Image
-                      className="h-[50px] w-max"
+                      className="h-[50px] w-auto"
                       src={category?.image}
                       width={100}
                       height={100}

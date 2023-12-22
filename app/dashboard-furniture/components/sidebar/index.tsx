@@ -175,6 +175,17 @@ const Sidebar = () => {
             <span>Team</span>
           </NavLink>
         </li>
+        <li className="text-sm">
+          <NavLink 
+            end
+            href={"/dashboard-furniture/admin/coupons"}
+            active="bg-white hover:bg-white"
+            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
+          >
+            <RiContactsFill />
+            <span>Coupons</span>
+          </NavLink>
+        </li>
       </ul>
     </div>
   );

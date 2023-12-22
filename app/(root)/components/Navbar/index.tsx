@@ -243,7 +243,7 @@ const Navbar = () => {
                 <div className="relative cursor-pointer group py-5">
                   <div className="hidden md:block w-[25px] lg:w-[30px]">
                     <Image
-                      src={userData.profileImage}
+                      src={userData?.profileImage}
                       alt="user"
                       className="w-full h-full"
                       width={100}

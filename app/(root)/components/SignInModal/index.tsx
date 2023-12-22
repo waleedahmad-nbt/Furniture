@@ -47,11 +47,12 @@ const Modal = ({
         });
         // console.log(res);
         if (res) {
+          dispatch(setLoginUser(res.data.data));
+          localStorage.setItem("token", JSON.stringify(res.data.data.token));
           setLoading(false);
           setIsResponse(true);
           setResMsg("");
           handleCancel();
-          dispatch(setLoginUser(res.data.data));
           router.push("/");
         }
       }

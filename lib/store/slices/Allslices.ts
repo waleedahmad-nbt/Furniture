@@ -88,7 +88,6 @@ export const Allslice = createSlice({
     },
     setLoginUser: (state, action: PayloadAction<object>) => {
       state.user = action.payload;
-      localStorage.setItem("token", JSON.stringify(action.payload));
     },
     changeUserName: (state, action: PayloadAction<object>) => {
       // Update state.user with new values

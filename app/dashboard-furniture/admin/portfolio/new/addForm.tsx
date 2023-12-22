@@ -54,6 +54,7 @@ const AddForm = ({ categories }: any) => {
         if(res.status === 201) {
           alert("Protfolio Created.");
           setSubmit(false);
+          setFormData(fields);
         }
       } catch (error) {
         console.error(error);
@@ -136,8 +137,9 @@ const AddForm = ({ categories }: any) => {
           className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black bg-white"
           onChange={handleChange}
         >
+          <option value="">Select a category</option>
           {categories.length > 0 && categories?.map((item: any, index: number) => (
-            <option key={index}>{item?.category}</option>
+            <option key={index} value={item?.category}>{item?.category}</option>
           ))}
         </select>
         {formErrors.category && (
