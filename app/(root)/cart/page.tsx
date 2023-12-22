@@ -16,10 +16,12 @@ import OrderComplete from "./OrderComplete";
 import CheckoutDetails from "./CheckoutDetails";
 
 const Cart = () => {
+  const [isOrderComplete, setIsOrderComplete] = useState(false);
+  // console.log(isOrderComplete, "isOrder");
+
   const dispatch = useDispatch();
 
   const cartItems: any = useSelector((state: RootState) => state.cart);
-  console.log(cartItems);
   // console.log(cartItems[0].Images[0].src);
 
   const removeItem = (id: string) => {
@@ -71,6 +73,11 @@ const Cart = () => {
                     style={{ borderBottom: borderBottomStyle }}
                     key={index}
                     onClick={() => {
+                      if (index === 2) {
+                        if (isOrderComplete) setCurrentTabIdx(index);
+                        return;
+                      }
+
                       setCurrentTabIdx(index);
                     }}
                   >
@@ -89,24 +96,32 @@ const Cart = () => {
               </div>
             ) : currentTabIdx === 1 ? (
               <div>
-                <CheckoutDetails />
+                <CheckoutDetails
+                  isOrderComplete={isOrderComplete}
+                  setIsOrderComplete={setIsOrderComplete}
+                  setCurrentTabIdx={setCurrentTabIdx}
+                />
               </div>
-            ) : (
+            ) : isOrderComplete ? (
               <div>
                 <OrderComplete />
               </div>
+            ) : (
+              ""
             )}
           </div>
 
           <div className="w-full lg:w-[40%] lg:pl-10">
-            {currentTabIdx == 0 ? (
+            {currentTabIdx === 0 ? (
               <div>
                 <CartTotal />
               </div>
-            ) : (
+            ) : currentTabIdx === 1 ? (
               <div>
                 <OrderSummary />
               </div>
+            ) : (
+              ""
             )}
           </div>
         </div>

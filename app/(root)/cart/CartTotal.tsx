@@ -75,7 +75,7 @@ const CartTotal = () => {
         <p>AED {totalPrice?.toFixed(2)}</p>
       </div>
 
-      <div
+      {/* <div
         className={`flex items-center justify-between px-5 py-2 rounded-md group cursor-pointer select-none ${
           toggleShipping ? "text-gray-900 active" : "bg-white text-[#555555]"
         }`}
@@ -172,7 +172,7 @@ const CartTotal = () => {
             Update
           </button>
         </div>
-      </div>
+      </div> */}
 
       <div
         className={`flex items-center mt-2 justify-between px-5 py-2 rounded-md group cursor-pointer select-none ${

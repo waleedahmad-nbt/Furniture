@@ -26,42 +26,18 @@ const ContactForm = () => {
       return { ...prev, [name]: "" };
     });
   };
-  // console.log(formData);
-
-  // const validateForm = () => {
-  //   // // Validate email format
-  //   // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //   // if (formData.email && !emailRegex.test(formData.email)) {
-  //   //   newErrors.email = "Please enter a valid email address.";
-  //   // }
-
-  //   // if (
-  //   //   !formData.firstName &&
-  //   //   !formData.lastName &&
-  //   //   !formData.companyName &&
-  //   //   !formData.phone &&
-  //   //   !formData.description
-  //   // ) {
-  //   //   newErrors.firstName = "Please enter a your firstname.";
-  //   //   newErrors.lastName = "Please enter a your lastname.";
-  //   //   newErrors.companyName = "Please enter a your companyName.";
-  //   //   newErrors.phone = "Please enter a your phone number.";
-  //   //   newErrors.description = "Please enter some description.";
-  //   // }
-
-  //   // setErrors(newErrors);
-  //   // return newErrors;
-
-  // };
 
   const validateForm = () => {
     const newErrors: any = {};
-    // Validate email format
-
     // Validate each field
+    console.log(Object.keys(formData));
+
     Object.keys(formData).forEach((key) => {
+      var captilize = key.replace(/([A-Z])/g, " $1").trim();
+      captilize = captilize.charAt(0).toUpperCase() + captilize.slice(1);
+
       if (!formData[key]) {
-        newErrors[key] = `Please enter ${key.toLowerCase()}.`;
+        newErrors[key] = `Please enter ${captilize}.`;
       }
     });
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -71,10 +47,6 @@ const ContactForm = () => {
     ) {
       newErrors.email = "Please enter a valid email address.";
     }
-
-    console.log(newErrors, "newErrors");
-    console.log(Object.keys);
-    console.log(Object.keys(newErrors));
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; // Return true if no errors

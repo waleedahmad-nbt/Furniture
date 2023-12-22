@@ -16,7 +16,6 @@ const ProductsDeatilsTabs = ({ product }: any) => {
 
   const features = product?.features;
 
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
       <div>
@@ -123,7 +122,7 @@ const ProductsDeatilsTabs = ({ product }: any) => {
               </div>
             </div>
           ) : (
-            tab === Tabs[2] && (<Reviews id={product?._id} />)
+            tab === Tabs[2] && <Reviews id={product?._id} />
           )}
         </div>
       </div>
@@ -132,7 +131,13 @@ const ProductsDeatilsTabs = ({ product }: any) => {
         <div>
           {imagesSlice?.map((item: any, index: number) => (
             <div className="w-full mb-10" key={index}>
-              <Image src={item} alt="product" className="w-full h-full" width={100} height={100} />
+              <Image
+                src={item}
+                alt="product"
+                className="w-full h-full"
+                width={100}
+                height={100}
+              />
             </div>
           ))}
         </div>
@@ -140,7 +145,13 @@ const ProductsDeatilsTabs = ({ product }: any) => {
         <>
           {imagesSlice?.map((item: any, index: number) => (
             <div className="w-full" key={index}>
-              <Image src={item} alt="product" className="w-full h-full" width={100} height={100} />
+              <Image
+                src={item}
+                alt="product"
+                className="w-full h-full"
+                width={100}
+                height={100}
+              />
             </div>
           ))}
         </>

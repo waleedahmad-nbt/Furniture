@@ -366,3 +366,25 @@ input[type="color"]::-webkit-color-swatch {
   50%   {transform:scaleY(-1) rotate(0deg)}
   100%  {transform:scaleY(-1) rotate(-135deg)}
 }
+
+
+
+input[type='radio'] {
+  @apply appearance-none w-[15px] h-[15px] p-[2px] rounded-full border-gray-300 border bg-clip-content;
+}
+
+input[type='radio']:checked {
+  @apply bg-gray-900;
+}
+
+
+/* 
+input[type='radio'] {
+  @apply appearance-none w-15 h-15 rounded-full border-gray-300 border box-border;
+}
+
+input[type='radio']:checked {
+  @apply appearance-none w-15 h-15 bg-gray-900 rounded-full border-gray-900 box-border;
+  box-sizing: border-box; 
+  padding: 10px;
+} */

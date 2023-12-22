@@ -50,9 +50,9 @@ const CartTable = () => {
                   </td>
                   <td className="py-3 px-0 md:px-5">
                     <div className="flex items-center gap-3">
-                      <div className="flex items-center justify-center h-[74px] max-w-[100px] shrink-0">
+                      <div className="flex items-center justify-center h-[74px] w-[100px] shrink-0">
                         <Image
-                          src={item?.Images[0].src}
+                          src={item?.Images[0]}
                           alt="product"
                           className="shrink-0 max-h-full w-auto"
                           width={100}
@@ -61,13 +61,13 @@ const CartTable = () => {
                       </div>
                       <div className="text-gray-300 text-xs md:text-sm hidden xs:block">
                         <p>{item?.name}</p>
-                        <span>Sunny Premium</span>
+                        <span>{item?.title}</span>
                       </div>
                     </div>
                   </td>
                   <td className="py-3 ps-5">
                     <span className="text-gray-300 text-xs md:text-sm">
-                      AED {item?.priceNow}
+                      AED {item?.price}
                     </span>
                   </td>
                   <td className="py-3 px-5">

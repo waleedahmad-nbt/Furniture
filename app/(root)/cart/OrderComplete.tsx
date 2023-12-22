@@ -5,7 +5,6 @@ import Image from "next/image";
 
 const OrderComplete = () => {
   const cartItems: any = useSelector((state: RootState) => state.cart);
-  console.log();
 
   return (
     <>
@@ -20,12 +19,12 @@ const OrderComplete = () => {
               <div className="relative w-[80px] h-[96px]">
                 <Image
                   className="w-full h-full"
-                  src={item?.Images[0].src}
+                  src={item?.Images[0]}
                   alt="Product"
                   width={100}
                   height={100}
                 />
-                <div className="absolute top-0 right-0 w-[30px] h-[30px] rounded-full bg-black text-white flex justify-center items-center">
+                <div className="absolute -top-2 -right-2 w-[30px] h-[30px] rounded-full bg-black text-white flex justify-center items-center">
                   {item?.quantity}
                 </div>
               </div>
