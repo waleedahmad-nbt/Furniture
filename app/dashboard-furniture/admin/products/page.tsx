@@ -193,7 +193,7 @@ const Products = () => {
               <tr>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-2 text-left"
                 >
                   <input type="checkbox" className="rounded" onChange={() => handleSelectAllChange()} />
                 </th>
@@ -247,7 +247,7 @@ const Products = () => {
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="divide-y">
               {data && filter(data)?.map((product: any, i: number) => {
                 const { _id, Images, title, status, qty, inStock, category, price, type, vender} = product;
                 return (
@@ -256,13 +256,15 @@ const Products = () => {
                       <input type="checkbox" className="rounded" checked={checkboxes[_id] ?? false} onChange={() => handleCheckboxChange(_id)} id={_id} />
                     </td>
                     <td className="px-6">
-                      <Image
-                        className="h-[50px] w-[70px]"
-                        src={Images[0]}
-                        width={100}
-                        height={50}
-                        alt=""
-                      />
+                      <div className="w-[50px] h-[50px]">
+                        <Image
+                          className="max-w-full max-h-full rounded-lg my-auto"
+                          src={Images[0]}
+                          width={100}
+                          height={100}
+                          alt=""
+                        />
+                      </div>
                     </td>
                     <td className="max-w-[300px] px-6 py-4  text-xs font-medium text-gray-900">
                       {title}
