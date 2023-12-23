@@ -21,8 +21,8 @@ export default function Adminlayout({
   return (
     <div>
       <Header />
-      <div className="flex justify-between relative mt-14">
-        <div className="w-[12%] h-[93.5vh] sticky top-14 left-0">
+      <div className="flex justify-between relative mt-[54px]">
+        <div className="w-[240px] shrink-0 h-[93.5vh] sticky top-14 left-0">
           <Sidebar />
         </div>
         <div className="w-[88%] bg-[rgb(241,241,241)]">{children}</div>

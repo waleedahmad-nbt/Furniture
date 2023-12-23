@@ -8,6 +8,7 @@ import Link from "next/link";
 import { publicRequest } from "@/requestMethods";
 import { FiEdit3, FiTrash, FiX } from "react-icons/fi";
 import { AddCategory } from "@/app/dashboard-furniture/components";
+import { TbArrowsSort } from "react-icons/tb";
 
 const Collection = () => {
   const [products, setProducts] = useState([
@@ -201,23 +202,23 @@ const Collection = () => {
   };
 
   return (
-    <div className="p-5">
-      <div className="py-3 mb-2 flex justify-between items-center">
-        <h1 className="text-xl font-bold">Categories</h1>
+    <div className="px-5">
+      <div className="py-6 flex justify-between items-center">
+        <h1 className="text-xl font-bold text-gray-600">Categories</h1>
         <div className="flex justify-center gap-2 items-center">
-          <button onClick={() => setAddCategory(true)} className="p-1 border-none bg-gray-900/80 hover:bg-gray-900/100 duration-100 text-white text-xs px-2 rounded-lg">
+          <button onClick={() => setAddCategory(true)} className="py-1.5 px-3 text-xs font-bold rounded-lg bg_admin hover:bg-gray-900 text-white">
             Create category
           </button>
         </div>
       </div>
 
-      <div className="bg-white rounded-lg">
+      <div className="bg-white text-gray-600 rounded-xl border">
         <div className="flex justify-between items-center p-2">
           <div className="flex justify-center items-center gap-2">
-            <button onClick={() => changeValue(0, 'all')} className={`rounded-lg text-sm p-1 px-2 ${val===0 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
+            <button onClick={() => changeValue(0, 'all')} className={`rounded-lg text-xs font-bold py-1.5 px-3 ${val === 0 ? "bg-[#00000014]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
               All
             </button>
-            <button onClick={() => changeValue(4, 'all')} className={`rounded-lg text-sm p-1 px-2 ${val===4 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
+            <button onClick={() => changeValue(4, 'all')} className={`rounded-lg text-xs font-bold py-1.5 px-3 ${val === 4 ? "bg-[#00000014]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
               +
             </button>
           </div>
@@ -233,24 +234,24 @@ const Collection = () => {
                 />
               </div>
               <label htmlFor="filter" onClick={() => setShowSearch(!showSearch)}>
-                <div className="rounded-lg text-sm px-1 py-1 flex items-center">
+                <div className="rounded-lg text-lg px-1 py-1 flex items-center">
                   <BiSearch />
                   <BsFilter />
                 </div>
               </label>
             </div>
-            <button onClick={toggleSortOrder} className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
-              <BiSort />
+            <button onClick={toggleSortOrder} className="rounded-lg text-lg p-1 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
+              <TbArrowsSort />
             </button>
           </div>
         </div>
         <div>
           <table className="min-w-full text-xs divide-y divide-gray-200">
-            <thead className="bg-[#F7F7F7] sticky top-[54px]">
+            <thead className="bg-[#F7F7F7] sticky top-[53px] border-t border-b">
               <tr>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-2 text-left"
                 >
                   <input
                     type="checkbox"
@@ -258,40 +259,40 @@ const Collection = () => {
                     onChange={handleSelectAllChange}
                   />
                 </th>
-                <th className="py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
+                <th className="py-2 text-left text-xs font-bold text-gray-700 capitalize">Image</th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Title
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Products
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Description
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Sub-Categories
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="divide-y">
               {filter(categories)?.map(( category: any, i: number ) => (
                 <tr key={i}>
                   <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
@@ -408,7 +409,7 @@ const Collection = () => {
 
       {addCategory && <AddCategory handleClose={() => setAddCategory(false)} />}
       
-      <p className="text-center py-3 mt-4 text-sm">Learn more about <Link href="#" className="text-blue-600 underline">category</Link></p>
+      <p className="text-center py-3 mt-4 text-sm font-medium">Learn more about <Link href="#" className="text-blue-600 underline">category</Link></p>
     </div>
   );
 };
