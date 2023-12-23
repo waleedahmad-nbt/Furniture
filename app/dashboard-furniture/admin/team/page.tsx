@@ -7,6 +7,8 @@ import { publicRequest } from "@/requestMethods";
 import { FiEdit3, FiEye, FiTrash } from "react-icons/fi";
 import { AddTeam } from "../../components";
 import Image from "next/image";
+import { IoIosAdd } from "react-icons/io";
+import { TbArrowsSort } from "react-icons/tb";
 
 const Team = () => {
 
@@ -128,25 +130,25 @@ const Team = () => {
   };
 
   return (
-    <div className="p-5">
-      <div className="py-3 mb-2 flex justify-between items-center">
-        <h1 className="text-xl font-bold">Teams</h1>
+    <div className="px-5">
+      <div className="py-6 flex justify-between items-center">
+        <h1 className="text-xl font-bold text-gray-600">Teams</h1>
         <button
-          className="p-1 bg-gray-900/80 hover:bg-gray-900/100 duration-100 text-white border border-none text-xs px-2 rounded-lg" 
+          className="py-1.5 px-3 text-xs font-bold rounded-lg bg_admin hover:bg-gray-900 text-white" 
           onClick={() => setAddTeam(true)}
         >
           Add Team
         </button>
       </div>
 
-      <div className="bg-white rounded-lg">
+      <div className="bg-white rounded-lg border">
         <div className="flex justify-between items-center p-2">
           <div className="flex justify-center items-center gap-2">
-            <button onClick={() => changeValue(0, 'all')} className={`duration-100 rounded-lg text-sm p-1 px-2 ${val===0 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
+            <button onClick={() => changeValue(0, 'all')} className={`rounded-lg text-xs font-bold py-1.5 px-3 ${val === 0 ? "bg-[#00000014]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
               All
             </button>
-            <button onClick={() => changeValue(4, 'all')} className={`duration-100 rounded-lg text-sm p-1 px-2 ${val===4 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
-              +
+            <button onClick={() => changeValue(4, 'all')} className={`rounded-lg text-base font-bold py-1.5 px-2 ${val === 4 ? "bg-[#00000014]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
+              <IoIosAdd />
             </button>
           </div>
           <div className="flex">
@@ -157,64 +159,64 @@ const Team = () => {
                   id="filter"
                   value={searchVal}
                   onChange={(e: any) => setSearchVal(e.target.value)}
-                  className={`duration-150 pr-3 mx-2 text-xs rounded-md outline-none`}
+                  className={`duration-150 pr-3 pl-1 mx-2 text-xs rounded-md outline-none`}
                 />
               </div>
               <label htmlFor="filter" onClick={() => setShowSearch(!showSearch)}>
-                <div className="rounded-lg text-sm px-1 py-1 flex items-center">
+                <div className="rounded-lg text-lg px-1 py-1 flex items-center">
                   <BiSearch />
                   <BsFilter />
                 </div>
               </label>
             </div>
-            <button onClick={toggleSortOrder} className="rounded-lg text-sm p-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
-              <BiSort />
+            <button onClick={toggleSortOrder} className="rounded-lg text-lg p-1 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
+              <TbArrowsSort />
             </button>
           </div>
         </div>
         <div>
           <table className="min-w-full text-xs divide-y divide-gray-200">
-            <thead className="bg-[#F7F7F7] sticky top-[54px]">
+            <thead className="bg-[#F7F7F7] sticky top-[53px] border-t border-b">
               <tr>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-1.5 text-left"
                 >
                   <input type="checkbox" className="rounded" onChange={() => handleSelectAllChange()} />
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Image
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Name
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Designation
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Socials
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="divide-y">
               {data && filter(data)?.map((team: any, i: number) => {
                 const { _id, name, designation, image, socials} = team;
                 return (
@@ -223,18 +225,20 @@ const Team = () => {
                       <input type="checkbox" className="rounded" checked={checkboxes[_id] ?? false} onChange={() => handleCheckboxChange(_id)} id={_id} />
                     </td>
                     <td className="px-6">
-                      <Image
-                        className="h-[50px] w-[70px]"
-                        src={image}
-                        width={100}
-                        height={50}
-                        alt=""
-                      />
+                      <div className="w-[50px] h-[50px] flex items-center justify-center">
+                        <Image
+                          className="max-w-full max-h-full rounded-lg"
+                          src={image}
+                          width={100}
+                          height={100}
+                          alt=""
+                        />
+                      </div>
                     </td>
-                    <td className="px-6">
+                    <td className="px-6 text-xs font-medium text-gray-900">
                       {name}
                     </td>
-                    <td className="max-w-[300px] px-6 py-4  text-xs font-medium text-gray-900">
+                    <td className="max-w-[300px] px-6 py-4 text-xs font-medium text-gray-900">
                       {designation}
                     </td>
                     <td className="max-w-[300px] px-6 py-4 text-xs font-medium text-gray-900">

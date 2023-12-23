@@ -127,8 +127,8 @@ const Products = () => {
   }
 
   return (
-    <div className="p-5">
-      <div className="py-3 mb-2 flex justify-between items-center">
+    <div className="px-5">
+      <div className="py-6 flex justify-between items-center">
         <h1 className="text-xl font-bold text-gray-600">Products</h1>
         <div className="flex justify-center gap-2 items-center">
           <button className="py-1.5 px-3 text-xs font-bold rounded-lg bg-gray-100/30 text-gray-600">
@@ -145,7 +145,7 @@ const Products = () => {
         </div>
       </div>
 
-      <div className="bg-white text-gray-600 rounded-lg">
+      <div className="bg-white text-gray-600 rounded-xl border">
         <div className="flex justify-between items-center p-2">
           <div className="flex justify-center items-center gap-2">
             <button onClick={() => changeValue(0, 'all')} className={`rounded-lg text-xs font-bold py-1.5 px-3 ${val === 0 ? "bg-[#00000014]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
@@ -193,55 +193,55 @@ const Products = () => {
               <tr>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left"
+                  className="px-6 py-1.5 text-left"
                 >
                   <input type="checkbox" className="rounded" onChange={() => handleSelectAllChange()} />
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Image
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Name
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Category
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Status
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Quantity
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Price
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Reviews
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Actions
                 </th>
@@ -256,9 +256,9 @@ const Products = () => {
                       <input type="checkbox" className="rounded" checked={checkboxes[_id] ?? false} onChange={() => handleCheckboxChange(_id)} id={_id} />
                     </td>
                     <td className="px-6">
-                      <div className="w-[50px] h-[50px]">
+                      <div className="w-[50px] h-[50px] flex items-center justify-center">
                         <Image
-                          className="max-w-full max-h-full rounded-lg my-auto"
+                          className="max-w-full max-h-full rounded-lg"
                           src={Images[0]}
                           width={100}
                           height={100}
@@ -288,7 +288,7 @@ const Products = () => {
                       PKR {price}
                     </td>
                     <td className="px-6 py-4 text-left whitespace-nowrap text-xs text-gray-500">
-                      <Link href={`/dashboard-furniture/admin/products/reviews/${_id}`} className="bg-gray-900/80 hover:bg-gray-900/100 px-2 text-white py-1 rounded-md">Reviews</Link>
+                      <Link href={`/dashboard-furniture/admin/products/reviews/${_id}`} className="bg_admin hover:bg-gray-900 px-2 text-white py-1 rounded-md">Reviews</Link>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
                       <div className="flex gap-2 text-base items-center">

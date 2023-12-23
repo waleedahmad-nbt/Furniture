@@ -4,6 +4,8 @@ import { AccountSideBar } from "../components";
 import { FiX } from "react-icons/fi";
 
 import Pro2 from "@/app/assets/products/table_03.png";
+import React, { useEffect, useState } from "react";
+import { publicRequest } from "@/requestMethods";
 
 const MyOrders = () => {
   const products = [
@@ -36,6 +38,25 @@ const MyOrders = () => {
     },
   ];
 
+  const [orders, setOrders] = useState<any>([]);
+
+  useEffect(() => {
+    const getOrders = async () => {
+      try {
+        const res = await publicRequest.get(`/order`);
+  
+        if(res.status === 200) {
+          console.log(res.data.data);
+          setOrders(res.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    getOrders();
+  }, []) 
+
   let token = localStorage.getItem("token");
 
   return (
@@ -57,7 +78,6 @@ const MyOrders = () => {
             <table className="text-left w-full table-auto">
               <thead>
                 <tr>
-                  <th></th>
                   <th className="py-3 px-2 md:px-5 text-sm font-medium md:font-semibold">
                     Product
                   </th>
@@ -73,53 +93,54 @@ const MyOrders = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.length > 0 &&
-                  products?.map((item: any, index: number) => (
-                    <tr key={index}>
-                      <td className="px-2 text-gray-200 text-xl">
-                        <button onClick={() => console.log(item?._id)}>
-                          <FiX />
-                        </button>
-                      </td>
-                      <td className="py-3 px-0 md:px-5">
-                        <div className="flex items-center gap-0 md:gap-3">
-                          <div className="flex items-center justify-center h-[74px] max-w-[100px] shrink-0">
-                            <Image
-                              src={item?.images[0]}
-                              alt="product"
-                              className="shrink-0 max-h-full w-auto"
-                            />
-                          </div>
-                          <div className="text-gray-300 text-xs md:text-sm hidden xs:block">
-                            <p>{item?.name}</p>
-                            <span>Sunny Premium</span>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="py-3 ps-5">
-                        <p className="text-gray-300 text-xs md:text-sm">
-                          AED {item?.priceNow}
-                        </p>
-                      </td>
-                      <td className="py-3 px-5">
-                        <div className="w-[20px] md:w-[40px] h-[30px] md:h-[40px] flex items-center justify-center bg-white rounded-md border text-xs md:text-sm">
-                          {item?.quantity}
-                        </div>
-                      </td>
-                      <td className="py-3 px-0 md:px-5 text-xs md:text-sm">
-                        <span
-                          className={`${
-                            item?.status === "Pending"
-                              ? "text-secondary"
-                              : item?.status === "In Transits"
-                              ? "text-green"
-                              : "text-gray-300"
-                          }`}
-                        >
-                          {item?.status}
-                        </span>
-                      </td>
-                    </tr>
+                {orders.length > 0 &&
+                  orders?.map((order: any, index: number) => (
+                    <React.Fragment key={index}>
+                    {order?.products?.map((item: any, index: number) => (
+                        <tr key={index}>
+                          <td className="py-3 px-0 md:px-5">
+                            <div className="flex items-center gap-0 md:gap-3">
+                              <div className="flex items-center justify-center h-[74px] w-[100px] shrink-0">
+                                <Image
+                                  src={item?.image}
+                                  width={100}
+                                  height={100}
+                                  alt="product"
+                                  className="shrink-0 max-w-full max-h-full"
+                                />
+                              </div>
+                              <div className="text-gray-300 text-xs md:text-sm hidden xs:block">
+                                <p>{item?.name}</p>
+                                <span>Sunny Premium</span>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-3 ps-5">
+                            <p className="text-gray-300 text-xs md:text-sm">
+                              AED {item?.price}
+                            </p>
+                          </td>
+                          <td className="py-3 px-5">
+                            <div className="w-[20px] md:w-[40px] h-[30px] md:h-[40px] flex items-center justify-center bg-white rounded-md border text-xs md:text-sm">
+                              {item?.qty}
+                            </div>
+                          </td>
+                          <td className="py-3 px-0 md:px-5 text-xs md:text-sm">
+                            <span
+                              className={`${
+                                order?.status === "processing"
+                                  ? "text-secondary"
+                                  : order?.status === "completed"
+                                  ? "text-green"
+                                  : order?.status === "delivered" ? "text-gray-300" : ""
+                              } capitalize`}
+                            >
+                              {order?.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </React.Fragment>
                   ))}
               </tbody>
             </table>

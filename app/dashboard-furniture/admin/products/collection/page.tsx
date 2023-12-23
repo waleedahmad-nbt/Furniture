@@ -57,7 +57,7 @@ const Collection = () => {
     },
   ]);
 
-  const [val, setVal] = useState(0)
+  const [val, setVal] = useState(0);
   const [updating, setUpdating] = useState<string>("");
   const [category, setCategory] = useState('all');
   const [addCategory, setAddCategory] = useState<boolean>(false);
@@ -252,7 +252,7 @@ const Collection = () => {
               <tr>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left"
+                  className="px-6 py-1.5 text-left"
                 >
                   <input
                     type="checkbox"
@@ -260,34 +260,34 @@ const Collection = () => {
                     onChange={handleSelectAllChange}
                   />
                 </th>
-                <th className="py-2 text-left text-xs font-bold text-gray-700 capitalize">Image</th>
+                <th className="py-1.5 text-left text-xs font-bold text-gray-700 capitalize">Image</th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Title
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Products
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Description
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Sub-Categories
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Actions
                 </th>
@@ -306,7 +306,7 @@ const Collection = () => {
                     />
                   </td>
                   <td>
-                    <div className="w-[50px] h-[50px]">
+                    <div className="w-[50px] h-[50px] flex items-center justify-center">
                       <Image
                         className="max-w-full max-h-full rounded-lg"
                         src={category?.image}
@@ -316,7 +316,7 @@ const Collection = () => {
                       />
                     </div>
                   </td>
-                  <td className="max-w-[300px] px-6 py-4  text-xs font-medium text-gray-900">
+                  <td className="max-w-[300px] px-6 py-4 text-xs font-medium text-gray-900">
                     {editCatId === category?._id ? (
                       <input
                         type="text"

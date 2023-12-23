@@ -1,14 +1,14 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdExpandMore } from "react-icons/md";
-import { AiOutlineSearch } from "react-icons/ai";
-import { TbFileReport } from "react-icons/tb";
+import { TbArrowsSort, TbFileReport } from "react-icons/tb";
 import { FiArrowUpRight } from "react-icons/fi";
 import { Smallchart, Table } from "../../components";
-import { BiMenuAltRight } from "react-icons/bi";
-import { BsArrowDown, BsArrowUp } from "react-icons/bs";
-import { Radio } from "@material-tailwind/react";
+import { BiSearch } from "react-icons/bi";
+import { BsFilter } from "react-icons/bs";
 import { useRouter } from "next/navigation";
+import { IoIosAdd } from "react-icons/io";
+import { publicRequest } from "@/requestMethods";
 
 interface DataRow {
   id: string,
@@ -61,35 +61,83 @@ const dataRows: DataRow[] = [
 
 const Orders = () => {
   const Router = useRouter();
-  const [currentTab, setcurrentTab] = useState("All");
+  const [currentTab, setcurrentTab] = useState("all");
   const [cureentlocationtab, setCureentlocationtab] = useState("All locations");
   const [Locationbox, setLocationbox] = useState(false);
-  const [Export, setExport] = useState(false);
+  const [orders, setOrders] = useState<any>([]);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const res = await publicRequest.get(`/order`);
+  
+        if(res.status === 200) {
+          console.log(res.data.data);
+          setOrders(res.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    getProducts();
+  }, [])  
 
   const handleorder = () => {
     Router.push("/dashboard-furniture/admin/orders/drafts/new");
   };
 
+  const [showSearch, setShowSearch] = useState<boolean>(false);
+  const [searchVal, setSearchVal] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<any>('');
+
+  const toggleSortOrder = () => {
+    setSortOrder((prevSortOrder: any) => (prevSortOrder === 'asc' ? 'desc' : 'asc'));
+  };
+
   const filter = (rows: any) => {
-    if(currentTab==="All"){
-      return rows;
+    let result = rows;
+    if(currentTab==="all"){
+      result = rows;
     }
-    else if(currentTab==="Unfulfilled"){
-      return rows.filter((e:any, i:any) => {
-        return e.fulfillmentStatus !== 'Processing'
+    else if(currentTab==="Active"){
+      result = rows.filter((e:any, i:any) => {
+        return e.status === 'Active'
       })
     }
-    else if(currentTab==="Unpaid"){
-      return rows.filter((e:any, i:any) => {
-          return e.paymentStatus === 'Pending'
+    else if(currentTab==="Draft"){
+      result = rows.filter((e:any, i:any) => {
+        return e.status === 'Draft'
       })
     }
+
+    if(sortOrder) {
+      result = sortByColumn(result);
+    }
+
+    return result.filter((row: any) =>
+      ['contactInfo'].some((col) =>
+        row[col]["firstName"]?.toString().toLowerCase().indexOf(searchVal.toLowerCase()) > -1)
+    );
+  };
+
+  const sortByColumn = (data: any[]) => {
+    return data.slice().sort((a, b) => {
+      const valueA = a['contactInfo']?.toString().toLowerCase();
+      const valueB = b['contactInfo']?.toString().toLowerCase();
+
+      if (sortOrder === 'asc') {
+        return valueA?.localeCompare(valueB);
+      } else {
+        return valueB?.localeCompare(valueA);
+      }
+    });
   };
 
   return (
     <>
-      <div className="p-6 w-full">
-        <div className="Orderbar w-full flex justify-between items-center mb-10">
+      <div className="px-5 w-full">
+        <div className="Orderbar w-full flex justify-between items-center py-6">
           <div className="relative">
             <h1 className="text-xl font-bold text-gray-900 flex items-center">
               Orders:
@@ -146,81 +194,18 @@ const Orders = () => {
           </div>
 
           <div className=" space-x-3">
-            <button
-              onClick={() => setExport(true)}
-              className="bg-gray-100/30 px-2 rounded-lg py-1 text-sm text-gray-900 opacity-90 hover:opacity-100 "
-            >
+            <button className="py-1.5 px-3 text-xs font-bold rounded-lg bg-gray-100/30 text-gray-600">
               Export
             </button>
             <button
               onClick={handleorder}
-              className="bg-gray-900/80 hover:bg-gray-900/100 duration-100 px-2 rounded-lg py-1 text-sm text-white shadow-sm"
+              className="py-1.5 px-3 text-xs font-bold rounded-lg bg_admin hover:bg-gray-900 text-white"
             >
               Create order
             </button>
           </div>
         </div>
-        <div
-          className={`absolute h-screen flex justify-center items-center w-full left-0 z-[10] bg-[#00000067] ${
-            !Export ? "-top-[100vh]" : "-top-1"
-          }`}
-        >
-          <div className="w-1/3 rounded-2xl bg-white overflow-hidden">
-            <div className="flex justify-between items-center text-lg bg-gray-200 text-gray-900 p-4 border-b-[1px] border-P_textColour">
-              <h1 className="font-bold">Export orders</h1>
-              <h1
-                onClick={() => setExport(false)}
-                className="font-medium cursor-pointer px-2 rounded-md hover:bg-gray-300"
-              >
-                x
-              </h1>
-            </div>
-            <div className="py-6 px-2">
-              <p className="text-sm">Export</p>
-              <Radio name="type" label="Current page" className="rad" crossOrigin="anonymous"/>{" "}
-              <br />
-              <Radio name="type" label="All orders" className="rad" crossOrigin="anonymous"/> <br />
-              <Radio
-                name="order"
-                label="Selected: 0 orders"
-                disabled
-                checked
-                className="rad"
-                crossOrigin="anonymous"
-              />{" "}
-              <br />
-              <Radio
-                name="order search"
-                label="50+ orders matching your search"
-                checked
-                disabled
-                className="rad"
-                crossOrigin="anonymous"
-              />{" "}
-              <br />
-              <Radio name="type" label="Orders by date" className="rad" crossOrigin="anonymous"/>
-              <br />
-            </div>
-            <div className="py-0 px-2">
-              <p className="text-sm">Export as</p>
-              <Radio
-                name="Exportas"
-                label="CSV for Excel, Numbers, or other spreadsheet programs"
-                className="rad"
-                crossOrigin="anonymous"
-              />{" "}
-              <br />
-              <Radio
-                name="Exportas"
-                label="Plain CSV fil"
-                className="rad"
-                crossOrigin="anonymous"
-              />{" "}
-              <br />
-            </div>
-          </div>
-        </div>
-        <div className="w-full rounded-xl bg-white flex shadow-md">
+        <div className="w-full rounded-xl bg-white flex shadow-md mb-6">
           <div className="w-[8%] cursor-pointer flex items-center justify-center p-6 border-r-[1px]">
             <TbFileReport className="text-xl" />
             &nbsp; <span className="text-sm">Today</span>
@@ -293,64 +278,41 @@ const Orders = () => {
             </div>
           </div>
         </div>
-        <div className="w-full rounded-t-xl bg-white flex justify-between items-center px-2 shadow-md mt-4 py-2">
-          <ul className="flex space-x-4 text-xs text-ubuntu-regular px-4 ">
-            <li
-              onClick={(e: any) => setcurrentTab(e.target.innerText)}
-              className={`hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer ${
-                currentTab === "All" ? "bg-gray-blue/20" : ""
-              }`}
-            >
-              All
-            </li>
-            <li
-              onClick={(e: any) => setcurrentTab(e.target.innerText)}
-              className={`hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer ${
-                currentTab === "Unfulfilled" ? "bg-gray-blue/20" : ""
-              }`}
-            >
-              Unfulfilled
-            </li>
-            <li
-              onClick={(e: any) => setcurrentTab(e.target.innerText)}
-              className={`hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer ${
-                currentTab === "Unpaid" ? "bg-gray-blue/20" : ""
-              }`}
-            >
-              Unpaid
-            </li>
-            <li
-              onClick={(e: any) => setcurrentTab(e.target.innerText)}
-              className={`hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer ${
-                currentTab === "Open" ? "bg-gray-blue/20" : ""
-              }`}
-            >
-              Open
-            </li>
-            <li
-              onClick={(e: any) => setcurrentTab(e.target.innerText)}
-              className={`hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer ${
-                currentTab === "Closed" ? "bg-gray-blue/20" : ""
-              }`}
-            >
-              Closed
-            </li>
-            <li className="hover:bg-gray-blue/20 px-2 py-1 rounded-lg cursor-pointer">
-              +
-            </li>
-          </ul>
-          <div className="flex space-x-3">
-            <div className="flex items-center justify-center shadow-md py-1 px-2 border-[1px] space-x-2 rounded-md cursor-pointer">
-              <AiOutlineSearch className="text-lg" />
-              <BiMenuAltRight className="text-lg" />
+        <div className="bg-white text-gray-600 rounded-xl border">
+          <div className="flex justify-between items-center p-2">
+            <div className="flex justify-center items-center gap-2">
+              <button onClick={() => setcurrentTab('all')} className={`rounded-lg text-xs font-bold py-1.5 px-3 ${currentTab === "all" ? "bg-[#00000014]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
+                All
+              </button>
+              <button onClick={() => setcurrentTab('all')} className={`rounded-lg text-base font-bold py-1.5 px-2 ${currentTab === "+" ? "bg-[#00000014]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
+                <IoIosAdd />
+              </button>
             </div>
-            <div className="flex items-center justify-center shadow-md py-1 px-2 border-[1px] rounded-md cursor-pointer">
-              <BsArrowUp className="text-lg" />
-              <BsArrowDown className="text-lg -ml-[10px]" />
+            <div className="flex">
+              <div className="flex h-max items-center shadow-sm border bg-white hover:shadow-none rounded-md">
+                <div className={`overflow-hidden duration-200 h-[14px] py-1 ${showSearch ? "w-max" : "w-[0px]"}`}>
+                  <input
+                    type="text"
+                    id="filter"
+                    value={searchVal}
+                    onChange={(e: any) => setSearchVal(e.target.value)}
+                    className={`duration-150 pr-3 pl-1 mx-2 text-xs rounded-md outline-none`}
+                  />
+                </div>
+                <label htmlFor="filter" onClick={() => setShowSearch(!showSearch)}>
+                  <div className="rounded-lg text-lg px-1 py-1 flex items-center">
+                    <BiSearch />
+                    <BsFilter />
+                  </div>
+                </label>
+              </div>
+              <button onClick={toggleSortOrder} className="rounded-lg text-lg p-1 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
+                <TbArrowsSort />
+              </button>
             </div>
           </div>
+          <Table data={filter(orders)} setOrders={setOrders}/>
         </div>
-        <Table data={filter(dataRows)}/>
       </div>
     </>
   );

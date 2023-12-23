@@ -23,6 +23,8 @@ const config: Config = {
         "gray-700": "#616161",
         "gray-900": "#1F1F1F",
 
+        "tb-hover": "#f7f7f7",
+
         "primary": "#FF6F00",
         "secondary": "#FF3939",
       },
