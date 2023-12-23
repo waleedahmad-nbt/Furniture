@@ -9,6 +9,7 @@ import { publicRequest } from "@/requestMethods";
 import { FiEdit3, FiTrash, FiX } from "react-icons/fi";
 import { AddCategory } from "@/app/dashboard-furniture/components";
 import { TbArrowsSort } from "react-icons/tb";
+import { IoIosAdd } from "react-icons/io";
 
 const Collection = () => {
   const [products, setProducts] = useState([
@@ -218,8 +219,8 @@ const Collection = () => {
             <button onClick={() => changeValue(0, 'all')} className={`rounded-lg text-xs font-bold py-1.5 px-3 ${val === 0 ? "bg-[#00000014]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
               All
             </button>
-            <button onClick={() => changeValue(4, 'all')} className={`rounded-lg text-xs font-bold py-1.5 px-3 ${val === 4 ? "bg-[#00000014]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
-              +
+            <button onClick={() => changeValue(4, 'all')} className={`rounded-lg text-base font-bold py-1.5 px-2 ${val === 4 ? "bg-[#00000014]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
+              <IoIosAdd />
             </button>
           </div>
           <div className="flex">
@@ -230,7 +231,7 @@ const Collection = () => {
                   id="filter"
                   value={searchVal}
                   onChange={(e: any) => setSearchVal(e.target.value)}
-                  className={`duration-150 pr-3 mx-2 text-xs rounded-md outline-none`}
+                  className={`duration-150 pr-3 pl-1 mx-2 text-xs rounded-md outline-none`}
                 />
               </div>
               <label htmlFor="filter" onClick={() => setShowSearch(!showSearch)}>
@@ -305,13 +306,15 @@ const Collection = () => {
                     />
                   </td>
                   <td>
-                    <Image
-                      className="h-[50px] w-auto"
-                      src={category?.image}
-                      width={100}
-                      height={100}
-                      alt=""
-                    />
+                    <div className="w-[50px] h-[50px]">
+                      <Image
+                        className="max-w-full max-h-full rounded-lg"
+                        src={category?.image}
+                        width={100}
+                        height={100}
+                        alt=""
+                      />
+                    </div>
                   </td>
                   <td className="max-w-[300px] px-6 py-4  text-xs font-medium text-gray-900">
                     {editCatId === category?._id ? (
@@ -321,7 +324,7 @@ const Collection = () => {
                         name="category"
                         value={formData?.category}
                         onChange={handleChange}
-                        className="py-1 px-3 outline-none border rounded-md"
+                        className="py-1 px-3 outline-none border rounded-md w-full"
                       />
                     ) : (
                       <>
@@ -331,7 +334,7 @@ const Collection = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-end w text-xs text-gray-500">
                     <div className="p-1 px-2 rounded-lg w-max text-end">
-                      {category?.quantity || 0}
+                      {category?.products || 0}
                     </div>
                   </td>
                   <td
@@ -343,7 +346,7 @@ const Collection = () => {
                         name="description"
                         value={formData?.description}
                         onChange={handleChange}
-                        className="py-1 px-3 outline-none border rounded-md"
+                        className="py-1 px-3 outline-none border rounded-md w-full"
                       />
                     ) : (
                       <>
@@ -409,10 +412,9 @@ const Collection = () => {
 
       {addCategory && <AddCategory handleClose={() => setAddCategory(false)} />}
       
-      <p className="text-center py-3 mt-4 text-sm font-medium">Learn more about <Link href="#" className="text-blue-600 underline">category</Link></p>
+      <p className="text-center py-3 mt-4 font-medium text-gray-600">Learn more about <Link href="#" className="text-blue-600 underline">category</Link></p>
     </div>
   );
 };
 
 export default Collection;
-// askjdh

@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import image from "@/app/assets/images/Seller/Product.jpeg";
-import { BiSearch, BiSort } from "react-icons/bi";
-import { BsFilter } from "react-icons/bs";
 import Link from "next/link";
+import { BiSearch} from "react-icons/bi";
+import { BsFilter } from "react-icons/bs";
 import { publicRequest } from "@/requestMethods";
 import { FiTrash } from "react-icons/fi";
+import { IoIosAdd } from "react-icons/io";
+import { TbArrowsSort } from "react-icons/tb";
 
 const Products = () => {
 
@@ -128,39 +129,39 @@ const Products = () => {
   return (
     <div className="p-5">
       <div className="py-3 mb-2 flex justify-between items-center">
-        <h1 className="text-xl font-bold">Products</h1>
+        <h1 className="text-xl font-bold text-gray-600">Products</h1>
         <div className="flex justify-center gap-2 items-center">
-          <button className="p-1 bg-[#E3E3E3] border-none hover:bg-[#D4D4D4] text-xs px-2 rounded duration-100">
+          <button className="py-1.5 px-3 text-xs font-bold rounded-lg bg-gray-100/30 text-gray-600">
             Export
           </button>
-          <button className="p-1 bg-[#E3E3E3] border-none hover:bg-[#D4D4D4] text-xs px-2 rounded duration-100">
+          <button className="py-1.5 px-3 text-xs font-bold rounded-lg bg-gray-100/30 text-gray-600">
             Import
           </button>
           <Link href={'/dashboard-furniture/admin/products/new'}>
-            <button className="p-1 bg-gray-900/80 hover:bg-gray-900/100 duration-100 text-white border border-none text-xs px-2 rounded-lg">
+            <button className="py-1.5 px-3 text-xs font-bold rounded-lg bg_admin hover:bg-gray-900 text-white">
               Add Product
             </button>
           </Link>
         </div>
       </div>
 
-      <div className="bg-white rounded-lg">
+      <div className="bg-white text-gray-600 rounded-lg">
         <div className="flex justify-between items-center p-2">
           <div className="flex justify-center items-center gap-2">
-            <button onClick={() => changeValue(0, 'all')} className={`duration-100 rounded-lg text-sm p-1 px-2 ${val===0 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
+            <button onClick={() => changeValue(0, 'all')} className={`rounded-lg text-xs font-bold py-1.5 px-3 ${val === 0 ? "bg-[#00000014]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
               All
             </button>
-            <button onClick={() => changeValue(1, 'Active')} className={`duration-100 rounded-lg text-sm p-1 px-2 ${val===1 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
+            <button onClick={() => changeValue(1, 'Active')} className={`rounded-lg text-xs font-bold py-1.5 px-3 ${val === 1 ? "bg-[#00000014]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
               Active
             </button>
-            <button onClick={() => changeValue(2, 'Draft')} className={`duration-100 rounded-lg text-sm p-1 px-2 ${val===2 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
+            <button onClick={() => changeValue(2, 'Draft')} className={`rounded-lg text-xs font-bold py-1.5 px-3 ${val === 2 ? "bg-[#00000014]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
               Draft
             </button>
-            <button onClick={() => changeValue(3, 'archived')} className={`duration-100 rounded-lg text-sm p-1 px-2 ${val===3 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
+            <button onClick={() => changeValue(3, 'archived')} className={`rounded-lg text-xs font-bold py-1.5 px-3 ${val === 3 ? "bg-[#00000014]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
               Archived
             </button>
-            <button onClick={() => changeValue(4, 'all')} className={`duration-100 rounded-lg text-sm p-1 px-2 ${val===4 ? "bg-[#EFEFEF]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
-              +
+            <button onClick={() => changeValue(4, 'all')} className={`rounded-lg text-base font-bold py-1.5 px-2 ${val === 4 ? "bg-[#00000014]" : "bg-transparent"} hover:bg-[#f3f3f3]`}>
+              <IoIosAdd />
             </button>
           </div>
           <div className="flex">
@@ -171,24 +172,24 @@ const Products = () => {
                   id="filter"
                   value={searchVal}
                   onChange={(e: any) => setSearchVal(e.target.value)}
-                  className={`duration-150 pr-3 mx-2 text-xs rounded-md outline-none`}
+                  className={`duration-150 pr-3 pl-1 mx-2 text-xs rounded-md outline-none`}
                 />
               </div>
               <label htmlFor="filter" onClick={() => setShowSearch(!showSearch)}>
-                <div className="rounded-lg text-sm px-1 py-1 flex items-center">
+                <div className="rounded-lg text-lg px-1 py-1 flex items-center">
                   <BiSearch />
                   <BsFilter />
                 </div>
               </label>
             </div>
-            <button onClick={toggleSortOrder} className="rounded-lg text-sm py-1 px-2 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
-              <BiSort />
+            <button onClick={toggleSortOrder} className="rounded-lg text-lg p-1 mx-1 flex items-center shadow-sm border bg-white hover:shadow-none">
+              <TbArrowsSort />
             </button>
           </div>
         </div>
         <div>
           <table className="min-w-full text-xs divide-y divide-gray-200">
-            <thead className="bg-[#F7F7F7] sticky top-[54px]">
+            <thead className="bg-[#F7F7F7] sticky top-[53px] border-t border-b">
               <tr>
                 <th
                   scope="col"
@@ -198,49 +199,49 @@ const Products = () => {
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Image
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Name
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Category
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Status
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Quantity
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Price
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Reviews
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-2 text-left text-xs font-bold text-gray-700 capitalize"
                 >
                   Actions
                 </th>

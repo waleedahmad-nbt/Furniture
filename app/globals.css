@@ -221,7 +221,7 @@ input[type='checkbox'] {
 }
 
 input[type='checkbox']:checked {
-  @apply appearance-none w-[15px] h-[15px] bg-gray-900 rounded-sm border;
+  @apply w-[18px] h-[18px] bg-gray-900 border-gray-900;
   background-image: url("data:image/svg+xml,%3csvg aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 12'%3e %3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M1 5.917 5.724 10.5 15 1.5'/%3e %3c/svg%3e");
   background-repeat: no-repeat;
   background-position: center;
