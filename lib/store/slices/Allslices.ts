@@ -58,14 +58,10 @@ export const Allslice = createSlice({
       state.cart = state.cart.filter((item: any) => item._id !== idToRemove);
     },
     incrementQuantity:(state,action: PayloadAction<object>)=>{
-      // console.log(action.payload);
       const idToIncrement = action.payload;
-
-      // Find the index of the item with the specified ID in the cart
       const index = state.cart.findIndex((item: any) => item._id === idToIncrement);
  
       if (index !== -1) {
-        // Use type casting to treat the item as having a 'quantity' property
         (state.cart[index] as any).quantity += 1;
       }
 
@@ -73,8 +69,7 @@ export const Allslice = createSlice({
     decrementQuantity: (state, action: PayloadAction<string>) => {
       const idToDecrement = action.payload;
       const index = state.cart.findIndex((item: any) => item._id === idToDecrement);
-    
-      // If the item is found and the quantity is greater than 1, decrement it
+      
       if (index !== -1 && (state.cart[index] as any).quantity > 1) {
         (state.cart[index] as any).quantity -= 1;
       }

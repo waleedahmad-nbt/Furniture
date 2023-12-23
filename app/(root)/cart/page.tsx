@@ -17,6 +17,8 @@ import CheckoutDetails from "./CheckoutDetails";
 
 const Cart = () => {
   const [isOrderComplete, setIsOrderComplete] = useState(false);
+  const [orderData, setOrderData] = useState([]);
+
   // console.log(isOrderComplete, "isOrder");
 
   const dispatch = useDispatch();
@@ -100,11 +102,13 @@ const Cart = () => {
                   isOrderComplete={isOrderComplete}
                   setIsOrderComplete={setIsOrderComplete}
                   setCurrentTabIdx={setCurrentTabIdx}
+                  cartItems={cartItems}
+                  setOrderData={setOrderData}
                 />
               </div>
             ) : isOrderComplete ? (
               <div>
-                <OrderComplete />
+                <OrderComplete orderData={orderData} />
               </div>
             ) : (
               ""

@@ -11,7 +11,6 @@ import {
 const OrderSummary = () => {
   const dispatch = useDispatch();
   const cartItems: any = useSelector((state: RootState) => state.cart);
-  console.log(cartItems);
 
   const totalPrice = cartItems.reduce((accumulator: any, currentItem: any) => {
     const itemPrice = parseFloat(currentItem.price);

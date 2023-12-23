@@ -22,7 +22,7 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  // console.log(formData);
+  console.log(formData);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -42,6 +42,7 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
           lastName: formData.lastName,
           firstName: formData.firstName,
           username: formData.username,
+          phoneNumber: formData.phoneNumber,
         });
         // console.log(res);
         if (res) {
@@ -161,6 +162,29 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                         id="email"
                         required
                         placeholder="Type your email"
+                        onChange={handleChange}
+                      />
+                      {/* {!isEmail && (
+                        <p className="mt-3 text-secondary text-[12px] font-normal ms-3">
+                          Please enter a valid email address.
+                        </p>
+                      )} */}
+                    </div>
+
+                    <div className="flex flex-col">
+                      <label
+                        htmlFor="phoneNumber"
+                        className="mt-5 text-[12px] ms-3"
+                      >
+                        Phone Number <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        className="w-full sm:w-[368px] h-[48px] px-3 mt-1 border border-gray-100 rounded-md bg-white outline-none"
+                        type="text"
+                        name="phoneNumber"
+                        id="phoneNumber"
+                        required
+                        placeholder="Phone Number"
                         onChange={handleChange}
                       />
                       {/* {!isEmail && (

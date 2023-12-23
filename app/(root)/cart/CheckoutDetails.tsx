@@ -1,10 +1,14 @@
 "use client";
-import React, { useState } from "react";
+import { publicRequest } from "@/requestMethods";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Select from "react-select";
 const CheckoutDetails = ({
   isOrderComplete,
   setIsOrderComplete,
   setCurrentTabIdx,
+  cartItems,
+  setOrderData,
 }: any) => {
   const customStyles = {
     option: (provided: any) => ({
@@ -38,24 +42,52 @@ const CheckoutDetails = ({
     { label: "US", value: "US" },
   ];
 
-  const fields = {
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    email: "",
-    streetAddress: "",
-    country: "",
-    townCity: "",
-    state: "",
-    zipCode: "",
+  const requiredCart = cartItems.map((item: any, indes: any) => {
+    return {
+      produtTitle: item.title,
+      price: item.price,
+      qty: item.quantity,
+      image: item.Images[0],
+    };
+  });
+
+  const totalPrice = requiredCart.reduce(
+    (accumulator: any, currentItem: any) => {
+      const itemPrice = parseFloat(currentItem.price);
+      const itemQuantity = currentItem.qty;
+
+      return accumulator + itemPrice * itemQuantity;
+    },
+    0
+  );
+
+  const userData = useSelector((state: any) => state.user);
+  console.log(userData, "userData");
+
+  const initialFormData = {
+    customerId: userData._id,
     paymentMethod: "",
-    cardNumber: "",
-    expirationDate: "",
-    cvcCode: "",
+    products: requiredCart,
+    contactInfo: {
+      firstName: userData ? userData.firstName : "",
+      lastName: userData ? userData.lastName : "",
+      phoneNumber: userData ? userData.phoneNumber : "",
+      email: userData ? userData.email : "",
+    },
+    shippingAddress: {
+      streetAddress: "",
+      country: "",
+      townCity: "",
+      state: "",
+      zipCode: "",
+    },
+    subtotal: totalPrice,
+    shipping: "free",
+    total: totalPrice,
   };
-  const [formData, setFormData]: any = useState(fields);
+
+  const [formData, setFormData]: any = useState(initialFormData);
   const [errors, setErrors] = useState<any>({});
-  // console.log(errors);
 
   const handleChange = (e: any) => {
     const { name, value, type, checked } = e.target;
@@ -63,10 +95,7 @@ const CheckoutDetails = ({
     setFormData((prev: any) => {
       if (type === "radio") {
         // Handle radio buttons
-        return { ...prev, [name]: checked ? value : "" };
-      } else {
-        // Handle other input types
-        return { ...prev, [name]: value };
+        return { ...prev, paymentMethod: checked ? value : "" };
       }
     });
 
@@ -75,60 +104,138 @@ const CheckoutDetails = ({
     });
   };
 
-  // console.log(formData);
+  const handlePaymentmethod = (e: any) => {
+    const { name, value, checked } = e.target;
 
-  // const validateForm = () => {
-  //   let newErrors: any = {};
+    setFormData((prev: any) => {
+      return { ...prev, paymentMethod: checked ? value : "" };
+    });
 
-  //   if (!formData.firstName) {
-  //     newErrors.firstName = "First Name is required";
-  //   }
+    setErrors((prev: any) => {
+      return { ...prev, [name]: "" };
+    });
+  };
 
-  //   if (!formData.lastName) {
-  //     newErrors.lastName = "Last Name is required";
-  //   }
+  const handleContactInfo = (e: any) => {
+    const { name, value } = e.target;
 
-  //   console.log(newErrors, "newError");
+    setFormData((prev: any) => ({
+      ...prev,
+      contactInfo: {
+        ...prev.contactInfo,
+        [name]: value,
+      },
+    }));
 
-  //   setErrors(newErrors);
+    setErrors((prev: any) => {
+      return { ...prev, [name]: "" };
+    });
+  };
 
-  //   return Object.keys(newErrors).length === 0;
-  // };
+  const handleShippingAddress = (e: any) => {
+    const { name, value } = e.target;
+
+    setFormData((prev: any) => ({
+      ...prev,
+      shippingAddress: {
+        ...prev.shippingAddress,
+        [name]: value,
+      },
+    }));
+
+    setErrors((prev: any) => {
+      return { ...prev, [name]: "" };
+    });
+  };
+
+  const handleCountryChange = (country: any) => {
+    setFormData((prev: any) => {
+      return {
+        ...prev,
+        shippingAddress: { ...prev.shippingAddress, country: country.value },
+      };
+    });
+
+    setErrors((prev: any) => {
+      return { ...prev, country: "" };
+    });
+  };
+
+  console.log(formData);
 
   const validateForm = () => {
     const newErrors: any = {};
 
-    // Validate each field
-
-    Object.keys(formData).forEach((key) => {
+    Object.keys(formData.contactInfo).forEach((key) => {
       var captilize = key.replace(/([A-Z])/g, " $1").trim();
       captilize = captilize.charAt(0).toUpperCase() + captilize.slice(1);
 
-      if (!formData[key]) {
+      if (!formData.contactInfo[key]) {
         newErrors[key] = `Please enter ${captilize}.`;
       }
     });
+
+    Object.keys(formData.shippingAddress).forEach((key) => {
+      var captilize = key.replace(/([A-Z])/g, " $1").trim();
+      captilize = captilize.charAt(0).toUpperCase() + captilize.slice(1);
+
+      if (!formData.shippingAddress[key]) {
+        newErrors[key] = `Please enter ${captilize}.`;
+      }
+    });
+
+    if (!formData.paymentMethod) {
+      newErrors.paymentMethod = "Please enter Payment Method";
+    }
+
+    if (formData.paymentMethod == "Pay by Card Credit") {
+      if (!formData.cardNumber) {
+        newErrors.cardNumber = "Please enter Card Number";
+      }
+      if (!formData.expirationDate) {
+        newErrors.expirationDate = "Please enter Expiration Date";
+      }
+      if (!formData.cvcCode) {
+        newErrors.cvcCode = "Please enter CVC Code";
+      }
+    }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (formData.email && !emailRegex.test(formData.email)) {
       newErrors.email = "Please enter a valid email address.";
     }
-    console.log(newErrors);
+    // console.log(newErrors);
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; // Return true if no errors
   };
 
-  const handleSubmit = (e: any) => {
+  useEffect(() => {
+    setFormData((prev: any) => {
+      return { ...prev, products: requiredCart };
+    });
+  }, [cartItems]);
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     // Validate the form
     if (!validateForm()) {
       return;
     }
-    setIsOrderComplete(true);
-    setCurrentTabIdx((prev: any) => prev + 1);
-    console.log(formData, "formData in Submit");
+
+    try {
+      const res = await publicRequest.post("/order/add", formData);
+      console.log(res.data.data);
+
+      if (res) {
+        setIsOrderComplete(true);
+        setCurrentTabIdx((prev: any) => prev + 1);
+        setOrderData(res.data.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -152,7 +259,9 @@ const CheckoutDetails = ({
                   name="firstName"
                   id="firstName"
                   placeholder="First Name"
-                  onChange={handleChange}
+                  onChange={handleContactInfo}
+                  defaultValue={userData ? userData?.firstName : ""}
+                  disabled={userData ? true : false}
                 />
                 {errors.firstName && (
                   <div className="text-secondary">{errors.firstName}</div>
@@ -171,7 +280,9 @@ const CheckoutDetails = ({
                   name="lastName"
                   id="lastName"
                   placeholder="Last Name"
-                  onChange={handleChange}
+                  onChange={handleContactInfo}
+                  defaultValue={userData ? userData?.lastName : ""}
+                  disabled={userData ? true : false}
                 />
                 {errors.lastName && (
                   <div className="text-secondary">{errors.lastName}</div>
@@ -192,7 +303,9 @@ const CheckoutDetails = ({
                 name="phoneNumber"
                 id="phoneNumber"
                 placeholder="Phone Number"
-                onChange={handleChange}
+                onChange={handleContactInfo}
+                defaultValue={userData ? userData?.phoneNumber : ""}
+                disabled={userData ? true : false}
               />
               {errors.phoneNumber && (
                 <div className="text-secondary">{errors.phoneNumber}</div>
@@ -212,7 +325,9 @@ const CheckoutDetails = ({
                 name="email"
                 id="email"
                 placeholder="Your Email"
-                onChange={handleChange}
+                onChange={handleContactInfo}
+                defaultValue={userData ? userData?.email : ""}
+                disabled={userData ? true : false}
               />
               {errors.email && (
                 <div className="text-secondary">{errors.email}</div>
@@ -236,7 +351,7 @@ const CheckoutDetails = ({
                 name="streetAddress"
                 id="streetAddress"
                 placeholder="Street Address"
-                onChange={handleChange}
+                onChange={handleShippingAddress}
               />
               {errors.streetAddress && (
                 <div className="text-secondary">{errors.streetAddress}</div>
@@ -261,11 +376,12 @@ const CheckoutDetails = ({
                 placeholder="Country"
                 name="country"
                 // value={formData.country}
-                onChange={(country: any) =>
-                  setFormData((prev: any) => {
-                    return { ...prev, country: country.value };
-                  })
-                }
+                // onChange={(country: any) =>
+                //   setFormData((prev: any) => {
+                //     return { ...prev, country: country.value };
+                //   })
+                // }
+                onChange={handleCountryChange}
               />
               {errors.country && (
                 <div className="text-secondary">{errors.country}</div>
@@ -285,7 +401,7 @@ const CheckoutDetails = ({
                 name="townCity"
                 id="townCity"
                 placeholder="Town / City"
-                onChange={handleChange}
+                onChange={handleShippingAddress}
               />
               {errors.townCity && (
                 <div className="text-secondary">{errors.townCity}</div>
@@ -306,7 +422,7 @@ const CheckoutDetails = ({
                   name="state"
                   id="state"
                   placeholder="State"
-                  onChange={handleChange}
+                  onChange={handleShippingAddress}
                 />
                 {errors.state && (
                   <div className="text-secondary">{errors.state}</div>
@@ -325,7 +441,7 @@ const CheckoutDetails = ({
                   name="zipCode"
                   id="zipCode"
                   placeholder="Zip Code"
-                  onChange={handleChange}
+                  onChange={handleShippingAddress}
                 />
                 {errors.zipCode && (
                   <div className="text-secondary">{errors.zipCode}</div>
@@ -344,7 +460,7 @@ const CheckoutDetails = ({
                   name="paymentMethod"
                   value="Pay by Card Credit"
                   id="payByCard"
-                  onChange={handleChange}
+                  onChange={handlePaymentmethod}
                 />
                 <label htmlFor="payByCard">Pay by Card Credit</label>
               </div>
