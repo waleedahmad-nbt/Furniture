@@ -122,7 +122,7 @@ const SideBar = ({ menuOpen, setMenuOpen, showModal }: any) => {
               </label>
               <Link
                 href="/customizeFurniture"
-                className=" px-3 h-[34px] flex items-center bg-gray-400 text-white text-[12px] sm:text-[14px] transition-all duration-300"
+                className=" px-1 xs:px-3 h-[34px] flex items-center bg-gray-400 text-white text-[10px] xs:text-[14px] transition-all duration-300"
               >
                 <p>Customize Furniture</p>
               </Link>

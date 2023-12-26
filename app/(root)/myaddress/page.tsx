@@ -135,6 +135,7 @@ const MyAddress = () => {
           country: "",
           city: "",
         });
+        setFilterAddrs("");
       }
     } catch (error) {
       console.error(error);
@@ -146,7 +147,7 @@ const MyAddress = () => {
     const filterAdd = userAddress.find((item: any, index: any) => {
       return item.addressType === addressType;
     });
-    console.log(filterAdd);
+    // console.log(filterAdd);
 
     setFilterAddrs(filterAdd);
 
@@ -188,44 +189,37 @@ const MyAddress = () => {
                           <h2 className="text-[20px] text-gray-900 font-medium">
                             {item.addressType}
                           </h2>
-                          <div className="grid grid-cols-2 mt-5">
-                            <div className="col-span-1 flex flex-col gap-y-3">
-                              <h2 className="text-[16px] text-gray-300 font-medium">
-                                County
-                              </h2>
-                              <h2 className="text-[16px] text-gray-300 font-medium">
-                                City
-                              </h2>
-                              <h2 className="text-[16px] text-gray-300 font-medium">
-                                Address
-                              </h2>
-                              <div className="">
-                                <h2 className="text-[16px] text-gray-300 font-medium">
-                                  Phone Number
-                                </h2>
-                                <h2 className="text-[16px] text-gray-300 font-medium">
-                                  Alternative Phone Number
-                                </h2>
-                              </div>
-                            </div>
-
-                            <div className="col-span-1 flex flex-col gap-y-2">
-                              <p className="text-[14px] text-gray-200 font-normal">
-                                {item.country}
-                              </p>
-                              <p className="text-[14px] text-gray-200 font-normal">
-                                {item.city}
-                              </p>
-                              <p className="text-[14px] text-gray-200 font-normal">
-                                {item.address}
-                              </p>
-                              <p className="text-[14px] text-gray-200 font-normal">
-                                {item.phoneNumber}
-                              </p>
-                              <p className="text-[14px] text-gray-200 font-normal">
-                                {item.alternativePhoneNumber}
-                              </p>
-                            </div>
+                          <div className="grid grid-cols-2 gap-3 mt-5">
+                            <h2 className="text-[16px] text-gray-300 font-medium">
+                              County
+                            </h2>
+                            <p className="text-[14px] text-gray-200 font-normal">
+                              {item.country}
+                            </p>
+                            <h2 className="text-[16px] text-gray-300 font-medium">
+                              City
+                            </h2>
+                            <p className="text-[14px] text-gray-200 font-normal">
+                              {item.city}
+                            </p>
+                            <h2 className="text-[16px] text-gray-300 font-medium">
+                              Address
+                            </h2>
+                            <p className="text-[14px] text-gray-200 font-normal">
+                              {item.address}
+                            </p>
+                            <h2 className="text-[16px] text-gray-300 font-medium">
+                              Phone Number
+                            </h2>
+                            <p className="text-[14px] text-gray-200 font-normal">
+                              {item.phoneNumber}
+                            </p>
+                            <h2 className="text-[16px] text-gray-300 font-medium">
+                              Alternative Phone Number
+                            </h2>
+                            <p className="text-[14px] text-gray-200 font-normal">
+                              {item.alternativePhoneNumber}
+                            </p>
                           </div>
                         </div>
                       );
@@ -248,7 +242,7 @@ const MyAddress = () => {
                             components={{
                               IndicatorSeparator: () => null,
                             }}
-                            // value={formData.addressType}
+                            value={formData.addressType}
                             onChange={(addressType: any) => {
                               setFormData((prev: any) => {
                                 filterAddress(addressType.value);
@@ -344,7 +338,7 @@ const MyAddress = () => {
                             placeholder={
                               filterAddrs ? filterAddrs.country : "Country"
                             }
-                            // value={formData.country}
+                            value={formData.country}
                             onChange={(country: any) =>
                               setFormData((prev: any) => {
                                 return { ...prev, country: country.value };
@@ -371,7 +365,7 @@ const MyAddress = () => {
                             placeholder={
                               filterAddrs ? filterAddrs.city : "City"
                             }
-                            // value={formData.city}
+                            value={formData.city}
                             onChange={(city: any) =>
                               setFormData((prev: any) => {
                                 return { ...prev, city: city.value };
@@ -382,7 +376,7 @@ const MyAddress = () => {
                       </div>
 
                       <button
-                        className="bg-primary flex justify-center items-center text-white w-[172px] h-[40px] text-[14px] cursor-pointer mt-5"
+                        className="bg-primary outline-none flex justify-center items-center text-white w-[172px] h-[40px] text-[14px] cursor-pointer mt-5"
                         type="submit"
                       >
                         <p>{!loading ? "Save Changes" : ""}</p>

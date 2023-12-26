@@ -234,7 +234,7 @@ const Navbar = () => {
                 <input
                   type="text"
                   placeholder="Search here..."
-                  className="grow h-[34px] lg:h-[44px] px-3 w-full"
+                  className="grow h-[34px] lg:h-[44px] px-3 w-full outline-none"
                 />
                 <button className="bg-primary shrink-0 h-[34px] lg:h-[44px] px-2.5">
                   <Image src={search} alt="search" />
