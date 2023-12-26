@@ -1,7 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { PaginationContainer, RecentViewed } from "../components";
+import {
+  PaginationContainer,
+  RecentViewed,
+  useRequestMethods,
+} from "../components";
 
 import { FaAngleDown, FaList, FaSlidersH } from "react-icons/fa";
 import { CgMenuGridO } from "react-icons/cg";
@@ -11,11 +15,13 @@ import angle from "@/app/assets/icons/angle-right.svg";
 import check from "@/app/assets/icons/check.svg";
 
 import { RootState } from "@/lib/store";
-import { publicRequest } from "@/requestMethods";
+// import { publicRequest } from "@/requestMethods";
 import { useSelector } from "react-redux";
 import { RiFilterOffFill } from "react-icons/ri";
 
 const Products = () => {
+  const { publicRequest } = useRequestMethods();
+
   const category: any = useSelector((state: RootState) => state.category);
   const categoryId: any = useSelector((state: RootState) => state.categoryId);
   const [options, setoptions] = useState([]);
@@ -121,18 +127,22 @@ const Products = () => {
 
   const filterPrice = async (min: number, max: number) => {
     try {
-      const res = await publicRequest.get(`/product?cat=${category}&subcat=${tab}&min=${min}&max=${max}`);
+      const res = await publicRequest.get(
+        `/product?cat=${category}&subcat=${tab}&min=${min}&max=${max}`
+      );
       if (res.status === 200) {
         setProducts(res.data.data);
       }
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const fetchProductBySubCat = async (subCat: any) => {
     try {
-      const res = await publicRequest.get(`/product?cat=${category}&subcat=${subCat}`);
+      const res = await publicRequest.get(
+        `/product?cat=${category}&subcat=${subCat}`
+      );
       if (res.status === 200) {
         setProducts(res.data.data);
       }
@@ -143,7 +153,9 @@ const Products = () => {
 
   const fetchProductByColor = async (color: any) => {
     try {
-      const res = await publicRequest.get(`/product?cat=${category}&subcat=${tab}&color=${color}`);
+      const res = await publicRequest.get(
+        `/product?cat=${category}&subcat=${tab}&color=${color}`
+      );
       if (res.status === 200) {
         console.log(res.data.data, "colorr");
         setProducts(res.data.data);
@@ -183,7 +195,7 @@ const Products = () => {
               {options?.map((item: any, index: number) => (
                 <button
                   onClick={() => {
-                    if(tab === item) {
+                    if (tab === item) {
                       fetchProductBySubCat("");
                       setTab("");
                     } else {
@@ -253,9 +265,9 @@ const Products = () => {
                       fetchProductByColor("");
                     }}
                   >
-                    <span
-                      className="block rounded-full w-[18px] h-[18px]"
-                    ><RiFilterOffFill /></span>
+                    <span className="block rounded-full w-[18px] h-[18px]">
+                      <RiFilterOffFill />
+                    </span>
                   </button>
                   {colors?.map((item: any, index: any) => (
                     <button

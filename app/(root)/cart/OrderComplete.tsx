@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const OrderComplete = ({ orderData }: any) => {
+const OrderComplete = ({ orderData, successMsg }: any) => {
   console.log(orderData);
 
   return (
@@ -23,6 +23,17 @@ const OrderComplete = ({ orderData }: any) => {
               className="bg-white flex flex-col items-center justify-center gap-5 mt-6 py-10 shadow-md"
               key={index}
             >
+              {successMsg ? (
+                <div>
+                  <p className="text-green text-center">{successMsg}</p>{" "}
+                  <p className="text-green text-center">
+                    Please Login to your account to view you order details
+                  </p>
+                </div>
+              ) : (
+                ""
+              )}
+
               <h2 className="text-[28px] font-medium text-gray-200">
                 Thank you! 🎉
               </h2>

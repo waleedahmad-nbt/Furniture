@@ -1,14 +1,18 @@
 "use client";
-import { publicRequest } from "@/requestMethods";
+// import { publicRequest } from "@/requestMethods";
 import React, { useEffect, useState } from "react";
+import { FiEyeOff } from "react-icons/fi";
+import { IoEyeOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import Select from "react-select";
+import { useRequestMethods } from "../components";
 const CheckoutDetails = ({
   isOrderComplete,
   setIsOrderComplete,
   setCurrentTabIdx,
   cartItems,
   setOrderData,
+  setSuccessMsg,
 }: any) => {
   const customStyles = {
     option: (provided: any) => ({
@@ -34,6 +38,8 @@ const CheckoutDetails = ({
       },
     }),
   };
+
+  const { publicRequest } = useRequestMethods();
 
   const countryOptions = [
     { label: "Pakistan", value: "Pakistan" },
@@ -61,11 +67,14 @@ const CheckoutDetails = ({
     0
   );
 
+  const [showPassword, setShowPasswords] = useState(true);
+
   const userData = useSelector((state: any) => state.user);
-  console.log(userData, "userData");
+  const isLoggedIn = userData !== undefined && Object.keys(userData).length > 0;
+  console.log(isLoggedIn);
 
   const initialFormData = {
-    customerId: userData._id,
+    customerId: isLoggedIn ? userData._id : "",
     paymentMethod: "",
     products: requiredCart,
     contactInfo: {
@@ -73,6 +82,7 @@ const CheckoutDetails = ({
       lastName: userData ? userData.lastName : "",
       phoneNumber: userData ? userData.phoneNumber : "",
       email: userData ? userData.email : "",
+      ...(isLoggedIn ? {} : { password: "" }),
     },
     shippingAddress: {
       streetAddress: "",
@@ -88,6 +98,7 @@ const CheckoutDetails = ({
 
   const [formData, setFormData]: any = useState(initialFormData);
   const [errors, setErrors] = useState<any>({});
+  const [resMsg, setResMsg] = useState("");
 
   const handleChange = (e: any) => {
     const { name, value, type, checked } = e.target;
@@ -224,17 +235,76 @@ const CheckoutDetails = ({
       return;
     }
 
-    try {
-      const res = await publicRequest.post("/order/add", formData);
-      console.log(res.data.data);
+    if (!isLoggedIn) {
+      try {
+        const signUpRes = await publicRequest.post(`/user/register`, {
+          firstName: formData.contactInfo.firstName,
+          lastName: formData.contactInfo.lastName,
+          username:
+            formData.contactInfo.firstName + formData.contactInfo.lastName,
+          phoneNumber: formData.contactInfo.phoneNumber,
+          email: formData.contactInfo.email,
+          password: formData.contactInfo.password,
+        });
+        // console.log(signUpRes);
 
-      if (res) {
-        setIsOrderComplete(true);
-        setCurrentTabIdx((prev: any) => prev + 1);
-        setOrderData(res.data.data);
+        if (signUpRes) {
+          try {
+            const res = await publicRequest.post("/order/add", {
+              customerId: signUpRes.data.data._id,
+              paymentMethod: formData.paymentMethod,
+              products: requiredCart,
+              contactInfo: {
+                firstName: formData.contactInfo.firstName,
+                lastName: formData.contactInfo.lastName,
+                phoneNumber: formData.contactInfo.phoneNumber,
+                email: formData.contactInfo.email,
+              },
+              shippingAddress: {
+                streetAddress: formData.shippingAddress.streetAddress,
+                country: formData.shippingAddress.country,
+                townCity: formData.shippingAddress.townCity,
+                state: formData.shippingAddress.state,
+                zipCode: formData.shippingAddress.zipCode,
+              },
+              subtotal: totalPrice,
+              shipping: "free",
+              total: totalPrice,
+            });
+            console.log(res.data.data);
+
+            if (res) {
+              setIsOrderComplete(true);
+              setCurrentTabIdx((prev: any) => prev + 1);
+              setOrderData(res.data.data);
+              setSuccessMsg("Your account has also been created successfully");
+              setResMsg("");
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      } catch (error: any) {
+        // console.error(error.response.data.error);
+        if (error.response.data.error == "user already exists") {
+          setResMsg("Your account already exist. Please Login");
+        } else {
+          setResMsg(error.response.data.error);
+        }
       }
-    } catch (error) {
-      console.error(error);
+    } else {
+      try {
+        const res = await publicRequest.post("/order/add", formData);
+        console.log(res.data.data);
+
+        if (res) {
+          setIsOrderComplete(true);
+          setCurrentTabIdx((prev: any) => prev + 1);
+          setOrderData(res.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -261,7 +331,7 @@ const CheckoutDetails = ({
                   placeholder="First Name"
                   onChange={handleContactInfo}
                   defaultValue={userData ? userData?.firstName : ""}
-                  disabled={userData ? true : false}
+                  disabled={isLoggedIn ? true : false}
                 />
                 {errors.firstName && (
                   <div className="text-secondary">{errors.firstName}</div>
@@ -282,7 +352,7 @@ const CheckoutDetails = ({
                   placeholder="Last Name"
                   onChange={handleContactInfo}
                   defaultValue={userData ? userData?.lastName : ""}
-                  disabled={userData ? true : false}
+                  disabled={isLoggedIn ? true : false}
                 />
                 {errors.lastName && (
                   <div className="text-secondary">{errors.lastName}</div>
@@ -305,7 +375,7 @@ const CheckoutDetails = ({
                 placeholder="Phone Number"
                 onChange={handleContactInfo}
                 defaultValue={userData ? userData?.phoneNumber : ""}
-                disabled={userData ? true : false}
+                disabled={isLoggedIn ? true : false}
               />
               {errors.phoneNumber && (
                 <div className="text-secondary">{errors.phoneNumber}</div>
@@ -327,12 +397,39 @@ const CheckoutDetails = ({
                 placeholder="Your Email"
                 onChange={handleContactInfo}
                 defaultValue={userData ? userData?.email : ""}
-                disabled={userData ? true : false}
+                disabled={isLoggedIn ? true : false}
               />
               {errors.email && (
                 <div className="text-secondary">{errors.email}</div>
               )}
             </div>
+            {!isLoggedIn ? (
+              <div className="flex flex-col">
+                <label htmlFor="password" className="mt-5 text-[12px]">
+                  Password
+                </label>
+                <div className="flex justify-between items-center w-full h-[48px] px-3 mt-2 border">
+                  <input
+                    className="bg-white h-full w-full outline-none"
+                    type={showPassword ? "password" : "text"}
+                    name="password"
+                    id="password"
+                    placeholder="Type your Password"
+                    onChange={handleContactInfo}
+                  />
+                  <div onClick={() => setShowPasswords(!showPassword)}>
+                    {showPassword ? <IoEyeOutline /> : <FiEyeOff />}
+                  </div>
+                </div>
+                {errors.password && (
+                  <div className="text-secondary">{errors.password}</div>
+                )}
+              </div>
+            ) : (
+              ""
+            )}
+
+            {resMsg ? <div className="text-secondary mt-3">{resMsg}</div> : ""}
           </div>
 
           <div className="bg-white ps-5 pr-10 py-10 mt-5 border-2 rounded-sm shadow-sm">

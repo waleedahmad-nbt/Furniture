@@ -15,6 +15,7 @@ import Logout from "./Logout";
 import AuthGuard from "./AuthGuard";
 import FurniturePortfolio from "./FurniturePortfolio";
 import RecentViewed from "./RecentViewed";
+import useRequestMethods from "./RequestMethods";
 
 export {
   Navbar,
@@ -34,4 +35,5 @@ export {
   AuthGuard,
   FurniturePortfolio,
   RecentViewed,
+  useRequestMethods,
 };

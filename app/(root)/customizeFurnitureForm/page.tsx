@@ -28,9 +28,12 @@ import graypair from "@/app/assets/images/grayPair.png";
 import sofacmBed from "@/app/assets/images/sofacmBed.png";
 import grayBed from "@/app/assets/images/grayBed.png";
 import yellowSofa from "@/app/assets/images/yellowSofa.png";
-import { publicRequest } from "@/requestMethods";
+import { useRequestMethods } from "../components";
+// import { publicRequest } from "@/requestMethods";
 
 const customizeFurnitureForm = () => {
+  const { publicRequest } = useRequestMethods();
+
   const categories = [
     { title: "Bed", img: bed },
     { title: "Dressing table", img: dressingTable },
@@ -502,8 +505,8 @@ const customizeFurnitureForm = () => {
             </div>
             <p className="text-[12px] mt-10">
               By clicking submit, i agree to the{" "}
-              <span className="text-primary">Privacy Policy</span> and
-              <span className="text-primary">Terms & Condition</span>
+              <span className="text-primary">Privacy Policy</span> and{" "}
+              <span className="text-primary"> Terms & Condition</span>
             </p>
 
             <button

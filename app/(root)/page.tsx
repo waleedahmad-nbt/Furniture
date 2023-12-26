@@ -6,7 +6,13 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import { Features, MainSlider, MultiProductView, ProductCard } from "./components";
+import {
+  Features,
+  MainSlider,
+  MultiProductView,
+  ProductCard,
+  useRequestMethods,
+} from "./components";
 
 import arrowL from "@/app/assets/icons/arrow-left.svg";
 
@@ -16,10 +22,12 @@ import star from "@/app/assets/icons/star.svg";
 import starFill from "@/app/assets/icons/star_fill.svg";
 
 import Banner from "@/app/assets/banners/banner_02.png";
-import { publicRequest } from "@/requestMethods";
+// import { publicRequest } from "@/requestMethods";
 import { FaSleigh } from "react-icons/fa";
 
 export default function Home() {
+  const { publicRequest } = useRequestMethods();
+
   const tabs = ["Bedroom", "Dining Room", "Living Room"];
 
   const [activeTab, setActiveTab] = useState<string>(tabs[0]);
@@ -31,33 +39,33 @@ export default function Home() {
     const getCategories = async () => {
       try {
         const res = await publicRequest.get(`/category`);
-  
-        if(res.status === 200) {
+
+        if (res.status === 200) {
           setCategories(res.data.data);
         }
       } catch (error) {
         console.error(error);
       }
-    }
+    };
 
     getCategories();
-  }, [])
+  }, []);
 
   useEffect(() => {
     const getNewArrival = async () => {
       try {
         const res = await publicRequest.get(`/product`);
-  
-        if(res.status === 200) {
+
+        if (res.status === 200) {
           setProducts(res.data.data);
         }
       } catch (error) {
         console.error(error);
       }
-    }
+    };
 
     getNewArrival();
-  }, [])
+  }, []);
 
   const settings = {
     dots: true,
@@ -143,7 +151,13 @@ export default function Home() {
           {categories?.map((item: any, index: number) => (
             <div key={index}>
               <div className="bg-cream h-[170px]">
-                <Image src={item?.image} alt="product" className="w-full h-full" width={100} height={100} />
+                <Image
+                  src={item?.image}
+                  alt="product"
+                  className="w-full h-full"
+                  width={100}
+                  height={100}
+                />
               </div>
               <h3 className="text-center font-medium text-gray-300 mt-3">
                 {item?.category}
@@ -183,12 +197,14 @@ export default function Home() {
           </Link>
         </div>
         <div className="w-full my-10">
-          <Slider {...settings} className={`Product_Slider ${products?.length <= 5 ? "c_hidden" : ""}`}>
+          <Slider
+            {...settings}
+            className={`Product_Slider ${
+              products?.length <= 5 ? "c_hidden" : ""
+            }`}
+          >
             {products?.map((item: any, index: number) => (
-              <div
-                className={`relative w-full`}
-                key={index}
-              >
+              <div className={`relative w-full`} key={index}>
                 <div className="">
                   <ProductCard item={item} />
                 </div>

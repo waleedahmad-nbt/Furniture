@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { RecentViewed } from "../../../components";
+import { RecentViewed, useRequestMethods } from "../../../components";
 import Image from "next/image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -24,9 +24,10 @@ import mail from "@/app/assets/icons/mail.svg";
 import twitter from "@/app/assets/icons/twitter_outline.svg";
 import ProductsDeatilsTabs from "./productsDeatilsTabs";
 import { useParams } from "next/navigation";
-import { publicRequest } from "@/requestMethods";
+// import { publicRequest } from "@/requestMethods";
 
 const ProductDetails = () => {
+  const { publicRequest } = useRequestMethods();
 
   const { details } = useParams();
 
@@ -72,17 +73,17 @@ const ProductDetails = () => {
     const getProducts = async () => {
       try {
         const res = await publicRequest.get(`/product/${details}`);
-  
-        if(res.status === 200) {
+
+        if (res.status === 200) {
           setProduct(res.data.data);
         }
       } catch (error) {
         console.error(error);
       }
-    }
+    };
 
     getProducts();
-  }, [])  
+  }, []);
 
   function SamplePrevArrow(props: any) {
     const { className, onClick } = props;
@@ -98,7 +99,13 @@ const ProductDetails = () => {
     customPaging: function (i: any) {
       return (
         <div className="w-[117px] h-[117px] rounded-lg overflow-hidden hidden md:block">
-          <Image src={product?.Images[i]} alt="img" className="w-full h-full" width={100} height={100} />
+          <Image
+            src={product?.Images[i]}
+            alt="img"
+            className="w-full h-full"
+            width={100}
+            height={100}
+          />
         </div>
       );
     },
@@ -155,7 +162,13 @@ const ProductDetails = () => {
             <Slider {...settings} className="Product_Details mb-[150px]">
               {product?.Images?.map((item: any, index: number) => (
                 <div className={`relative w-full h-full`} key={index}>
-                  <Image src={item} alt="img" className="w-full h-[613px] object-cover" width={100} height={100} />
+                  <Image
+                    src={item}
+                    alt="img"
+                    className="w-full h-[613px] object-cover"
+                    width={100}
+                    height={100}
+                  />
                 </div>
               ))}
             </Slider>
@@ -285,7 +298,7 @@ const ProductDetails = () => {
 
             <div className="flex gap-2 mt-1">
               <p className="px-2 flex flex-col justify-center items-center gap-6">
-                10  
+                10
                 <span className="text-[#858585]">Day</span>
               </p>
               :

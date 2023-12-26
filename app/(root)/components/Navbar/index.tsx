@@ -23,10 +23,19 @@ import search from "@/app/assets/icons/search.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import { setCategory, setCategoryId } from "@/lib/store/slices/Allslices";
-import { NavLink, SideBar, SignInModal, SignUpModal, Logout } from "../index";
-import { publicRequest } from "@/requestMethods";
+import {
+  NavLink,
+  SideBar,
+  SignInModal,
+  SignUpModal,
+  Logout,
+  useRequestMethods,
+} from "../index";
+// import { publicRequest } from "@/requestMethods";
 
 const Navbar = () => {
+  const { publicRequest } = useRequestMethods();
+
   const dispatch = useDispatch();
   const [logout, setLogout] = useState<boolean>(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);

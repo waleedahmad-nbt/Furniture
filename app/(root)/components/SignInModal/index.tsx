@@ -4,12 +4,12 @@ import { RxCross1 } from "react-icons/rx";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiEyeOff } from "react-icons/fi";
 import { FaCheck } from "react-icons/fa";
-import { publicRequest } from "@/requestMethods";
 import Image from "next/image";
 import loader from "@/app/assets/icons/loader.gif";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setLoginUser } from "@/lib/store/slices/Allslices";
+import { useRequestMethods } from "../index";
 
 const Modal = ({
   showModal,
@@ -18,6 +18,8 @@ const Modal = ({
   isModalOpen,
   showSignUp,
 }: any) => {
+  const { publicRequest } = useRequestMethods();
+
   const [showSignIn, setSignIn] = useState(true);
   const [showPassword, setShowPasswords] = useState(true);
   const [forgotPassword, setForgotPassword] = useState(false);

@@ -20,8 +20,8 @@ const CartTable = () => {
   };
   return (
     <div>
-      <div className="bg-white w-full rounded-sm mt-6">
-        <table className="text-left w-full">
+      <div className="bg-white w-full rounded-sm mt-6 overflow-x-auto">
+        <table className="text-left w-full table-auto">
           <thead>
             <tr>
               <th></th>
@@ -59,9 +59,8 @@ const CartTable = () => {
                           height={100}
                         />
                       </div>
-                      <div className="text-gray-300 text-xs md:text-sm hidden xs:block">
-                        <p>{item?.name}</p>
-                        <span>{item?.title}</span>
+                      <div className="text-gray-300 text-xs md:text-sm ">
+                        <p>{item?.title}</p>
                       </div>
                     </div>
                   </td>

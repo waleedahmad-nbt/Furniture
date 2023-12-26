@@ -4,11 +4,14 @@ import Image from "next/image";
 import { AccountSideBar, NavLink } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { userRequest } from "@/requestMethods";
+import { useRequestMethods } from "../components/index";
+// import { userRequest } from "@/requestMethods";
 import { changeUserName } from "@/lib/store/slices/Allslices";
 import { AuthGuard } from "@/app/(root)/components/index";
 
 const MyAccount = () => {
+  const { userRequest } = useRequestMethods();
+
   const dispatch = useDispatch();
 
   const userData = useSelector((state: any) => state.user);

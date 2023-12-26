@@ -1,42 +1,44 @@
 "use client";
 import Image from "next/image";
-import { AccountSideBar } from "../components";
+import { AccountSideBar, useRequestMethods } from "../components";
 import { FiX } from "react-icons/fi";
 
 import Pro2 from "@/app/assets/products/table_03.png";
 import React, { useEffect, useState } from "react";
-import { publicRequest } from "@/requestMethods";
+// import { publicRequest } from "@/requestMethods";
 
 const MyOrders = () => {
-  const products = [
-    {
-      _id: "1",
-      name: "Rocket stool",
-      images: [Pro2],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 2,
-      status: "Delivered",
-    },
-    {
-      _id: "2",
-      name: "Rocket stool",
-      images: [Pro2],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 0,
-      status: "Pending",
-    },
-    {
-      _id: "3",
-      name: "Rocket stool",
-      images: [Pro2],
-      priceWas: "27.90",
-      priceNow: "18.80",
-      quantity: 5,
-      status: "In Transits",
-    },
-  ];
+  const { publicRequest } = useRequestMethods();
+
+  // const products = [
+  //   {
+  //     _id: "1",
+  //     name: "Rocket stool",
+  //     images: [Pro2],
+  //     priceWas: "27.90",
+  //     priceNow: "18.80",
+  //     quantity: 2,
+  //     status: "Delivered",
+  //   },
+  //   {
+  //     _id: "2",
+  //     name: "Rocket stool",
+  //     images: [Pro2],
+  //     priceWas: "27.90",
+  //     priceNow: "18.80",
+  //     quantity: 0,
+  //     status: "Pending",
+  //   },
+  //   {
+  //     _id: "3",
+  //     name: "Rocket stool",
+  //     images: [Pro2],
+  //     priceWas: "27.90",
+  //     priceNow: "18.80",
+  //     quantity: 5,
+  //     status: "In Transits",
+  //   },
+  // ];
 
   const [orders, setOrders] = useState<any>([]);
 
@@ -44,20 +46,30 @@ const MyOrders = () => {
     const getOrders = async () => {
       try {
         const res = await publicRequest.get(`/order`);
-  
-        if(res.status === 200) {
-          console.log(res.data.data);
+
+        if (res.status === 200) {
+          console.log(res.data.data, "orders");
           setOrders(res.data.data);
         }
       } catch (error) {
         console.error(error);
       }
-    }
+    };
 
     getOrders();
-  }, []) 
+  }, []);
 
   let token = localStorage.getItem("token");
+
+  const [itemsToShow, setItemsToShow] = useState(2);
+
+  const handleLoadMore = () => {
+    setItemsToShow((prev) => prev + 1);
+  };
+
+  const orderToDisplay = orders.slice(0, itemsToShow);
+  const hasMoreItems = itemsToShow < orders.length;
+  // console.log(orderToDisplay);
 
   return (
     <div className="container">
@@ -81,6 +93,9 @@ const MyOrders = () => {
                   <th className="py-3 px-2 md:px-5 text-sm font-medium md:font-semibold">
                     Product
                   </th>
+                  <th className="py-3 px-2 md:px-5 text-sm font-medium md:font-semibold">
+                    Order Code
+                  </th>
                   <th className="py-3 px-5 text-sm font-medium md:font-semibold">
                     Price
                   </th>
@@ -93,13 +108,13 @@ const MyOrders = () => {
                 </tr>
               </thead>
               <tbody>
-                {orders.length > 0 &&
-                  orders?.map((order: any, index: number) => (
+                {orderToDisplay.length > 0 &&
+                  orderToDisplay?.map((order: any, index: number) => (
                     <React.Fragment key={index}>
-                    {order?.products?.map((item: any, index: number) => (
+                      {order?.products?.map((item: any, index: number) => (
                         <tr key={index}>
                           <td className="py-3 px-0 md:px-5">
-                            <div className="flex items-center gap-0 md:gap-3">
+                            <div className="flex items-center gap-3">
                               <div className="flex items-center justify-center h-[74px] w-[100px] shrink-0">
                                 <Image
                                   src={item?.image}
@@ -109,11 +124,15 @@ const MyOrders = () => {
                                   className="shrink-0 max-w-full max-h-full"
                                 />
                               </div>
-                              <div className="text-gray-300 text-xs md:text-sm hidden xs:block">
-                                <p>{item?.name}</p>
-                                <span>Sunny Premium</span>
+                              <div className="text-gray-300 text-xs md:text-sm ">
+                                <p>{item?.produtTitle}</p>
                               </div>
                             </div>
+                          </td>
+                          <td>
+                            <p className="text-gray-300 text-xs md:text-sm ">
+                              {order.orderCode}
+                            </p>
                           </td>
                           <td className="py-3 ps-5">
                             <p className="text-gray-300 text-xs md:text-sm">
@@ -132,7 +151,9 @@ const MyOrders = () => {
                                   ? "text-secondary"
                                   : order?.status === "completed"
                                   ? "text-green"
-                                  : order?.status === "delivered" ? "text-gray-300" : ""
+                                  : order?.status === "delivered"
+                                  ? "text-gray-300"
+                                  : ""
                               } capitalize`}
                             >
                               {order?.status}
@@ -144,6 +165,15 @@ const MyOrders = () => {
                   ))}
               </tbody>
             </table>
+
+            {hasMoreItems && (
+              <button
+                className="text-white bg-primary outline-primary px-10 py-3 rounded-md block mx-auto my-5"
+                onClick={handleLoadMore}
+              >
+                Load More
+              </button>
+            )}
           </div>
         </div>
       </div>

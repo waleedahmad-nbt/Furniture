@@ -4,11 +4,14 @@ import { RxCross1 } from "react-icons/rx";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiEyeOff } from "react-icons/fi";
 import { FaCheck } from "react-icons/fa";
-import { publicRequest, userRequest } from "@/requestMethods";
+// import { publicRequest, userRequest } from "@/requestMethods";
+import { useRequestMethods } from "../index";
 import Image from "next/image";
 import loader from "@/app/assets/icons/loader.gif";
 import axios from "axios";
 const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
+  const { publicRequest } = useRequestMethods();
+
   const [showPassword, setShowPasswords] = useState(true);
   const [reenterPassword, setReenterPasswords] = useState(true);
   const [isChecked, setIsChecked] = useState(false);

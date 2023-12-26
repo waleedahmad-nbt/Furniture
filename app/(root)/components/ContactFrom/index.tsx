@@ -1,8 +1,11 @@
 "use client";
-import { publicRequest } from "@/requestMethods";
+// import { publicRequest } from "@/requestMethods";
 import React, { useState } from "react";
+import { useRequestMethods } from "..";
 
 const ContactForm = () => {
+  const { publicRequest } = useRequestMethods();
+
   const [message, setMessage] = useState("");
   const fields = {
     firstName: "",

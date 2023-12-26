@@ -2,13 +2,15 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import Image from "next/image";
-import { AccountSideBar } from "../components";
+import { AccountSideBar, useRequestMethods } from "../components";
 import { AuthGuard } from "@/app/(root)/components/index";
 import { useSelector } from "react-redux";
-import { userRequest } from "@/requestMethods";
+// import { userRequest } from "@/requestMethods";
 import loader from "@/app/assets/icons/loader.gif";
 
 const MyAddress = () => {
+  const { userRequest } = useRequestMethods();
+
   const [userAddress, setUserAddress]: any = useState([]);
   const [filterAddrs, setFilterAddrs]: any = useState("");
   // console.log(filterAddrs);
@@ -97,7 +99,7 @@ const MyAddress = () => {
     });
   };
 
-  // console.log(formData);
+  console.log(formData);
 
   const validateForm = () => {
     let errors: any = {};
@@ -124,9 +126,19 @@ const MyAddress = () => {
       if (res) {
         fetchUseraddress();
         setLoading(false);
+        setFormData({
+          userId: userData._id,
+          addressType: "",
+          address: "",
+          phoneNumber: "",
+          alternativePhoneNumber: "",
+          country: "",
+          city: "",
+        });
       }
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   };
 
@@ -134,13 +146,15 @@ const MyAddress = () => {
     const filterAdd = userAddress.find((item: any, index: any) => {
       return item.addressType === addressType;
     });
+    console.log(filterAdd);
+
     setFilterAddrs(filterAdd);
 
     // Update the fields object with default values
     setFormData((prev: any) => {
       return {
         ...prev,
-        addressType: filterAdd ? filterAdd.addressType : "",
+        addressType: filterAdd ? filterAdd.addressType : addressType,
         address: filterAdd ? filterAdd.address : "",
         phoneNumber: filterAdd ? filterAdd.phoneNumber : "",
         alternativePhoneNumber: filterAdd
@@ -261,6 +275,7 @@ const MyAddress = () => {
                           id="address"
                           className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
                           placeholder="Address"
+                          value={formData.address}
                           defaultValue={filterAddrs ? filterAddrs.address : ""}
                           onChange={handleChange}
                         />
@@ -279,6 +294,7 @@ const MyAddress = () => {
                           id="phoneNumber"
                           className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
                           placeholder="Phone Number"
+                          value={formData.phoneNumber}
                           defaultValue={
                             filterAddrs ? filterAddrs.phoneNumber : ""
                           }
@@ -299,6 +315,7 @@ const MyAddress = () => {
                           id="alternativePhoneNumber"
                           className="w-full h-[40px] text-[14px] border ps-5 focus:border-primary outline-none"
                           placeholder="Alternative Phone Number"
+                          value={formData.alternativePhoneNumber}
                           defaultValue={
                             filterAddrs
                               ? filterAddrs.alternativePhoneNumber
