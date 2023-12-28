@@ -20,7 +20,6 @@ import david from "@/app/assets/images/david.png";
 import arrowIcon from "@/app/assets/icons/ArrowIcon.svg";
 import { Features } from "../components";
 import { useEffect, useState } from "react";
-import { publicRequest } from "@/requestMethods";
 
 const aboutUs = () => {
   const [team, setTeam] = useState([]);
