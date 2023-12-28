@@ -20,9 +20,11 @@ import david from "@/app/assets/images/david.png";
 import arrowIcon from "@/app/assets/icons/ArrowIcon.svg";
 import { Features } from "../components";
 import { useEffect, useState } from "react";
-import { publicRequest } from "@/requestMethods";
+import { useRequestMethods } from "../components/index";
 
 const aboutUs = () => {
+  const { publicRequest } = useRequestMethods();
+
   const [team, setTeam] = useState([]);
 
   const fetchTeam = async () => {
