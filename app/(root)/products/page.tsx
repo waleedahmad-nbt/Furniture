@@ -319,29 +319,43 @@ const Products = () => {
               <div className="bg-[#FAFAFA] px-5 py-7 mt-7">
                 <p className="text-gray-900 font-bold">Filter by Category</p>
                 <div className="flex flex-row md:flex-col flex-wrap mt-4 gap-4">
-                  {cats?.map((item: any, index: any) => (
+                  {options?.map((item: any, index: any) => (
                     <div
                       key={index}
                       className="flex justify-start md:justify-between cursor-pointer"
-                      onClick={() =>
-                        setFilters((prev: any) => {
-                          return { ...prev, CAta: item.label };
-                        })
-                      }
+                      // onClick={() =>
+                      //   setFilters((prev: any) => {
+                      //     return { ...prev, CAta: item };
+                      //   })
+                      // }
+
+                      onClick={() => {
+                        if (filters.CAta === item) {
+                          fetchProductBySubCat("");
+                          setFilters((prev: any) => {
+                            return { ...prev, CAta: "" };
+                          });
+                        } else {
+                          fetchProductBySubCat(item);
+                          setFilters((prev: any) => {
+                            return { ...prev, CAta: item };
+                          });
+                        }
+                      }}
                     >
                       <div className="flex items-center gap-2">
                         <div className="w-[17px] h-[15px] p-[2px] border flex items-center justify-center text-white">
                           <div
                             className={`w-[9px] h-[8px] ${
-                              filters.CAta === item.label
+                              filters.CAta === item
                                 ? "bg-[#272727]"
                                 : "bg-white"
                             }`}
                           ></div>
                         </div>
-                        <p className="text-gray-900">{item?.label}</p>
+                        <p className="text-gray-900">{item}</p>
                       </div>
-                      <span className="text-gray-200">{item?.quantity}</span>
+                      <span className="text-gray-200">5</span>
                     </div>
                   ))}
                 </div>

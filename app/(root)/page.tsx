@@ -244,7 +244,7 @@ export default function Home() {
           </div>
           <div className="relative">
             <div className="p-7 md:p-10 md:pr-20">
-              <h2 className="text-black font-bold text-[27px] md:text-[38px]">
+              <h2 className="text-gray-600 font-bold text-[27px] md:text-[38px]">
                 Redefine you space,
                 <br /> because comfort is everything
               </h2>
