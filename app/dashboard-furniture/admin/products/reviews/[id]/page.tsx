@@ -2,11 +2,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
-import { publicRequest } from "@/requestMethods";
 
 import star from "@/app/assets/icons/star.svg";
 import starFill from "@/app/assets/icons/star_fill.svg";
 import messages from "@/app/assets/icons/messages.svg";
+import axios from "axios";
 
 const ProductReviews = () => {
 
@@ -20,7 +20,7 @@ const ProductReviews = () => {
   useEffect(() => {
     const getProductsReview = async () => {
       try {
-        const res = await publicRequest.get(`/review/product/${id}`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/review/product/${id}`);
   
         if(res.status === 200) {
           console.log(res.data.data);
@@ -33,7 +33,7 @@ const ProductReviews = () => {
 
     const getProducts = async () => {
       try {
-        const res = await publicRequest.get(`/product/${id}`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/product/${id}`);
   
         if(res.status === 200) {
           setProduct(res.data.data);

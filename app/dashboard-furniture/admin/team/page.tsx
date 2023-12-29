@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import { BiSearch, BiSort } from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
 import Link from "next/link";
-import { publicRequest } from "@/requestMethods";
 import { FiEdit3, FiEye, FiTrash } from "react-icons/fi";
 import { AddTeam } from "../../components";
 import Image from "next/image";
 import { IoIosAdd } from "react-icons/io";
 import { TbArrowsSort } from "react-icons/tb";
+import axios from "axios";
 
 const Team = () => {
 
@@ -23,7 +23,7 @@ const Team = () => {
 
     const getQuotes = async () => {
       try {
-        const res = await publicRequest.get(`/team`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/team`);
   
         if(res.status === 200) {
           setData(res.data.data);
@@ -39,7 +39,7 @@ const Team = () => {
   const deleteQuote = async (_id: string) => {
     setUpdating(_id);
     try {
-      const res = await publicRequest.delete(`/team/delete/${_id}`);
+      const res = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/team/delete/${_id}`);
 
       if(res.status === 200) {
         setData((prev: any) => prev.filter((item: any) => item?._id !== _id)); 

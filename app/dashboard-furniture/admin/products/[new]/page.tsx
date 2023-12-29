@@ -9,7 +9,7 @@ import { BsArrowLeft } from "react-icons/bs";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import Image from "next/image";
-import { publicRequest } from "@/requestMethods";
+import axios from "axios";
 
 const NewProduct = () => {
 
@@ -39,7 +39,7 @@ const NewProduct = () => {
 
     const getCatgories = async () => {
       try {
-        const res = await publicRequest.get(`/category`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/category`);
   
         if(res.status === 200) {
           setCategories(res.data.data);
@@ -161,7 +161,7 @@ const NewProduct = () => {
       data.append("weight", formData?.weight + " " + formData?.weightUnit);
 
       try {
-        const res = await publicRequest.post(`/product/add`, data);
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/product/add`, data);
   
         console.log(res);
         if(res.status === 201) {

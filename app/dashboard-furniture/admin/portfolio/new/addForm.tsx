@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react";
-import { publicRequest } from "@/requestMethods";
 import Image from "next/image";
+import axios from "axios";
 
 const AddForm = ({ categories }: any) => {
   
@@ -48,7 +48,7 @@ const AddForm = ({ categories }: any) => {
       data.append("description", formData.description);
 
       try {
-        const res = await publicRequest.post(`/portfolio/add`, data);
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/portfolio/add`, data);
   
         console.log(res);
         if(res.status === 201) {

@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import { BiSearch, BiSort } from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
 import Link from "next/link";
-import { publicRequest } from "@/requestMethods";
 import { FiEye, FiTrash } from "react-icons/fi";
 import { ViewQuote } from "../../components";
 import ViewContact from "../../components/viewContact";
 import { TbArrowsSort } from "react-icons/tb";
 import { IoIosAdd } from "react-icons/io";
+import axios from "axios";
 
 const Contacts = () => {
 
@@ -22,7 +22,7 @@ const Contacts = () => {
 
     const getContacts = async () => {
       try {
-        const res = await publicRequest.get(`/contact`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/contact`);
   
         if(res.status === 200) {
           setData(res.data.data);
@@ -38,7 +38,7 @@ const Contacts = () => {
   const deleteConatct = async (_id: string) => {
     setUpdating(_id);
     try {
-      const res = await publicRequest.delete(`/contact/delete/${_id}`);
+      const res = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/contact/delete/${_id}`);
 
       if(res.status === 200) {
         setData((prev: any) => prev.filter((item: any) => item?._id !== _id)); 

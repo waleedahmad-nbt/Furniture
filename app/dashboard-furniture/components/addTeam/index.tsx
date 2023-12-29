@@ -1,5 +1,5 @@
 "use client"
-import { publicRequest } from "@/requestMethods";
+import axios from "axios";
 import Image from "next/image";
 import { useState } from "react";
 import { FiX } from "react-icons/fi";
@@ -83,7 +83,7 @@ const AddTeam = ({ team, handleClose }: any) => {
       if(team) {
 
         try {
-          const res = await publicRequest.put(`/team/edit/${team?._id}`, data);
+          const res = await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/team/edit/${team?._id}`, data);
     
           console.log(res);
           if(res.status === 201) {
@@ -97,7 +97,7 @@ const AddTeam = ({ team, handleClose }: any) => {
       } else {
 
         try {
-          const res = await publicRequest.post(`/team/add`, data);
+          const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/team/add`, data);
     
           console.log(res);
           if(res.status === 201) {

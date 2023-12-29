@@ -1,5 +1,5 @@
 "use client"
-import { publicRequest } from "@/requestMethods";
+import axios from "axios";
 import Image from "next/image";
 import { useState } from "react";
 import { FiX } from "react-icons/fi";
@@ -53,7 +53,7 @@ const AddCategory = ({ handleClose }: any) => {
       });
 
       try {
-        const res = await publicRequest.post(`/category/add`, data);
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/category/add`, data);
 
         if(res.status === 201) {
           alert("Category Created.");

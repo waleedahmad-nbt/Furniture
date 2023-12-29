@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import { BiSearch, BiSort } from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
 import Link from "next/link";
-import { publicRequest } from "@/requestMethods";
 import { FiEye, FiTrash } from "react-icons/fi";
 import { ViewQuote } from "../../components";
 import { IoIosAdd } from "react-icons/io";
 import { TbArrowsSort } from "react-icons/tb";
+import axios from "axios";
 
 const Quotes = () => {
 
@@ -21,7 +21,7 @@ const Quotes = () => {
 
     const getQuotes = async () => {
       try {
-        const res = await publicRequest.get(`/quote`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/quote`);
   
         console.log(res);
         if(res.status === 200) {
@@ -38,7 +38,7 @@ const Quotes = () => {
   const deleteQuote = async (_id: string) => {
     setUpdating(_id);
     try {
-      const res = await publicRequest.delete(`/quote/delete/${_id}`);
+      const res = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/quote/delete/${_id}`);
 
       console.log(res);
       if(res.status === 200) {

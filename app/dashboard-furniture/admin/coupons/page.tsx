@@ -4,10 +4,10 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { BiSearch, BiSort } from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
-import { publicRequest } from "@/requestMethods";
 import { FiTrash } from "react-icons/fi";
 import { IoIosAdd } from "react-icons/io";
 import { TbArrowsSort } from "react-icons/tb";
+import axios from "axios";
 
 const Coupons = () => {
 
@@ -84,7 +84,7 @@ const Coupons = () => {
   const deleteProduct = async (_id: string) => {
     setUpdating(_id);
     try {
-      const res = await publicRequest.delete(`/product/delete/${_id}`);
+      const res = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/product/delete/${_id}`);
 
       if(res.status === 200) {
         setData((prev: any) => prev.filter((item: any) => item?._id !== _id));

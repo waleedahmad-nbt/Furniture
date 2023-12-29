@@ -1,5 +1,5 @@
 "use client"
-import { publicRequest } from "@/requestMethods";
+import axios from "axios";
 import Link from "next/link"
 import { useEffect, useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
@@ -36,7 +36,7 @@ const CreateCoupons = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await publicRequest.get(`/product`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/product`);
   
         console.log(res);
         if(res.status === 200) {

@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { BsArrowLeft } from "react-icons/bs";
 import AddForm from "./addForm";
-import { publicRequest } from "@/requestMethods";
+import axios from "axios";
 
 async function getCategories() {
   try {
-    const response = await publicRequest.get(`/category`);
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/category`);
     return response.data;
   } catch (error) {
     console.error('Error fetching categories:', error);
