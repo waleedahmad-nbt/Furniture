@@ -1,6 +1,5 @@
 "use client"
 import { useEffect, useState } from "react";
-import { publicRequest } from "@/requestMethods";
 import Image from "next/image";
 import Link from "next/link";
 import { BiSearch, BiSort } from "react-icons/bi";
@@ -8,6 +7,7 @@ import { BsFilter } from "react-icons/bs";
 import { FiEdit3, FiEye, FiTrash } from "react-icons/fi";
 import { TbArrowsSort } from "react-icons/tb";
 import { IoIosAdd } from "react-icons/io";
+import axios from "axios";
 
 const PortFolio = () => {
 
@@ -24,7 +24,7 @@ const PortFolio = () => {
   useEffect(() => {
     const getPortfolio = async () => {
       try {
-        const res = await publicRequest.get(`/portfolio`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/portfolio`);
   
         if(res.status === 200) {
           setData(res.data.data);
@@ -69,7 +69,7 @@ const PortFolio = () => {
       data.append("description", formData.description);
   
       try {
-        const res = await publicRequest.put(`/portfolio/edit/${editPortId}`, formData);
+        const res = await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/portfolio/edit/${editPortId}`, formData);
   
         if(res.status === 201) {
           setData((prev: any) => {
@@ -90,7 +90,7 @@ const PortFolio = () => {
   const deletePortfolio = async (_id: string) => {
     setUpdating(_id);
     try {
-      const res = await publicRequest.delete(`portfolio/delete/${_id}`);
+      const res = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}portfolio/delete/${_id}`);
 
       if(res.status === 200) {
         setData((prev: any) => prev.filter((item: any) => item?._id !== _id));

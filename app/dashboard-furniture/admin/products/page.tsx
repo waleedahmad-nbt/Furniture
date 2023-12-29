@@ -4,10 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { BiSearch} from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
-import { publicRequest } from "@/requestMethods";
 import { FiTrash } from "react-icons/fi";
 import { IoIosAdd } from "react-icons/io";
 import { TbArrowsSort } from "react-icons/tb";
+import axios from "axios";
 
 const Products = () => {
 
@@ -27,7 +27,7 @@ const Products = () => {
 
     const getProducts = async () => {
       try {
-        const res = await publicRequest.get(`/product`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/product`);
   
         console.log(res);
         if(res.status === 200) {
@@ -115,7 +115,7 @@ const Products = () => {
   const deleteProduct = async (_id: string) => {
     setUpdating(_id);
     try {
-      const res = await publicRequest.delete(`/product/delete/${_id}`);
+      const res = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/product/delete/${_id}`);
 
       if(res.status === 200) {
         setData((prev: any) => prev.filter((item: any) => item?._id !== _id));

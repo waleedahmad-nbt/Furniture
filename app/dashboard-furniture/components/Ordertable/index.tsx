@@ -1,5 +1,5 @@
 "use client";
-import { publicRequest } from "@/requestMethods";
+import axios from "axios";
 import React, { useState } from "react";
 import { FiEye, FiMoreVertical, FiTrash } from "react-icons/fi";
 
@@ -43,7 +43,7 @@ function Table({ data, setOrders }: any) {
   const deleteOrder = async (id: string) => {
     setUpdating(id);
     try {
-      const res = await publicRequest.delete(`/order/delete/${id}`);
+      const res = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/order/delete/${id}`);
 
       if(res.status === 200) {
         setOrders((prev: any) => prev.filter((item: any) => item?._id !== id));
@@ -57,7 +57,7 @@ function Table({ data, setOrders }: any) {
   const changeStatus = async (status: string, id: string) => {
     setUpdatingStatus(status);
     try {
-      const res = await publicRequest.put(`/order/${id}?status=${status}`);
+      const res = await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/order/${id}?status=${status}`);
 
       if(res.status === 200) {
         setOrders((prev: any) => prev.map((item: any) => {

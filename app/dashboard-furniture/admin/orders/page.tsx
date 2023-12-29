@@ -8,7 +8,7 @@ import { BiSearch } from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import { IoIosAdd } from "react-icons/io";
-import { publicRequest } from "@/requestMethods";
+import axios from "axios";
 
 interface DataRow {
   id: string,
@@ -69,7 +69,7 @@ const Orders = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await publicRequest.get(`/order`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/order`);
   
         if(res.status === 200) {
           console.log(res.data.data);
