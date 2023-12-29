@@ -11,11 +11,10 @@ import { BsCreditCard2Front } from "react-icons/bs";
 import { TbMathGreater } from "react-icons/tb";
 
 import Product from "@/app/assets/images/Seller/Product.jpeg";
-import Instagrampic from "@/app/assets/images/Seller/Instagram.svg"
-import Facebookpic from "@/app/assets/images/Seller/facebook.jpg"
+import Instagrampic from "@/app/assets/images/Seller/Instagram.svg";
+import Facebookpic from "@/app/assets/images/Seller/facebook.jpg";
 
 const Admin = () => {
-  
   const [checkTab, setchecktab] = useState(0);
 
   return (
@@ -25,11 +24,11 @@ const Admin = () => {
           <div className="grid grid-cols-4 gap-4 p-2">
             <div
               onClick={() => setchecktab(0)}
-              className={`p-3 rounded-lg cursor-pointer ${checkTab == 0 ? "bg-[rgb(241,241,241)]" : ""}`}
+              className={`p-3 rounded-lg cursor-pointer ${
+                checkTab == 0 ? "bg-[rgb(241,241,241)]" : ""
+              }`}
             >
-              <p className="w-max">
-                Sessions
-              </p>
+              <p className="w-max">Sessions</p>
               <hr className="h-[1px] border-dashed border-[1px]" />
               <p className="text-2xl text-gray-900 font-bold flex">
                 309
@@ -40,11 +39,11 @@ const Admin = () => {
             </div>
             <div
               onClick={() => setchecktab(1)}
-              className={`p-3 rounded-lg cursor-pointer ${checkTab == 1 ? "bg-[rgb(241,241,241)]" : ""}`}
+              className={`p-3 rounded-lg cursor-pointer ${
+                checkTab == 1 ? "bg-[rgb(241,241,241)]" : ""
+              }`}
             >
-              <p className="w-max">
-                Total Sales
-              </p>
+              <p className="w-max">Total Sales</p>
               <hr className="h-[1px] border-dashed border-[1px]" />
               <p className="text-2xl text-gray-900 font-bold flex">
                 PKR5.76K
@@ -55,11 +54,11 @@ const Admin = () => {
             </div>
             <div
               onClick={() => setchecktab(2)}
-              className={`p-3 rounded-lg cursor-pointer ${checkTab == 2 ? "bg-[rgb(241,241,241)]" : ""}`}
+              className={`p-3 rounded-lg cursor-pointer ${
+                checkTab == 2 ? "bg-[rgb(241,241,241)]" : ""
+              }`}
             >
-              <p className="w-max">
-                Total Orders
-              </p>
+              <p className="w-max">Total Orders</p>
               <hr className="h-[1px] border-dashed border-[1px]" />
               <p className="text-2xl text-gray-900 font-bold flex">
                 4
@@ -74,9 +73,7 @@ const Admin = () => {
                 checkTab == 3 ? "bg-[rgb(241,241,241)]" : ""
               }`}
             >
-              <p className="w-max">
-                Conversation rate
-              </p>
+              <p className="w-max">Conversation rate</p>
               <hr className="h-[1px] border-dashed border-[1px]" />
               <p className="text-2xl text-gray-900 font-bold flex">
                 0.97%
@@ -107,9 +104,7 @@ const Admin = () => {
           </div>
         </div>
         <div className="w-full mt-5 p-4 bg-white rounded-lg shadow-md">
-          <p className="text-gray-300 text-xs">
-            In the last 14 days
-          </p>
+          <p className="text-gray-300 text-xs">In the last 14 days</p>
           <h2 className="text-gray-900 font-bold py-4">
             Visitors from these social sites are spending time in your store
           </h2>
@@ -118,9 +113,7 @@ const Admin = () => {
           </h2>
           <div className="flex justify-between py-3">
             <span>Product</span>
-            <h1 className="text-gray-900 font-bold">
-              Aug 10–Aug 23
-            </h1>
+            <h1 className="text-gray-900 font-bold">Aug 10–Aug 23</h1>
           </div>
           <div className="border-[1px] rounded-lg">
             <div className="">
@@ -137,9 +130,7 @@ const Admin = () => {
                     </Link>
                   </p>
                 </div>
-                <p className="text-sm px-2 text-gray-300">
-                  2,015 views
-                </p>
+                <p className="text-sm px-2 text-gray-300">2,015 views</p>
               </div>
               <div className="flex items-center justify-between border-b-[1px]">
                 <div className="space-x-6 p-4 flex items-center">
@@ -176,9 +167,7 @@ const Admin = () => {
           </div>
         </div>
         <div className="w-full mt-5 p-4 bg-white rounded-lg shadow-md">
-          <p className="text-xs">
-            Since store launch
-          </p>
+          <p className="text-xs">Since store launch</p>
           <h2 className="text-gray-300 font-bold py-4">
             Visitors from these social sites are spending time in your store
           </h2>
@@ -187,9 +176,7 @@ const Admin = () => {
           </h2>
           <div className="flex justify-between py-3">
             <span>Referrer</span>
-            <h1 className="text-gray-300 font-bold">
-              Average length of stay
-            </h1>
+            <h1 className="text-gray-300 font-bold">Average length of stay</h1>
           </div>
           <div className="border-[1px] rounded-lg">
             <div className="">
@@ -219,7 +206,9 @@ const Admin = () => {
                     <p className="text-sm">Average page views: 1.8</p>
                   </div>
                 </div>
-                <p className="text-sm px-2 text-gray-300">less than 20 seconds</p>
+                <p className="text-sm px-2 text-gray-300">
+                  less than 20 seconds
+                </p>
               </div>
             </div>
           </div>
