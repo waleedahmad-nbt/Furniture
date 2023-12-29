@@ -24,6 +24,7 @@ import mail from "@/app/assets/icons/mail.svg";
 import twitter from "@/app/assets/icons/twitter_outline.svg";
 import ProductsDeatilsTabs from "./productsDeatilsTabs";
 import { useParams } from "next/navigation";
+import starhalf from "@/app/assets/icons/starhalf.svg";
 // import { publicRequest } from "@/requestMethods";
 
 const ProductDetails = () => {
@@ -177,17 +178,35 @@ const ProductDetails = () => {
             <h1 className="text-[24px] font-medium text-gray-900">
               {product?.title}
             </h1>
-            <div className="flex my-4">
-              {Array.from({ length: 4 })?.map((_, index) => (
-                <Image
-                  src={starFill}
-                  alt="product"
-                  width={24}
-                  height={24}
-                  key={index}
-                />
-              ))}
-              <Image src={star} alt="product" width={24} height={24} />
+            <div className="flex items-center gap-3">
+              <div className="flex my-4">
+                {Array.from({ length: 5 }, (_, index) => {
+                  let number = index + 0.5;
+                  return (
+                    <>
+                      {product?.averageRating >= index + 1 ? (
+                        <Image
+                          src={starFill}
+                          alt="product"
+                          width={24}
+                          height={24}
+                          key={index}
+                        />
+                      ) : product?.averageRating >= number ? (
+                        <Image
+                          src={starhalf}
+                          alt="product"
+                          width={24}
+                          height={24}
+                        />
+                      ) : (
+                        <Image src={star} alt="product" width={24} height={24} />
+                      )}
+                    </>
+                  );
+                })}
+              </div>
+              <span className="text-gray-500">( {product?.totalReviews} )</span>
             </div>
             <h2 className="text-[24px] font-medium text-gray-900 mb-4">
               AED {product?.price}

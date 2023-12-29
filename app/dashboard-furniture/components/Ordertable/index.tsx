@@ -171,7 +171,7 @@ function Table({ data, setOrders }: any) {
                 {rowData?.contactInfo?.firstName + " " + rowData?.contactInfo?.lastName}
               </td>
               <td className="px-6 text-xs py-2 whitespace-nowrap">
-                ${rowData?.total}
+                AED {rowData?.total}
               </td>
               <td className="px-6 text-xs py-2 whitespace-nowrap">
                 <div

@@ -22,15 +22,12 @@ import star from "@/app/assets/icons/star.svg";
 import starFill from "@/app/assets/icons/star_fill.svg";
 
 import Banner from "@/app/assets/banners/banner_02.png";
-// import { publicRequest } from "@/requestMethods";
-import { FaSleigh } from "react-icons/fa";
 
 export default function Home() {
   const { publicRequest } = useRequestMethods();
 
-  const tabs = ["Bedroom", "Dining Room", "Living Room"];
-
-  const [activeTab, setActiveTab] = useState<string>(tabs[0]);
+  const [activeTab, setActiveTab] = useState<string>("");
+  const [activeTab2, setActiveTab2] = useState<string>("");
 
   const [categories, setCategories] = useState<any>([]);
   const [products, setProducts] = useState<any>([]);
@@ -100,6 +97,16 @@ export default function Home() {
       },
     ],
   };
+
+  const filter = (products: any) => {
+    if(activeTab === "") return products;
+    return products.filter((item: any) => item.category === activeTab);
+  }
+
+  const filter2 = (products: any) => {
+    if(activeTab2 === "") return products;
+    return products.filter((item: any) => item.category === activeTab2);
+  }
 
   return (
     <>
@@ -175,16 +182,16 @@ export default function Home() {
           <h1 className="text-[27px] md:text-[38px] text-gray-300 font-bold">
             Best Selling Products
           </h1>
-          <div className="flex flex-wrap items-center gap-x-1 gap-y-5 md:gap-5">
-            {tabs?.map((item: any, index: number) => (
+          <div className="flex flex-wrap items-center gap-x-1 gap-y-5 md:gap-5 gap-4">
+            {categories.length > 0 && categories?.slice(0, 3)?.map((item: any, index: number) => (
               <button
-                onClick={() => setActiveTab(item)}
+                onClick={() => setActiveTab(item?.category)}
                 className={`px-5 text-gray-200 rounded-md ${
-                  activeTab === item ? "bg-gray-100" : ""
+                  activeTab === item?.category ? "bg-gray-100" : ""
                 }`}
                 key={index}
               >
-                {item}
+                {item?.category}
               </button>
             ))}
           </div>
@@ -203,7 +210,7 @@ export default function Home() {
               products?.length <= 5 ? "c_hidden" : ""
             }`}
           >
-            {products?.map((item: any, index: number) => (
+            {filter(products)?.map((item: any, index: number) => (
               <div className={`relative w-full`} key={index}>
                 <div className="">
                   <ProductCard item={item} />
@@ -234,7 +241,7 @@ export default function Home() {
                 industry. Lorem Ipsum.
               </p>
               <Link
-                href="#"
+                href="/products"
                 className="flex items-center gap-3 bg-primary px-6 py-3 w-max text-white mb-30"
               >
                 <span>Shop now</span>
@@ -253,7 +260,7 @@ export default function Home() {
                 industry. Lorem Ipsum.
               </p>
               <Link
-                href="#"
+                href="/products"
                 className="flex items-center gap-3 bg-primary px-6 py-3 w-max text-white mb-30"
               >
                 <span>Shop now</span>
@@ -281,7 +288,7 @@ export default function Home() {
           <div className="grow p-5 pb-7 border-[5px] border-primary h-max">
             <div className="flex flex-wrap gap-6">
               <div className="w-full h-full sm:w-[266px] sm:h-[262px] shrink-0">
-                <MultiProductView item={products[0]} />
+                <MultiProductView item={products[1]} />
               </div>
               <div className="grow">
                 <div className="flex mt-3 gap-1">
@@ -339,7 +346,7 @@ export default function Home() {
             </div>
           </div>
           <ProductCard
-            item={products[1]}
+            item={products[2]}
             className="shrink-0 w-[213px]"
             offer
           />
@@ -382,16 +389,16 @@ export default function Home() {
           <h1 className="text-[27px] md:text-[38px] text-gray-300 font-bold">
             New Arrival
           </h1>
-          <div className="flex flex-wrap items-center justify-between">
-            {tabs?.map((item: any, index: number) => (
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            {categories.length > 0 && categories?.slice(0, 3)?.map((item: any, index: number) => (
               <button
-                onClick={() => setActiveTab(item)}
+                onClick={() => setActiveTab2(item?.category)}
                 className={`px-5 text-gray-200 rounded-md ${
-                  activeTab === item ? "bg-gray-100" : ""
+                  activeTab2 === item?.category ? "bg-gray-100" : ""
                 }`}
                 key={index}
               >
-                {item}
+                {item?.category}
               </button>
             ))}
           </div>
@@ -405,7 +412,7 @@ export default function Home() {
         </div>
         <div className="w-full my-10">
           <div className="relative flex flex-wrap gap-y-10 gap-x-5 items-center">
-            {products?.map((item: any, index: number) => (
+            {filter2(products)?.map((item: any, index: number) => (
               <ProductCard
                 item={item}
                 key={index}

@@ -43,7 +43,6 @@ const Products = () => {
       try {
         const res = await publicRequest.get(`/category/${categoryId}`);
         if (res.status === 200) {
-          // console.log(res.data.data);
           setoptions(res.data.data.subCategories);
         }
       } catch (error) {
@@ -195,12 +194,12 @@ const Products = () => {
               {options?.map((item: any, index: number) => (
                 <button
                   onClick={() => {
-                    if (tab === item) {
+                    if (tab === item?.name) {
                       fetchProductBySubCat("");
                       setTab("");
                     } else {
-                      fetchProductBySubCat(item);
-                      setTab(item);
+                      fetchProductBySubCat(item?.name);
+                      setTab(item?.name);
                     }
                   }}
                   className="bg-white flex items-center gap-2 px-3 py-2 shrink-0"
@@ -208,12 +207,12 @@ const Products = () => {
                 >
                   <div
                     className={`w-[17px] h-[15px] p-[2px] flex items-center justify-center text-white ${
-                      tab === item ? "bg-primary" : "bg-[#F1F3F5]"
+                      tab === item?.name ? "bg-primary" : "bg-[#F1F3F5]"
                     }`}
                   >
-                    {tab === item && <Image src={check} alt="icon" />}
+                    {tab === item?.name && <Image src={check} alt="icon" />}
                   </div>
-                  {item}
+                  {item?.name}
                 </button>
               ))}
             </div>
@@ -330,15 +329,15 @@ const Products = () => {
                       // }
 
                       onClick={() => {
-                        if (filters.CAta === item) {
+                        if (filters.CAta === item?.name) {
                           fetchProductBySubCat("");
                           setFilters((prev: any) => {
                             return { ...prev, CAta: "" };
                           });
                         } else {
-                          fetchProductBySubCat(item);
+                          fetchProductBySubCat(item?.name);
                           setFilters((prev: any) => {
-                            return { ...prev, CAta: item };
+                            return { ...prev, CAta: item?.name };
                           });
                         }
                       }}
@@ -347,15 +346,15 @@ const Products = () => {
                         <div className="w-[17px] h-[15px] p-[2px] border flex items-center justify-center text-white">
                           <div
                             className={`w-[9px] h-[8px] ${
-                              filters.CAta === item
+                              filters.CAta === item?.name
                                 ? "bg-[#272727]"
                                 : "bg-white"
                             }`}
                           ></div>
                         </div>
-                        <p className="text-gray-900">{item}</p>
+                        <p className="text-gray-900">{item?.name}</p>
                       </div>
-                      <span className="text-gray-200">5</span>
+                      <span className="text-gray-200">{item?.count}</span>
                     </div>
                   ))}
                 </div>

@@ -6,6 +6,7 @@ import star from "@/app/assets/icons/star.svg";
 import starFill from "@/app/assets/icons/star_fill.svg";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
+import starhalf from "@/app/assets/icons/starhalf.svg";
 import { setRecentViews, setUpdateRecentViews } from "@/lib/store/slices/Allslices";
 import { RootState } from "@/lib/store";
 
@@ -39,6 +40,8 @@ const ProductCard = ({ item, className, offer }: any) => {
     }
   }
 
+  console.log(item);
+
   return (
     <div className={className}>
       <div className="h-[203px]">
@@ -46,18 +49,33 @@ const ProductCard = ({ item, className, offer }: any) => {
       </div>
       <div className="flex mt-3 gap-1">
         <div className="flex">
-          {Array.from({ length: 4 })?.map((_, index) => (
-            <Image
-              src={starFill}
-              alt="product"
-              width={10}
-              height={10}
-              key={index}
-            />
-          ))}
-          <Image src={star} alt="product" width={10} height={10} />
+          {Array.from({ length: 5 }, (_, index) => {
+            let number = index + 0.5;
+            return (
+              <>
+                {item?.averageRating >= index + 1 ? (
+                  <Image
+                    src={starFill}
+                    alt="product"
+                    width={10}
+                    height={10}
+                    key={index}
+                  />
+                ) : item?.averageRating >= number ? (
+                  <Image
+                    src={starhalf}
+                    alt="product"
+                    width={10}
+                    height={10}
+                  />
+                ) : (
+                  <Image src={star} alt="product" width={10} height={10} />
+                )}
+              </>
+            );
+          })}
         </div>
-        <span className="text-gray-500 text-[14px]">3</span>
+        <span className="text-gray-500 text-[14px]">{item?.totalReviews}</span>
       </div>
       <Link href={`/products/details/${item?._id}`} onClick={addRecent}>
         <h3 className="font-medium text-gray-300 mt-1">{item?.title}</h3>

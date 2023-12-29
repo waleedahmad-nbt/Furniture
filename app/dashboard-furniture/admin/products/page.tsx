@@ -285,7 +285,7 @@ const Products = () => {
                       {qty} in stock
                     </td>
                     <td className="px-6 py-4 text-left whitespace-nowrap text-xs text-gray-500">
-                      PKR {price}
+                      AED {price}
                     </td>
                     <td className="px-6 py-4 text-left whitespace-nowrap text-xs text-gray-500">
                       <Link href={`/dashboard-furniture/admin/products/reviews/${_id}`} className="bg_admin hover:bg-gray-900 px-2 text-white py-1 rounded-md">Reviews</Link>

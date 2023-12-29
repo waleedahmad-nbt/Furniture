@@ -15,12 +15,25 @@ async function fetchData() {
   }
 }
 
+async function fetchCats() {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/category`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching portfolio:", error);
+    throw error;
+  }
+}
+
 const customizeFurniture = async () => {
   const images: any = await fetchData();
+  const cats: any = await fetchCats();
 
   return (
     <>
-      <FurniturePortfolio response={images.data} />
+      <FurniturePortfolio response={images.data} allCategories={cats.data} />
     </>
   );
 };

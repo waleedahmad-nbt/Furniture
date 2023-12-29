@@ -3,8 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import livingRoomChair from "@/app/assets/images/livingRoomChair.png";
 
-const FurniturePortfolio = ({ response }: any) => {
-  const allCategories = [{ category: "All" }, ...response];
+const FurniturePortfolio = ({ response, allCategories }: any) => {
 
   const [filterValue, setFilterValue] = useState<string>("All");
 
@@ -13,7 +12,7 @@ const FurniturePortfolio = ({ response }: any) => {
       return rows;
     }
 
-    const filtered = rows.filter((item: any) => item.category === filterValue);
+    const filtered = rows.filter((item: any) => item.category?.toLowerCase() === filterValue?.toLowerCase());
     return filtered;
   };
 
@@ -40,6 +39,18 @@ const FurniturePortfolio = ({ response }: any) => {
           </h1>
           <div>
             <div className="flex flex-wrap gap-2 justify-center mt-5">
+              <div
+                className={`group ${
+                  filterValue === "All" ? "active" : ""
+                }`}
+              >
+                <div
+                  onClick={() => setFilterValue("All")}
+                  className="border px-3 py-1 group-[.active]:bg-primary group-[.active]:text-white text-gray-200 font-normal cursor-pointer"
+                >
+                  All
+                </div>
+              </div>
               {response &&
                 allCategories.map((item: any, index: any) => {
                   return (
