@@ -20,19 +20,12 @@ import david from "@/app/assets/images/david.png";
 import arrowIcon from "@/app/assets/icons/ArrowIcon.svg";
 import { Features } from "../components";
 import { useEffect, useState } from "react";
-<<<<<<< HEAD
-=======
-import { useRequestMethods } from "../components/index";
->>>>>>> 3b711c794b4e764423bc0db9909016ce291fa0ca
 
 const aboutUs = () => {
-  const { publicRequest } = useRequestMethods();
-
   const [team, setTeam] = useState([]);
 
   const fetchTeam = async () => {
     try {
-      const res = await publicRequest.get("/team");
       console.log(res.data.data);
       if (res) {
         setTeam(res.data.data);
