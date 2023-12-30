@@ -416,7 +416,7 @@ export default function Home() {
             <Image src={arrowL} alt="icon" />
           </Link>
         </div>
-
+        {/* commit */}
         <div className="w-full my-10">
           <div className="relative flex flex-wrap gap-y-10 gap-x-5 items-center">
             {products?.map((item: any, index: number) => (
