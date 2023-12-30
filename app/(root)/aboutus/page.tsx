@@ -17,6 +17,8 @@ import { Features } from "../components";
 import { useEffect, useState } from "react";
 import { useRequestMethods } from "../components/index";
 
+// About Us Page
+
 const aboutUs = () => {
   const { publicRequest } = useRequestMethods();
   const [team, setTeam] = useState([]);
