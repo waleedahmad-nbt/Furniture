@@ -46,6 +46,7 @@ const Navbar = () => {
   const [filterValue, setFilterValue] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string>("");
   const allCats = [{ category: "Home" }, ...cats];
+  console.log(allCats, "allCats");
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -184,7 +185,7 @@ const Navbar = () => {
     <div className="relative bg-gray-900 text-white">
       <header className="border-b hidden md:block">
         <div className="container">
-          <ul className="flex gap-8 py-2 text-[16px]">
+          <ul className="flex gap-8 py-2 text-[12px]">
             <li>
               <NavLink href="/myorders">Track Order</NavLink>
             </li>
@@ -316,7 +317,7 @@ const Navbar = () => {
             </div>
           </div>
         </nav>
-        <ul className="hidden md:flex flex-wrap items-center justify-start gap-5  ">
+        <ul className="hidden md:flex flex-wrap items-center justify-start gap-5  text-[16px]">
           {allCats?.map((item: any, index: number) => (
             <li
               onClick={() => {

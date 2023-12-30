@@ -112,18 +112,22 @@ const MultiProductView = ({ item }: any) => {
           <button className="bg-white border rounded-full w-[32px] h-[32px] opacity-0 duration-200 group-hover:opacity-100 flex items-center justify-center mt-1">
             <Image src={zoom} alt="product" />
           </button>
-          <button className="bg-white border rounded-full w-[32px] h-[32px] opacity-0 duration-200 group-hover:opacity-100 flex items-center justify-center mt-1">
+          <button
+            className="bg-white border rounded-full w-[32px] h-[32px] opacity-0 duration-200 group-hover:opacity-100 flex items-center justify-center mt-1"
+            onClick={handleCart}
+          >
             <Image src={cart} alt="product" />
           </button>
         </div>
+
         <Link href={`/products/details/${item?._id}`} onClick={addRecent}>
           {item?.Images?.length > 0 &&
             item?.Images?.map((img: any, index: number) => (
               <div
-                className={`mx-auto duration-200 transition-opacity ${
+                className={`mx-auto duration-300 transition-opacity ${
                   index === activeIndex
-                    ? "relative opacity-100 visible"
-                    : "absolute inset-0 opacity-0 invisible pointer-events-none"
+                    ? "relative opacity-100 "
+                    : "absolute inset-0 opacity-0 pointer-events-none"
                 }`}
                 key={index}
               >
@@ -139,6 +143,15 @@ const MultiProductView = ({ item }: any) => {
               </div>
             ))}
         </Link>
+        <div className="absolute inset-0 opacity-0 duration-300 group-hover:opacity-100">
+          <Image
+            src={item?.Images[1]}
+            alt="img"
+            width={100}
+            height={100}
+            className="w-auto"
+          />
+        </div>
         <div className="absolute bottom-0 group-hover:bottom-4 translate-y-full group-hover:translate-y-0 duration-200 opacity-0 group-hover:opacity-100">
           <button
             onClick={handleCart}

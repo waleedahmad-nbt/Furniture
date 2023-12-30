@@ -5,7 +5,7 @@ import Image from "next/image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { GoArrowRight } from "react-icons/go";
+
 import {
   Features,
   MainSlider,
@@ -20,17 +20,22 @@ import sofa1 from "@/app/assets/banners/sofa_01.png";
 import sofa2 from "@/app/assets/banners/sofa_02.png";
 import star from "@/app/assets/icons/star.svg";
 import starFill from "@/app/assets/icons/star_fill.svg";
-import starhalf from "@/app/assets/icons/starhalf.svg";
+import { setCategory, setCategoryId } from "@/lib/store/slices/Allslices";
 
 import Banner from "@/app/assets/banners/banner_02.png";
+// import { publicRequest } from "@/requestMethods";
+import { FaSleigh } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 
 export default function Home() {
   const { publicRequest } = useRequestMethods();
 
-  const [activeTab, setActiveTab] = useState<string>("");
-  const [activeTab2, setActiveTab2] = useState<string>("");
+  const tabs = ["Bedroom", "Dining Room", "Living Room"];
+
+  const [activeTab, setActiveTab] = useState<string>(tabs[0]);
 
   const [categories, setCategories] = useState<any>([]);
+
   const [products, setProducts] = useState<any>([]);
 
   useEffect(() => {
@@ -99,15 +104,7 @@ export default function Home() {
     ],
   };
 
-  const filter = (products: any) => {
-    if (activeTab === "") return products;
-    return products.filter((item: any) => item.category === activeTab);
-  };
-
-  const filter2 = (products: any) => {
-    if (activeTab2 === "") return products;
-    return products.filter((item: any) => item.category === activeTab2);
-  };
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -155,17 +152,25 @@ export default function Home() {
             industry. Lorem Ipsum.
           </p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 my-14">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 my-14 ">
           {categories?.map((item: any, index: number) => (
             <div key={index}>
-              <div className="bg-cream h-[170px]">
-                <Image
-                  src={item?.image}
-                  alt="product"
-                  className="w-full h-full"
-                  width={100}
-                  height={100}
-                />
+              <div
+                className="bg-cream h-[170px] cursor-pointer group overflow-hidden"
+                onClick={() => {
+                  dispatch(setCategory(item.category));
+                  dispatch(setCategoryId(item._id));
+                }}
+              >
+                <Link href="/products">
+                  <Image
+                    src={item?.image}
+                    alt="product"
+                    className="w-full h-full group-hover:scale-110 duration-300"
+                    width={100}
+                    height={100}
+                  />
+                </Link>
               </div>
               <h3 className="text-center font-medium text-gray-300 mt-3">
                 {item?.category}
@@ -180,35 +185,28 @@ export default function Home() {
 
       <div className="container my-10">
         <div className="flex flex-wrap items-center justify-between gap-y-6">
-          <div className="flex items-center justify-start">
-            <h1 className="text-[18px] md:text-[18px] text-gray-300 font-bold mr-10">
-              Best Selling Products
-            </h1>
-            <div className="flex flex-wrap items-center gap-x-1 gap-y-5 md:gap-5 gap-4">
-              {categories.length > 0 &&
-                categories?.slice(0, 6)?.map((item: any, index: number) => (
-                  <button
-                    onClick={() => setActiveTab(item?.category)}
-                    className={`px-5 py-1 text-gray-100 rounded-lg text-[14px] font-bold hover:text-gray-200 ${
-                      activeTab === item?.category
-                        ? "bg-gray-100/30 text-gray-200"
-                        : ""
-                    }`}
-                    key={index}
-                  >
-                    {item?.category}
-                  </button>
-                ))}
-            </div>
+          <h1 className="text-[27px] md:text-[38px] text-gray-300 font-bold">
+            Best Selling Products
+          </h1>
+          <div className="flex flex-wrap items-center gap-x-1 gap-y-5 md:gap-5">
+            {tabs?.map((item: any, index: number) => (
+              <button
+                onClick={() => setActiveTab(item)}
+                className={`px-5 text-gray-200 rounded-md ${
+                  activeTab === item ? "bg-gray-100" : ""
+                }`}
+                key={index}
+              >
+                {item}
+              </button>
+            ))}
           </div>
           <Link
             href="/products"
-            className="flex items-center gap-3  px-2 py-1 w-max text-white text-[14px]"
+            className="flex items-center gap-3 bg-primary px-2 py-1 w-max text-white uppercase text-[14px]"
           >
-            <span className="text-gray-300 flex items-center font-bold duration-100 hover:text-primary">
-              <span className="mr-2">View All </span>
-              <GoArrowRight />
-            </span>
+            <span>view all</span>
+            <Image src={arrowL} alt="icon" />
           </Link>
         </div>
         <div className="w-full my-10">
@@ -218,7 +216,7 @@ export default function Home() {
               products?.length <= 5 ? "c_hidden" : ""
             }`}
           >
-            {filter(products)?.map((item: any, index: number) => (
+            {products?.map((item: any, index: number) => (
               <div className={`relative w-full`} key={index}>
                 <div className="">
                   <ProductCard item={item} />
@@ -249,7 +247,7 @@ export default function Home() {
                 industry. Lorem Ipsum.
               </p>
               <Link
-                href="/products"
+                href="#"
                 className="flex items-center gap-3 bg-primary px-6 py-3 w-max text-white mb-30"
               >
                 <span>Shop now</span>
@@ -268,7 +266,7 @@ export default function Home() {
                 industry. Lorem Ipsum.
               </p>
               <Link
-                href="/products"
+                href="#"
                 className="flex items-center gap-3 bg-primary px-6 py-3 w-max text-white mb-30"
               >
                 <span>Shop now</span>
@@ -296,45 +294,23 @@ export default function Home() {
           <div className="grow p-5 pb-7 border-[5px] border-primary h-max">
             <div className="flex flex-wrap gap-6">
               <div className="w-full h-full sm:w-[266px] sm:h-[262px] shrink-0">
-                <MultiProductView item={products[1]} />
+                <MultiProductView item={products[0]} />
               </div>
               <div className="grow">
                 <div className="flex mt-3 gap-1">
                   <div className="flex">
-                    {Array.from({ length: 5 }, (_, index) => {
-                      let number = index + 0.5;
-                      return (
-                        <>
-                          {products[1]?.averageRating >= index + 1 ? (
-                            <Image
-                              src={starFill}
-                              alt="product"
-                              width={10}
-                              height={10}
-                              key={index}
-                            />
-                          ) : products[1]?.averageRating >= number ? (
-                            <Image
-                              src={starhalf}
-                              alt="product"
-                              width={10}
-                              height={10}
-                            />
-                          ) : (
-                            <Image
-                              src={star}
-                              alt="product"
-                              width={10}
-                              height={10}
-                            />
-                          )}
-                        </>
-                      );
-                    })}
+                    {Array.from({ length: 4 })?.map((_, index) => (
+                      <Image
+                        src={starFill}
+                        alt="product"
+                        width={10}
+                        height={10}
+                        key={index}
+                      />
+                    ))}
+                    <Image src={star} alt="product" width={10} height={10} />
                   </div>
-                  <span className="text-gray-500 text-[14px]">
-                    {products[1]?.totalReviews}
-                  </span>
+                  <span className="text-gray-500 text-[14px]">3</span>
                 </div>
                 <h2 className="text-gray-300 font-medium text-[18px] mb-2">
                   Setomono Cup by kristina dam
@@ -376,7 +352,7 @@ export default function Home() {
             </div>
           </div>
           <ProductCard
-            item={products[2]}
+            item={products[1]}
             className="shrink-0 w-[213px]"
             offer
           />
@@ -416,41 +392,34 @@ export default function Home() {
 
       <div className="container my-10">
         <div className="flex flex-wrap items-center justify-between gap-y-6">
-          <div className="flex items-center justify-start">
-            <h1 className="text-[18px] md:text-[18px] text-gray-300 font-bold mr-10">
-              New Arrivals
-            </h1>
-            <div className="flex flex-wrap items-center gap-x-1 gap-y-5 md:gap-5 gap-4">
-              {categories.length > 0 &&
-                categories?.slice(0, 6)?.map((item: any, index: number) => (
-                  <button
-                    onClick={() => setActiveTab(item?.category)}
-                    className={`px-5 py-1 text-gray-100 rounded-lg text-[14px] font-bold hover:text-gray-200 ${
-                      activeTab === item?.category
-                        ? "bg-gray-100/30 text-gray-200"
-                        : ""
-                    }`}
-                    key={index}
-                  >
-                    {item?.category}
-                  </button>
-                ))}
-            </div>
+          <h1 className="text-[27px] md:text-[38px] text-gray-300 font-bold">
+            New Arrival
+          </h1>
+          <div className="flex flex-wrap items-center justify-between">
+            {tabs?.map((item: any, index: number) => (
+              <button
+                onClick={() => setActiveTab(item)}
+                className={`px-5 text-gray-200 rounded-md ${
+                  activeTab === item ? "bg-gray-100" : ""
+                }`}
+                key={index}
+              >
+                {item}
+              </button>
+            ))}
           </div>
           <Link
             href="/products"
-            className="flex items-center gap-3  px-2 py-1 w-max text-white text-[14px]"
+            className="flex items-center gap-3 bg-primary px-2 py-1 w-max text-white uppercase text-[14px]"
           >
-            <span className="text-gray-300 flex items-center font-bold duration-100 hover:text-primary">
-              <span className="mr-2">View All </span>
-              <GoArrowRight />
-            </span>
+            <span>view all</span>
+            <Image src={arrowL} alt="icon" />
           </Link>
         </div>
         {/* comments */}
         <div className="w-full my-10">
           <div className="relative flex flex-wrap gap-y-10 gap-x-5 items-center">
-            {filter2(products)?.map((item: any, index: number) => (
+            {products?.map((item: any, index: number) => (
               <ProductCard
                 item={item}
                 key={index}
