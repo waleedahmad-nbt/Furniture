@@ -120,7 +120,12 @@ const MultiProductView = ({ item }: any) => {
           </button>
         </div>
 
-        <Link href={`/products/details/${item?._id}`} onClick={addRecent}>
+        <Link
+          href={`/products/details/${item?._id}`}
+          onClick={addRecent}
+          onMouseEnter={() => setActiveIndex(1)}
+          onMouseLeave={() => setActiveIndex(0)}
+        >
           {item?.Images?.length > 0 &&
             item?.Images?.map((img: any, index: number) => (
               <div
@@ -143,15 +148,6 @@ const MultiProductView = ({ item }: any) => {
               </div>
             ))}
         </Link>
-        <div className="absolute inset-0 opacity-0 duration-300 group-hover:opacity-100">
-          <Image
-            src={item?.Images[1]}
-            alt="img"
-            width={100}
-            height={100}
-            className="w-auto"
-          />
-        </div>
         <div className="absolute bottom-0 group-hover:bottom-4 translate-y-full group-hover:translate-y-0 duration-200 opacity-0 group-hover:opacity-100">
           <button
             onClick={handleCart}

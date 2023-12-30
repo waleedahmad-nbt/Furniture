@@ -29,7 +29,8 @@ const ViewProduct = () => {
   return product?.title === undefined ? (
     <div className="Loader w-[15px] border-[2px] border-gray-900"></div>
   ) : (
-    <ProductDetail data={product} />
+    // <ProductDetail data={product} />
+    <></>
   )
 }
 

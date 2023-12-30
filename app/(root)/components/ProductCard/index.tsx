@@ -88,42 +88,8 @@ const ProductCard = ({ item, className, offer }: any) => {
             );
           })}
         </div>
-        <span className="text-gray-500 text-[14px]">{item?.totalReviews}</span>
+        <span className="text-gray-500 text-[14px]">{item?.totalReviews || "No Reviews"}</span>
       </div>
-      {item?.totalReviews > 0 ? (
-        <div className="flex mt-3 gap-1">
-          <div className="flex">
-            {Array.from({ length: 4 })?.map((_, index) => (
-              <Image
-                src={starFill}
-                alt="product"
-                width={10}
-                height={10}
-                key={index}
-              />
-            ))}
-            <Image src={star} alt="product" width={10} height={10} />
-          </div>
-          <span className="text-gray-500 text-[14px]">
-            {item?.totalReviews}
-          </span>
-        </div>
-      ) : (
-        <div className="flex mt-5 gap-2">
-          <div className="flex ">
-            {Array.from({ length: 5 })?.map((_, index) => (
-              <Image
-                src={star}
-                alt="product"
-                width={10}
-                height={10}
-                key={index}
-              />
-            ))}
-          </div>
-          <span className="text-gray-500 text-[14px]">No Reviews</span>
-        </div>
-      )}
       <Link href={`/products/details/${item?._id}`} onClick={addRecent}>
         <h3 className="font-medium text-gray-300 mt-1">{item?.title}</h3>
       </Link>
