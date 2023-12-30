@@ -6,11 +6,15 @@ import star from "@/app/assets/icons/star.svg";
 import starFill from "@/app/assets/icons/star_fill.svg";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
+
 import starhalf from "@/app/assets/icons/starhalf.svg";
 import { setRecentViews, setUpdateRecentViews } from "@/lib/store/slices/Allslices";
+
+
 import { RootState } from "@/lib/store";
 
 const ProductCard = ({ item, className, offer }: any) => {
+  console.log(item, "item in product Cart");
   const dispatch = useDispatch();
 
   const recentViews: any = useSelector((state: RootState) => state.recentViews);
@@ -23,22 +27,33 @@ const ProductCard = ({ item, className, offer }: any) => {
     const hours = now.getHours();
     const minutes = now.getMinutes();
     const seconds = now.getSeconds();
-  
+
     // Format the date and time as YYYY-MM-DD HH:MM:SS
-    const formattedDateTime = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')} ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-  
+    const formattedDateTime = `${year}-${String(month).padStart(
+      2,
+      "0"
+    )}-${String(day).padStart(2, "0")} ${String(hours).padStart(
+      2,
+      "0"
+    )}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
     return formattedDateTime;
   };
 
   const addRecent = () => {
-    const exist = recentViews.find((pro: any) => pro?._id === item?._id)
+    const exist = recentViews.find((pro: any) => pro?._id === item?._id);
 
-    if(!exist && recentViews?.length < 20) {
+    if (!exist && recentViews?.length < 20) {
       dispatch(setRecentViews({ ...item, time: getCurrentDateTime() }));
     } else {
-      dispatch(setUpdateRecentViews({ id: item?._id, updatedTime: getCurrentDateTime() }));
+      dispatch(
+        setUpdateRecentViews({
+          id: item?._id,
+          updatedTime: getCurrentDateTime(),
+        })
+      );
     }
-  }
+  };
 
   return (
     <div className={className}>
@@ -75,11 +90,45 @@ const ProductCard = ({ item, className, offer }: any) => {
         </div>
         <span className="text-gray-500 text-[14px]">{item?.totalReviews}</span>
       </div>
+      {item?.totalReviews > 0 ? (
+        <div className="flex mt-3 gap-1">
+          <div className="flex">
+            {Array.from({ length: 4 })?.map((_, index) => (
+              <Image
+                src={starFill}
+                alt="product"
+                width={10}
+                height={10}
+                key={index}
+              />
+            ))}
+            <Image src={star} alt="product" width={10} height={10} />
+          </div>
+          <span className="text-gray-500 text-[14px]">
+            {item?.totalReviews}
+          </span>
+        </div>
+      ) : (
+        <div className="flex mt-5 gap-2">
+          <div className="flex ">
+            {Array.from({ length: 5 })?.map((_, index) => (
+              <Image
+                src={star}
+                alt="product"
+                width={10}
+                height={10}
+                key={index}
+              />
+            ))}
+          </div>
+          <span className="text-gray-500 text-[14px]">No Reviews</span>
+        </div>
+      )}
       <Link href={`/products/details/${item?._id}`} onClick={addRecent}>
         <h3 className="font-medium text-gray-300 mt-1">{item?.title}</h3>
       </Link>
       <div className="flex flex-items gap-3">
-        <span className="text-gray-500 line-through">${item?.price}</span>
+        {/* <span className="text-gray-500 line-through">${item?.price}</span> */}
         <span className="text-primary">${item?.price}</span>
       </div>
       <p className="text-gray-300 text-[14px]">

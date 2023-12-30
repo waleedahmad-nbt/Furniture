@@ -28,6 +28,18 @@ async function fetchCats() {
 }
 
 const customizeFurniture = async () => {
+  async function fetchData() {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/portfolio`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching portfolio:", error);
+      throw error;
+    }
+  }
+
   const images: any = await fetchData();
   const cats: any = await fetchCats();
 
