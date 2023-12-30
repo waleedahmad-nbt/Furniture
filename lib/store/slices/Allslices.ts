@@ -15,6 +15,7 @@ interface AuthState {
   category: string;
   categoryId: string;
   recentViews: Array<object>;
+  searchVal: string;
 
 
   Authcheck: boolean;
@@ -34,6 +35,7 @@ const initialState: AuthState = {
   category: "",
   categoryId:"",
   recentViews: [],
+  searchVal: "",
 
   
   orderItems: [],
@@ -109,7 +111,10 @@ export const Allslice = createSlice({
       state.recentViews = state.recentViews.map((item: any) =>
         item._id === id ? { ...item, time: updatedTime } : item
       );
-    },    
+    },
+    setSearchVal: (state, action: PayloadAction<string>) => {
+      state.searchVal = action.payload;
+    },
 
 
 
@@ -165,6 +170,7 @@ export const {
   setCategoryId,
   setRecentViews,
   setUpdateRecentViews,
+  setSearchVal,
 
   AssignAuthTrue,
   AssignAuthFalse,

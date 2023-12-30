@@ -20,6 +20,7 @@ import sofa1 from "@/app/assets/banners/sofa_01.png";
 import sofa2 from "@/app/assets/banners/sofa_02.png";
 import star from "@/app/assets/icons/star.svg";
 import starFill from "@/app/assets/icons/star_fill.svg";
+import starhalf from "@/app/assets/icons/starhalf.svg";
 
 import Banner from "@/app/assets/banners/banner_02.png";
 
@@ -293,18 +294,33 @@ export default function Home() {
               <div className="grow">
                 <div className="flex mt-3 gap-1">
                   <div className="flex">
-                    {Array.from({ length: 4 })?.map((_, index) => (
-                      <Image
-                        src={starFill}
-                        alt="product"
-                        width={10}
-                        height={10}
-                        key={index}
-                      />
-                    ))}
-                    <Image src={star} alt="product" width={10} height={10} />
+                  {Array.from({ length: 5 }, (_, index) => {
+                    let number = index + 0.5;
+                    return (
+                      <>
+                        {products[1]?.averageRating >= index + 1 ? (
+                          <Image
+                            src={starFill}
+                            alt="product"
+                            width={10}
+                            height={10}
+                            key={index}
+                          />
+                        ) : products[1]?.averageRating >= number ? (
+                          <Image
+                            src={starhalf}
+                            alt="product"
+                            width={10}
+                            height={10}
+                          />
+                        ) : (
+                          <Image src={star} alt="product" width={10} height={10} />
+                        )}
+                      </>
+                    );
+                  })}
                   </div>
-                  <span className="text-gray-500 text-[14px]">3</span>
+                  <span className="text-gray-500 text-[14px]">{products[1]?.totalReviews}</span>
                 </div>
                 <h2 className="text-gray-300 font-medium text-[18px] mb-2">
                   Setomono Cup by kristina dam

@@ -1,31 +1,25 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import SubMenu from "./SubMenu";
+
 import { FiX } from "react-icons/fi";
 import { FaListUl } from "react-icons/fa";
-import SubMenu from "./SubMenu";
 import { PiPaperPlaneTilt, PiPhoneLight } from "react-icons/pi";
 import { usePathname } from "next/navigation";
-
-import profile from "@/app/assets/icons/profileBlack.svg";
-import search from "@/app/assets/icons/search.svg";
-
-import Image from "next/image";
-import { NavLink, SignInModal, SignUpModal } from "../index";
+import { NavLink } from "../index";
 import { BsHeart } from "react-icons/bs";
 import { RootState } from "@/lib/store";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
-const SideBar = ({ menuOpen, setMenuOpen, showModal }: any) => {
+import search from "@/app/assets/icons/search.svg";
+import profile from "@/app/assets/icons/profileBlack.svg";
+
+const SideBar = ({ menuOpen, setMenuOpen, showModal, categories }: any) => {
   const [searchInp, setSearchInp] = useState(false);
   const userData = useSelector((state: any) => state.user);
-
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // const showModal = () => {
-  //   setIsModalOpen(true);
-  // };
 
   const wishList: any = useSelector((state: RootState) => state.wishList);
 
@@ -217,11 +211,11 @@ const SideBar = ({ menuOpen, setMenuOpen, showModal }: any) => {
                   <span>Browse Categories</span>
                 </div>
               </li>
-              {option2?.map((item: any, index: any) => (
+              {categories?.map((item: any, index: any) => (
                 <li key={index}>
                   <SubMenu
-                    title={item}
-                    options={option1}
+                    title={item?.category}
+                    options={item?.subCategories}
                     setIsOpen={setIsOpen}
                     isOpen={isOpen}
                   />

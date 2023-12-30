@@ -2,12 +2,13 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { BiSearch, BiSort } from "react-icons/bi";
+import axios from "axios";
+
+import { BiSearch } from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
-import { FiEdit3, FiEye, FiTrash } from "react-icons/fi";
+import { FiEdit3, FiTrash } from "react-icons/fi";
 import { TbArrowsSort } from "react-icons/tb";
 import { IoIosAdd } from "react-icons/io";
-import axios from "axios";
 
 const PortFolio = () => {
 
@@ -15,6 +16,7 @@ const PortFolio = () => {
   const [editPortId, setEditPortId] = useState<any>({});
   const [data, setData] = useState<any>([]);
   const [val, setVal] = useState<number>(0);
+  const [categoryData, setCategoryData] = useState<any>([]);
 
   const changeValue = (i:any, type:any) => {
     setVal(i)
@@ -34,6 +36,19 @@ const PortFolio = () => {
       }
     }
 
+    const getCategories = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/category`);
+        if(response.status === 200) {
+          setCategoryData(response.data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+        throw error;
+      }
+    }
+
+    getCategories();
     getPortfolio();
   }, [])
 
@@ -260,21 +275,24 @@ const PortFolio = () => {
                           src={image}
                           width={100}
                           height={100}
-                          alt=""
+                          alt="portfolio img"
                         />
                       </div>
                     </td>
                     <td className="max-w-[300px] px-6 py-4  text-xs font-medium text-gray-900">
                       {editPortId === _id ? (
                         <>
-                          <input
-                            type="text"
+                          <select
                             id="category"
                             name="category"
-                            value={formData?.category}
+                            className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black bg-white"
                             onChange={handleChange}
-                            className="py-1 px-3 outline-none border rounded-md w-full"
-                          />
+                            defaultValue={category}
+                          >
+                            {categoryData.length > 0 && categoryData?.map((item: any, index: number) => (
+                              <option key={index} value={item?.category}>{item?.category}</option>
+                            ))}
+                          </select>
                           {formErrors.category && (
                             <p className="text-red-500 text-xs mt-1">
                               {formErrors.category}

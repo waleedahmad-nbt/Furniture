@@ -22,37 +22,12 @@ import { RiFilterOffFill } from "react-icons/ri";
 const Products = () => {
   const { publicRequest } = useRequestMethods();
 
+  const searchValue: any = useSelector((state: RootState) => state.searchVal);
+
   const category: any = useSelector((state: RootState) => state.category);
   const categoryId: any = useSelector((state: RootState) => state.categoryId);
   const [options, setoptions] = useState([]);
   const [products, setProducts] = useState<any>([]);
-
-  useEffect(() => {
-    const sendQuery = async () => {
-      try {
-        const res = await publicRequest.get(`/product?cat=${category}`);
-        if (res.status === 200) {
-          setProducts(res.data.data);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    const searchCategories = async () => {
-      try {
-        const res = await publicRequest.get(`/category/${categoryId}`);
-        if (res.status === 200) {
-          setoptions(res.data.data.subCategories);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    sendQuery();
-    searchCategories();
-  }, [category]);
 
   const [tab, setTab] = useState<string>("");
   const [pageData, setPageData] = useState<any>({
@@ -78,15 +53,6 @@ const Products = () => {
     "cacaca",
   ];
 
-  const cats = [
-    { label: "Adidas", quantity: 10 },
-    { label: "Balmain", quantity: 39 },
-    { label: "Balenciage", quantity: 95 },
-    { label: "Burberry", quantity: 110 },
-    { label: "Kenzo", quantity: 48 },
-    { label: "Givenchy", quantity: 77 },
-    { label: "Zara", quantity: 48 },
-  ];
   const status = ["In Stock", "On Sale"];
 
   const [filters, setFilters] = useState({
@@ -100,10 +66,9 @@ const Products = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await publicRequest.get(`/product`);
+        const res = await publicRequest.get(`/product?keyword=${searchValue}&cat=${category}`);
 
         if (res.status === 200) {
-          // console.log(res.data.data);
           setProducts(res.data.data);
         }
       } catch (error) {
@@ -111,8 +76,23 @@ const Products = () => {
       }
     };
 
+    const searchCategories = async () => {
+      try {
+        const res = await publicRequest.get(`/category/${categoryId}`);
+        if (res.status === 200) {
+          setoptions(res.data.data.subCategories);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if(category) {
+      searchCategories();
+    }
+
     getProducts();
-  }, []);
+  }, [searchValue, category]);
 
   const [minPrice, setMinPrice] = useState<number>(100);
   const [maxPrice, setMaxPrice] = useState<number>(9999);
@@ -156,7 +136,6 @@ const Products = () => {
         `/product?cat=${category}&subcat=${tab}&color=${color}`
       );
       if (res.status === 200) {
-        console.log(res.data.data, "colorr");
         setProducts(res.data.data);
       }
     } catch (error) {
