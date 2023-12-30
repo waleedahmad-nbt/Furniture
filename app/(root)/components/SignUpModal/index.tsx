@@ -25,7 +25,6 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  console.log(formData);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

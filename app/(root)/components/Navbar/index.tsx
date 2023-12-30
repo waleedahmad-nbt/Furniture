@@ -11,7 +11,6 @@ import pinkSofa from "@/app/assets/images/pinkSofa.png";
 import dustSofa from "@/app/assets/images/dustSofa.png";
 import tumericSofa from "@/app/assets/images/tumericSofa.png";
 
-import starIcon from "@/app/assets/icons/star_fill.svg";
 import { CgProfile } from "react-icons/cg";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoMdLogOut } from "react-icons/io";
@@ -22,7 +21,7 @@ import { BsHeart } from "react-icons/bs";
 import search from "@/app/assets/icons/search.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
-import { setCategory, setCategoryId } from "@/lib/store/slices/Allslices";
+import { setCategory, setCategoryId, setSearchVal } from "@/lib/store/slices/Allslices";
 import {
   NavLink,
   SideBar,
@@ -31,9 +30,11 @@ import {
   Logout,
   useRequestMethods,
 } from "../index";
+import { useRouter } from "next/navigation";
 // import { publicRequest } from "@/requestMethods";
 
 const Navbar = () => {
+  const Router = useRouter();
   const { publicRequest } = useRequestMethods();
 
   const dispatch = useDispatch();
@@ -42,7 +43,8 @@ const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [cats, setCats] = useState([]);
-  const [filterValue, setFilterValue] = useState<string>("  ");
+  const [filterValue, setFilterValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>("");
   const allCats = [{ category: "Home" }, ...cats];
 
   const showModal = () => {
@@ -171,18 +173,12 @@ const Navbar = () => {
     },
   ];
 
-  const Links = [
-    { label: "Home", link: "#", subMenu: homeMenu },
-    { label: "Bed", link: "#", subMenu: bedMenu },
-    { label: "sofa", link: "#", subMenu: homeMenu },
-    { label: "Dressing table", link: "#", subMenu: homeMenu },
-    { label: "Wardrobe", link: "#", subMenu: homeMenu },
-    { label: "Bean bag", link: "#", subMenu: homeMenu },
-    { label: "Curtain", link: "#", subMenu: homeMenu },
-    { label: "Office furniture", link: "#", subMenu: homeMenu },
-    { label: "Coffee table/ Living  room table", link: "#", subMenu: homeMenu },
-    { label: "TV units", link: "#", subMenu: homeMenu },
-  ];
+  const handleSearch = (e: any) => {
+    e.preventDefault();
+
+    dispatch(setSearchVal(searchValue));
+    Router.push("/products");
+  }
 
   return (
     <div className="relative bg-gray-900 text-white">
@@ -230,15 +226,19 @@ const Navbar = () => {
                 <Image src={Menu} alt="menu icon" />
                 Menu
               </button>
-              <div className="grow shrink flex items-center">
-                <input
-                  type="text"
-                  placeholder="Search here..."
-                  className="grow h-[34px] lg:h-[44px] px-3 w-full outline-none"
-                />
-                <button className="bg-primary shrink-0 h-[34px] lg:h-[44px] px-2.5">
-                  <Image src={search} alt="search" />
-                </button>
+              <div className="grow shrink">
+                <form onSubmit={handleSearch} className="flex items-center">
+                  <input
+                    type="text"
+                    placeholder="Search here..."
+                    className="grow h-[34px] lg:h-[44px] px-3 w-full outline-none text-gray-900"
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                  />
+                  <button type="submit" className="bg-primary shrink-0 h-[34px] lg:h-[44px] px-2.5">
+                    <Image src={search} alt="search" />
+                  </button>
+                </form>
               </div>
               <Link
                 href="/customizeFurniture"
@@ -405,6 +405,7 @@ const Navbar = () => {
         menuOpen={menuOpen}
         setMenuOpen={setMenuOpen}
         showModal={showModal}
+        categories={cats}
       />
       <Logout setLogout={setLogout} logout={logout} />
     </div>

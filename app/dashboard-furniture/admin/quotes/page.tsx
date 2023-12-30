@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { BiSearch, BiSort } from "react-icons/bi";
+import axios from "axios";
+
+import { BiSearch } from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
-import Link from "next/link";
 import { FiEye, FiTrash } from "react-icons/fi";
 import { ViewQuote } from "../../components";
 import { IoIosAdd } from "react-icons/io";
 import { TbArrowsSort } from "react-icons/tb";
-import axios from "axios";
 
 const Quotes = () => {
 

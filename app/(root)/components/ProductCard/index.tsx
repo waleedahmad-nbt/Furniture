@@ -40,8 +40,6 @@ const ProductCard = ({ item, className, offer }: any) => {
     }
   }
 
-  console.log(item);
-
   return (
     <div className={className}>
       <div className="h-[203px]">
