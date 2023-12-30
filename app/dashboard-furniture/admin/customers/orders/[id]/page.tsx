@@ -6,25 +6,25 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { BsArrowLeft } from "react-icons/bs";
 
-const ViewOrder = () => {
+const Viewuser = () => {
   const Router = useRouter();
   const { id } = useParams();
-  const [order, setOrder] = useState<any>({});
+  const [user, setUser] = useState<any>({});
 
   useEffect(() => {
-    const getOrder = async () => {
+    const getuser = async () => {
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/order/${id}`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/user/details/${id}`);
   
         if(res.status === 200) {
           console.log(res.data.data);
-          setOrder(res.data.data);
+          setUser(res.data.data);
         }
       } catch (error) {
         console.error(error);
       }
     }
-    getOrder();
+    getuser();
   }, [])  
 
   const handleBack = () => {
@@ -41,101 +41,65 @@ const ViewOrder = () => {
             </div>
           </button>
           <p className="text-xl font-bold text-text-gray-300">
-            All Orders
+            Users Orders
           </p>
         </div>
       </div>
 
       <div className="xl:w-[950px] w-full m-auto">
-        <div className="w-full bg-white border py-3 px-4 rounded-md">
+        <div className="w-full bg-white buser py-3 px-4 rounded-md">
           <div className="flex justify-between">
             <div>
-              <h1 className="text-lg text-gray-900 font-bold">Order By:</h1>
+              <h1 className="text-lg text-gray-900 font-bold">User Details:</h1>
+              <div className="w-[50px] h-[50px] mb-2 mt-1">
+                {user?.profileImage &&
+                  <Image src={user?.profileImage} width={200} height={200} alt="user" className="w-full h-full rounded-full"/>
+                }
+              </div>
               <table>
                 <tbody>
                   <tr>
                     <td className="py-1">First Name:</td>
-                    <td className="py-1 pl-7"><h2>{order?.contactInfo?.firstName}</h2></td>
+                    <td className="py-1 pl-7"><h2>{user?.firstName}</h2></td>
                   </tr>
                   <tr>
                     <td className="py-1">Last Name:</td>
-                    <td className="py-1 pl-7"><h2>{order?.contactInfo?.lastName}</h2></td>
+                    <td className="py-1 pl-7"><h2>{user?.lastName}</h2></td>
                   </tr>
                   <tr>
                     <td className="py-1">Email:</td>
-                    <td className="py-1 pl-7"><h2>{order?.contactInfo?.email}</h2></td>
+                    <td className="py-1 pl-7"><h2>{user?.email}</h2></td>
                   </tr>
                   <tr>
                     <td className="py-1">Phone:</td>
-                    <td className="py-1 pl-7"><h2>{order?.contactInfo?.phoneNumber}</h2></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div>
-              <h1 className="text-lg text-gray-900 font-bold">Order Details:</h1>
-              <table>
-                <tbody>
-                  <tr>
-                    <td className="py-1">Order Code:</td>
-                    <td className="py-1 pl-7">{order?.orderCode}</td>
-                  </tr>
-                  <tr>
-                    <td className="py-1">Payment Method:</td>
-                    <td className="py-1 pl-7">{order?.paymentMethod}</td>
-                  </tr>
-                  <tr>
-                    <td className="py-1">Shipping:</td>
-                    <td className="py-1 pl-7">{order?.shipping}</td>
-                  </tr>
-                  <tr>
-                    <td className="py-1">Products:</td>
-                    <td className="py-1 pl-7">{order?.products?.length}</td>
-                  </tr>
-                  <tr>
-                    <td className="py-1">Sub-Total:</td>
-                    <td className="py-1 pl-7"><span className="font-bold mr-1 text-gray-900">AED</span>{order?.subtotal}</td>
-                  </tr>
-                  <tr>
-                    <td className="py-1">Total:</td>
-                    <td className="py-1 pl-7"><span className="font-bold mr-1 text-gray-900">AED</span> {order?.total}</td>
-                  </tr>
-                  <tr>
-                    <td className="py-1">Status:</td>
-                    <td className="py-1 pl-7"><div className="text-white bg_admin text-center py-1 rounded-md text-xs capitalize">{order?.status}</div></td>
+                    <td className="py-1 pl-7"><h2>{user?.phoneNumber}</h2></td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
         </div>
-        <div className="w-full bg-white border rounded-md my-5">
+        <div className="w-full bg-white buser rounded-md my-5">
           <table className="min-w-full text-xs divide-y divide-gray-200">
-            <thead className="bg-[#F7F7F7] sticky top-[53px] border-b">
+            <thead className="bg-[#F7F7F7] sticky top-[53px] buser-b">
               <tr>
                 <th
                   scope="col"
                   className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
-                  Image
+                  Order Code
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
-                  Name
+                  Items
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
-                  Quantity
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
-                >
-                  Price
+                  Payment Method
                 </th>
                 <th
                   scope="col"
@@ -143,35 +107,57 @@ const ViewOrder = () => {
                 >
                   Sub-Total
                 </th>
+                <th
+                  scope="col"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
+                >
+                  Total
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
+                >
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y">
-              {order && order?.products?.map((product: any, i: number) => {
-                const { _id, image, produtTitle, qty, price} = product;
+              {user && user?.orders?.map((product: any, i: number) => {
+                const { _id, orderCode, products, paymentMethod, total, subtotal, status} = product;
                 return (
                   <tr key={i}>
                     <td className="px-6">
-                      <div className="w-[50px] h-[50px] flex items-center justify-center">
-                        <Image
-                          className="max-w-full max-h-full rounded-lg"
-                          src={image}
-                          width={100}
-                          height={100}
-                          alt=""
-                        />
-                      </div>
+                      {orderCode}
                     </td>
                     <td className="max-w-[300px] px-6 py-4  text-xs font-medium text-gray-900">
-                      {produtTitle}
+                      {products?.length}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-xs">
-                      {qty}
+                      {paymentMethod}
                     </td>
                     <td className="px-6 py-4 text-left whitespace-nowrap text-xs">
-                      AED {price}
+                      AED {subtotal}
                     </td>
                     <td className="px-6 py-4 text-left whitespace-nowrap text-xs">
-                      AED {Math.floor(price * qty)}
+                      AED {total}
+                    </td>
+                    <td className="px-6 py-4 text-left whitespace-nowrap text-xs">
+                      <div
+                        className={` ${
+                          status === "delivered"
+                            ? "bg-gray-900 text-white"
+                            : status === "processing"
+                            ? "bg-orange-500"
+                            : status === "completed" ? "bg-green" : ""
+                        } h-max py-1 px-2 rounded-md text-center capitalize font-bold text-gray-900`}
+                      >
+                        {status}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-left whitespace-nowrap text-xs">
+                      <Link href={`/dashboard-furniture/admin/orders/details/${_id}`} className="px-2 text-white py-1 rounded-md relative bg_admin hover:bg-gray-900">
+                        View Order
+                      </Link>
                     </td>
                   </tr>
                 )})}
@@ -183,4 +169,4 @@ const ViewOrder = () => {
   )
 }
 
-export default ViewOrder
+export default Viewuser

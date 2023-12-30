@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BiSearch} from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
-import { FiTrash } from "react-icons/fi";
+import { FiEye, FiTrash } from "react-icons/fi";
 import { IoIosAdd } from "react-icons/io";
 import { TbArrowsSort } from "react-icons/tb";
 import axios from "axios";
@@ -292,6 +292,12 @@ const Products = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
                       <div className="flex gap-2 text-base items-center">
+                        <Link
+                          href={`/dashboard-furniture/admin/products/details/${_id}`}
+                          className="text-gray-300 hover:text-gray-900 duration-150 relative"
+                        >
+                          <FiEye />
+                        </Link>
                         <button
                           onClick={() => deleteProduct(_id)}
                           className="text-gray-300 hover:text-gray-900 duration-150 relative"

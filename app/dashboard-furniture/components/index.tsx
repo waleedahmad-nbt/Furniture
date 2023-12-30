@@ -19,6 +19,7 @@ import ViewQuote from "./viewQuote";
 import ViewContact from "./viewContact";
 import AddTeam from "./addTeam";
 import AddCategory from "./addCategory";
+import ProductDetail from "./productDetail";
 
 export {
   Header,
@@ -42,4 +43,5 @@ export {
   ViewContact,
   AddTeam,
   AddCategory,
+  ProductDetail,
 };

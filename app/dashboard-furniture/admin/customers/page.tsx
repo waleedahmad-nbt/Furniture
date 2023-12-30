@@ -232,9 +232,9 @@ const Customers = () => {
                           </div>
                           <span className={updating === _id ? "opacity-0" : ""}>{isActive ? "Disable" : "Activate"}</span>
                         </button>
-                        <button className="px-2 text-white py-1 rounded-md relative bg_admin hover:bg-gray-900">
+                        <Link href={`/dashboard-furniture/admin/customers/orders/${_id}`} className="px-2 text-white py-1 rounded-md relative bg_admin hover:bg-gray-900">
                           View Orders
-                        </button>
+                        </Link>
                       </div>
                     </td>
                   </tr>
