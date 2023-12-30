@@ -447,6 +447,7 @@ export default function Home() {
             </span>
           </Link>
         </div>
+        {/* comments */}
         <div className="w-full my-10">
           <div className="relative flex flex-wrap gap-y-10 gap-x-5 items-center">
             {filter2(products)?.map((item: any, index: number) => (
