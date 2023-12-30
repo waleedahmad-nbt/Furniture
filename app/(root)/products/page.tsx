@@ -16,10 +16,12 @@ import check from "@/app/assets/icons/check.svg";
 
 import { RootState } from "@/lib/store";
 // import { publicRequest } from "@/requestMethods";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RiFilterOffFill } from "react-icons/ri";
+import { setCategory, setCategoryId } from "@/lib/store/slices/Allslices";
 
 const Products = () => {
+  const dispatch = useDispatch();
   const { publicRequest } = useRequestMethods();
 
   const searchValue: any = useSelector((state: RootState) => state.searchVal);
@@ -66,7 +68,17 @@ const Products = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await publicRequest.get(`/product?keyword=${searchValue}&cat=${category}`);
+
+        const params = new URLSearchParams();
+
+        if (searchValue) {
+          params.append('keyword', searchValue);
+        }
+        if(category) {
+          params.append('cat', category);
+        }
+        
+        const res = await publicRequest.get(`/product${params.toString() ? `?${params.toString()}` : ''}`);
 
         if (res.status === 200) {
           setProducts(res.data.data);
@@ -93,6 +105,13 @@ const Products = () => {
 
     getProducts();
   }, [searchValue, category]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(setCategory(""));
+      dispatch(setCategoryId(''));
+    }
+  }, [])  
 
   const [minPrice, setMinPrice] = useState<number>(100);
   const [maxPrice, setMaxPrice] = useState<number>(9999);

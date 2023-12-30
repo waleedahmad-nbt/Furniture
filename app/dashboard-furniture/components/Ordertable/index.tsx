@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import Link from "next/link";
 import React, { useState } from "react";
 import { FiEye, FiMoreVertical, FiTrash } from "react-icons/fi";
 
@@ -207,9 +208,9 @@ function Table({ data, setOrders }: any) {
               </td>
               <td className="px-6 py-2 relative">
                 <div className="flex gap-2 text-base items-center">
-                  <button className="text-gray-300 hover:text-gray-900 duration-150 relative whitespace-nowrap">
+                  <Link href={`/dashboard-furniture/admin/orders/details/${rowData?._id}`} className="text-gray-300 hover:text-gray-900 duration-150 relative whitespace-nowrap">
                     <FiEye />
-                  </button>
+                  </Link>
                   <button
                     onClick={() => deleteOrder(rowData?._id)}
                     className="text-gray-300 hover:text-gray-900 duration-150 relative whitespace-nowrap"

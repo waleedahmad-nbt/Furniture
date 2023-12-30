@@ -8,8 +8,7 @@ import { BiSolidUser } from "react-icons/bi";
 import { TbDiscount2 } from "react-icons/tb";
 import { GoHomeFill } from "react-icons/go";
 import { ImPriceTag } from "react-icons/im";
-import { AiFillPicture } from "react-icons/ai";
-import { RiContactsFill, RiDoubleQuotesR, RiGroupFill } from "react-icons/ri";
+import { RiContactsFill, RiFileList2Line, RiGroupFill } from "react-icons/ri";
 import { FaUsers } from "react-icons/fa";
 
 const Sidebar = () => {
@@ -27,14 +26,9 @@ const Sidebar = () => {
   ];
 
   const ordersSubLink = [
-    { label: "Drafts", link: "/dashboard-furniture/admin/orders/drafts" },
     { label: "Abandoned checkouts", link: "/dashboard-furniture/admin/orders/Abandonedcheckouts" },
   ];
-
-  const contentSubLink = [
-    { label: "File", link: "/dashboard-furniture/admin/orders/content" },
-  ];
-
+  
   const analyticsSubLink = [
     { label: "Reports", link: "/dashboard-furniture/admin/analytices/reports" },
     { label: "Live View", link: "/dashboard-furniture/admin/analytices/liveview" },
@@ -79,8 +73,8 @@ const Sidebar = () => {
             active="bg-white hover:bg-white"
             className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
           >
-            <RiDoubleQuotesR />
-            <span>Quotes</span>
+            <RiFileList2Line />
+            <span>Quotation</span>
           </NavLink>
         </li>
         <li className="text-sm">

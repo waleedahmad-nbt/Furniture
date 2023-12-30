@@ -1,13 +1,18 @@
 "use client";
 import { RootState } from "@/lib/store";
+import { setLoginUser } from "@/lib/store/slices/Allslices";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { AiOutlineBars, AiOutlineCheck, AiOutlineCheckCircle, AiOutlineSearch } from "react-icons/ai";
 import { BiSearch, BiStore } from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
 import { HiOutlineBell } from "react-icons/hi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
+
+  const dispatch = useDispatch();
+  const Router = useRouter();
 
   const User: any = useSelector((state: RootState) => state.user);
 
@@ -49,6 +54,12 @@ const Header = () => {
     setNotification(true);
     setViewuser(!viewuser);
   };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    dispatch(setLoginUser({}));
+    Router.push("/");
+  }
 
   return (
     <div className="w-full py-2 bg-[rgb(26,26,26)] grid grid-cols-3 px-4 fixed top-0 left-0 z-[100]">
@@ -138,7 +149,7 @@ const Header = () => {
             className="bg-[rgb(48,48,48)] relative flex rounded-md items-center cursor-pointer"
           >
             <p className="p-2 text-xs">My Store</p>
-            <div className="bg-primary w-max p-2 rounded-md text-xs">{getInitials(User?.userName)}</div>
+            <div className="bg-primary w-max p-2 rounded-md text-xs">{getInitials(User?.firstName + " " + User?.lastName)}</div>
             <div
               className={`absolute w-80 top-14 z-[1] p-2 duration-200 right-0 h-max text-black bg-white rounded-md shadow-lg ${
                 viewuser ? "hidden" : "block"
@@ -148,9 +159,9 @@ const Header = () => {
                 <div className="bg-[rgb(250,250,250)] flex items-center justify-between  p-2">
                   <div className="flex items-center space-x-2">
                     <div className="bg-primary w-max py-2 px-3 font-medium rounded-md text-xs">
-                      {getInitials(User?.userName)}
+                      {getInitials(User?.firstName + " " + User?.lastName)}
                     </div>
-                    <span className="text-sm capitalize">{User?.userName}</span>
+                    <span className="text-sm capitalize">{User?.firstName + " " + User?.lastName}</span>
                   </div>
                   <AiOutlineCheck className="text-sm" />
                 </div>
@@ -215,8 +226,8 @@ const Header = () => {
                   </span>
                 </div>
               </div>
-              <div className="flex items-center justify-between my-1 px-2 py-1">
-                <div className=" px-2">
+              <div className="flex items-center justify-between my-1 px-2 py-1" onClick={logout}>
+                <div className="px-2">
                   <span className="text-xs">Log Out</span>
                 </div>
               </div>

@@ -14,8 +14,8 @@ export default function Adminlayout({
 
   const User: any = useSelector((state: RootState) => state.user);
 
-  if(User?.role !== "admin") {
-    Router.push("/");
+  if(!User?.isAdmin) {
+    Router.push("/dashboard-furniture");
   }
 
   return (

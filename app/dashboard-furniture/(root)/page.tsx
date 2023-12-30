@@ -6,6 +6,7 @@ import Link from "next/link";
 import { setLoginUser } from "@/lib/store/slices/Allslices";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
+import axios from "axios";
 
 interface User {
   email: string;
@@ -17,8 +18,9 @@ const Dashboard = () => {
   const Router = useRouter();
 
   const User: any = useSelector((state: RootState) => state.user);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  if(User?.role === "admin") {
+  if(User?.isAdmin) {
     Router.push("/dashboard-furniture/admin");
   } else if (Object.keys(User).length !== 0) {
     Router.push("/");
@@ -62,16 +64,24 @@ const Dashboard = () => {
     return Object.keys(errors).length === 0;
   }
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     
     if (validateForm()) {
-      if (formData.email === "admin@gmail.com" && formData.password === "123") {
-        dispatch(setLoginUser({ email: "admin@gmail.com", userName: 'admin', role: "admin" }))
-        Router.push("/dashboard-furniture/admin");
-      } else {
-        setFormErrors({ email: "Incorrect email or password." });
-        setFormData(fields);
+      setLoading(true);
+      try {
+        const res: any = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/user/login`, {
+          email: formData.email,
+          password: formData.password,
+        });
+
+        if (res.status === 200) {
+          dispatch(setLoginUser(res.data.data));
+          localStorage.setItem("token", JSON.stringify(res.data.data.token));
+          Router.push("/dashboard-furniture/admin");
+        }
+      } catch (error: any) {
+        setLoading(false);
       }
     }
   };
@@ -123,8 +133,11 @@ const Dashboard = () => {
               </p>
             )}
           </div>
-          <button type="submit" className="py-2 px-10 bg-primary text-white text-ubuntu-bold rounded-md w-full mt-8 mb-3">
-            Sign In
+          <button type="submit" className="py-2 px-10 bg-primary text-white text-ubuntu-bold rounded-md w-full mt-8 mb-3 relative">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              {loading && <div className="Loader w-[15px] border-[2px] border-gray-900"></div>}
+            </div>
+            <span className={loading ? "opacity-0" : ""}>Sign In</span>
           </button>
         </form>
       </div>
