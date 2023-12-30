@@ -131,8 +131,8 @@ const MultiProductView = ({ item }: any) => {
               <div
                 className={`mx-auto duration-300 transition-opacity ${
                   index === activeIndex
-                    ? "relative opacity-100 "
-                    : "absolute inset-0 opacity-0 pointer-events-none"
+                    ? "relative opacity-100 visible"
+                    : "absolute inset-0 opacity-0 invisible pointer-events-none"
                 }`}
                 key={index}
               >

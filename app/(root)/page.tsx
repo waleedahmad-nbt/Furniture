@@ -15,6 +15,11 @@ import {
 } from "./components";
 
 import arrowL from "@/app/assets/icons/arrow-left.svg";
+import {
+  setCategory,
+  setCategoryId,
+  setSearchVal,
+} from "@/lib/store/slices/Allslices";
 
 import sofa1 from "@/app/assets/banners/sofa_01.png";
 import sofa2 from "@/app/assets/banners/sofa_02.png";
@@ -23,6 +28,7 @@ import starFill from "@/app/assets/icons/star_fill.svg";
 import starhalf from "@/app/assets/icons/starhalf.svg";
 
 import Banner from "@/app/assets/banners/banner_02.png";
+import { useDispatch } from "react-redux";
 
 export default function Home() {
   const { publicRequest } = useRequestMethods();
@@ -109,6 +115,8 @@ export default function Home() {
     return products.filter((item: any) => item.category === activeTab2);
   };
 
+  const dispatch = useDispatch();
+
   return (
     <>
       <div className="relative bg-cream">
@@ -158,14 +166,22 @@ export default function Home() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 my-14">
           {categories?.map((item: any, index: number) => (
             <div key={index}>
-              <div className="bg-cream h-[170px]">
-                <Image
-                  src={item?.image}
-                  alt="product"
-                  className="w-full h-full"
-                  width={100}
-                  height={100}
-                />
+              <div
+                className="bg-cream h-[170px] group overflow-hidden"
+                onClick={() => {
+                  dispatch(setCategory(item.category));
+                  dispatch(setCategoryId(item._id));
+                }}
+              >
+                <Link href="/products">
+                  <Image
+                    src={item?.image}
+                    alt="product"
+                    className="w-full h-full group-hover:scale-110 duration-300"
+                    width={100}
+                    height={100}
+                  />
+                </Link>
               </div>
               <h3 className="text-center font-medium text-gray-300 mt-3">
                 {item?.category}
