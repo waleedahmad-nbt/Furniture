@@ -149,7 +149,7 @@ const ProductDetails = () => {
           <div className="flex items-center gap-2 mt-4">
             <p className="text-gray-200">Home</p>
             <Image src={angle} alt="icon" />
-            <p className="text-gray-200">Living Room</p>
+            <p className="text-gray-200"> {product?.category}</p>
             <Image src={angle} alt="icon" />
             <p className="text-gray-300 font-medium">Product Detail</p>
           </div>
@@ -200,13 +200,22 @@ const ProductDetails = () => {
                           height={24}
                         />
                       ) : (
-                        <Image src={star} alt="product" width={24} height={24} />
+                        <Image
+                          src={star}
+                          alt="product"
+                          width={24}
+                          height={24}
+                        />
                       )}
                     </>
                   );
                 })}
               </div>
-              <span className="text-gray-500">( {product?.totalReviews} )</span>
+              {product?.totalReviews > 0 && (
+                <span className="text-gray-500">
+                  ( {product?.totalReviews} )
+                </span>
+              )}
             </div>
             <h2 className="text-[24px] font-medium text-gray-900 mb-4">
               AED {product?.price}
