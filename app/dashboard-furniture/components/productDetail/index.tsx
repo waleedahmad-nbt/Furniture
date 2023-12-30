@@ -15,16 +15,17 @@ const ProductDetail = ({ data }: any) => {
   const fields = {
     title: data?.title || "",
     description: data?.description || "",
-    quantity: data?.quantity || 0,
+    quantity: data?.qty || 0,
     weight: "",
     images: data?.Images || [],
     category: data?.category || "",
     subCategory: data?.subCategory || "",
     status: "",
     materials: "",
-    brand: "",
+    brand: data?.features?.brand || "",
     warranty: "",
     weightUnit: "Kg",
+    price: data?.price || "",
   };
 
   const [colors, setColors] = useState<string[]>(data?.colors || []);
@@ -455,7 +456,7 @@ const ProductDetail = ({ data }: any) => {
                       {formData?.images[index] ? (
                         <div>
                           <Image
-                            src={URL.createObjectURL(formData?.images[index])}
+                            src={data.Images[index] === formData?.images[index] ? data.Images[index] : URL.createObjectURL(formData?.images[index])}
                             width={100}
                             height={100}
                             className="w-full h-full object-cover rounded-lg"
@@ -510,10 +511,11 @@ const ProductDetail = ({ data }: any) => {
                         placeholder="0.00"
                         name="price"
                         id="price"
+                        value={formData?.price}
                         onChange={handleChange}
                       />
                       <div className="absolute text-xs inset-y-0 left-0 flex items-center pl-3 ">
-                        Rs
+                        AED
                       </div>
                     </div>
                   </div>
