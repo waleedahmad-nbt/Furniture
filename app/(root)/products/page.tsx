@@ -28,8 +28,12 @@ const Products = () => {
 
   const category: any = useSelector((state: RootState) => state.category);
   const categoryId: any = useSelector((state: RootState) => state.categoryId);
+  // console.log(category, "category");
+  // console.log(categoryId, "categoryId");
+
   const [options, setoptions] = useState([]);
   const [products, setProducts] = useState<any>([]);
+  console.log(products, "products");
 
   const [tab, setTab] = useState<string>("");
   const [pageData, setPageData] = useState<any>({
@@ -68,17 +72,18 @@ const Products = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-
         const params = new URLSearchParams();
 
         if (searchValue) {
-          params.append('keyword', searchValue);
+          params.append("keyword", searchValue);
         }
-        if(category) {
-          params.append('cat', category);
+        if (category) {
+          params.append("cat", category);
         }
-        
-        const res = await publicRequest.get(`/product${params.toString() ? `?${params.toString()}` : ''}`);
+
+        const res = await publicRequest.get(
+          `/product${params.toString() ? `?${params.toString()}` : ""}`
+        );
 
         if (res.status === 200) {
           setProducts(res.data.data);
@@ -99,7 +104,7 @@ const Products = () => {
       }
     };
 
-    if(category) {
+    if (category) {
       searchCategories();
     }
 
@@ -109,9 +114,9 @@ const Products = () => {
   useEffect(() => {
     return () => {
       dispatch(setCategory(""));
-      dispatch(setCategoryId(''));
-    }
-  }, [])  
+      dispatch(setCategoryId(""));
+    };
+  }, []);
 
   const [minPrice, setMinPrice] = useState<number>(100);
   const [maxPrice, setMaxPrice] = useState<number>(9999);

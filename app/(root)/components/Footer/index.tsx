@@ -10,7 +10,7 @@ import { NavLink } from "../index";
 const Footer = () => {
   return (
     <>
-      <div className="bg-gray-900 py-20">
+      <div className="bg-gray-900 pt-20 pb-5">
         <div className="container text-white">
           <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 place-items-start border-b border-gray-100 pb-10">
             <div className="px-5 lg:px-0">
@@ -127,16 +127,18 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="flex flex-col items-start sm:flex-row gap-x-5 gap-y-5 sm:items-center">
+            {/* <div className="flex flex-col items-start sm:flex-row gap-x-5 gap-y-5 sm:items-center">
               <p>Download App:</p>
               <div className="flex justify-start">
                 <Image src={AppStore} alt="" className="" />
                 <Image src={PlayStore} alt="" className="ms-2" />
               </div>
-            </div>
+            </div> */}
+            <p className="text-[12px] md:text-[16px]">
+              Copyright 2023 © Guidline. All right reserved. Powered by NBT.
+            </p>
           </div>
         </div>
-        <div className="h-[1px] w-full bg-gray-100 mt-5 "></div>
       </div>
     </>
   );

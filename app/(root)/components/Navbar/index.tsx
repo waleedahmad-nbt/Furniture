@@ -10,6 +10,7 @@ import greenSofa from "@/app/assets/images/greenSofa.png";
 import pinkSofa from "@/app/assets/images/pinkSofa.png";
 import dustSofa from "@/app/assets/images/dustSofa.png";
 import tumericSofa from "@/app/assets/images/tumericSofa.png";
+import starIcon from "@/app/assets/icons/star.svg";
 
 import { CgProfile } from "react-icons/cg";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -21,7 +22,11 @@ import { BsHeart } from "react-icons/bs";
 import search from "@/app/assets/icons/search.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
-import { setCategory, setCategoryId, setSearchVal } from "@/lib/store/slices/Allslices";
+import {
+  setCategory,
+  setCategoryId,
+  setSearchVal,
+} from "@/lib/store/slices/Allslices";
 import {
   NavLink,
   SideBar,
@@ -43,10 +48,15 @@ const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [cats, setCats] = useState([]);
+  const [megaMenu, setMegaMenu] = useState([]);
+  const [filterCats, setFilterCats] = useState([]);
+  const [loading, setLoading] = useState(true);
+  // console.log(cats, "cats");
+
   const [filterValue, setFilterValue] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string>("");
   const allCats = [{ category: "Home" }, ...cats];
-  console.log(allCats, "allCats");
+  // console.log(allCats, "allCats");
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -84,7 +94,17 @@ const Navbar = () => {
     }
   }
 
+  const gettingSubMenu = async () => {
+    const res = await publicRequest.get(`/product`);
+    console.log(res, "res");
+    if (res.data.success) {
+      setMegaMenu(res.data.data);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
+    gettingSubMenu();
     fetchCats();
   }, []);
 
@@ -179,7 +199,15 @@ const Navbar = () => {
 
     dispatch(setSearchVal(searchValue));
     Router.push("/products");
-  }
+  };
+
+  const filterMenu = (category: any) => {
+    const filterCat = megaMenu.filter((item: any, index: any) => {
+      return item.category == category;
+    });
+    // console.log(filterCat  , "filterCat");
+    setFilterCats(filterCat);
+  };
 
   return (
     <div className="relative bg-gray-900 text-white">
@@ -236,7 +264,10 @@ const Navbar = () => {
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
                   />
-                  <button type="submit" className="bg-primary shrink-0 h-[34px] lg:h-[44px] px-2.5">
+                  <button
+                    type="submit"
+                    className="bg-primary shrink-0 h-[34px] lg:h-[44px] px-2.5"
+                  >
                     <Image src={search} alt="search" />
                   </button>
                 </form>
@@ -325,6 +356,7 @@ const Navbar = () => {
                 dispatch(setCategory(item.category));
                 dispatch(setCategoryId(item._id));
               }}
+              onMouseEnter={() => filterMenu(item.category)}
               key={index}
               className={`hover:text-primary transition-all group pb-3 font-normal text-[12px] lg:text-[16px] ${
                 filterValue === item.category ? "text-primary" : "text-white"
@@ -333,55 +365,77 @@ const Navbar = () => {
               <Link href={item.category == "Home" ? "/" : "/products"}>
                 {item?.category}
               </Link>
-              <div className="absolute w-full max-h-[0vh] overflow-hidden bottom-0 translate-y-[100%] left-0 bg-white z-50 group-hover:max-h-[100vh] group-hover:overflow-auto transition-all duration-500 hover:block">
-                <div className="container py-5">
-                  <div className="flex items-center gap-5">
-                    <h1 className="text-[14px] text-gray-300 font-bold">
-                      The best discount this week{" "}
-                    </h1>
-                    <span className="text-gray-200 text-[10px] font-normal">
-                      Every week you can find the best discount here
-                    </span>
-                  </div>
-                  {/* <div className="flex items-center justify-around flex-wrap mt-5">
-                    {item?.subMenu.map((e: any, i: any) => {
-                      return (
-                        <div
-                          key={i}
-                          className={`${
-                            i == 0 ? "border-0" : "border-l"
-                          } p-5 flex flex-col gap-3`}
-                        >
-                          <Image src={e.img} alt="" />
-                          <p className="w-[40px] h-[22px] bg-secondary rounded-full text-[12px] text-white text-center leading-[21px]">
-                            {e.discount}
-                          </p>
-                          <div className="flex gap-2">
-                            <s className="text-gray-300 text-[14px]">
-                              {e.price}
-                            </s>
-                            <p className="text-white bg-[#3CB242] text-[14px] px-1">
-                              {e.discountedPrice}
-                            </p>
-                          </div>
-                          <h1 className="text-gray-300">{e.title}</h1>
-                          <div className="flex gap-3">
-                            <div className="flex bg-[#FFF6DC] gap-1 px-2 rounded-md">
-                              <Image src={starIcon} alt="" />
-                              <p className="text-gray-200 text-[12px]">
-                                {e.Reviews}{" "}
-                              </p>
-                            </div>
-                            <p className="text-gray-200 text-[12px]">
-                              {e.Reviews} Reviews
-                            </p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div> */}
+              {item.category == "Home" ? (
+                ""
+              ) : (
+                <div className="absolute w-full max-h-[0vh] overflow-hidden bottom-0 translate-y-[100%] left-0 bg-white z-50 group-hover:max-h-[100vh] group-hover:overflow-auto transition-all duration-500 hover:block">
+                  {loading ? (
+                    <div className="flex justify-center py-5">
+                      <div className="loader"></div>
+                    </div>
+                  ) : (
+                    <div className="container py-5">
+                      <div className="flex items-center gap-5">
+                        <h1 className="text-[14px] text-gray-300 font-bold">
+                          The best discount this week{" "}
+                        </h1>
+                        <span className="text-gray-200 text-[10px] font-normal">
+                          Every week you can find the best discount here
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-around flex-wrap mt-5">
+                        {filterCats &&
+                          filterCats.map((e: any, i: any) => {
+                            return (
+                              <div
+                                key={i}
+                                className={`${
+                                  i == 0 ? "border-0" : "border-l"
+                                } p-5 flex flex-col gap-3`}
+                              >
+                                <Image
+                                  src={e.Images[0]}
+                                  alt=""
+                                  width={100}
+                                  height={100}
+                                />
+                                <p className="w-[40px] h-[22px] bg-secondary rounded-full text-[12px] text-white text-center leading-[21px]">
+                                  15%
+                                </p>
+                                <div className="flex gap-2">
+                                  <s className="text-gray-300 text-[14px]">
+                                    AED 27.90
+                                  </s>
+                                  <p className="text-white bg-[#3CB242] text-[14px] px-1">
+                                    AED {e.price}
+                                  </p>
+                                </div>
+                                <h1 className="text-gray-300">{e.title}</h1>
+                                {!e.totalReviews ? (
+                                  <p className="text-gray-200 text-[12px]">
+                                    No Reviews
+                                  </p>
+                                ) : (
+                                  <div className="flex gap-3">
+                                    <div className="flex bg-[#FFF6DC] gap-1 px-2 rounded-md">
+                                      <Image src={starIcon} alt="" />
+                                      <p className="text-gray-200 text-[12px]">
+                                        {e.totalReviews}{" "}
+                                      </p>
+                                    </div>
+                                    <p className="text-gray-200 text-[12px]">
+                                      {e.Reviews} Reviews
+                                    </p>
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
+              )}
             </li>
           ))}
         </ul>
