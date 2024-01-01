@@ -4,10 +4,9 @@ import { ProductCard } from "..";
 
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
-const PaginationContainer = ({ items, setStats }: any) => {
-  const totalPages = 4;
+const PaginationContainer = ({ items, setStats, totalPages, isGrid }: any) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 1;
+  const itemsPerPage = 9;
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -74,9 +73,18 @@ const PaginationContainer = ({ items, setStats }: any) => {
   return (
     <>
       {/* Display current page items */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div
+        className={`grid ${
+          isGrid ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 " : "grid-cols-1"
+        } gap-4`}
+      >
         {currentItems?.map((item: any, index: number) => (
-          <ProductCard item={item} key={index} className="h-max" />
+          <ProductCard
+            item={item}
+            key={index}
+            className="h-max"
+            isGrid={isGrid}
+          />
         ))}
       </div>
 

@@ -17,8 +17,8 @@ import cart from "@/app/assets/icons/cart_dark.svg";
 import { HiShoppingCart } from "react-icons/hi";
 import zoom from "@/app/assets/icons/zoom.svg";
 import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import ViewItem from "./ViewItem";
 
 const MultiProductView = ({ item }: any) => {
@@ -81,7 +81,10 @@ const MultiProductView = ({ item }: any) => {
     }
   };
 
-  const notify = () => toast("Product Added to Cart!");
+  const notify = () =>
+    toast("Product Added to Cart!", {
+      className: "custom-toast", // Add a custom class to the toast container
+    });
 
   const handleWishList = () => {
     const id = item?._id;
@@ -102,8 +105,12 @@ const MultiProductView = ({ item }: any) => {
 
   return (
     <>
-      {toggleView && <ViewItem item={item} close={() => setToggleView(false)} />}
-      <div className={`bg-white flex items-center justify-center relative group overflow-hidden h-full`}>
+      {toggleView && (
+        <ViewItem item={item} close={() => setToggleView(false)} />
+      )}
+      <div
+        className={`bg-white flex items-center justify-center relative group overflow-hidden h-full`}
+      >
         <div className="absolute top-2 right-3 z-10">
           <button
             onClick={handleWishList}
@@ -112,14 +119,19 @@ const MultiProductView = ({ item }: any) => {
           >
             {existWish.length > 0 ? <IoHeartSharp /> : <IoHeartOutline />}
           </button>
-          <button onClick={() => setToggleView(true)} className="bg-white border rounded-full w-[32px] h-[32px] opacity-0 duration-200 group-hover:opacity-100 flex items-center justify-center mt-1">
+          <button
+            onClick={() => setToggleView(true)}
+            className="bg-white border rounded-full w-[32px] h-[32px] opacity-0 duration-200 group-hover:opacity-100 flex items-center justify-center mt-1"
+          >
             <Image src={zoom} alt="product" />
           </button>
           <button
             className="bg-white border rounded-full w-[32px] h-[32px] opacity-0 duration-200 group-hover:opacity-100 flex items-center justify-center mt-1"
             onClick={handleCart}
           >
-            <HiShoppingCart className={`${existCart ? "text-primary" : "text-gray-200"}`} />
+            <HiShoppingCart
+              className={`${existCart ? "text-primary" : "text-gray-200"}`}
+            />
           </button>
         </div>
 
