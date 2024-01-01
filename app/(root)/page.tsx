@@ -238,7 +238,7 @@ export default function Home() {
             {filter(products)?.map((item: any, index: number) => (
               <div className={`relative w-full`} key={index}>
                 <div className="">
-                  <ProductCard item={item} />
+                  <ProductCard item={item} isGrid={true} />
                 </div>
               </div>
             ))}
@@ -309,6 +309,7 @@ export default function Home() {
             item={products[0]}
             className="shrink-0 w-[213px]"
             offer
+            isGrid={true}
           />
           <div className="grow p-5 pb-7 border-[5px] border-primary h-max">
             <div className="flex flex-wrap gap-6">
@@ -396,6 +397,7 @@ export default function Home() {
             item={products[2]}
             className="shrink-0 w-[213px]"
             offer
+            isGrid={true}
           />
         </div>
       </div>
@@ -472,6 +474,7 @@ export default function Home() {
                 item={item}
                 key={index}
                 className="shrink-0 w-[213px]"
+                isGrid={true}
               />
             ))}
           </div>

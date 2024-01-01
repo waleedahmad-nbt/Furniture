@@ -409,3 +409,7 @@ input[type='radio']:checked {
   content:"Loading..."
 }
 @keyframes l2 {to{background-size: 100% 3px}}
+
+.custom-toast .Toastify__progress-bar {
+  background: #FF6F00; /* Set the desired color for the progress bar */
+}
