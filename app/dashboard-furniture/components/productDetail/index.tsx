@@ -4,6 +4,8 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { HiXMark } from "react-icons/hi2";
 import { BsArrowLeft } from "react-icons/bs";
+import Select from 'react-select';
+import CSS_COLOR_NAMES from '@/Utils/colors';
 
 // import ReactQuill from 'react-quill';
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -15,22 +17,21 @@ const ProductDetail = ({ data }: any) => {
   const fields = {
     title: data?.title || "",
     description: data?.description || "",
-    quantity: data?.qty || 0,
-    weight: "",
+    qty: data?.qty || 0,
+    weight: data?.features?.weight ||"",
     images: data?.Images || [],
     category: data?.category || "",
     subCategory: data?.subCategory || "",
-    status: "",
-    materials: "",
+    status: data?.status || "Active",
+    materials: data?.features?.materials || "",
     brand: data?.features?.brand || "",
-    warranty: "",
+    warranty: data?.features?.warrenty || "",
     weightUnit: "Kg",
     price: data?.price || "",
   };
 
   const [colors, setColors] = useState<string[]>(data?.colors || []);
   const [submit, setSubmit] = useState<boolean>(false);
-  const [value, setValue] = useState<string>("");
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [formData, setFormData] = useState<any>(fields);
   const [categories, setCategories] = useState<any>([]);
@@ -157,29 +158,29 @@ const ProductDetail = ({ data }: any) => {
       data.append(`features[bDimensions][height]`, boxArray[0].height);
       data.append(`features[bDimensions][width]`, boxArray[0].width);
 
-      sizesArray?.forEach((size: any, index: number) => {
-        data.append(`features[materials][${index}]`, formatSize(size));
+      formData.materials?.forEach((material: any, index: number) => {
+        data.append(`features[materials][${index}]`, material);
       });
 
       data.append("features[brand]", formData?.brand);
-      data.append("features[warranty]", formData?.warranty);
+      data.append("features[warrenty]", formData?.warranty);
       data.append("weight", formData?.weight + " " + formData?.weightUnit);
 
-      try {
-        const res = await axios.post(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/product/add`,
-          data
-        );
+      // try {
+      //   const res = await axios.post(
+      //     `${process.env.NEXT_PUBLIC_BASE_URL}/product/add`,
+      //     data
+      //   );
 
-        console.log(res);
-        if (res.status === 201) {
-          alert("Product Created.");
-          setSubmit(false);
-          setFormData(fields);
-        }
-      } catch (error) {
-        console.error(error);
-      }
+      //   console.log(res);
+      //   if (res.status === 201) {
+      //     alert("Product Created.");
+      //     setSubmit(false);
+      //     setFormData(fields);
+      //   }
+      // } catch (error) {
+      //   console.error(error);
+      // }
     }
   };
 
@@ -199,15 +200,6 @@ const ProductDetail = ({ data }: any) => {
       };
     }
   }, [showPopup]);
-
-  const changeValue = (e: any) => {
-    setValue(e.target.value);
-  };
-
-  const submitColor = (e: any) => {
-    e.preventDefault();
-    setColors([...colors, value]);
-  };
 
   const delColor = (idx: any) => {
     setColors(
@@ -397,6 +389,24 @@ const ProductDetail = ({ data }: any) => {
     });
   };
 
+  const customStyles = {
+    option: (provided: any, state: any) => ({
+      ...provided,
+      backgroundColor: state.data.color,
+    }),
+  };
+
+  const colorOptions = CSS_COLOR_NAMES.map((color) => ({
+    label: color,
+    value: color,
+  }));
+
+  const submitColor = (e: any) => {
+    if (!colors.includes(e.value)) {
+      setColors([...colors, e.value]);
+    }
+  };
+
   return (
     <>
       <div className="w-full p-2">
@@ -546,6 +556,7 @@ const ProductDetail = ({ data }: any) => {
                     placeholder="0.0"
                     name="qty"
                     id="qty"
+                    value={formData.qty}
                     onChange={handleChange}
                   />
                 </div>
@@ -664,18 +675,22 @@ const ProductDetail = ({ data }: any) => {
 
                 <div>
                   <p className="text-sm mb-1 mt-2">Colors</p>
-                  <form onSubmit={submitColor} className="w-1/2">
-                    <input
-                      type="color"
-                      onChange={changeValue}
-                      onBlur={submitColor}
-                      placeholder="Colors"
-                      className="mb-2 text-xs px-2 py-1 h-10 rounded-lg focus:border-black w-1/2"
-                    />
-                  </form>
-                  <div className="flex flex-wrap">
+                  <Select
+                    options={colorOptions}
+                    styles={customStyles}
+                    components={{
+                      Option: ({ innerProps, label }) => (
+                        <div {...innerProps} className="flex items-center gap-3 pl-3 py-1 cursor-pointer hover:bg-gray-100/30">
+                          <span style={{ backgroundColor: label }} className="block w-[25px] h-[15px]"></span>
+                          {label}
+                        </div>
+                      ),
+                    }}
+                    onChange={submitColor}
+                  />
+                  <div className="flex flex-wrap mt-3">
                     {colors &&
-                      colors?.map((e: any, i: any) => {
+                      colors?.map((color: any, i: any) => {
                         return (
                           <span
                             className="bg-gray-blue/30 h-max rounded m-1 text-xs py-1.5 flex justify-center items-center px-2"
@@ -683,8 +698,9 @@ const ProductDetail = ({ data }: any) => {
                           >
                             <span
                               className="w-[30px] h-[17px] mr-2"
-                              style={{ background: `${e}` }}
+                              style={{ background: `${color}` }}
                             ></span>
+                            <span className="mr-3">{color}</span>
                             <HiXMark
                               onClick={() => delColor(i)}
                               className="cursor-pointer"
@@ -792,6 +808,7 @@ const ProductDetail = ({ data }: any) => {
                   className="bg-gray-50 border px-2 py-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                   defaultValue="Active"
                   name="status"
+                  value={formData.status}
                   onChange={handleChange}
                 >
                   <option value="Active">Active</option>
@@ -808,6 +825,7 @@ const ProductDetail = ({ data }: any) => {
                     className="bg-gray-50 border px-2 py-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-1"
                     name="category"
                     onChange={handleChange}
+                    value={formData.category}
                   >
                     <option value="">Select a category</option>
                     {categories?.map((item: any, index: number) => (
@@ -824,6 +842,7 @@ const ProductDetail = ({ data }: any) => {
                         id="subCategory"
                         className="bg-gray-50 border px-2 py-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-1"
                         name="subCategory"
+                        value={formData.subCategory}
                         onChange={handleChange}
                       >
                         <option>Select A sub-category</option>
@@ -845,6 +864,7 @@ const ProductDetail = ({ data }: any) => {
                     className="bg-gray-50 border px-2 py-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-1"
                     defaultValue="Material"
                     name="material"
+                    value={formData.material}
                     onChange={handleMaterials}
                   >
                     <option>Select A Material</option>
@@ -877,6 +897,7 @@ const ProductDetail = ({ data }: any) => {
                     defaultValue="Brand"
                     id="brand"
                     name="brand"
+                    value={formData.brand}
                     onChange={handleChange}
                   >
                     <option value="">Select a brand</option>

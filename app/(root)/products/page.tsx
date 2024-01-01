@@ -40,25 +40,7 @@ const Products = () => {
     start: 0,
     end: 0,
   });
-
-  const colors = [
-    "D76C66",
-    "7584DE",
-    "292929",
-    "B0D7E8",
-    "9D763B",
-    "D19D4A",
-    "E7AF96",
-    "BABABA",
-    "D76C66",
-    "A3CAAB",
-    "ccc",
-    "fff",
-    "000000",
-    "kkk",
-    "cacaca",
-  ];
-
+  
   const status = ["In Stock", "On Sale"];
 
   const [filters, setFilters] = useState({
@@ -67,7 +49,25 @@ const Products = () => {
     status: "",
   });
 
-  // const options = ["Bathroom", "Home Office"];
+  const [filterColors, setFilterColors] = useState<any>([]);
+
+  useEffect(() => {
+    const getColors = async () => {
+      try {
+
+        const res = await publicRequest.get(`/product/colors`);
+
+        if (res.status === 200) {
+          setFilterColors(res.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getColors();
+  }, [])
+  
 
   useEffect(() => {
     const getProducts = async () => {
@@ -86,6 +86,7 @@ const Products = () => {
         );
 
         if (res.status === 200) {
+          // setFilterColors(res.data.data.uniqueColors);
           setProducts(res.data.data);
         }
       } catch (error) {
@@ -255,27 +256,30 @@ const Products = () => {
             <div className="flex-[0_0_33%] px-[10px]">
               <div className="bg-[#FAFAFA] px-5 py-7">
                 <p className="text-gray-900 font-bold">Filter by Color</p>
-                <div className="flex flex-wrap mt-4 gap-4">
+                <div className="mt-4 space-y-1">
                   <button
-                    className={`rounded-full border p-[5px] flex items-center justify-center ${
-                      filters.color === "" ? "border-primary" : ""
-                    }`}
-                    onClick={() => {
-                      setFilters((prev: any) => {
-                        return { ...prev, color: "" };
-                      });
-                      fetchProductByColor("");
-                    }}
-                  >
-                    <span className="block rounded-full w-[18px] h-[18px]">
-                      <RiFilterOffFill />
-                    </span>
+                      className="flex items-center justify-between w-full"
+                      onClick={() => {
+                        setFilters((prev: any) => {
+                          return { ...prev, color: "" };
+                        });
+                        fetchProductByColor("");
+                      }}
+                    >
+                    <div className={`flex items-center gap-3`}>
+                      <div className={`border rounded-full p-[2px] ${filters.color === "" ? "border-primary" : ""}`}>
+                        <span
+                          className={`block rounded-full`}
+                        >
+                        <RiFilterOffFill />
+                        </span>
+                      </div>
+                      <p className="text-gray-200">None</p>
+                    </div>
                   </button>
-                  {colors?.map((item: any, index: any) => (
+                  {filterColors.length > 0 && filterColors?.map((item: any, index: any) => (
                     <button
-                      className={`rounded-full border p-[5px] ${
-                        filters.color === item ? "border-primary" : ""
-                      }`}
+                      className="flex items-center justify-between w-full"
                       key={index}
                       onClick={() => {
                         setFilters((prev: any) => {
@@ -284,10 +288,16 @@ const Products = () => {
                         fetchProductByColor(item);
                       }}
                     >
-                      <span
-                        className="block rounded-full w-[18px] h-[18px]"
-                        style={{ backgroundColor: `#${item}` }}
-                      ></span>
+                      <div className={`flex items-center gap-3`}>
+                        <div className={`border rounded-full ${filters.color === item ? "border-primary p-[2px]" : ""}`}>
+                          <span
+                            className={`block rounded-full border ${filters.color === item ? "w-[14px] h-[14px]" : "w-[18px] h-[18px]"}`}
+                            style={{ backgroundColor: item }}
+                          ></span>
+                        </div>
+                        <p className="text-gray-200">{item}</p>
+                      </div>
+                      <p className="text-gray-200">( 1 )</p>
                     </button>
                   ))}
                 </div>

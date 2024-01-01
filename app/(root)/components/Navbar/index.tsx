@@ -56,8 +56,7 @@ const Navbar = () => {
   const [filterValue, setFilterValue] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string>("");
   const allCats = [{ category: "Home" }, ...cats];
-  // console.log(allCats, "allCats");
-
+  
   const showModal = () => {
     setIsModalOpen(true);
   };

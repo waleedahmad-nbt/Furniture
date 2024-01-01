@@ -1,11 +1,9 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import { ProductCard } from "..";
 import { RootState } from "@/lib/store";
 import { useSelector } from "react-redux";
 
-import arrowL from "@/app/assets/icons/arrow-left.svg";
 import { GoArrowRight } from "react-icons/go";
 
 const RecentViewed = () => {

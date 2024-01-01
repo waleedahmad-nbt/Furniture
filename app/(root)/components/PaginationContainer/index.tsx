@@ -5,8 +5,6 @@ import { ProductCard } from "..";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 const PaginationContainer = ({ items, setStats }: any) => {
-  // console.log(items, "items");
-
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 

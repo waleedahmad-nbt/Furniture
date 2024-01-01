@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
@@ -13,12 +14,17 @@ import {
 } from "@/lib/store/slices/Allslices";
 
 import cart from "@/app/assets/icons/cart_dark.svg";
+import { HiShoppingCart } from "react-icons/hi";
 import zoom from "@/app/assets/icons/zoom.svg";
 import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
-import Link from "next/link";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ViewItem from "./ViewItem";
 
 const MultiProductView = ({ item }: any) => {
   const dispatch = useDispatch();
+
+  const [toggleView, setToggleView] = useState<boolean>(false);
 
   const recentViews: any = useSelector((state: RootState) => state.recentViews);
 
@@ -68,12 +74,14 @@ const MultiProductView = ({ item }: any) => {
     const filterCart = cartItems.filter(
       (product: any) => product._id === item?._id
     );
-    console.log({ ...item, quantity: 1 });
 
     if (filterCart.length <= 0) {
       dispatch(addToCart({ ...item, quantity: 1 }));
+      notify();
     }
   };
+
+  const notify = () => toast("Product Added to Cart!");
 
   const handleWishList = () => {
     const id = item?._id;
@@ -90,17 +98,12 @@ const MultiProductView = ({ item }: any) => {
 
   // check if exists in wishlist or not
   const existWish = wishList.filter((wish: any) => wish._id === item?._id);
+  const existCart = cartItems.filter((cart: any) => cart._id === item?._id);
 
   return (
     <>
-      <div
-        className={`bg-white flex items-center justify-center relative group overflow-hidden h-full`}
-      >
-        {/* {item?.status && (
-          <span className={`absolute top-2 left-3 rounded-2xl px-2 uppercase py-1 text-white font-bold text-[10px] z-10 ${bgColor}`}>
-            {item?.status}
-          </span>
-        )} */}
+      {toggleView && <ViewItem item={item} close={() => setToggleView(false)} />}
+      <div className={`bg-white flex items-center justify-center relative group overflow-hidden h-full`}>
         <div className="absolute top-2 right-3 z-10">
           <button
             onClick={handleWishList}
@@ -109,14 +112,14 @@ const MultiProductView = ({ item }: any) => {
           >
             {existWish.length > 0 ? <IoHeartSharp /> : <IoHeartOutline />}
           </button>
-          <button className="bg-white border rounded-full w-[32px] h-[32px] opacity-0 duration-200 group-hover:opacity-100 flex items-center justify-center mt-1">
+          <button onClick={() => setToggleView(true)} className="bg-white border rounded-full w-[32px] h-[32px] opacity-0 duration-200 group-hover:opacity-100 flex items-center justify-center mt-1">
             <Image src={zoom} alt="product" />
           </button>
           <button
             className="bg-white border rounded-full w-[32px] h-[32px] opacity-0 duration-200 group-hover:opacity-100 flex items-center justify-center mt-1"
             onClick={handleCart}
           >
-            <Image src={cart} alt="product" />
+            <HiShoppingCart className={`${existCart ? "text-primary" : "text-gray-200"}`} />
           </button>
         </div>
 

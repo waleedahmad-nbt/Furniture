@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import '@/app/globals.css';
 import { Footer, Navbar } from './components';
 import ReduxProvider from '@/lib/store/ReduxProvider';
+import { ToastContainer } from 'react-toastify';
 
 export const metadata: Metadata = {
   title: 'Furniture',
@@ -23,6 +24,7 @@ export default function RootLayout({
       </head>
       <body>
         <ReduxProvider>
+          <ToastContainer position="top-right" />
           <Navbar />
           <main className="min-h-[75vh]">
             {children}

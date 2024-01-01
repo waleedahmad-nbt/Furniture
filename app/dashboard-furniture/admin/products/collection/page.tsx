@@ -14,57 +14,6 @@ import { useRequestMethods } from "@/app/(root)/components/index";
 const Collection = () => {
   const { publicRequest } = useRequestMethods();
 
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      image: image,
-      name: "New Year Sale",
-      Products: 276,
-      ProductCondition:
-        "Product tag is equal to Kitchen Gadgets Inventory stock is greater than 0",
-    },
-    {
-      id: 2,
-      image: image,
-      name: "New Year Sale",
-      Products: 276,
-      ProductCondition:
-        "Product tag is equal to Kitchen Gadgets Inventory stock is greater than 0",
-    },
-    {
-      id: 3,
-      image: image,
-      name: "New Year Sale",
-      Products: 276,
-      ProductCondition:
-        "Product tag is equal to Kitchen Gadgets Inventory stock is greater than 0",
-    },
-    {
-      id: 4,
-      image: image,
-      name: "New Year Sale",
-      Products: 276,
-      ProductCondition:
-        "Product tag is equal to Kitchen Gadgets Inventory stock is greater than 0",
-    },
-    {
-      id: 5,
-      image: image,
-      name: "New Year Sale",
-      Products: 276,
-      ProductCondition:
-        "Product tag is equal to Kitchen Gadgets Inventory stock is greater than 0",
-    },
-    {
-      id: 6,
-      image: image,
-      name: "New Year Sale",
-      Products: 276,
-      ProductCondition:
-        "Product tag is equal to Kitchen Gadgets Inventory stock is greater than 0",
-    },
-  ]);
-
   const [val, setVal] = useState(0);
   const [updating, setUpdating] = useState<string>("");
   const [category, setCategory] = useState("all");
@@ -127,7 +76,6 @@ const Collection = () => {
     try {
       const res = await publicRequest.delete(`/category/delete/${_id}`);
 
-      console.log(res);
       if (res.status === 200) {
         setCategories((prev: any) =>
           prev.filter((item: any) => item?._id !== _id)
@@ -162,7 +110,7 @@ const Collection = () => {
   const handleSelectAllChange = () => {
     const updatedCheckboxes: CheckboxState = {};
 
-    products.map((product: any) => {
+    categories.map((product: any) => {
       const Id = product.id;
       updatedCheckboxes[Id] = !checkboxes[Id] ? !checkboxes[Id] : false;
     });
@@ -219,6 +167,22 @@ const Collection = () => {
       }
     });
   };
+
+  const [subCat, setSubCat] = useState<any>([]);
+
+  const addSubCats = (e: any) => {
+    e.preventDefault();
+
+    if (!formData.subCategories.includes(subCat) && subCat) {
+      setFormData((prev: any) => { return { ...prev, subCategories: [ ...prev.subCategories, subCat ] } });
+      setSubCat("");
+    }
+  }
+
+  const deleteSubCat = (cat: any) => {
+    const filtered = formData.subCategories?.filter((item: any) => item !== cat );
+    setFormData((prev: any) => { return { ...prev, subCategories: filtered } });
+  }
 
   return (
     <div className="px-5">
@@ -389,14 +353,44 @@ const Collection = () => {
                     )}
                   </td>
                   <td className={`px-6 py-4 whitespace-nowrap text-xs`}>
-                    {category?.subCategories?.map(
-                      (item: any, index: number) => (
-                        <React.Fragment key={index}>
-                          {index !== 0 && ", "}
-                          {item}
-                        </React.Fragment>
-                      )
-                    )}
+                  {editCatId === category?._id ? (
+                    <div>
+                      <form onSubmit={addSubCats}>
+                        <div className="flex">
+                          <div>
+                            <input
+                              type="text"
+                              onChange={(e: any) => setSubCat(e.target.value)}
+                              id="subCat"
+                              name="subCat"
+                              value={subCat}
+                              className="border px-3 py-1 outline-none focus:border-primary rounded-md w-full"
+                            />
+                          </div>
+                          <button type="submit" className="bg-gray-900 text-white px-3 shrink-0 ml-3 rounded-md">+ Add</button>
+                        </div>
+                      </form>
+                      <div className="flex flex-wrap gap-x-5 mt-2">
+                        {formData?.subCategories?.length > 0 && formData?.subCategories?.map((item: any, index: number) => (
+                          <div onClick={() => deleteSubCat(item)} key={index} className="relative my-3 text-white bg-gray-900 px-3 py-1 rounded-md text-xs cursor-pointer">
+                            <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-gray-900 rounded-full p-1"><FiX /></span>
+                            {item}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      {category?.subCategories?.map(
+                        (item: any, index: number) => (
+                          <React.Fragment key={index}>
+                            {index !== 0 && ", "}
+                            {item}
+                          </React.Fragment>
+                        )
+                      )}
+                    </>
+                  )}
                   </td>
                   <td className={`px-6 py-4 whitespace-nowrap text-xs`}>
                     <div className="flex gap-2 text-base items-center">

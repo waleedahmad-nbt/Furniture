@@ -4,6 +4,8 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { HiXMark } from "react-icons/hi2";
 import { BsArrowLeft } from "react-icons/bs";
+import Select from 'react-select';
+import CSS_COLOR_NAMES from '@/Utils/colors';
 
 // import ReactQuill from 'react-quill';
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -20,7 +22,7 @@ const NewProduct = () => {
     images: [],
     category: "",
     subCategory: "",
-    status: "",
+    status: "Active",
     materials: "",
     brand: "",
     warranty: "",
@@ -29,7 +31,6 @@ const NewProduct = () => {
 
   const [colors, setColors] = useState<string[]>([]);
   const [submit, setSubmit] = useState<boolean>(false);
-  const [value, setValue] = useState<string>("");
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [formData, setFormData] = useState<any>(fields);
   const [categories, setCategories] = useState<any>([]);
@@ -142,8 +143,8 @@ const NewProduct = () => {
         data.append(`pic${index + 1}`, img);
       });
 
-      colors?.forEach((size: any, index: number) => {
-        data.append(`colors[${index}]`, size);
+      colors?.forEach((color: any, index: number) => {
+        data.append(`colors[${index}]`, color);
       });
 
       sizesArray.forEach((size: any, index: number) => {
@@ -156,12 +157,12 @@ const NewProduct = () => {
       data.append(`features[bDimensions][height]`, boxArray[0].height);
       data.append(`features[bDimensions][width]`, boxArray[0].width);
 
-      sizesArray?.forEach((size: any, index: number) => {
-        data.append(`features[materials][${index}]`, formatSize(size));
+      formData.materials?.forEach((material: any, index: number) => {
+        data.append(`features[materials][${index}]`, formatSize(material));
       });
 
       data.append("features[brand]", formData?.brand);
-      data.append("features[warranty]", formData?.warranty);
+      data.append("features[warrenty]", formData?.warranty);
       data.append("weight", formData?.weight + " " + formData?.weightUnit);
 
       try {
@@ -198,15 +199,6 @@ const NewProduct = () => {
       };
     }
   }, [showPopup]);
-
-  const changeValue = (e: any) => {
-    setValue(e.target.value);
-  };
-
-  const submitColor = (e: any) => {
-    e.preventDefault();
-    setColors([...colors, value]);
-  };
 
   const delColor = (idx: any) => {
     setColors(
@@ -396,6 +388,24 @@ const NewProduct = () => {
     });
   };
 
+  const customStyles = {
+    option: (provided: any, state: any) => ({
+      ...provided,
+      backgroundColor: state.data.color,
+    }),
+  };
+
+  const colorOptions = CSS_COLOR_NAMES.map((color) => ({
+    label: color,
+    value: color,
+  }));
+
+  const submitColor = (e: any) => {
+    if (!colors.includes(e.value)) {
+      setColors([...colors, e.value]);
+    }
+  };
+
   return (
     <>
       <div className="w-full p-2">
@@ -512,7 +522,7 @@ const NewProduct = () => {
                         onChange={handleChange}
                       />
                       <div className="absolute text-xs inset-y-0 left-0 flex items-center pl-3 ">
-                        Rs
+                        AED
                       </div>
                     </div>
                   </div>
@@ -661,18 +671,22 @@ const NewProduct = () => {
 
                 <div>
                   <p className="text-sm mb-1 mt-2">Colors</p>
-                  <form onSubmit={submitColor} className="w-1/2">
-                    <input
-                      type="color"
-                      onChange={changeValue}
-                      onBlur={submitColor}
-                      placeholder="Colors"
-                      className="mb-2 text-xs px-2 py-1 h-10 rounded-lg focus:border-black w-1/2"
-                    />
-                  </form>
-                  <div className="flex flex-wrap">
+                  <Select
+                    options={colorOptions}
+                    styles={customStyles}
+                    components={{
+                      Option: ({ innerProps, label }) => (
+                        <div {...innerProps} className="flex items-center gap-3 pl-3 py-1 cursor-pointer hover:bg-gray-100/30">
+                          <span style={{ backgroundColor: label }} className="block w-[25px] h-[15px]"></span>
+                          {label}
+                        </div>
+                      ),
+                    }}
+                    onChange={submitColor}
+                  />
+                  <div className="flex flex-wrap mt-3">
                     {colors &&
-                      colors?.map((e: any, i: any) => {
+                      colors?.map((color: any, i: any) => {
                         return (
                           <span
                             className="bg-gray-blue/30 h-max rounded m-1 text-xs py-1.5 flex justify-center items-center px-2"
@@ -680,8 +694,9 @@ const NewProduct = () => {
                           >
                             <span
                               className="w-[30px] h-[17px] mr-2"
-                              style={{ background: `${e}` }}
+                              style={{ background: `${color}` }}
                             ></span>
+                            <span className="mr-3">{color}</span>
                             <HiXMark
                               onClick={() => delColor(i)}
                               className="cursor-pointer"
@@ -787,9 +802,9 @@ const NewProduct = () => {
                 <select
                   id="status"
                   className="bg-gray-50 border px-2 py-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-                  defaultValue="Active"
                   name="status"
                   onChange={handleChange}
+                  value={formData.status}
                 >
                   <option value="Active">Active</option>
                   <option value="Draft">Draft</option>

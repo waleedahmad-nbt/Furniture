@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 const ViewProduct = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<any>({});
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -16,20 +17,30 @@ const ViewProduct = () => {
         if(response.status === 200) {
           console.log(response.data.data);
           setProduct(response.data.data);
+          setLoading(false);
         }
       } catch (error) {
         console.error('Error fetching categories:', error);
-        throw error;
       }
+
+      setLoading(false);
     }
 
     fetchProduct();
   }, []) 
 
-  return product?.title === undefined ? (
-    <div className="Loader w-[15px] border-[2px] border-gray-900"></div>
+  return loading ? (
+    <div className="flex justify-center py-10">
+      <div className="Loader w-[50px] border-[7px] border-gray-900"></div>
+    </div>
   ) : (
-    <ProductDetail data={product} />
+    <>
+      {product?.title !== undefined ? (
+        <ProductDetail data={product} />
+      ) : (
+        <div className="pl-2 pt-3">Product Not Found</div>
+      )}
+    </>
   )
 }
 

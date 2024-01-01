@@ -4,17 +4,15 @@ import { MultiProductView } from "..";
 
 import star from "@/app/assets/icons/star.svg";
 import starFill from "@/app/assets/icons/star_fill.svg";
+import starhalf from "@/app/assets/icons/starhalf.svg";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 
-import starhalf from "@/app/assets/icons/starhalf.svg";
 import { setRecentViews, setUpdateRecentViews } from "@/lib/store/slices/Allslices";
-
 
 import { RootState } from "@/lib/store";
 
 const ProductCard = ({ item, className, offer }: any) => {
-  console.log(item, "item in product Cart");
   const dispatch = useDispatch();
 
   const recentViews: any = useSelector((state: RootState) => state.recentViews);
@@ -80,9 +78,10 @@ const ProductCard = ({ item, className, offer }: any) => {
                     alt="product"
                     width={10}
                     height={10}
+                    key={index}
                   />
                 ) : (
-                  <Image src={star} alt="product" width={10} height={10} />
+                  <Image src={star} alt="product" width={10} height={10} key={index}/>
                 )}
               </>
             );
