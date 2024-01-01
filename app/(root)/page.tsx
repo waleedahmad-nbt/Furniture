@@ -235,7 +235,7 @@ export default function Home() {
               products?.length <= 5 ? "c_hidden" : ""
             }`}
           >
-            {filter(products)?.products?.map((item: any, index: number) => (
+            {filter(products)?.map((item: any, index: number) => (
               <div className={`relative w-full`} key={index}>
                 <div className="">
                   <ProductCard item={item} />
@@ -467,7 +467,7 @@ export default function Home() {
         </div>
         <div className="w-full my-10">
           <div className="relative flex flex-wrap gap-y-10 gap-x-5 items-center">
-            {filter2(products)?.products?.map((item: any, index: number) => (
+            {filter2(products)?.map((item: any, index: number) => (
               <ProductCard
                 item={item}
                 key={index}

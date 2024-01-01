@@ -28,6 +28,11 @@ const Sidebar = () => {
   const ordersSubLink = [
     { label: "Abandoned checkouts", link: "/dashboard-furniture/admin/orders/Abandonedcheckouts" },
   ];
+
+  const pageManagement = [
+    { label: "Home", link: "/dashboard-furniture/admin/page-management/home" },
+    { label: "About Us", link: "/dashboard-furniture/admin/page-management/about-us" },
+  ];
   
   const analyticsSubLink = [
     { label: "Reports", link: "/dashboard-furniture/admin/analytices/reports" },
@@ -53,7 +58,17 @@ const Sidebar = () => {
             <span>Home</span>
           </NavLink>
         </li>
-
+        <li className="text-sm">
+          <SideLinks
+            href={"/dashboard-furniture/admin/page-management/home"}
+            active="bg-white hover:bg-white"
+            className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
+            subLinks={pageManagement}
+          >
+            <RiFileList2Line />
+            <span>Page Management</span>
+          </SideLinks>
+        </li>
         <li className="text-sm">
           <SideLinks
             href={"/dashboard-furniture/admin/orders"}
