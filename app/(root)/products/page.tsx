@@ -33,7 +33,7 @@ const Products = () => {
 
   const [options, setoptions] = useState([]);
   const [products, setProducts] = useState<any>([]);
-  console.log(products, "products");
+  // console.log(products, "products");
 
   const [tab, setTab] = useState<string>("");
   const [pageData, setPageData] = useState<any>({
@@ -68,6 +68,8 @@ const Products = () => {
     getColors();
   }, [])
   
+  // const options = ["Bathroom", "Home Office"];
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -88,6 +90,7 @@ const Products = () => {
         if (res.status === 200) {
           // setFilterColors(res.data.data.uniqueColors);
           setProducts(res.data.data);
+          setTotalPages(res.data.pagination.totalPages);
         }
       } catch (error) {
         console.error(error);
@@ -136,6 +139,7 @@ const Products = () => {
       );
       if (res.status === 200) {
         setProducts(res.data.data);
+        setTotalPages(res.data.pagination.totalPages);
       }
     } catch (error) {
       console.error(error);
@@ -149,6 +153,7 @@ const Products = () => {
       );
       if (res.status === 200) {
         setProducts(res.data.data);
+        setTotalPages(res.data.pagination.totalPages);
       }
     } catch (error) {
       console.error(error);
@@ -162,6 +167,7 @@ const Products = () => {
       );
       if (res.status === 200) {
         setProducts(res.data.data);
+        setTotalPages(res.data.pagination.totalPages);
       }
     } catch (error) {
       console.error(error);
@@ -409,6 +415,7 @@ const Products = () => {
                 setStats={(start: any, end: any) =>
                   setPageData({ start: start, end: end })
                 }
+                totalPages={totalPages}
               />
             </div>
           </div>

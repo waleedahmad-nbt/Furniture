@@ -8,7 +8,11 @@ import starhalf from "@/app/assets/icons/starhalf.svg";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setRecentViews, setUpdateRecentViews } from "@/lib/store/slices/Allslices";
+
+import {
+  setRecentViews,
+  setUpdateRecentViews,
+} from "@/lib/store/slices/Allslices";
 
 import { RootState } from "@/lib/store";
 
@@ -87,7 +91,9 @@ const ProductCard = ({ item, className, offer }: any) => {
             );
           })}
         </div>
-        <span className="text-gray-500 text-[14px]">{item?.totalReviews || "No Reviews"}</span>
+        <span className="text-gray-500 text-[14px]">
+          {item?.totalReviews || "No Reviews"}
+        </span>
       </div>
       <Link href={`/products/details/${item?._id}`} onClick={addRecent}>
         <h3 className="font-medium text-gray-300 mt-1">{item?.title}</h3>
