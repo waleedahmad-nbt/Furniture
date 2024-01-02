@@ -64,6 +64,7 @@ const Sidebar = () => {
             active="bg-white hover:bg-white"
             className="hover:bg-[#ffffff77] text-gray-900 rounded-md px-2 py-1 flex items-center gap-2 w-full cursor-pointer font-bold"
             subLinks={pageManagement}
+            end
           >
             <RiFileList2Line />
             <span>Page Management</span>
