@@ -37,7 +37,7 @@ const RecentViewed = () => {
         <div className="relative grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-6">
           {sortedRecentViews.length > 0 &&
             sortedRecentViews?.map((item: any, index: number) => (
-              <ProductCard item={item} key={index} />
+              <ProductCard item={item} key={index} isGrid={true} />
             ))}
         </div>
       </div>

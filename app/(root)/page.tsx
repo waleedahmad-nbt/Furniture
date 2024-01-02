@@ -118,31 +118,55 @@ export default function Home() {
 
   const dispatch = useDispatch();
 
+  const [showCase, setShowCase]: any = useState({});
+  const [services, setServices]: any = useState([]);
+  const [reDefines, setReDefines]: any = useState([]);
+  const [offers, setOffers]: any = useState([]);
+
+  useEffect(() => {
+    const fetchShowCase = async () => {
+      try {
+        const res = await publicRequest.get("/showcase/get");
+        console.log(res, "res");
+        if (res.data.success) {
+          setShowCase(res.data.data.showCase);
+          setServices(res.data.data.services);
+          setReDefines(res.data.data.reDefines);
+          setOffers(res.data.data.offers);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchShowCase();
+  }, []);
+
   return (
     <>
       <div className="relative bg-cream">
         <div className="absolute container bottom-0 right-0 max-md:right-1/2 max-md:translate-x-1/2 -translate-y-[15%] md:-translate-y-0 h-[30%] md:h-full w-full md:w-[60%] flex justify-end">
-          <MainSlider />
+          <MainSlider images={showCase?.images} />
         </div>
         <div className="container">
           <div className="flex Home_Banner pt-16 pb-64 md:py-32">
             <div className="text-gray-300">
-              <span className="text-[18px] font-medium">
-                Trending Furniture
-              </span>
-              <h1 className="text-4xl md:text-3xl lg:text-5xl font-medium">
-                Great Furniture <br /> Sale
+              <span className="text-[18px] font-medium">{showCase?.title}</span>
+              <h1 className=" w-[355px] text-4xl md:text-3xl lg:text-5xl font-medium mt-2">
+                {/* Great Furniture <br /> Sale */}
+                {showCase?.subTitle}
+                {}
               </h1>
-              <p className="border-l-[3px] border-gray-300 my-10 pl-5">
-                Limited time
+              <p className="border-l-[3px] border-gray-300 my-10 pl-5 w-[135px]">
+                {/* Limited time
                 <br />
-                sale up to 30% off
+                sale up to 30% off */}
+                {showCase?.offer}
               </p>
               <Link
                 href="/products"
                 className="flex items-center gap-3 bg-primary px-6 py-3 w-max text-white cursor-pointer"
               >
-                <span>Shop now</span>
+                <span>{showCase?.btnText}</span>
                 <Image src={arrowL} alt="icon" />
               </Link>
             </div>
@@ -151,7 +175,7 @@ export default function Home() {
       </div>
 
       <div className="container my-10">
-        <Features />
+        <Features services={services} />
       </div>
 
       <div className="container my-10">
@@ -248,58 +272,41 @@ export default function Home() {
 
       <div className="container my-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          <div className="relative">
-            <div className="absolute inset-0 z-[-1]">
-              <Image
-                src={sofa1}
-                alt="banner"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="p-7 md:p-10 md:pr-20">
-              <h2 className="text-white font-bold text-[27px] md:text-[38px]">
-                Redefine you space,
-                <br /> because comfort is everything
-              </h2>
-              <p className="text-white mb-5 mt-2">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum.
-              </p>
-              <Link
-                href="/products"
-                className="flex items-center gap-3 bg-primary px-6 py-3 w-max text-white mb-30"
-              >
-                <span>Shop now</span>
-                <Image src={arrowL} alt="icon" />
-              </Link>
-            </div>
-          </div>
-          <div className="relative">
-            <div className="p-7 md:p-10 md:pr-20">
-              <h2 className="text-gray-600 font-bold text-[27px] md:text-[38px]">
-                Redefine you space,
-                <br /> because comfort is everything
-              </h2>
-              <p className="text-black mb-5 mt-2">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum.
-              </p>
-              <Link
-                href="/products"
-                className="flex items-center gap-3 bg-primary px-6 py-3 w-max text-white mb-30"
-              >
-                <span>Shop now</span>
-                <Image src={arrowL} alt="icon" />
-              </Link>
-            </div>
-            <div className="absolute inset-0 z-[-1]">
-              <Image
-                src={sofa2}
-                alt="banner"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
+          {reDefines &&
+            reDefines.map((item: any, index: any) => {
+              return (
+                <div className="relative">
+                  <div className="absolute inset-0 z-[-1]">
+                    <Image
+                      src={item?.image}
+                      alt="banner"
+                      className="w-full h-full object-cover"
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+                  <div className="p-7 md:p-10 md:pr-20">
+                    <h2 className="text-white font-bold text-[27px] md:text-[38px]">
+                      {/* Redefine you space,
+                      <br /> because comfort is everything */}
+                      {item?.title}
+                    </h2>
+                    <p className="text-white mb-5 mt-2">
+                      {/* Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry. Lorem Ipsum. */}
+                      {item?.description}
+                    </p>
+                    <Link
+                      href="/products"
+                      className="flex items-center gap-3 bg-primary px-6 py-3 w-max text-white mb-30"
+                    >
+                      <span>{item?.btnText}</span>
+                      <Image src={arrowL} alt="icon" />
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </div>
 
@@ -402,35 +409,42 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="container my-10">
-        <div className="relative h-[300px]">
-          <div className="absolute h-full right-0 top-0 z-[-1]">
-            <Image
-              src={Banner}
-              alt="banner"
-              className="max-h-[300px] h-full object-cover"
-            />
-          </div>
-          <div className="Discount_Banner px-10 py-10 h-full flex items-center">
-            <div>
-              <span className="text-primary uppercase font-medium">
-                Weekend discount
-              </span>
-              <h2 className="text-[27px] md:text-[30px] font-medium text-gray-300">
-                Leave the season in blonwe style
-              </h2>
-              <p className="font-medium text-gray-200">
-                Organizing never looked so good, Design yours today!..
-              </p>
-              <div className="flex gap-3 items-end mt-3">
-                <span className="text-gray-300 font-medium">from</span>
-                <p className="text-gray-300 text-[20px] font-medium">
-                  $ 247.99
-                </p>
+      <div className="container my-10 flex flex-col gap-10">
+        {offers &&
+          offers.map((item: any, index: any) => {
+            return (
+              <div className="relative h-[300px]">
+                <div className="absolute h-full w-full right-0 top-0 z-[-1]">
+                  <Image
+                    src={item?.image}
+                    alt="banner"
+                    className="max-h-[300px] w-full h-full object-cover"
+                    width={100}
+                    height={100}
+                  />
+                </div>
+                <div className="Discount_Banner px-10 py-10 h-full flex items-center">
+                  <div>
+                    <span className="text-primary uppercase font-medium">
+                      {item?.title}
+                    </span>
+                    <h2 className="text-[27px] md:text-[30px] font-medium text-gray-300">
+                      {item?.subTitle}
+                    </h2>
+                    <p className="font-medium text-gray-200">
+                      {item?.description}
+                    </p>
+                    <div className="flex gap-3 items-end mt-3">
+                      <span className="text-gray-300 font-medium">from</span>
+                      <p className="text-gray-300 text-[20px] font-medium">
+                        $ {item?.from}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
+            );
+          })}
       </div>
 
       <div className="container my-10">
