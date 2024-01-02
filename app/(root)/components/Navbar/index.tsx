@@ -56,7 +56,7 @@ const Navbar = () => {
   const [filterValue, setFilterValue] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string>("");
   const allCats = [{ category: "Home" }, ...cats];
-  
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -95,7 +95,7 @@ const Navbar = () => {
 
   const gettingSubMenu = async () => {
     const res = await publicRequest.get(`/product`);
-    console.log(res, "res");
+    // console.log(res, "res");
     if (res.data.success) {
       setMegaMenu(res.data.data);
       setLoading(false);
@@ -367,14 +367,15 @@ const Navbar = () => {
               {item.category == "Home" ? (
                 ""
               ) : (
-                <div className="absolute w-full max-h-[0vh] overflow-hidden bottom-0 translate-y-[100%] left-0 bg-white z-50 group-hover:max-h-[100vh] group-hover:overflow-auto transition-all duration-500 hover:block">
+                // <div className="absolute w-full max-h-[0vh] overflow-hidden bottom-0 translate-y-[100%] left-0 bg-white z-50 group-hover:max-h-[100vh] group-hover:overflow-auto transition-all duration-500">
+                <div className="absolute w-full hidden  bottom-0 translate-y-[100%] left-0 bg-white z-50 group-hover:block">
                   {loading ? (
                     <div className="flex justify-center py-5">
                       <div className="loader"></div>
                     </div>
                   ) : (
-                    <div className="container py-5">
-                      <div className="flex items-center gap-5">
+                    <div className=" px-14 md:px-20 lg:px-32 py-5">
+                      <div className="flex items-center gap-5 py-5 px-10">
                         <h1 className="text-[14px] text-gray-300 font-bold">
                           The best discount this week{" "}
                         </h1>
@@ -382,7 +383,7 @@ const Navbar = () => {
                           Every week you can find the best discount here
                         </span>
                       </div>
-                      <div className="flex items-center justify-around flex-wrap mt-5">
+                      <div className="grid grid-cols-6 mt-5">
                         {filterCats &&
                           filterCats.map((e: any, i: any) => {
                             return (
@@ -390,43 +391,47 @@ const Navbar = () => {
                                 key={i}
                                 className={`${
                                   i == 0 ? "border-0" : "border-l"
-                                } p-5 flex flex-col gap-3`}
+                                } flex justify-center items-center py-5`}
                               >
-                                <Image
-                                  src={e.Images[0]}
-                                  alt=""
-                                  width={100}
-                                  height={100}
-                                />
-                                <p className="w-[40px] h-[22px] bg-secondary rounded-full text-[12px] text-white text-center leading-[21px]">
-                                  15%
-                                </p>
-                                <div className="flex gap-2">
-                                  <s className="text-gray-300 text-[14px]">
-                                    AED 27.90
-                                  </s>
-                                  <p className="text-white bg-[#3CB242] text-[14px] px-1">
-                                    AED {e.price}
+                                <div className="flex flex-col gap-3 items-start">
+                                  <div>
+                                    <Image
+                                      src={e.Images[0]}
+                                      alt=""
+                                      width={100}
+                                      height={100}
+                                    />
+                                  </div>
+                                  <p className="w-[40px] h-[22px] bg-secondary rounded-full text-[12px] text-white text-center leading-[21px]">
+                                    15%
                                   </p>
-                                </div>
-                                <h1 className="text-gray-300">{e.title}</h1>
-                                {!e.totalReviews ? (
-                                  <p className="text-gray-200 text-[12px]">
-                                    No Reviews
-                                  </p>
-                                ) : (
-                                  <div className="flex gap-3">
-                                    <div className="flex bg-[#FFF6DC] gap-1 px-2 rounded-md">
-                                      <Image src={starIcon} alt="" />
-                                      <p className="text-gray-200 text-[12px]">
-                                        {e.totalReviews}{" "}
-                                      </p>
-                                    </div>
-                                    <p className="text-gray-200 text-[12px]">
-                                      {e.Reviews} Reviews
+                                  <div className="flex gap-2">
+                                    <s className="text-gray-300 text-[14px]">
+                                      AED 27.90
+                                    </s>
+                                    <p className="text-white bg-[#3CB242] text-[14px] px-1">
+                                      AED {e.price}
                                     </p>
                                   </div>
-                                )}
+                                  <h1 className="text-gray-300">{e.title}</h1>
+                                  {!e.totalReviews ? (
+                                    <p className="text-gray-200 text-[12px]">
+                                      No Reviews
+                                    </p>
+                                  ) : (
+                                    <div className="flex gap-3">
+                                      <div className="flex bg-[#FFF6DC] gap-1 px-2 rounded-md">
+                                        <Image src={starIcon} alt="" />
+                                        <p className="text-gray-200 text-[12px]">
+                                          {e.totalReviews}{" "}
+                                        </p>
+                                      </div>
+                                      <p className="text-gray-200 text-[12px]">
+                                        {e.Reviews} Reviews
+                                      </p>
+                                    </div>
+                                  )}
+                                </div>
                               </div>
                             );
                           })}

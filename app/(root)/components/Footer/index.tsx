@@ -13,7 +13,7 @@ const Footer = () => {
       <div className="bg-gray-900 pt-20 pb-5">
         <div className="container text-white">
           <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 place-items-start border-b border-gray-100 pb-10">
-            <div className="px-5 lg:px-0">
+            <div className="pr-5 lg:pr-4">
               <h1 className="font-normal text-[16px]">Do You Need Help?</h1>
               <p className="text-[14px] mt-5">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -31,8 +31,8 @@ const Footer = () => {
               <p className="text-sm">Mon-Sun 09:00-19:00</p>
             </div>
             <div className="border-0 lg:border-l border-gray-100 text-[16px] font-normal px-5 md:px-20">
-              <h1 className="font-semibold">Services</h1>
-              <div className="flex flex-col gap-3 mt-6">
+              <h1 className="font-bold text-[18px]">Services</h1>
+              <div className="flex flex-col gap-3 mt-6 text-[14px]">
                 <p className="hover:text-primary duration-150 cursor-pointer">
                   Bed
                 </p>
@@ -60,8 +60,8 @@ const Footer = () => {
               </div>
             </div>
             <div className="text-[16px] font-normal px-5  lg:px-20">
-              <h1 className="font-semibold">Customized Services</h1>
-              <div className="flex flex-col gap-3 mt-6">
+              <h1 className="font-bold text-[18px]">Customized Services</h1>
+              <div className="flex flex-col gap-3 mt-6 text-[14px]">
                 <p className="hover:text-primary duration-150 cursor-pointer">
                   Customized Services
                 </p>
@@ -86,8 +86,8 @@ const Footer = () => {
               </div>
             </div>
             <div className="text-[16px] font-normal px-5 md:px-20">
-              <h1 className="font-semibold">Pages</h1>
-              <div className="flex flex-col gap-3 mt-6">
+              <h1 className="font-bold text-[18px]">Pages</h1>
+              <div className="flex flex-col gap-3 mt-6 text-[14px]">
                 <p className="hover:text-primary duration-150 cursor-pointer">
                   <NavLink href="/">Home</NavLink>
                 </p>

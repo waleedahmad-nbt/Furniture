@@ -16,7 +16,7 @@ import {
 import { RootState } from "@/lib/store";
 
 const ProductCard = ({ item, className, offer, isGrid }: any) => {
-  console.log(item, "itemmm");
+  // console.log(item, "itemmm");
 
   const dispatch = useDispatch();
 

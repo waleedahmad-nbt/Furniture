@@ -37,7 +37,14 @@ const SliderImage = ({ item, itemNumebr, setIndex, hover }: any) => {
         ref={img}
         className={`absolute top-0 bottom-0 left-1/2 -translate-x-1/2 h-full cursor-pointer w-max`}
       >
-        <Image src={item} alt="banner" priority className="h-full w-full" />
+        <Image
+          src={item}
+          alt="banner"
+          priority
+          className="h-full w-full"
+          width={10}
+          height={10}
+        />
       </div>
     </div>
   );

@@ -5,30 +5,30 @@ import money from "@/app/assets/icons/money.svg";
 import time from "@/app/assets/icons/time.svg";
 import discount from "@/app/assets/icons/discount.svg";
 
-const Features = () => {
+const Features = ({ services }: any) => {
   return (
-    <div className="flex items-center justify-between flex-wrap gap-5">
-      <div className="bg-silver py-7 text-center border-[0.6px] border-gray-200 w-[100%] sm:w-[290px] flex flex-col justify-center">
-        <Image src={Delivery} alt="icon" className="mx-auto mb-2" />
-        <h3 className="text-gray-300 font-bold">Free Delivery</h3>
-        <p className="text-gray-300">Free shipping on all order</p>
+    <>
+      <div className="flex items-center justify-between flex-wrap gap-5">
+        {services &&
+          services.map((item: any, index: any) => {
+            return (
+              <div className="bg-silver py-7 text-center border-[0.6px] min-h-[150px] border-gray-200 w-[100%] sm:w-[290px] flex flex-col justify-center items-center gap-1">
+                <div className="w-[83.7px] h-[47.03px]">
+                  <Image
+                    src={item.image}
+                    alt="icon"
+                    className="mx-auto mb-2 w-full h-full"
+                    width={100}
+                    height={100}
+                  />
+                </div>
+                <h3 className="text-gray-300 font-bold">{item.title}</h3>
+                <p className="text-gray-300">{item.subTitle}</p>
+              </div>
+            );
+          })}
       </div>
-      <div className="bg-silver py-7 text-center border-[0.6px] border-gray-200 w-[100%] sm:w-[290px] flex flex-col justify-center">
-        <Image src={time} alt="icon" className="mx-auto mb-2" />
-        <h3 className="text-gray-300 font-bold">Online support 24/7</h3>
-        <p className="text-gray-300">Support online 24/7 hours a day</p>
-      </div>
-      <div className="bg-silver py-7 text-center border-[0.6px] border-gray-200 w-[100%] sm:w-[290px] flex flex-col justify-center">
-        <Image src={money} alt="icon" className="mx-auto mb-2" />
-        <h3 className="text-gray-300 font-bold">Money return</h3>
-        <p className="text-gray-300">Back guarantee under 7 days</p>
-      </div>
-      <div className="bg-silver py-7 text-center border-[0.6px] border-gray-200 w-[100%] sm:w-[290px] flex flex-col justify-center">
-        <Image src={discount} alt="icon" className="mx-auto mb-2" />
-        <h3 className="text-gray-300 font-bold">Member discount</h3>
-        <p className="text-gray-300">On every order over $120.00</p>
-      </div>
-    </div>
+    </>
   );
 };
 

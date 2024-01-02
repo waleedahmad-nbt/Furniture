@@ -7,6 +7,8 @@ import {
   useRequestMethods,
 } from "../components";
 
+import Select from "react-select";
+
 import { FaAngleDown, FaList, FaSlidersH } from "react-icons/fa";
 import { CgMenuGridO } from "react-icons/cg";
 import MultiRangeSlider from "multi-range-slider-react";
@@ -48,6 +50,47 @@ const Products = () => {
     CAta: "",
     status: "",
   });
+
+  const customStyles = {
+    option: (provided: any) => ({
+      ...provided,
+    }),
+    focus: (provided: any) => ({
+      ...provided,
+      outlineColor: "#FF6F00",
+    }),
+    singleValue: (provided: any) => ({
+      ...provided,
+      color: "#6D758F",
+    }),
+    control: (provided: any, state: any) => ({
+      ...provided,
+      outlineColor: "none",
+      borderRadius: "0px",
+      boxShadow: "none",
+      padding: "5px",
+      borderColor: state.isFocused ? "#FF6F00" : "",
+      "&:hover": {
+        border: "1px solid #FF6F00",
+      },
+    }),
+  };
+
+  const sortOptions = [
+    { label: "Low to High", value: "lowToHigh" },
+    { label: "High to Low", value: "highToLow" },
+  ];
+
+  const handleSort = (sortOption: any) => {
+    let sortedArray = [...products];
+
+    if (sortOption === "lowToHigh") {
+      sortedArray.sort((a, b) => a.price - b.price);
+    } else if (sortOption === "highToLow") {
+      sortedArray.sort((a, b) => b.price - a.price);
+    }
+    setProducts(sortedArray);
+  };
 
   const [filterColors, setFilterColors] = useState<any>([]);
 
@@ -236,10 +279,21 @@ const Products = () => {
                     <FaSlidersH />
                     Filter
                   </button>
-                  <button className="bg-white flex items-center gap-2 px-6 py-2 shrink-0 font-medium">
-                    Default sorting
-                    <FaAngleDown />
-                  </button>
+                  <div>
+                    <Select
+                      className="w-[200px] h-[40px] z-30"
+                      id="country"
+                      styles={customStyles}
+                      options={sortOptions}
+                      components={{
+                        IndicatorSeparator: () => null,
+                      }}
+                      onChange={(sortOption: any) => {
+                        handleSort(sortOption.value);
+                      }}
+                      placeholder="Sort By"
+                    />
+                  </div>
                 </div>
                 <div className="flex">
                   <button
