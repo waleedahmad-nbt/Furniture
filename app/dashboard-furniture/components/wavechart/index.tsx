@@ -4,21 +4,51 @@ import dynamic from 'next/dynamic';
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const Wavechart = () => {
+const Wavechart = ({ data, type, checkTab }: any) => {
   const series: any = [
     {
-      name: "Session Duration",
-      data: [45, 52, 38, 102, 33, 26, 21, 20, 90, 8, 15, 10],
-    },
-    // {
-    //   name: "Page Views",
-    //   data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35],
-    // },
-    {
-      name: "Total Visits",
-      data: [10, 57, 74, 88, 75, 38, 62, 47, 82, 56, 45, 47],
+      name: ["Customers", "Sales", "Orders", "Conversations"][checkTab],
+      data,
     },
   ];
+
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  function getCurrentAndPreviousMonths() {
+    const currentDate = new Date();
+    const result = [];
+  
+    for (let i = 0; i < 12; i++) {
+      const currentMonthDate = new Date(currentDate);
+      currentMonthDate.setMonth(currentDate.getMonth() - i);
+  
+      const monthName = months[currentMonthDate.getMonth()];
+      result.unshift(monthName); // Add to the beginning of the array
+    }
+  
+    return result;
+  }
+  
+  function getLast30Days() {
+    const currentDate = new Date();
+    const result = [];
+  
+    for (let i = 30; i >= 0; i--) {
+      const currentDayDate = new Date(currentDate);
+      currentDayDate.setDate(currentDate.getDate() - i);
+      currentDayDate.setHours(0, 0, 0, 0);
+  
+      const dayNumber = currentDayDate.getDate();
+      result.push(dayNumber); // Add to the end of the array
+    }
+  
+    return result;
+  }
+  
+  const last30DaysArray = getLast30Days();
+  console.log(last30DaysArray);
+
+  const days = Array.from({ length: 31 }).map((_, index) => index + 1);
 
   const options: any = {
     chart: {
@@ -53,20 +83,7 @@ const Wavechart = () => {
       },
     },
     xaxis: {
-      categories: [
-        "01 Jan",
-        "02 Jan",
-        "03 Jan",
-        "04 Jan",
-        "05 Jan",
-        "06 Jan",
-        "07 Jan",
-        "08 Jan",
-        "09 Jan",
-        "10 Jan",
-        "11 Jan",
-        "12 Jan",
-      ],
+      categories: type === "Days" ? getLast30Days() : getCurrentAndPreviousMonths(),
     },
     tooltip: {
       y: [

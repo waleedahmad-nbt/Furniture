@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,14 +8,67 @@ import Wavechart from "../components/wavechart";
 import { FiArrowUpRight } from "react-icons/fi";
 import { CiHardDrive } from "react-icons/ci";
 import { BsCreditCard2Front } from "react-icons/bs";
+import { FaAngleDown } from "react-icons/fa6";
 import { TbMathGreater } from "react-icons/tb";
 
 import Product from "@/app/assets/images/Seller/Product.jpeg";
 import Instagrampic from "@/app/assets/images/Seller/Instagram.svg";
 import Facebookpic from "@/app/assets/images/Seller/facebook.jpg";
+import axios from "axios";
 
 const Admin = () => {
   const [checkTab, setchecktab] = useState(0);
+  const [data, setData] = useState<any>([]);
+  const [type, setType] = useState<string>("Months");
+  const [chartType, setChartType] = useState<string>("Months");
+
+  useEffect(() => {
+    const data = async () => {
+
+      let apiEndPoint = "";
+
+      if(checkTab === 0) {
+        apiEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/user/statistics`;
+  
+        if(type === "Weeks") {
+          apiEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/user/statistics`;
+        } else if(type === "Days") {
+          apiEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/user/dailystats`;
+        }
+      } else if(checkTab === 2) {
+        apiEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/order/statistics/orders`;
+  
+        if(type === "Weeks") {
+          apiEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/order/statistics/orders`;
+        } else if(type === "Days") {
+          apiEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/order/daily-statistics/orders`;
+        }
+      } else if(checkTab === 1) {
+        apiEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/order/sales/orders`;
+  
+        if(type === "Weeks") {
+          apiEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/order/sales/orders`;
+        } else if(type === "Days") {
+          apiEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/order/daily-sales/orders`;
+        }
+      }
+
+
+      try {
+        const res = await axios.get(apiEndPoint);
+
+        if(res.status === 200) {
+          setData(res.data.data);
+          setChartType(type);
+        }
+        
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    data();
+  }, [type, checkTab])  
 
   return (
     <div className="w-full">
@@ -28,7 +81,7 @@ const Admin = () => {
                 checkTab == 0 ? "bg-[rgb(241,241,241)]" : ""
               }`}
             >
-              <p className="w-max">Sessions</p>
+              <p className="w-max">Total Customers</p>
               <hr className="h-[1px] border-dashed border-[1px]" />
               <p className="text-2xl text-gray-900 font-bold flex">
                 309
@@ -83,7 +136,16 @@ const Admin = () => {
               </p>
             </div>
           </div>
-          <Wavechart />
+          <div className="px-3">
+            <div className="flex justify-end mb-3">
+              <select onChange={(e: any) => setType(e.target.value)} value={type} className="px-1 py-1 rounded-md bg-gray-900 text-white flex gap-3 items-center text-xs">
+                <option value="Months">Months</option>
+                <option value="Weeks">Weeks</option>
+                <option value="Days">Days</option>
+              </select>
+            </div>
+            <Wavechart data={data} type={chartType} checkTab={checkTab}/>
+          </div>
         </div>
         <div className="w-full mt-5 p-2 bg-white rounded-lg shadow-md">
           <div className="border-b-[1px] py-3 px-2 flex justify-between cursor-pointer">
