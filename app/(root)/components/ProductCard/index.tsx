@@ -129,9 +129,17 @@ const ProductCard = ({ item, className, offer, isGrid }: any) => {
               : " flex flex-col sm:flex-row items-start sm:items-center justify-between mt-2"
           }
         >
-          <div className="flex flex-items gap-3">
-            {/* <span className="text-gray-500 line-through">${item?.price}</span> */}
-            <span className="text-primary">${item?.price}</span>
+          <div>
+            {item?.discount?.discountedPrice ? (
+              <div className="flex items-center gap-3">
+                <s className="text-gray-200">AED {item?.price}</s>
+                <span className="text-primary">
+                  AED {item?.discount?.discountedPrice}
+                </span>
+              </div>
+            ) : (
+              <span className="text-primary">AED {item?.price}</span>
+            )}
           </div>
           <p className="text-gray-300 text-[14px]">
             {item?.qty > 0 ? (

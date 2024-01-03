@@ -14,11 +14,19 @@ import Image from "next/image";
 import axios from "axios";
 
 const ProductDetail = ({ data }: any) => {
+
+  const { _id } = data;
+
+  const weightString = data?.features?.weight; // Assuming data is your object
+  const match = weightString.match(/(\d+)\s*(\S+)/); // Extract numeric digits
+  const weightNumeric = parseInt(match[1]); // Convert numeric part to integer
+  const weightUnit = match[2];
+
   const fields = {
     title: data?.title || "",
     description: data?.description || "",
     qty: data?.qty || 0,
-    weight: data?.features?.weight ||"",
+    weight: weightNumeric || "",
     images: data?.Images || [],
     category: data?.category || "",
     subCategory: data?.subCategory || "",
@@ -26,8 +34,11 @@ const ProductDetail = ({ data }: any) => {
     materials: data?.features?.materials || "",
     brand: data?.features?.brand || "",
     warranty: data?.features?.warrenty || "",
-    weightUnit: "Kg",
+    weightUnit: weightUnit || "Kg",
     price: data?.price || "",
+    discount: (((data?.price - data?.discount?.discountedPrice) / data?.price) * 100).toFixed(2) || 0,
+    discountDuration: data?.discount?.duration || "",
+    sizes: data?.sizes || [],
   };
 
   const [colors, setColors] = useState<string[]>(data?.colors || []);
@@ -35,7 +46,8 @@ const ProductDetail = ({ data }: any) => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [formData, setFormData] = useState<any>(fields);
   const [categories, setCategories] = useState<any>([]);
-  // hh;
+  const [showDiscount, setShowDiscount] = useState<boolean>(data?.discount?.duration);
+
   useEffect(() => {
     const getCatgories = async () => {
       try {
@@ -84,15 +96,12 @@ const ProductDetail = ({ data }: any) => {
     }
     if (!formData.subCategory) {
       errors.subCategory = "Sub-Category is required";
-    }
+    }data
     if (!formData.price) {
       errors.price = "Price is required";
     }
     if (!formData.status) {
       errors.status = "Status is required";
-    }
-    if (!formData.warranty) {
-      errors.warranty = "Warranty is required";
     }
     if (!formData.qty) {
       errors.qty = "Quantity is required";
@@ -111,14 +120,20 @@ const ProductDetail = ({ data }: any) => {
         errors[`images[${i}]`] = "Image is required";
       }
     }
-    if (sizesArray.length <= 0) {
+    if (formData?.sizes?.length < 0 && sizesArray.length <= 0) {
       errors.sizes = "At least one Size is required";
     }
-    if (boxArray.length <= 0) {
-      errors.boxSizes = "At least one Size is required";
-    }
+
     if (colors.length <= 0) {
       errors.colors = "At least one Size is required";
+    }
+
+    if (!boxSizes.heightFeets && !boxSizes.heightInches) {
+      errors.height = "Height is required";
+    }
+
+    if (!boxSizes.widthFeets && !boxSizes.widthInches) {
+      errors.width = "Width is required";
     }
 
     console.log("vlid error", errors);
@@ -144,19 +159,19 @@ const ProductDetail = ({ data }: any) => {
         data.append(`pic${index + 1}`, img);
       });
 
-      colors?.forEach((size: any, index: number) => {
-        data.append(`colors[${index}]`, size);
+      colors?.forEach((color: any, index: number) => {
+        data.append(`colors[${index}]`, color);
       });
 
       sizesArray.forEach((size: any, index: number) => {
         data.append(`sizes[${index}]`, formatSize(size));
       });
 
-      data.append(`features[gDimensions][height]`, boxArray[0].height);
-      data.append(`features[gDimensions][width]`, boxArray[0].width);
+      data.append(`features[gDimensions][height]`, getHeight(boxSizes));
+      data.append(`features[gDimensions][width]`, getWidth(boxSizes));
 
-      data.append(`features[bDimensions][height]`, boxArray[0].height);
-      data.append(`features[bDimensions][width]`, boxArray[0].width);
+      data.append(`features[bDimensions][height]`, getHeight(boxSizes));
+      data.append(`features[bDimensions][width]`, getWidth(boxSizes));
 
       formData.materials?.forEach((material: any, index: number) => {
         data.append(`features[materials][${index}]`, material);
@@ -164,23 +179,26 @@ const ProductDetail = ({ data }: any) => {
 
       data.append("features[brand]", formData?.brand);
       data.append("features[warrenty]", formData?.warranty);
-      data.append("weight", formData?.weight + " " + formData?.weightUnit);
+      data.append("features[weight]", formData?.weight + " " + formData?.weightUnit);
 
-      // try {
-      //   const res = await axios.post(
-      //     `${process.env.NEXT_PUBLIC_BASE_URL}/product/add`,
-      //     data
-      //   );
+      data.append(`discount[rate]`, formData.discount);
+      data.append(`discount[duration]`, formData.discountDuration);
 
-      //   console.log(res);
-      //   if (res.status === 201) {
-      //     alert("Product Created.");
-      //     setSubmit(false);
-      //     setFormData(fields);
-      //   }
-      // } catch (error) {
-      //   console.error(error);
-      // }
+      try {
+        const res = await axios.put(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/product/edit/${_id}`,
+          data
+        );
+
+        console.log(res);
+        if (res.status === 201) {
+          alert("Product Created.");
+          setSubmit(false);
+          setFormData(fields);
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -215,7 +233,7 @@ const ProductDetail = ({ data }: any) => {
     widthFeets: "",
     widthInches: "",
   });
-  const [sizesArray, setSizesArray] = useState<any>([]);
+  const [sizesArray, setSizesArray] = useState<any>(data.sizes || []);
   const [errorSizes, setErrorSizes] = useState<any>({});
 
   const sizeChange = (e: any) => {
@@ -245,7 +263,7 @@ const ProductDetail = ({ data }: any) => {
   const submitSize = (e: any) => {
     e.preventDefault();
     if (validateSizes()) {
-      setSizesArray((prev: any) => [...prev, sizes]);
+      setSizesArray((prev: any) => [...prev, formatSize(sizes)]);
     }
   };
 
@@ -257,56 +275,26 @@ const ProductDetail = ({ data }: any) => {
     );
   };
 
+  function extractNumericValues(dimensionsString: any) {
+    const match = dimensionsString.match(/(\d+)'\s*(\d+)"/); // Match pattern for "5' H 3" W"
+  
+    if (match) {
+      const heightFeet = parseInt(match[1]);
+      const heightInches = parseInt(match[2]);
+  
+      return { heightFeet, heightInches };
+    } else {
+      // Handle the case where the input string doesn't match the expected pattern
+      return null;
+    }
+  }
+
   const [boxSizes, setBoxSizes] = useState<any>({
-    heightFeets: "",
-    heightInches: "",
-    widthFeets: "",
-    widthInches: "",
+    heightFeets: extractNumericValues(data?.features?.gDimensions?.height)?.heightFeet || "",
+    heightInches: extractNumericValues(data?.features?.gDimensions?.height)?.heightInches || "",
+    widthFeets: extractNumericValues(data?.features?.gDimensions?.width)?.heightInches || "",
+    widthInches: extractNumericValues(data?.features?.gDimensions?.width)?.heightInches || "",
   });
-  const [boxArray, setBoxArray] = useState<any>([]);
-  const [errorBoxes, setErrorBoxes] = useState<any>({});
-
-  const sizeBox = (e: any) => {
-    const { name, value } = e.target;
-
-    setBoxSizes((prev: any) => {
-      return { ...prev, [name]: value };
-    });
-  };
-
-  const validateBox = () => {
-    let errors: any = {};
-
-    if (!boxSizes.heightFeets && !boxSizes.heightInches) {
-      errors.height = "Height is required";
-    }
-
-    if (!boxSizes.widthFeets && !boxSizes.widthInches) {
-      errors.width = "Width is required";
-    }
-
-    setErrorBoxes(errors);
-
-    return Object.keys(errors).length === 0;
-  };
-
-  const submitBox = (e: any) => {
-    e.preventDefault();
-    if (validateBox()) {
-      setBoxArray((prev: any) => [
-        ...prev,
-        { height: getHeight(boxSizes), width: getWidth(boxSizes) },
-      ]);
-    }
-  };
-
-  const deleteBox = (index: number) => {
-    setBoxArray(
-      boxArray.filter((e: any, i: any) => {
-        return i !== index;
-      })
-    );
-  };
 
   const handleImage = (event: any, index: number) => {
     const file = event.target.files && event.target.files[0];
@@ -464,7 +452,7 @@ const ProductDetail = ({ data }: any) => {
                       }`}
                     >
                       {formData?.images[index] ? (
-                        <div>
+                        <div className="w-full h-full overflow-hidden">
                           <Image
                             src={data.Images[index] === formData?.images[index] ? data.Images[index] : URL.createObjectURL(formData?.images[index])}
                             width={100}
@@ -511,7 +499,7 @@ const ProductDetail = ({ data }: any) => {
 
               <div className="bg-white rounded-lg border p-3 mb-3">
                 <p className="text-sm mb-5">Pricing</p>
-                <div className="w-full grid md:grid-cols-2 grid-cols-1 gap-10">
+                <div className="w-full grid md:grid-cols-2 grid-cols-1 gap-x-10 gap-y-3">
                   <div>
                     <p className="text-xs mb-1">Price</p>
                     <div className=" relative w-full">
@@ -539,10 +527,109 @@ const ProductDetail = ({ data }: any) => {
                         placeholder="2 years"
                         name="warranty"
                         id="warranty"
+                        value={formData?.warranty}
                         onChange={handleChange}
                       />
                     </div>
                   </div>
+
+                  <div className="col-span-full flex items-center gap-3">
+                    <input
+                      type="checkbox"
+                      className="border rounded-lg focus:outline-none focus:border-black"
+                      name="discount"
+                      id="discount"
+                      checked={showDiscount}
+                      onChange={(e: any) => setShowDiscount(e.target.checked)}
+                    />
+                    <p className="text-sm">Add Discount</p>
+                  </div>
+
+                  {showDiscount && (
+                    <>
+                      <div>
+                        <p className="text-xs mb-1">Price After Discount</p>
+                        <div className=" relative w-full">
+                          <input
+                            type="number"
+                            disabled
+                            className=" text w-full text-xs border rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:border-black"
+                            placeholder="0.00"
+                            name="price"
+                            id="price"
+                            value={(formData?.price * (100 - formData?.discount)) / 100}
+                            onChange={handleChange}
+                          />
+                          <div className="absolute text-xs inset-y-0 left-0 flex items-center pl-3 ">
+                            AED
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-xs mb-1">Discount Price</p>
+                        <div className=" relative w-full">
+                          <input
+                            type="number"
+                            disabled
+                            className=" text w-full text-xs border rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:border-black"
+                            placeholder="0.00"
+                            name="price"
+                            id="price"
+                            value={formData?.price / formData?.discount}
+                            onChange={handleChange}
+                          />
+                          <div className="absolute text-xs inset-y-0 left-0 flex items-center pl-3 ">
+                            AED
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <p className="text-xs mb-1">Discount</p>
+                        <div className=" relative w-full">
+                          <input
+                            type="number"
+                            className="text w-full text-xs border rounded-lg pl-3 pr-8 py-2 focus:outline-none focus:border-black"
+                            placeholder="0.00"
+                            name="discount"
+                            id="discount"
+                            value={formData?.discount}
+                            onChange={handleChange}
+                          />
+                          <div className="absolute text-xs inset-y-0 right-0 flex items-center pr-3 ">
+                            %
+                          </div>
+                        </div>
+                        {formErrors.discount && (
+                          <p className="text-red-500 text-xs mt-1">
+                            {formErrors.discount}
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-xs mb-1">Discount Durating</p>
+                        <div className=" relative w-full">
+                          <input
+                            type="number"
+                            className="text w-full text-xs border rounded-lg pl-3 pr-12 py-2 focus:outline-none focus:border-black"
+                            placeholder="2"
+                            name="discountDuration"
+                            id="discountDuration"
+                            value={formData?.discountDuration}
+                            onChange={handleChange}
+                          />
+                          <div className="absolute text-xs inset-y-0 right-0 flex items-center pr-3 ">
+                            days
+                          </div>
+                        </div>
+                        {formErrors.discountDuration && (
+                          <p className="text-red-500 text-xs mt-1">
+                            {formErrors.discountDuration}
+                          </p>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -568,8 +655,14 @@ const ProductDetail = ({ data }: any) => {
                   placeholder="0.0"
                   name="weight"
                   id="weight"
+                  value={formData?.weight}
                   onChange={handleChange}
                 />
+                {formErrors.weight && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {formErrors.weight}
+                  </p>
+                )}
                 <select
                   id="weightUnit"
                   className="bg-gray-50 m-1 border inline-block px-2 py-2 text-gray-900 text-sm rounded-lg w-[70px] p-2.5"
@@ -583,90 +676,66 @@ const ProductDetail = ({ data }: any) => {
                 </select>
                 <div className="mt-3">
                   <p className="text-sm mb-1 mt-2">Box Dimensions</p>
-                  <form onSubmit={submitBox}>
-                    <p className="text-xs mb-1 mt-2">Height</p>
-                    <div className="grid grid-cols-2 gap-x-4 my-2">
-                      <div>
-                        <input
-                          type="number"
-                          name="heightFeets"
-                          id="heightFeets"
-                          onChange={sizeBox}
-                          placeholder="Feets"
-                          className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
-                        />
-                      </div>
-                      <div>
-                        <input
-                          type="number"
-                          name="heightInches"
-                          id="heightInches"
-                          onChange={sizeBox}
-                          placeholder="Inches"
-                          className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
-                        />
-                      </div>
+                  <p className="text-xs mb-1 mt-2">Height</p>
+                  <div className="grid grid-cols-2 gap-x-4 my-2">
+                    <div>
+                      <input
+                        type="number"
+                        name="heightFeets"
+                        id="heightFeets"
+                        value={boxSizes?.heightFeets}
+                        onChange={(e: any) => setBoxSizes((prev: any) => { return { ...prev, heightFeets: e.target.value } })}
+                        placeholder="Feets"
+                        className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
+                      />
                     </div>
-                    {errorBoxes.height && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {errorBoxes.height}
-                      </p>
-                    )}
-                    <p className="text-xs mb-1 mt-2">Width</p>
-                    <div className="grid grid-cols-2 gap-x-4 my-2">
-                      <div>
-                        <input
-                          type="number"
-                          name="widthFeets"
-                          id="widthFeets"
-                          onChange={sizeBox}
-                          placeholder="Feets"
-                          className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
-                        />
-                      </div>
-                      <div>
-                        <input
-                          type="number"
-                          name="widthInches"
-                          id="widthInches"
-                          onChange={sizeBox}
-                          placeholder="Inches"
-                          className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
-                        />
-                      </div>
+                    <div>
+                      <input
+                        type="number"
+                        name="heightInches"
+                        id="heightInches"
+                        value={boxSizes?.heightInches}
+                        onChange={(e: any) => setBoxSizes((prev: any) => { return { ...prev, heightInches: e.target.value } })}
+                        placeholder="Inches"
+                        className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
+                      />
                     </div>
-                    {errorBoxes.width && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {errorBoxes.width}
-                      </p>
-                    )}
-                    <div className="flex justify-end">
-                      <button
-                        type="submit"
-                        className="bg-gray-900 text-xs text-white px-6 py-2 rounded-lg mt-2"
-                      >
-                        + Add Box Dimensions
-                      </button>
-                    </div>
-                  </form>
-                  <div className="flex flex-wrap">
-                    {boxArray &&
-                      boxArray?.map((e: any, i: any) => {
-                        return (
-                          <span
-                            className="bg-gray-blue/30 relative h-max rounded m-1 text-sm p-1 flex justify-center items-center px-2"
-                            key={i}
-                          >
-                            {e.height + " " + e.width}
-                            <HiXMark
-                              size={18}
-                              onClick={() => deleteBox(i)}
-                              className="cursor-pointer absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-gray-blue/30 rounded-full p-1"
-                            />
-                          </span>
-                        );
-                      })}
                   </div>
+                  {formErrors.height && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {formErrors.height}
+                    </p>
+                  )}
+                  <p className="text-xs mb-1 mt-2">Width</p>
+                  <div className="grid grid-cols-2 gap-x-4 my-2">
+                    <div>
+                      <input
+                        type="number"
+                        name="widthFeets"
+                        id="widthFeets"
+                        value={boxSizes?.widthFeets}
+                        onChange={(e: any) => setBoxSizes((prev: any) => { return { ...prev, widthFeets: e.target.value } })}
+                        placeholder="Feets"
+                        className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="number"
+                        name="widthInches"
+                        id="widthInches"
+                        value={boxSizes?.widthInches}
+                        onChange={(e: any) => setBoxSizes((prev: any) => { return { ...prev, widthInches: e.target.value } })}
+                        placeholder="Inches"
+                        className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
+                      />
+                    </div>
+                  </div>
+                  {formErrors.width && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {formErrors.width}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -786,7 +855,7 @@ const ProductDetail = ({ data }: any) => {
                             className="bg-gray-blue/30 relative h-max rounded m-1 text-sm p-1 flex justify-center items-center px-2"
                             key={i}
                           >
-                            {formatSize(e)}
+                            {e}
                             <HiXMark
                               size={18}
                               onClick={() => deleteSize(i)}
@@ -916,7 +985,7 @@ const ProductDetail = ({ data }: any) => {
                     <div className="Loader w-[15px] border-[2px] border-primary"></div>
                   )}
                 </div>
-                <span className={submit ? "opacity-0" : ""}>Add Product</span>
+                <span className={submit ? "opacity-0" : ""}>Update Product</span>
               </button>
             </div>
           </div>

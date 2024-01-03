@@ -1,15 +1,46 @@
 "use client"
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import dynamic from "next/dynamic";
 
 const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 import "apexcharts/dist/apexcharts.css";
 
 const Ordersgraph = () => {
+
+  const [data, setData] = useState<any>([]);
+  const [type, setType] = useState<string>("Months");
+
+  useEffect(() => {
+    const data = async () => {
+
+      let apiEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/order/statistics/orders`;
+  
+      if(type === "Weeks") {
+        apiEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/order/weekly-statistics/orders`;
+      } else if(type === "Days") {
+        apiEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/order/daily-statistics/orders`;
+      }
+
+      try {
+        const res = await axios.get(apiEndPoint);
+
+        if(res.status === 200) {
+          setData(res.data.data);
+        }
+        
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    data();
+  }, [type])
+
   const seriesData = [
     {
       name: 'Sales',
-      data: [4, 3, 10, 9, 29, 19, 22, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5]
+      data: data.data,
     }
   ];
 
@@ -26,22 +57,7 @@ const Ordersgraph = () => {
       curve: 'smooth'
     },
     xaxis: {
-      type: 'datetime',
-      categories: ['1/11/2000', '2/11/2000', '3/11/2000', '4/11/2000', '5/11/2000', '6/11/2000', '7/11/2000', '8/11/2000', '9/11/2000', '10/11/2000', '11/11/2000', '12/11/2000', '1/11/2001', '2/11/2001', '3/11/2001', '4/11/2001', '5/11/2001', '6/11/2001'],
-      tickAmount: 10,
-      labels: {
-        formatter: function(value:any, timestamp:any, opts:any) {
-          return opts.dateFormatter(new Date(timestamp), 'dd MMM')
-        }
-      }
-    },
-    title: {
-      text: 'Total Orders',
-      align: 'left',
-      style: {
-        fontSize: "16px",
-        color: '#666'
-      }
+      categories: data.labels,
     },
     fill: {
       type: 'gradient',
@@ -55,16 +71,22 @@ const Ordersgraph = () => {
         stops: [0, 100, 100, 100]
       },
     },
-    yaxis: {
-      min: -10,
-      max: 40
-    }
   };
 
   return (
-    <div id="chart">
-      <ApexCharts options={options} series={seriesData} type="line" width={'100%'} height={350} />
-    </div>
+    <>
+      <div className="flex items-center justify-between px-3 py-4">
+        <h2 className="font-bold text-gray-900 text-[20px]">Total Orders</h2>
+        <select onChange={(e: any) => setType(e.target.value)} value={type} className="px-1 py-1 rounded-md bg-gray-900 text-white flex gap-3 items-center text-xs">
+          <option value="Months">Monthly</option>
+          <option value="Weeks">Weekly</option>
+          <option value="Days">Daily</option>
+        </select>
+      </div>
+      <div id="chart">
+        <ApexCharts options={options} series={seriesData} type="line" width={'100%'} height={350} />
+      </div>
+    </>
   );
 };
 

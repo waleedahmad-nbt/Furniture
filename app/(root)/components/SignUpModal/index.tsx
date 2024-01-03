@@ -8,6 +8,7 @@ import { FaCheck } from "react-icons/fa";
 import { useRequestMethods } from "../index";
 import Image from "next/image";
 import loader from "@/app/assets/icons/loader.gif";
+import signUpImg from "@/app/assets/images/signUpImg.png";
 import axios from "axios";
 const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
   const { publicRequest } = useRequestMethods();
@@ -82,12 +83,21 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
               aria-modal="true"
               aria-labelledby="modal-headline"
             >
-              <div className="relative w-full xs:w-[400px] sm:w-[500px] md:w-[768px] bg-white px-4 pt-10 pb-10 sm:p-6 text-gray-900">
+              <div className="relative w-full flex justify-between gap-5 items-center xs:w-[400px] sm:w-[500px] md:w-[768px] lg:w-[882px] bg-white px-4 pt-10 pb-10 sm:p-6 text-gray-900">
                 <div
                   className="absolute top-5 right-5 cursor-pointer"
                   onClick={handleSignUpCancel}
                 >
                   <RxCross1 />
+                </div>
+                <div className="hidden md:block h-[80%] w-[70%]">
+                  <Image
+                    src={signUpImg}
+                    alt=""
+                    className="h-full w-full"
+                    width={100}
+                    height={100}
+                  />
                 </div>
 
                 <div className=" w-auto md:w-max mx-auto pb-10">
@@ -95,7 +105,7 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                     Sign Up Information
                   </h1>
                   <form onSubmit={handleSubmit}>
-                    <div className="grid grid-cols-2 gap-3 sm:w-[368px] mt-3">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
                       <div>
                         <label
                           htmlFor="firstName"
@@ -131,96 +141,102 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                         />
                       </div>
                     </div>
-                    <div className="flex flex-col">
-                      <label
-                        htmlFor="username"
-                        className="mt-5 text-[12px] ms-3"
-                      >
-                        User Name <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        className="w-full sm:w-[368px] h-[48px] px-3 mt-1 border border-gray-100 rounded-md bg-white outline-none"
-                        type="text"
-                        name="username"
-                        id="username"
-                        required
-                        placeholder="User Name"
-                        onChange={handleChange}
-                      />
-                      {/* {!isEmail && (
-                        <p className="mt-3 text-secondary text-[12px] font-normal ms-3">
-                          Please enter a valid email address.
-                        </p>
-                      )} */}
-                    </div>
-                    <div className="flex flex-col">
-                      <label htmlFor="email" className="mt-5 text-[12px] ms-3">
-                        Email <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        className="w-full sm:w-[368px] h-[48px] px-3 mt-1 border border-gray-100 rounded-md bg-white outline-none"
-                        type="email"
-                        name="email"
-                        id="email"
-                        required
-                        placeholder="Type your email"
-                        onChange={handleChange}
-                      />
-                      {/* {!isEmail && (
-                        <p className="mt-3 text-secondary text-[12px] font-normal ms-3">
-                          Please enter a valid email address.
-                        </p>
-                      )} */}
-                    </div>
-
-                    <div className="flex flex-col">
-                      <label
-                        htmlFor="phoneNumber"
-                        className="mt-5 text-[12px] ms-3"
-                      >
-                        Phone Number <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        className="w-full sm:w-[368px] h-[48px] px-3 mt-1 border border-gray-100 rounded-md bg-white outline-none"
-                        type="text"
-                        name="phoneNumber"
-                        id="phoneNumber"
-                        required
-                        placeholder="Phone Number"
-                        onChange={handleChange}
-                      />
-                      {/* {!isEmail && (
-                        <p className="mt-3 text-secondary text-[12px] font-normal ms-3">
-                          Please enter a valid email address.
-                        </p>
-                      )} */}
-                    </div>
-
-                    <div className="flex flex-col">
-                      <label
-                        htmlFor="password"
-                        className="mt-5 text-[12px] ms-3"
-                      >
-                        Password <span className="text-red-500">*</span>
-                      </label>
-                      <div
-                        className={`flex justify-between items-center w-full sm:w-[368px] h-[48px] px-3 mt-1 border ${"border-gray-100 "} rounded-md`}
-                      >
+                    <div className="grid grid-cols-1 md:grid-cols-2 md:gap-3">
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="username"
+                          className="mt-5 text-[12px] ms-3"
+                        >
+                          User Name <span className="text-red-500">*</span>
+                        </label>
                         <input
-                          className="bg-white h-full outline-none w-full"
-                          type={showPassword ? "password" : "text"}
-                          name="password"
-                          id="password"
-                          // value={password}
-                          // onChange={handlePasswordChange}
+                          className="w-full h-[48px] px-3 mt-1 border border-gray-100 rounded-md bg-white outline-none"
+                          type="text"
+                          name="username"
+                          id="username"
+                          required
+                          placeholder="User Name"
                           onChange={handleChange}
-                          placeholder="Type your Password"
                         />
-                        <div onClick={() => setShowPasswords(!showPassword)}>
-                          {showPassword ? <IoEyeOutline /> : <FiEyeOff />}
-                        </div>
+                        {/* {!isEmail && (
+                        <p className="mt-3 text-secondary text-[12px] font-normal ms-3">
+                          Please enter a valid email address.
+                        </p>
+                      )} */}
                       </div>
-                      {/* {!isValid && (
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="email"
+                          className="mt-5 text-[12px] ms-3"
+                        >
+                          Email <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          className="w-full h-[48px] px-3 mt-1 border border-gray-100 rounded-md bg-white outline-none"
+                          type="email"
+                          name="email"
+                          id="email"
+                          required
+                          placeholder="Type your email"
+                          onChange={handleChange}
+                        />
+                        {/* {!isEmail && (
+                        <p className="mt-3 text-secondary text-[12px] font-normal ms-3">
+                          Please enter a valid email address.
+                        </p>
+                      )} */}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 md:gap-3">
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="phoneNumber"
+                          className="mt-5 text-[12px] ms-3"
+                        >
+                          Phone Number <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          className="w-full h-[48px] px-3 mt-1 border border-gray-100 rounded-md bg-white outline-none"
+                          type="text"
+                          name="phoneNumber"
+                          id="phoneNumber"
+                          required
+                          placeholder="Phone Number"
+                          onChange={handleChange}
+                        />
+                        {/* {!isEmail && (
+                        <p className="mt-3 text-secondary text-[12px] font-normal ms-3">
+                          Please enter a valid email address.
+                        </p>
+                      )} */}
+                      </div>
+
+                      <div className="flex flex-col">
+                        <label
+                          htmlFor="password"
+                          className="mt-5 text-[12px] ms-3"
+                        >
+                          Password <span className="text-red-500">*</span>
+                        </label>
+                        <div
+                          className={`flex justify-between items-center w-full h-[48px] px-3 mt-1 border ${"border-gray-100 "} rounded-md`}
+                        >
+                          <input
+                            className="bg-white h-full outline-none w-full"
+                            type={showPassword ? "password" : "text"}
+                            name="password"
+                            id="password"
+                            // value={password}
+                            // onChange={handlePasswordChange}
+                            onChange={handleChange}
+                            placeholder="Type your Password"
+                          />
+                          <div onClick={() => setShowPasswords(!showPassword)}>
+                            {showPassword ? <IoEyeOutline /> : <FiEyeOff />}
+                          </div>
+                        </div>
+                        {/* {!isValid && (
                         <p className="mt-3 text-secondary text-[12px] font-normal ms-3">
                           Password should be between 8-16 characters, contain{" "}
                           <br />
@@ -229,6 +245,7 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                           special character, and at least one number.
                         </p>
                       )} */}
+                      </div>
                     </div>
 
                     <div className="flex flex-col">
@@ -239,7 +256,7 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                         Re-enter The Password{" "}
                         <span className="text-red-500">*</span>
                       </label>
-                      <div className="flex justify-between items-center w-full sm:w-[368px] h-[48px] px-3 mt-1 border border-gray-100 rounded-md">
+                      <div className="flex justify-between items-center w-full h-[48px] px-3 mt-1 border border-gray-100 rounded-md">
                         <input
                           className="bg-white h-full outline-none w-full"
                           type={reenterPassword ? "password" : "text"}
@@ -262,7 +279,7 @@ const SignUpModal = ({ isSignUpOpen, handleSignUpCancel, showModal }: any) => {
                       )}
                     </div>
 
-                    <div className="flex justify-between items-start gap-3 mt-5 pr-16">
+                    <div className="flex justify-start items-start gap-3 mt-5 pr-16">
                       <div className=" mt-1">
                         <input
                           className="hidden"

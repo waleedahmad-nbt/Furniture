@@ -278,17 +278,27 @@ const Navbar = () => {
                 Customize furniture
               </Link>
             </div>
-            <div className="flex items-center gap-4 lg:gap-6">
+            <div className="flex items-center justify-center gap-4 lg:gap-6">
               {token ? (
                 <div className="relative cursor-pointer group py-5">
-                  <div className="hidden md:block w-[25px] lg:w-[30px]">
-                    <Image
-                      src={userData?.profileImage}
-                      alt="user"
-                      className="w-full h-full"
-                      width={100}
-                      height={100}
-                    />
+                  <div className="flex items-center gap-2">
+                    <div className="hidden md:block w-[25px] h-[25px] lg:h-[30px] lg:w-[30px]">
+                      <Image
+                        src={userData?.profileImage}
+                        alt="user"
+                        className="w-full h-full rounded-full"
+                        width={100}
+                        height={100}
+                      />
+                    </div>
+                    <div className="hidden lg:block">
+                      <p className="text-[8px] lg:text-[11px] text-[#717171]">
+                        Log out
+                      </p>
+                      <p className="text-[9px] lg:text-[12px]">
+                        {userData?.firstName}
+                      </p>
+                    </div>
                   </div>
                   <div className="w-[150px] hidden -z-10 md:flex flex-col gap-2 py-3 min-h-[100px] absolute bg-white right-[70%] text-gray-300 rounded-md group-hover:z-50 -bottom-[30%] translate-y-[100%] opacity-0 group-hover:bottom-[0%] group-hover:opacity-100 duration-300 shadow-2xl">
                     <Link href="/myaccount">
@@ -311,16 +321,24 @@ const Navbar = () => {
                   </div>
                 </div>
               ) : (
-                <button
-                  className="shrink-0 hidden md:block"
+                <div
+                  className=" gap-1 hidden md:flex cursor-pointer"
                   onClick={showModal}
                 >
-                  <Image
-                    src={profile}
-                    alt="user"
-                    className="w-[25px] lg:w-[35px]"
-                  />
-                </button>
+                  <button className="shrink-0">
+                    <Image
+                      src={profile}
+                      alt="user"
+                      className="w-[25px] lg:w-[35px]"
+                    />
+                  </button>
+                  <div className="hidden lg:block">
+                    <p className="text-[8px] lg:text-[11px] text-[#717171]">
+                      Sign in
+                    </p>
+                    <p className="text-[9px] lg:text-[12px]">Account</p>
+                  </div>
+                </div>
               )}
               <NavLink
                 href="/cart"

@@ -4,12 +4,17 @@ import Delivery from "@/app/assets/icons/delivery.svg";
 import money from "@/app/assets/icons/money.svg";
 import time from "@/app/assets/icons/time.svg";
 import discount from "@/app/assets/icons/discount.svg";
+import "react-loading-skeleton/dist/skeleton.css";
+import ServicesSkeleton from "../Skeletons/ServicesSkeleton";
 
-const Features = ({ services }: any) => {
+const Features = ({ services, loading }: any) => {
   return (
     <>
       <div className="flex items-center justify-between flex-wrap gap-5">
-        {services &&
+        {loading ? (
+          <ServicesSkeleton />
+        ) : (
+          services &&
           services.map((item: any, index: any) => {
             return (
               <div className="bg-silver py-7 text-center border-[0.6px] min-h-[150px] border-gray-200 w-[100%] sm:w-[290px] flex flex-col justify-center items-center gap-1">
@@ -26,7 +31,8 @@ const Features = ({ services }: any) => {
                 <p className="text-gray-300">{item.subTitle}</p>
               </div>
             );
-          })}
+          })
+        )}
       </div>
     </>
   );

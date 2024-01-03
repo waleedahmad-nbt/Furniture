@@ -237,6 +237,12 @@ const Products = () => {
                   scope="col"
                   className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
                 >
+                  Discounted Price
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
+                >
                   Reviews
                 </th>
                 <th
@@ -249,7 +255,7 @@ const Products = () => {
             </thead>
             <tbody className="divide-y">
               {data && filter(data)?.map((product: any, i: number) => {
-                const { _id, Images, title, status, qty, inStock, category, price, type, vender} = product;
+                const { _id, Images, title, status, qty, category, price, discount} = product;
                 return (
                   <tr key={i}>
                     <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
@@ -286,6 +292,18 @@ const Products = () => {
                     </td>
                     <td className="px-6 py-4 text-left whitespace-nowrap text-xs text-gray-500">
                       AED {price}
+                    </td>
+                    <td className="px-6 py-4 text-left whitespace-nowrap text-xs text-gray-500">
+                      {discount?.discountedPrice > 0 ? (
+                        <>
+                          AED {discount?.discountedPrice} 
+                          <span className="text-primary ml-1">({(((price - discount?.discountedPrice) / price) * 100).toFixed(2)}%)</span>
+                        </>
+                      ) : (
+                        <>
+                          AED {discount?.price}
+                        </>
+                      )}
                     </td>
                     <td className="px-6 py-4 text-left whitespace-nowrap text-xs text-gray-500">
                       <Link href={`/dashboard-furniture/admin/products/reviews/${_id}`} className="bg_admin hover:bg-gray-900 px-2 text-white py-1 rounded-md">Reviews</Link>

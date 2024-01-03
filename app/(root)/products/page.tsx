@@ -21,6 +21,8 @@ import { RootState } from "@/lib/store";
 import { useDispatch, useSelector } from "react-redux";
 import { RiFilterOffFill } from "react-icons/ri";
 import { setCategory, setCategoryId } from "@/lib/store/slices/Allslices";
+import BestSellerSkeleton from "../components/Skeletons/BestSellerSkeleton";
+import ProductsBar from "../components/Skeletons/ProductsBar";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -30,18 +32,20 @@ const Products = () => {
 
   const category: any = useSelector((state: RootState) => state.category);
   const categoryId: any = useSelector((state: RootState) => state.categoryId);
-  // console.log(category, "category");
-  // console.log(categoryId, "categoryId");
   const [isGrid, setIsGrid] = useState(true);
   const [options, setoptions] = useState([]);
   const [products, setProducts] = useState<any>([]);
-  // console.log(products, "products");
-
+  const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<string>("");
   const [pageData, setPageData] = useState<any>({
     start: 0,
     end: 0,
   });
+
+  const [minMax, setMinMax] = useState<any>({
+    min: 0,
+    max: 0,
+  })
 
   const status = ["In Stock", "On Sale"];
 
@@ -68,7 +72,7 @@ const Products = () => {
       outlineColor: "none",
       borderRadius: "0px",
       boxShadow: "none",
-      padding: "5px",
+      height: "40px",
       borderColor: state.isFocused ? "#FF6F00" : "",
       "&:hover": {
         border: "1px solid #FF6F00",
@@ -100,7 +104,8 @@ const Products = () => {
         const res = await publicRequest.get(`/product/colors`);
 
         if (res.status === 200) {
-          setFilterColors(res.data.data);
+          setFilterColors(res.data.data?.colors);
+          setMinMax({ min: res.data.data?.minPrice, max: res.data.data?.maxPrice })
         }
       } catch (error) {
         console.error(error);
@@ -110,7 +115,6 @@ const Products = () => {
     getColors();
   }, []);
 
-  // const options = ["Bathroom", "Home Office"];
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
@@ -133,6 +137,7 @@ const Products = () => {
           // setFilterColors(res.data.data.uniqueColors);
           setProducts(res.data.data);
           setTotalPages(res.data.pagination.totalPages);
+          setLoading(false);
         }
       } catch (error) {
         console.error(error);
@@ -233,171 +238,180 @@ const Products = () => {
           </div>
         </div>
       </div>
-      <div className="relative">
+      {loading ? (
         <div className="container">
-          <div className="border-b-[2px] pb-4 border-[#858585]">
-            <div className="flex items-center gap-2 mt-4">
-              <p className="text-gray-200">Home</p>
-              <Image src={angle} alt="icon" />
-              <p className="text-gray-300 font-medium">Shop</p>
-            </div>
-            <p className="text-gray-300 font-medium mt-2">Product Categories</p>
-            <div className="flex flex-wrap gap-2 my-3">
-              {options?.map((item: any, index: number) => (
-                <button
-                  onClick={() => {
-                    if (tab === item?.name) {
-                      fetchProductBySubCat("");
-                      setTab("");
-                    } else {
-                      fetchProductBySubCat(item?.name);
-                      setTab(item?.name);
-                    }
-                  }}
-                  className="bg-white flex items-center gap-2 px-3 py-2 shrink-0"
-                  key={index}
-                >
-                  <div
-                    className={`w-[17px] h-[15px] p-[2px] flex items-center justify-center text-white ${
-                      tab === item?.name ? "bg-primary" : "bg-[#F1F3F5]"
-                    }`}
-                  >
-                    {tab === item?.name && <Image src={check} alt="icon" />}
-                  </div>
-                  {item?.name}
-                </button>
-              ))}
-            </div>
-            <div className="flex flex-col items-start md:flex-row md:items-center justify-between  gap-2">
-              <p className="font-medium text-[18px] text-gray-300">
-                Showing {pageData?.start}-{pageData?.end} of {products?.length}{" "}
-                result
+          <ProductsBar />
+        </div>
+      ) : (
+        <div className="relative">
+          <div className="container">
+            <div className="border-b-[2px] pb-4 border-[#858585]">
+              <div className="flex items-center gap-2 mt-4">
+                <p className="text-gray-200">Home</p>
+                <Image src={angle} alt="icon" />
+                <p className="text-gray-300 font-medium">Shop</p>
+              </div>
+              <p className="text-gray-300 font-medium mt-2">
+                Product Categories
               </p>
-              <div className="flex flex-col items-start md:flex-row gap-3 md:items-center shrink-0 text-gray-300 ">
-                <div className="flex gap-2">
-                  <button className="bg-white flex items-center gap-2 px-6 py-2 shrink-0">
-                    <FaSlidersH />
-                    Filter
+              <div className="flex flex-wrap gap-2 my-3">
+                {options?.map((item: any, index: number) => (
+                  <button
+                    onClick={() => {
+                      if (tab === item?.name) {
+                        fetchProductBySubCat("");
+                        setTab("");
+                      } else {
+                        fetchProductBySubCat(item?.name);
+                        setTab(item?.name);
+                      }
+                    }}
+                    className="bg-white flex items-center gap-2 px-3 py-2 shrink-0"
+                    key={index}
+                  >
+                    <div
+                      className={`w-[17px] h-[15px] p-[2px] flex items-center justify-center text-white ${
+                        tab === item?.name ? "bg-primary" : "bg-[#F1F3F5]"
+                      }`}
+                    >
+                      {tab === item?.name && <Image src={check} alt="icon" />}
+                    </div>
+                    {item?.name}
                   </button>
-                  <div>
-                    <Select
-                      className="w-[200px] h-[40px] z-30"
-                      id="country"
-                      styles={customStyles}
-                      options={sortOptions}
-                      components={{
-                        IndicatorSeparator: () => null,
-                      }}
-                      onChange={(sortOption: any) => {
-                        handleSort(sortOption.value);
-                      }}
-                      placeholder="Sort By"
-                    />
+                ))}
+              </div>
+              <div className="flex flex-col items-start md:flex-row md:items-center justify-between  gap-2">
+                <p className="font-medium text-[18px] text-gray-300">
+                  Showing {pageData?.start}-{pageData?.end} of{" "}
+                  {products?.length} result
+                </p>
+                <div className="flex flex-col items-start md:flex-row gap-3 md:items-center shrink-0 text-gray-300 ">
+                  <div className="flex gap-2">
+                    <div>
+                      <Select
+                        className="w-[200px] h-[40px] z-30"
+                        id="country"
+                        styles={customStyles}
+                        options={sortOptions}
+                        components={{
+                          IndicatorSeparator: () => null,
+                        }}
+                        onChange={(sortOption: any) => {
+                          handleSort(sortOption.value);
+                        }}
+                        placeholder="Sort By"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="flex">
-                  <button
-                    className={`${
-                      isGrid
-                        ? "bg-primary text-white"
-                        : "bg-white text-gray-600"
-                    } flex items-center justify-center w-[40px] h-[40px] shrink-0`}
-                    onClick={() => {
-                      setIsGrid(true);
-                    }}
-                  >
-                    <CgMenuGridO size={22} />
-                  </button>
-                  <button
-                    className={`${
-                      !isGrid
-                        ? "bg-primary text-white"
-                        : "bg-white text-gray-600"
-                    } flex items-center justify-center w-[40px] h-[40px] shrink-0`}
-                    onClick={() => {
-                      setIsGrid(false);
-                    }}
-                  >
-                    <FaList />
-                  </button>
+                  <div className="flex">
+                    <button
+                      className={`${
+                        isGrid
+                          ? "bg-primary text-white"
+                          : "bg-white text-gray-600"
+                      } flex items-center justify-center w-[40px] h-[40px] shrink-0`}
+                      onClick={() => {
+                        setIsGrid(true);
+                      }}
+                    >
+                      <CgMenuGridO size={22} />
+                    </button>
+                    <button
+                      className={`${
+                        !isGrid
+                          ? "bg-primary text-white"
+                          : "bg-white text-gray-600"
+                      } flex items-center justify-center w-[40px] h-[40px] shrink-0`}
+                      onClick={() => {
+                        setIsGrid(false);
+                      }}
+                    >
+                      <FaList />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
-      <div>
-        <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row -mx-[15px] mt-10 ">
-            <div className="flex-[0_0_33%] px-[10px]">
-              <div className="bg-[#FAFAFA] px-5 py-7">
-                <p className="text-gray-900 font-bold">Filter by Color</p>
-                <div className="mt-4 space-y-1">
-                  <button
-                    className="flex items-center justify-between w-full"
-                    onClick={() => {
-                      setFilters((prev: any) => {
-                        return { ...prev, color: "" };
-                      });
-                      fetchProductByColor("");
-                    }}
-                  >
-                    <div className={`flex items-center gap-3`}>
-                      <div
-                        className={`border rounded-full p-[2px] ${
-                          filters.color === "" ? "border-primary" : ""
-                        }`}
-                      >
-                        <span className={`block rounded-full`}>
-                          <RiFilterOffFill />
-                        </span>
-                      </div>
-                      <p className="text-gray-200">None</p>
-                    </div>
-                  </button>
-                  {filterColors.length > 0 &&
-                    filterColors?.map((item: any, index: any) => (
-                      <button
-                        className="flex items-center justify-between w-full"
-                        key={index}
-                        onClick={() => {
-                          setFilters((prev: any) => {
-                            return { ...prev, color: item };
-                          });
-                          fetchProductByColor(item);
-                        }}
-                      >
-                        <div className={`flex items-center gap-3`}>
-                          <div
-                            className={`border rounded-full ${
-                              filters.color === item
-                                ? "border-primary p-[2px]"
-                                : ""
-                            }`}
-                          >
-                            <span
-                              className={`block rounded-full border ${
-                                filters.color === item
-                                  ? "w-[14px] h-[14px]"
-                                  : "w-[18px] h-[18px]"
-                              }`}
-                              style={{ backgroundColor: item }}
-                            ></span>
-                          </div>
-                          <p className="text-gray-200">{item}</p>
+      {loading ? (
+        <div className="container">
+          <BestSellerSkeleton />
+        </div>
+      ) : (
+        <div>
+          <div className="container mx-auto">
+            <div className="flex flex-col md:flex-row -mx-[15px] mt-10 ">
+              <div className="flex-[0_0_33%] px-[10px]">
+                <div className="bg-[#FAFAFA] px-5 py-7">
+                  <p className="text-gray-900 font-bold">Filter by Color</p>
+                  <div className="mt-4 space-y-1">
+                    <button
+                      className="flex items-center justify-between w-full"
+                      onClick={() => {
+                        setFilters((prev: any) => {
+                          return { ...prev, color: "" };
+                        });
+                        fetchProductByColor("");
+                      }}
+                    >
+                      <div className={`flex items-center gap-3`}>
+                        <div
+                          className={`border rounded-full p-[2px] ${
+                            filters.color === "" ? "border-primary" : ""
+                          }`}
+                        >
+                          <span className={`block rounded-full`}>
+                            <RiFilterOffFill />
+                          </span>
                         </div>
-                        <p className="text-gray-200">( 1 )</p>
-                      </button>
-                    ))}
+                        <p className="text-gray-200">None</p>
+                      </div>
+                    </button>
+                    {filterColors.length > 0 &&
+                      filterColors?.map((item: any, index: any) => (
+                        <button
+                          className="flex items-center justify-between w-full"
+                          key={index}
+                          onClick={() => {
+                            setFilters((prev: any) => {
+                              return { ...prev, color: item?.color };
+                            });
+                            fetchProductByColor(item?.color);
+                          }}
+                        >
+                          <div className={`flex items-center gap-3`}>
+                            <div
+                              className={`border rounded-full ${
+                                filters.color === item?.color
+                                  ? "border-primary p-[2px]"
+                                  : ""
+                              }`}
+                            >
+                              <span
+                                className={`block rounded-full border ${
+                                  filters.color === item?.color
+                                    ? "w-[14px] h-[14px]"
+                                    : "w-[18px] h-[18px]"
+                                }`}
+                                style={{ backgroundColor: item?.color }}
+                              ></span>
+                            </div>
+                            <p className="text-gray-200">{item?.color}</p>
+                          </div>
+                          <p className="text-gray-200">( {item?.productCount} )</p>
+                        </button>
+                      ))}
+                  </div>
                 </div>
-              </div>
               <div className="bg-[#FAFAFA] px-5 py-7 mt-7">
                 <p className="text-gray-900 font-bold">Filter by Price</p>
                 <div className="w-full mt-4 mb-1">
                   <MultiRangeSlider
-                    min={100}
-                    max={9999}
+                    min={minMax?.min}
+                    max={minMax?.max}
                     step={5}
                     minValue={minPrice}
                     maxValue={maxPrice}
@@ -414,8 +428,8 @@ const Products = () => {
                   />
                 </div>
                 <div className="flex flex-wrap items-center justify-between text-gray-200">
-                  <span>Min. Price: ${minPrice}</span>
-                  <span>Max. Price: ${maxPrice}</span>
+                  <span>Min. Price: ${minMax?.min}</span>
+                  <span>Max. Price: ${minMax?.max}</span>
                 </div>
               </div>
               <div className="bg-[#FAFAFA] px-5 py-7 mt-7">
@@ -435,81 +449,52 @@ const Products = () => {
                         if (filters.CAta === item?.name) {
                           fetchProductBySubCat("");
                           setFilters((prev: any) => {
-                            return { ...prev, CAta: "" };
-                          });
-                        } else {
-                          fetchProductBySubCat(item?.name);
-                          setFilters((prev: any) => {
-                            return { ...prev, CAta: item?.name };
-                          });
-                        }
-                      }}
-                    >
-                      <div className="flex items-center gap-2">
-                        <div className="w-[17px] h-[15px] p-[2px] border flex items-center justify-center text-white">
-                          <div
-                            className={`w-[9px] h-[8px] ${
-                              filters.CAta === item?.name
-                                ? "bg-[#272727]"
-                                : "bg-white"
-                            }`}
-                          ></div>
+                            return { ...prev, status: item };
+                          })
+                        }}}
+                      >
+                        <div className="flex items-center gap-2">
+                          <div className="w-[17px] h-[15px] p-[2px] border flex items-center justify-center text-white">
+                            <div
+                              className={`w-[9px] h-[8px] ${
+                                filters.status === item
+                                  ? "bg-[#272727]"
+                                  : "bg-white"
+                              }`}
+                            ></div>
+                          </div>
+                          <p className="text-gray-900">{item}</p>
                         </div>
-                        <p className="text-gray-900">{item?.name}</p>
                       </div>
-                      <span className="text-gray-200">{item?.count}</span>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
-              <div className="bg-[#FAFAFA] px-5 py-7 mt-7">
-                <p className="text-gray-900 font-bold">Product Status</p>
-                <div className="flex flex-wrap mt-4 gap-4">
-                  {status?.map((item: any, index: any) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between w-full cursor-pointer"
-                      onClick={() =>
-                        setFilters((prev: any) => {
-                          return { ...prev, status: item };
-                        })
-                      }
-                    >
-                      <div className="flex items-center gap-2">
-                        <div className="w-[17px] h-[15px] p-[2px] border flex items-center justify-center text-white">
-                          <div
-                            className={`w-[9px] h-[8px] ${
-                              filters.status === item
-                                ? "bg-[#272727]"
-                                : "bg-white"
-                            }`}
-                          ></div>
-                        </div>
-                        <p className="text-gray-900">{item}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
 
-            <div className="flex-[0_0_66.66%] px-[10px] mt-5 md:mt-0">
-              <PaginationContainer
-                items={products}
-                setStats={(start: any, end: any) =>
-                  setPageData({ start: start, end: end })
-                }
-                totalPages={totalPages}
-                isGrid={isGrid}
-              />
+              <div className="flex-[0_0_66.66%] px-[10px] mt-5 md:mt-0">
+                <PaginationContainer
+                  items={products}
+                  setStats={(start: any, end: any) =>
+                    setPageData({ start: start, end: end })
+                  }
+                  totalPages={totalPages}
+                  isGrid={isGrid}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
-      <div className="container my-10">
-        <RecentViewed />
-      </div>
+      {loading ? (
+        <div className="container">
+          <BestSellerSkeleton />
+        </div>
+      ) : (
+        <div className="container my-10">
+          <RecentViewed />
+        </div>
+      )}
     </>
   );
 };

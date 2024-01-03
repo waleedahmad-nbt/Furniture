@@ -27,6 +27,8 @@ const NewProduct = () => {
     brand: "",
     warranty: "",
     weightUnit: "Kg",
+    discount: 0,
+    discountDuration: "",
   };
 
   const [colors, setColors] = useState<string[]>([]);
@@ -34,7 +36,8 @@ const NewProduct = () => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [formData, setFormData] = useState<any>(fields);
   const [categories, setCategories] = useState<any>([]);
-  // hh;
+  const [showDiscount, setShowDiscount] = useState<boolean>(false);
+
   useEffect(() => {
     const getCatgories = async () => {
       try {
@@ -70,10 +73,8 @@ const NewProduct = () => {
   const validateForm = () => {
     let errors: any = {};
 
-    console.log(formData);
-
     if (!formData.title) {
-      errors.title = "Category is required";
+      errors.title = "Title is required";
     }
     if (!formData.description) {
       errors.description = "Description is required";
@@ -90,9 +91,7 @@ const NewProduct = () => {
     if (!formData.status) {
       errors.status = "Status is required";
     }
-    if (!formData.warranty) {
-      errors.warranty = "Warranty is required";
-    }
+    
     if (!formData.qty) {
       errors.qty = "Quantity is required";
     }
@@ -114,13 +113,21 @@ const NewProduct = () => {
       errors.sizes = "At least one Size is required";
     }
     if (boxArray.length <= 0) {
-      errors.boxSizes = "At least one Size is required";
+      errors.boxSizes = "At least one Box Size is required";
     }
     if (colors.length <= 0) {
-      errors.colors = "At least one Size is required";
+      errors.colors = "At least one Color is required";
     }
 
-    console.log("vlid error", errors);
+    if (showDiscount) {
+      if(!formData.discount) {
+        errors.discount = "Discount is required";
+      }
+      if(!formData.discountDuration) {
+        errors.discountDuration = "Discount Duration is required";
+      }
+    }
+
     setFormErrors(errors);
 
     return Object.keys(errors).length === 0;
@@ -157,13 +164,22 @@ const NewProduct = () => {
       data.append(`features[bDimensions][height]`, boxArray[0].height);
       data.append(`features[bDimensions][width]`, boxArray[0].width);
 
+      // data.append(`features[gDimensions][height]`, (boxSizes.heightFeets + "' H " + boxSizes.heightFeets + "\" W"));
+      // data.append(`features[gDimensions][width]`, (boxSizes.heightFeets + "' H " + boxSizes.heightFeets + "\" W"));
+
+      // data.append(`features[bDimensions][height]`, (boxSizes.heightFeets + "' H " + boxSizes.heightFeets + "\" W"));
+      // data.append(`features[bDimensions][width]`, (boxSizes.heightFeets + "' H " + boxSizes.heightFeets + "\" W"));
+
       formData.materials?.forEach((material: any, index: number) => {
-        data.append(`features[materials][${index}]`, formatSize(material));
+        data.append(`features[materials][${index}]`, material);
       });
 
       data.append("features[brand]", formData?.brand);
       data.append("features[warrenty]", formData?.warranty);
-      data.append("weight", formData?.weight + " " + formData?.weightUnit);
+      data.append("features[weight]", formData?.weight + " " + formData?.weightUnit);
+
+      data.append(`discount[rate]`, formData.discount);
+      data.append(`discount[duration]`, formData.discountDuration);
 
       try {
         const res = await axios.post(
@@ -171,7 +187,6 @@ const NewProduct = () => {
           data
         );
 
-        console.log(res);
         if (res.status === 201) {
           alert("Product Created.");
           setSubmit(false);
@@ -186,8 +201,6 @@ const NewProduct = () => {
   useEffect(() => {
     if (showPopup) {
       const closePopup = (e: any) => {
-        console.log(e.target, "target");
-
         if (!e.target.classList.contains("openDesc")) {
           setShowPopup(false);
         }
@@ -310,8 +323,6 @@ const NewProduct = () => {
   const handleImage = (event: any, index: number) => {
     const file = event.target.files && event.target.files[0];
 
-    console.log(index);
-
     if (file) {
       const reader = new FileReader();
 
@@ -431,9 +442,14 @@ const NewProduct = () => {
                   placeholder="Short sleeve t-shirt"
                   name="title"
                   id="title"
+                  value={formData?.title}
                   onChange={handleChange}
                 />
-
+                {formErrors.title && (
+                  <p className="text-red-500 text-xs mb-1">
+                    {formErrors.title}
+                  </p>
+                )}
                 <p className="text-xs mb-1">Description</p>
                 <div className="h-[150px] mb-12">
                   <ReactQuill
@@ -444,6 +460,11 @@ const NewProduct = () => {
                     formats={formats}
                   />
                 </div>
+                {formErrors.description && (
+                  <p className="text-red-500 text-xs mb-1">
+                    {formErrors.description}
+                  </p>
+                )}
               </div>
 
               <div className="bg-white rounded-lg border p-3 mb-3">
@@ -462,7 +483,7 @@ const NewProduct = () => {
                       }`}
                     >
                       {formData?.images[index] ? (
-                        <div>
+                        <div className="w-full h-full overflow-hidden">
                           <Image
                             src={URL.createObjectURL(formData?.images[index])}
                             width={100}
@@ -493,6 +514,11 @@ const NewProduct = () => {
                               Click to upload
                             </span>
                           </p>
+                          {formErrors?.[`images[${index}]`] && (
+                            <p className="text-red-500 text-xs mb-1">
+                              {formErrors?.[`images[${index}]`]}
+                            </p>
+                          )}
                         </div>
                       )}
                       <input
@@ -509,22 +535,28 @@ const NewProduct = () => {
 
               <div className="bg-white rounded-lg border p-3 mb-3">
                 <p className="text-sm mb-5">Pricing</p>
-                <div className="w-full grid md:grid-cols-2 grid-cols-1 gap-10">
+                <div className="w-full grid md:grid-cols-2 grid-cols-1 gap-x-10 gap-y-3">
                   <div>
                     <p className="text-xs mb-1">Price</p>
                     <div className=" relative w-full">
                       <input
                         type="number"
-                        className=" text w-full text-xs border border-gray-300 rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:border-black"
+                        className=" text w-full text-xs border rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:border-black"
                         placeholder="0.00"
                         name="price"
                         id="price"
+                        value={formData?.price}
                         onChange={handleChange}
                       />
                       <div className="absolute text-xs inset-y-0 left-0 flex items-center pl-3 ">
                         AED
                       </div>
                     </div>
+                    {formErrors.price && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {formErrors.price}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -532,14 +564,117 @@ const NewProduct = () => {
                     <div className="w-full">
                       <input
                         type="text"
-                        className=" text w-full text-xs border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:border-black"
+                        className=" text w-full text-xs border rounded-lg px-3 py-2 focus:outline-none focus:border-black"
                         placeholder="2 years"
                         name="warranty"
                         id="warranty"
+                        value={formData?.warranty}
                         onChange={handleChange}
                       />
                     </div>
+                    {formErrors.warranty && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {formErrors.warranty}
+                      </p>
+                    )}
                   </div>
+
+                  <div className="col-span-full flex items-center gap-3">
+                    <input
+                      type="checkbox"
+                      className="border rounded-lg focus:outline-none focus:border-black"
+                      name="discount"
+                      id="discount"
+                      onChange={(e: any) => setShowDiscount(e.target.checked)}
+                    />
+                    <p className="text-sm">Add Discount</p>
+                  </div>
+
+                  {showDiscount && (
+                    <>
+                      <div>
+                        <p className="text-xs mb-1">Price After Discount</p>
+                        <div className=" relative w-full">
+                          <input
+                            type="number"
+                            disabled
+                            className=" text w-full text-xs border rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:border-black"
+                            placeholder="0.00"
+                            name="price"
+                            id="price"
+                            value={(formData?.price * (100 - formData?.discount)) / 100}
+                            onChange={handleChange}
+                          />
+                          <div className="absolute text-xs inset-y-0 left-0 flex items-center pl-3 ">
+                            AED
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-xs mb-1">Discount Price</p>
+                        <div className=" relative w-full">
+                          <input
+                            type="number"
+                            disabled
+                            className=" text w-full text-xs border rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:border-black"
+                            placeholder="0.00"
+                            name="price"
+                            id="price"
+                            value={formData?.price / formData?.discount}
+                            onChange={handleChange}
+                          />
+                          <div className="absolute text-xs inset-y-0 left-0 flex items-center pl-3 ">
+                            AED
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <p className="text-xs mb-1">Discount</p>
+                        <div className=" relative w-full">
+                          <input
+                            type="number"
+                            className="text w-full text-xs border rounded-lg pl-3 pr-8 py-2 focus:outline-none focus:border-black"
+                            placeholder="0.00"
+                            name="discount"
+                            id="discount"
+                            value={formData?.discount}
+                            onChange={handleChange}
+                          />
+                          <div className="absolute text-xs inset-y-0 right-0 flex items-center pr-3 ">
+                            %
+                          </div>
+                        </div>
+                        {formErrors.discount && (
+                          <p className="text-red-500 text-xs mt-1">
+                            {formErrors.discount}
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-xs mb-1">Discount Durating</p>
+                        <div className=" relative w-full">
+                          <input
+                            type="number"
+                            className="text w-full text-xs border rounded-lg pl-3 pr-12 py-2 focus:outline-none focus:border-black"
+                            placeholder="2"
+                            name="discountDuration"
+                            id="discountDuration"
+                            value={formData?.discountDuration}
+                            onChange={handleChange}
+                          />
+                          <div className="absolute text-xs inset-y-0 right-0 flex items-center pr-3 ">
+                            days
+                          </div>
+                        </div>
+                        {formErrors.discountDuration && (
+                          <p className="text-red-500 text-xs mt-1">
+                            {formErrors.discountDuration}
+                          </p>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -553,30 +688,46 @@ const NewProduct = () => {
                     placeholder="0.0"
                     name="qty"
                     id="qty"
+                    value={formData?.qty}
                     onChange={handleChange}
                   />
+                  {formErrors.qty && (
+                    <p className="text-red-500 text-xs">
+                      {formErrors.qty}
+                    </p>
+                  )}
                 </div>
                 <p className="text-sm mb-5">Shipping</p>
                 <p className="text-xs mb-1">Weight</p>
-                <input
-                  type="number"
-                  className="mb-2 w-[120px] m-1 inline-block text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
-                  placeholder="0.0"
-                  name="weight"
-                  id="weight"
-                  onChange={handleChange}
-                />
-                <select
-                  id="weightUnit"
-                  className="bg-gray-50 m-1 border inline-block px-2 py-2 text-gray-900 text-sm rounded-lg w-[70px] p-2.5"
-                  name="weightUnit"
-                  onChange={handleChange}
-                >
-                  <option value="Kg">Kg</option>
-                  <option value="lb">lb</option>
-                  <option value="oz">oz</option>
-                  <option value="g">g</option>
-                </select>
+                <div className="flex items-start gap-3">
+                  <div>
+                    <input
+                      type="number"
+                      className="mb-2 w-[120px] inline-block text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
+                      placeholder="0.0"
+                      name="weight"
+                      id="weight"
+                      value={formData?.weight}
+                      onChange={handleChange}
+                    />
+                    {formErrors.weight && (
+                      <p className="text-red-500 text-xs">
+                        {formErrors.weight}
+                      </p>
+                    )}
+                  </div>                    
+                  <select
+                    id="weightUnit"
+                    className="bg-gray-50 border inline-block px-2 h-[34px] text-gray-900 text-sm rounded-lg w-[70px]"
+                    name="weightUnit"
+                    onChange={handleChange}
+                  >
+                    <option value="Kg">Kg</option>
+                    <option value="lb">lb</option>
+                    <option value="oz">oz</option>
+                    <option value="g">g</option>
+                  </select>
+                </div>
                 <div className="mt-3">
                   <p className="text-sm mb-1 mt-2">Box Dimensions</p>
                   <form onSubmit={submitBox}>
@@ -636,6 +787,11 @@ const NewProduct = () => {
                         {errorBoxes.width}
                       </p>
                     )}
+                    {formErrors.boxSizes && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {formErrors.boxSizes}
+                      </p>
+                    )}
                     <div className="flex justify-end">
                       <button
                         type="submit"
@@ -684,6 +840,11 @@ const NewProduct = () => {
                     }}
                     onChange={submitColor}
                   />
+                  {formErrors.colors && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {formErrors.colors}
+                    </p>
+                  )}
                   <div className="flex flex-wrap mt-3">
                     {colors &&
                       colors?.map((color: any, i: any) => {
@@ -765,6 +926,11 @@ const NewProduct = () => {
                         {errorSizes.width}
                       </p>
                     )}
+                    {formErrors.sizes && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {formErrors.sizes}
+                      </p>
+                    )}
                     <div className="flex justify-end">
                       <button
                         type="submit"
@@ -809,6 +975,11 @@ const NewProduct = () => {
                   <option value="Active">Active</option>
                   <option value="Draft">Draft</option>
                 </select>
+                {formErrors.status && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {formErrors.status}
+                  </p>
+                )}
               </div>
 
               <div className=" bg-white rounded-lg border p-3 mb-3">
@@ -819,6 +990,7 @@ const NewProduct = () => {
                     id="category"
                     className="bg-gray-50 border px-2 py-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-1"
                     name="category"
+                    value={formData.category}
                     onChange={handleChange}
                   >
                     <option value="">Select a category</option>
@@ -828,6 +1000,11 @@ const NewProduct = () => {
                       </option>
                     ))}
                   </select>
+                  {formErrors.category && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {formErrors.category}
+                    </p>
+                  )}
 
                   {formData?.category && (
                     <>
@@ -836,6 +1013,7 @@ const NewProduct = () => {
                         id="subCategory"
                         className="bg-gray-50 border px-2 py-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-1"
                         name="subCategory"
+                        value={formData.subCategory}
                         onChange={handleChange}
                       >
                         <option>Select A sub-category</option>
@@ -863,6 +1041,11 @@ const NewProduct = () => {
                     <option value="Material 1">Material 1</option>
                     <option value="Material 2">Material 2</option>
                   </select>
+                  {formErrors.material && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {formErrors.material}
+                    </p>
+                  )}
                   <div className="flex flex-wrap items-center">
                     {formData.materials &&
                       formData?.materials?.map((e: any, i: any) => {
@@ -889,12 +1072,18 @@ const NewProduct = () => {
                     defaultValue="Brand"
                     id="brand"
                     name="brand"
+                    value={formData.brand}
                     onChange={handleChange}
                   >
                     <option value="">Select a brand</option>
                     <option value="Brand 2">Brand</option>
                     <option value="Brand 2">Brand 2</option>
                   </select>
+                  {formErrors.brand && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {formErrors.brand}
+                    </p>
+                  )}
                 </div>
               </div>
 
