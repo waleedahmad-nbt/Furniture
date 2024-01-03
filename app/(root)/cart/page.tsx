@@ -55,7 +55,11 @@ const Cart = () => {
 
       <div className="container">
         <div className="flex flex-wrap justify-between gap-y-5 mt-5 mb-16">
-          <div className="pr-2 w-full lg:w-[60%]">
+          <div
+            className={`pr-2 w-full ${
+              isOrderComplete ? "lg:w-full" : "lg:w-[60%]"
+            } `}
+          >
             <h1 className="text-[20px] font-medium">Cart</h1>
 
             <div className="flex flex-col sm:flex-row gap-8 mt-5">

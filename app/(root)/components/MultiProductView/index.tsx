@@ -67,8 +67,9 @@ const MultiProductView = ({ item }: any) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   // const bgColor = item?.status === "sale" ? "bg-secondary" : "bg-primary";
 
-  const cartItems: any = useSelector((state: RootState) => state.cart);
   const wishList: any = useSelector((state: RootState) => state.wishList);
+
+  const cartItems: any = useSelector((state: RootState) => state.cart);
 
   const handleCart = () => {
     const filterCart = cartItems.filter(
@@ -99,9 +100,8 @@ const MultiProductView = ({ item }: any) => {
     }
   };
 
-  // check if exists in wishlist or not
-  const existWish = wishList.filter((wish: any) => wish._id === item?._id);
-  const existCart = cartItems.filter((cart: any) => cart._id === item?._id);
+  const existWish = wishList.filter((wish: any) => wish?._id === item?._id);
+  const existCart = cartItems.filter((cart: any) => cart?._id === item?._id);
 
   return (
     <>

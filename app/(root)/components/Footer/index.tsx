@@ -59,7 +59,7 @@ const Footer = () => {
                 </p>
               </div>
             </div>
-            <div className="text-[16px] font-normal px-5  lg:px-20">
+            <div className="text-[16px] font-normal px-5  lg:px-16">
               <h1 className="font-bold text-[18px]">Customized Services</h1>
               <div className="flex flex-col gap-3 mt-6 text-[14px]">
                 <p className="hover:text-primary duration-150 cursor-pointer">

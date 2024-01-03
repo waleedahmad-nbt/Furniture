@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { GoHeart } from "react-icons/go";
-
+import { FaHeart } from "react-icons/fa6";
 import angle from "@/app/assets/icons/angle-right.svg";
 import sofa from "@/app/assets/products/sofa.png";
 import sofa1 from "@/app/assets/products/sofa_01.png";
@@ -25,6 +25,17 @@ import twitter from "@/app/assets/icons/twitter_outline.svg";
 import ProductsDeatilsTabs from "./productsDeatilsTabs";
 import { useParams } from "next/navigation";
 import starhalf from "@/app/assets/icons/starhalf.svg";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  addToWhislist,
+  removeWishList,
+} from "@/lib/store/slices/Allslices";
+import { RootState } from "@/lib/store";
+import ProductBar from "@/app/(root)/components/Skeletons/ProductBar";
+import ProductPageSkeleton from "@/app/(root)/components/Skeletons/ProductPageSkeleton";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import { publicRequest } from "@/requestMethods";
 
 const ProductDetails = () => {
@@ -69,6 +80,17 @@ const ProductDetails = () => {
   };
 
   const [product, setProduct] = useState<any>(data);
+  // console.log(product, "product");
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (loading) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [loading]);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -77,6 +99,7 @@ const ProductDetails = () => {
 
         if (res.status === 200) {
           setProduct(res.data.data);
+          setLoading(false);
         }
       } catch (error) {
         console.error(error);
@@ -137,6 +160,41 @@ const ProductDetails = () => {
     }
   };
 
+  const dispatch = useDispatch();
+  const wishList: any = useSelector((state: RootState) => state.wishList);
+  const cartItems: any = useSelector((state: RootState) => state.cart);
+
+  const handleCart = (item: any) => {
+    const filterCart = cartItems.filter(
+      (product: any) => product._id === item?._id
+    );
+
+    if (filterCart.length <= 0) {
+      dispatch(addToCart({ ...item, quantity: 1 }));
+      notify();
+    }
+  };
+
+  const notify = () =>
+    toast("Product Added to Cart!", {
+      className: "custom-toast", // Add a custom class to the toast container
+    });
+
+  const handleWishList = (item: any) => {
+    const id = item?._id;
+    const filterWishList = wishList.filter(
+      (product: any) => product._id === id
+    );
+
+    if (filterWishList.length > 0) {
+      dispatch(removeWishList({ id }));
+    } else {
+      dispatch(addToWhislist(item));
+    }
+  };
+
+  const existWish = wishList.filter((wish: any) => wish?._id === product?._id);
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log(formData);
@@ -144,206 +202,215 @@ const ProductDetails = () => {
 
   return (
     <>
-      <div className="container">
-        <div className="border-b-[2px] pb-4 border-[#858585]">
-          <div className="flex items-center gap-2 mt-4">
-            <p className="text-gray-200">Home</p>
-            <Image src={angle} alt="icon" />
-            <p className="text-gray-200"> {product?.category}</p>
-            <Image src={angle} alt="icon" />
-            <p className="text-gray-300 font-medium">Product Detail</p>
+      <div className="container pt-5">
+        {loading ? (
+          <ProductBar />
+        ) : (
+          <div className="border-b-[2px] pb-4 border-[#858585]">
+            <div className="flex items-center gap-2 mt-4">
+              <p className="text-gray-200">Home</p>
+              <Image src={angle} alt="icon" />
+              <p className="text-gray-200"> {product?.category}</p>
+              <Image src={angle} alt="icon" />
+              <p className="text-gray-300 font-medium">Product Detail</p>
+            </div>
+            <p className="text-gray-300 font-medium mt-2">Product Categories</p>
           </div>
-          <p className="text-gray-300 font-medium mt-2">Product Categories</p>
-        </div>
+        )}
       </div>
 
       <div className="container my-5">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-14 my-10">
-          <div className="w-full">
-            <Slider {...settings} className="Product_Details mb-[150px]">
-              {product?.Images?.map((item: any, index: number) => (
-                <div className={`relative w-full h-full`} key={index}>
-                  <Image
-                    src={item}
-                    alt="img"
-                    className="w-full h-[613px] object-cover"
-                    width={100}
-                    height={100}
-                  />
+        {loading ? (
+          <ProductPageSkeleton />
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-14 my-10">
+            <div className="w-full">
+              <Slider {...settings} className="Product_Details mb-[150px]">
+                {product?.Images?.map((item: any, index: number) => (
+                  <div className={`relative w-full h-full`} key={index}>
+                    <Image
+                      src={item}
+                      alt="img"
+                      className="w-full h-[613px] object-cover"
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+                ))}
+              </Slider>
+            </div>
+            <div className="-mt-28 md:-mt-0">
+              <h1 className="text-[24px] font-medium text-gray-900">
+                {product?.title}
+              </h1>
+              <div className="flex items-center gap-3">
+                <div className="flex my-4">
+                  {Array.from({ length: 5 }, (_, index) => {
+                    let number = index + 0.5;
+                    return (
+                      <>
+                        {product?.averageRating >= index + 1 ? (
+                          <Image
+                            src={starFill}
+                            alt="product"
+                            width={24}
+                            height={24}
+                            key={index}
+                          />
+                        ) : product?.averageRating >= number ? (
+                          <Image
+                            src={starhalf}
+                            alt="product"
+                            width={24}
+                            height={24}
+                          />
+                        ) : (
+                          <Image
+                            src={star}
+                            alt="product"
+                            width={24}
+                            height={24}
+                          />
+                        )}
+                      </>
+                    );
+                  })}
                 </div>
-              ))}
-            </Slider>
-          </div>
-          <div className="-mt-28 md:-mt-0">
-            <h1 className="text-[24px] font-medium text-gray-900">
-              {product?.title}
-            </h1>
-            <div className="flex items-center gap-3">
-              <div className="flex my-4">
-                {Array.from({ length: 5 }, (_, index) => {
-                  let number = index + 0.5;
-                  return (
-                    <>
-                      {product?.averageRating >= index + 1 ? (
-                        <Image
-                          src={starFill}
-                          alt="product"
-                          width={24}
-                          height={24}
-                          key={index}
-                        />
-                      ) : product?.averageRating >= number ? (
-                        <Image
-                          src={starhalf}
-                          alt="product"
-                          width={24}
-                          height={24}
-                        />
-                      ) : (
-                        <Image
-                          src={star}
-                          alt="product"
-                          width={24}
-                          height={24}
-                        />
-                      )}
-                    </>
-                  );
-                })}
+                {product?.totalReviews > 0 && (
+                  <span className="text-gray-500">
+                    ( {product?.totalReviews} )
+                  </span>
+                )}
               </div>
-              {product?.totalReviews > 0 && (
-                <span className="text-gray-500">
-                  ( {product?.totalReviews} )
-                </span>
-              )}
-            </div>
-            <h2 className="text-[24px] font-medium text-gray-900 mb-4">
-              AED {product?.price}
-            </h2>
-            <p className="font-medium text-gray-900 my-4">Sizes</p>
-            <div className="flex flex-wrap gap-2">
-              {product?.sizes?.map((item: any, index: number) => (
-                <div
-                  className={`bg-white px-3 py-2 text-gray-400 border shrink-0 cursor-pointer ${
-                    formData.size === item ? "border-primary" : ""
-                  }`}
-                  key={index}
-                  onClick={() =>
-                    setFormData((prev: any) => {
-                      return { ...prev, size: item };
-                    })
-                  }
-                >
-                  {item}
-                </div>
-              ))}
-            </div>
-            <p className="font-medium text-gray-900 my-4">Color:</p>
-            <div className="flex flex-wrap mt-4 gap-4">
-              {product?.colors?.map((item: any, index: any) => (
+              <h2 className="text-[24px] font-medium text-gray-900 mb-4">
+                AED {product?.price}
+              </h2>
+              <p className="font-medium text-gray-900 my-4">Sizes</p>
+              <div className="flex flex-wrap gap-2">
+                {product?.sizes?.map((item: any, index: number) => (
+                  <div
+                    className={`bg-white px-3 py-2 text-gray-400 border shrink-0 cursor-pointer ${
+                      formData.size === item ? "border-primary" : ""
+                    }`}
+                    key={index}
+                    onClick={() =>
+                      setFormData((prev: any) => {
+                        return { ...prev, size: item };
+                      })
+                    }
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+              <p className="font-medium text-gray-900 my-4">Color:</p>
+              <div className="flex flex-wrap mt-4 gap-4">
+                {product?.colors?.map((item: any, index: any) => (
+                  <button
+                    className={`rounded-full border p-[5px] ${
+                      formData.color === item
+                        ? "border-primary"
+                        : "border-transparent"
+                    }`}
+                    key={index}
+                    onClick={() =>
+                      setFormData((prev: any) => {
+                        return { ...prev, color: item };
+                      })
+                    }
+                  >
+                    <span
+                      className="block rounded-full w-[32px] h-[32px]"
+                      style={{ backgroundColor: item }}
+                    ></span>
+                  </button>
+                ))}
+              </div>
+              <p className="font-medium text-gray-900 my-4">Amount:</p>
+              <div className="flex items-center gap-4">
                 <button
-                  className={`rounded-full border p-[5px] ${
-                    formData.color === item
-                      ? "border-primary"
-                      : "border-transparent"
-                  }`}
-                  key={index}
-                  onClick={() =>
-                    setFormData((prev: any) => {
-                      return { ...prev, color: item };
-                    })
-                  }
+                  className="text-[22px] text-[#858585] cursor-pointer"
+                  onClick={() => setAmount("minus")}
                 >
-                  <span
-                    className="block rounded-full w-[32px] h-[32px]"
-                    style={{ backgroundColor: item }}
-                  ></span>
+                  <FiMinus />
                 </button>
-              ))}
-            </div>
-            <p className="font-medium text-gray-900 my-4">Amount:</p>
-            <div className="flex items-center gap-4">
-              <button
-                className="text-[22px] text-[#858585] cursor-pointer"
-                onClick={() => setAmount("minus")}
-              >
-                <FiMinus />
-              </button>
-              <div className="w-[40px] h-[40px] flex items-center justify-center bg-white rounded-md border">
-                {formData?.amount}
+                <div className="w-[40px] h-[40px] flex items-center justify-center bg-white rounded-md border">
+                  {formData?.amount}
+                </div>
+                <button
+                  className="text-[22px] text-[#858585] cursor-pointer"
+                  onClick={() => setAmount("plus")}
+                >
+                  <FiPlus />
+                </button>
+
+                <button
+                  className="font-medium bg-[#3CB242] text-white px-2 md:px-10 py-2.5 rounded-md cursor-pointer"
+                  onClick={() => handleCart(product)}
+                >
+                  Add to Cart
+                </button>
+
+                <button
+                  className="font-bold bg-gray-900 text-[#3CB242] w-[40px] h-[40px] flex items-center justify-center text-2xl rounded-md cursor-pointer"
+                  onClick={() => handleWishList(product)}
+                >
+                  {existWish.length > 0 ? <FaHeart /> : <GoHeart />}
+                </button>
               </div>
-              <button
-                className="text-[22px] text-[#858585] cursor-pointer"
-                onClick={() => setAmount("plus")}
-              >
-                <FiPlus />
-              </button>
 
-              <button
-                className="font-medium bg-[#3CB242] text-white px-2 md:px-10 py-2.5 rounded-md cursor-pointer"
-                onClick={handleSubmit}
-              >
-                Add to Cart
-              </button>
+              <div className="flex gap-3">
+                <p className="font-medium text-gray-900 my-4 mr-10">Share:</p>
+                <Image src={facebook} alt="product" width={25} height={25} />
+                <Image src={linkedin} alt="product" width={25} height={25} />
+                <Image src={mail} alt="product" width={25} height={25} />
+                <Image src={twitter} alt="product" width={25} height={25} />
+              </div>
 
-              <button
-                className="font-bold bg-gray-900 text-[#3CB242] w-[40px] h-[40px] flex items-center justify-center text-2xl rounded-md cursor-pointer"
-                onClick={handleSubmit}
-              >
-                <GoHeart />
-              </button>
-            </div>
+              <p className="font-medium text-gray-900 my-4 mr-10">
+                Special Offer:
+              </p>
 
-            <div className="flex gap-3">
-              <p className="font-medium text-gray-900 my-4 mr-10">Share:</p>
-              <Image src={facebook} alt="product" width={25} height={25} />
-              <Image src={linkedin} alt="product" width={25} height={25} />
-              <Image src={mail} alt="product" width={25} height={25} />
-              <Image src={twitter} alt="product" width={25} height={25} />
-            </div>
+              <div className="w-1/2 mb-5">
+                <div className="flex justify-between items-center">
+                  <p className="text-gray-500">
+                    Sold:{" "}
+                    <span className="text-[#555555] font-medium">700</span>
+                  </p>
+                  <p className="text-gray-500">
+                    In Stock:{" "}
+                    <span className="text-[#555555] font-medium">300</span>
+                  </p>
+                </div>
+                <div className="relative mt-1">
+                  <span className="block h-[6px] w-full bg-[#E3E4E4] rounded-md"></span>
+                  <span
+                    className={`block absolute inset-0 h-[6px] w-[50%] bg-[#3CB242] rounded-md`}
+                  ></span>
+                </div>
+              </div>
 
-            <p className="font-medium text-gray-900 my-4 mr-10">
-              Special Offer:
-            </p>
-
-            <div className="w-1/2 mb-5">
-              <div className="flex justify-between items-center">
-                <p className="text-gray-500">
-                  Sold: <span className="text-[#555555] font-medium">700</span>
+              <div className="flex gap-2 mt-1">
+                <p className="px-2 flex flex-col justify-center items-center gap-6">
+                  10
+                  <span className="text-[#858585]">Day</span>
                 </p>
-                <p className="text-gray-500">
-                  In Stock:{" "}
-                  <span className="text-[#555555] font-medium">300</span>
+                :
+                <p className="px-2 flex flex-col justify-center items-center gap-6">
+                  24<span className="text-[#858585]">Hours</span>
+                </p>
+                :
+                <p className="px-2 flex flex-col justify-center items-center gap-6">
+                  00<span className="text-[#858585]">Min</span>
+                </p>
+                :
+                <p className="px-2 flex flex-col justify-center items-center gap-6">
+                  08<span className="text-[#858585]">Sec</span>
                 </p>
               </div>
-              <div className="relative mt-1">
-                <span className="block h-[6px] w-full bg-[#E3E4E4] rounded-md"></span>
-                <span
-                  className={`block absolute inset-0 h-[6px] w-[50%] bg-[#3CB242] rounded-md`}
-                ></span>
-              </div>
-            </div>
-
-            <div className="flex gap-2 mt-1">
-              <p className="px-2 flex flex-col justify-center items-center gap-6">
-                10
-                <span className="text-[#858585]">Day</span>
-              </p>
-              :
-              <p className="px-2 flex flex-col justify-center items-center gap-6">
-                24<span className="text-[#858585]">Hours</span>
-              </p>
-              :
-              <p className="px-2 flex flex-col justify-center items-center gap-6">
-                00<span className="text-[#858585]">Min</span>
-              </p>
-              :
-              <p className="px-2 flex flex-col justify-center items-center gap-6">
-                08<span className="text-[#858585]">Sec</span>
-              </p>
             </div>
           </div>
-        </div>
+        )}
       </div>
 
       <div className="container mx-auto">
