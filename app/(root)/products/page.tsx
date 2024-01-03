@@ -287,10 +287,6 @@ const Products = () => {
                 </p>
                 <div className="flex flex-col items-start md:flex-row gap-3 md:items-center shrink-0 text-gray-300 ">
                   <div className="flex gap-2">
-                    <button className="bg-white flex items-center gap-2 px-6 py-2 shrink-0">
-                      <FaSlidersH />
-                      Filter
-                    </button>
                     <div>
                       <Select
                         className="w-[200px] h-[40px] z-30"
@@ -381,31 +377,31 @@ const Products = () => {
                           key={index}
                           onClick={() => {
                             setFilters((prev: any) => {
-                              return { ...prev, color: item };
+                              return { ...prev, color: item?.color };
                             });
-                            fetchProductByColor(item);
+                            fetchProductByColor(item?.color);
                           }}
                         >
                           <div className={`flex items-center gap-3`}>
                             <div
                               className={`border rounded-full ${
-                                filters.color === item
+                                filters.color === item?.color
                                   ? "border-primary p-[2px]"
                                   : ""
                               }`}
                             >
                               <span
                                 className={`block rounded-full border ${
-                                  filters.color === item
+                                  filters.color === item?.color
                                     ? "w-[14px] h-[14px]"
                                     : "w-[18px] h-[18px]"
                                 }`}
-                                style={{ backgroundColor: item }}
+                                style={{ backgroundColor: item?.color }}
                               ></span>
                             </div>
-                            <p className="text-gray-200">{item}</p>
+                            <p className="text-gray-200">{item?.color}</p>
                           </div>
-                          <p className="text-gray-200">( 1 )</p>
+                          <p className="text-gray-200">( {item?.productCount} )</p>
                         </button>
                       ))}
                   </div>
