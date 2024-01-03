@@ -18,11 +18,8 @@ import arrowL from "@/app/assets/icons/arrow-left.svg";
 import {
   setCategory,
   setCategoryId,
-  setSearchVal,
 } from "@/lib/store/slices/Allslices";
 
-import sofa1 from "@/app/assets/banners/sofa_01.png";
-import sofa2 from "@/app/assets/banners/sofa_02.png";
 import star from "@/app/assets/icons/star.svg";
 import starFill from "@/app/assets/icons/star_fill.svg";
 import starhalf from "@/app/assets/icons/starhalf.svg";
@@ -57,6 +54,8 @@ export default function Home() {
 
         if (res.status === 200) {
           setCategories(res.data.data);
+          setActiveTab(res.data.data[0].category);
+          setActiveTab2(res.data.data[0].category);
         }
       } catch (error) {
         console.error(error);

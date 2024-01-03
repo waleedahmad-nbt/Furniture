@@ -3,14 +3,12 @@ import Instagram from "@/app/assets/icons/Instagram.svg";
 import Dribble from "@/app/assets/icons/Dribble.svg";
 import Twitter from "@/app/assets/icons/Twitter.svg";
 import Youtube from "@/app/assets/icons/Youtube.svg";
-import AppStore from "@/app/assets/images/App Store Logo.png";
-import PlayStore from "@/app/assets/images/Play Store Logo.png";
 import { NavLink } from "../index";
 
 const Footer = () => {
   return (
     <>
-      <div className="bg-gray-900 pt-20 pb-5">
+      <div className="bg-gray-900 pt-20">
         <div className="container text-white">
           <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 place-items-start border-b border-gray-100 pb-10">
             <div className="pr-5 lg:pr-4">
@@ -113,16 +111,16 @@ const Footer = () => {
             <div className="flex gap-5 items-center">
               <p>Follow us:</p>
               <ul className="flex gap-5 items-center">
-                <li className="bg-gray-300 p-2 rounded-full">
+                <li className="bg-gray-300 p-2 h-[34px] w-[34px] flex items-center justify-center rounded-full cursor-pointer hover:bg-primary duration-100">
                   <Image src={Instagram} alt="Instagram.svg" />
                 </li>
-                <li className="bg-gray-300 p-2 rounded-full">
+                <li className="bg-gray-300 p-2 h-[34px] w-[34px] flex items-center justify-center rounded-full cursor-pointer hover:bg-primary duration-100">
                   <Image src={Dribble} alt="Dribble.svg" />
                 </li>
-                <li className="bg-gray-300 p-2 rounded-full">
+                <li className="bg-gray-300 p-2 h-[34px] w-[34px] flex items-center justify-center rounded-full cursor-pointer hover:bg-primary duration-100">
                   <Image src={Twitter} alt="Twitter.svg" />
                 </li>
-                <li className="bg-gray-300 p-2 rounded-full">
+                <li className="bg-gray-300 p-2 h-[34px] w-[34px] flex items-center justify-center rounded-full cursor-pointer hover:bg-primary duration-100">
                   <Image src={Youtube} alt="Youtube.svg" />
                 </li>
               </ul>

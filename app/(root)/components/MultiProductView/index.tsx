@@ -140,6 +140,7 @@ const MultiProductView = ({ item }: any) => {
           onClick={addRecent}
           onMouseEnter={() => setActiveIndex(1)}
           onMouseLeave={() => setActiveIndex(0)}
+          className="w-full h-full flex items-center justify-center"
         >
           {item?.Images?.length > 0 &&
             item?.Images?.map((img: any, index: number) => (

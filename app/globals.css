@@ -413,3 +413,8 @@ input[type='radio']:checked {
 .custom-toast .Toastify__progress-bar {
   background: #FF6F00; /* Set the desired color for the progress bar */
 }
+
+.Select_Small > div:not(:last-child) {
+  padding: 0;
+  height: 40px;
+}

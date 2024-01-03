@@ -1,19 +1,46 @@
 "use client"
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 import "apexcharts/dist/apexcharts.css";
+import axios from "axios";
 
 const Returningcoustmer = () => {
+
+  const [data, setData] = useState<any>([]);
+  const [type, setType] = useState<string>("Months");
+
+  useEffect(() => {
+    const data = async () => {
+
+      let apiEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/user/statistics`;
+
+      if(type === "Weeks") {
+        apiEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/user/weeklystats`;
+      } else if(type === "Days") {
+        apiEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/user/dailystats`;
+      }
+
+      try {
+        const res = await axios.get(apiEndPoint);
+
+        if(res.status === 200) {
+          setData(res.data.data);
+        }
+        
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    data();
+  }, [type])
+
   const seriesData = [
     {
-      name: 'series1',
-      data: [31, 40, 28, 51, 42, 109, 100]
-    },
-    {
-      name: 'series2',
-      data: [11, 32, 45, 32, 34, 52, 41]
+      name: 'Customers',
+      data: data.data,
     }
   ];
 
@@ -29,20 +56,24 @@ const Returningcoustmer = () => {
       curve: 'smooth'
     },
     xaxis: {
-      type: 'datetime',
-      categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-    },
-    tooltip: {
-      x: {
-        format: 'dd/MM/yy HH:mm'
-      },
+      categories: data.labels,
     },
   };
 
   return (
-    <div id="chart">
-      <ApexCharts options={options} series={seriesData} type="area" width={'100%'} height={350} />
-    </div>
+    <>
+      <div className="flex items-center justify-between px-3 py-4">
+        <h2 className="font-bold text-gray-900 text-[20px]">Total Customer</h2>
+        <select onChange={(e: any) => setType(e.target.value)} value={type} className="px-1 py-1 rounded-md bg-gray-900 text-white flex gap-3 items-center text-xs">
+          <option value="Months">Monthly</option>
+          <option value="Weeks">Weekly</option>
+          <option value="Days">Daily</option>
+        </select>
+      </div>
+      <div id="chart">
+        <ApexCharts options={options} series={seriesData} type="area" width={'100%'} height={350} />
+      </div>
+    </>
   );
 };
 

@@ -4,51 +4,13 @@ import dynamic from 'next/dynamic';
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const Wavechart = ({ data, type, checkTab }: any) => {
+const Wavechart = ({ data, checkTab }: any) => {
   const series: any = [
     {
       name: ["Customers", "Sales", "Orders", "Conversations"][checkTab],
-      data,
+      data: data?.data,
     },
   ];
-
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-  function getCurrentAndPreviousMonths() {
-    const currentDate = new Date();
-    const result = [];
-  
-    for (let i = 0; i < 12; i++) {
-      const currentMonthDate = new Date(currentDate);
-      currentMonthDate.setMonth(currentDate.getMonth() - i);
-  
-      const monthName = months[currentMonthDate.getMonth()];
-      result.unshift(monthName); // Add to the beginning of the array
-    }
-  
-    return result;
-  }
-  
-  function getLast30Days() {
-    const currentDate = new Date();
-    const result = [];
-  
-    for (let i = 30; i >= 0; i--) {
-      const currentDayDate = new Date(currentDate);
-      currentDayDate.setDate(currentDate.getDate() - i);
-      currentDayDate.setHours(0, 0, 0, 0);
-  
-      const dayNumber = currentDayDate.getDate();
-      result.push(dayNumber); // Add to the end of the array
-    }
-  
-    return result;
-  }
-  
-  const last30DaysArray = getLast30Days();
-  console.log(last30DaysArray);
-
-  const days = Array.from({ length: 31 }).map((_, index) => index + 1);
 
   const options: any = {
     chart: {
@@ -83,7 +45,7 @@ const Wavechart = ({ data, type, checkTab }: any) => {
       },
     },
     xaxis: {
-      categories: type === "Days" ? getLast30Days() : getCurrentAndPreviousMonths(),
+      categories: data?.labels,
     },
     tooltip: {
       y: [
