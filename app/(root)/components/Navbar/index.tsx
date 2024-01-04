@@ -51,7 +51,6 @@ const Navbar = () => {
   const [megaMenu, setMegaMenu] = useState([]);
   const [filterCats, setFilterCats] = useState([]);
   const [loading, setLoading] = useState(true);
-  // console.log(cats, "cats");
 
   const [filterValue, setFilterValue] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string>("");
@@ -95,7 +94,6 @@ const Navbar = () => {
 
   const gettingSubMenu = async () => {
     const res = await publicRequest.get(`/product`);
-    // console.log(res, "res");
     if (res.data.success) {
       setMegaMenu(res.data.data);
       setLoading(false);
@@ -204,7 +202,6 @@ const Navbar = () => {
     const filterCat = megaMenu.filter((item: any, index: any) => {
       return item.category == category;
     });
-    // console.log(filterCat  , "filterCat");
     setFilterCats(filterCat);
   };
 
@@ -240,7 +237,13 @@ const Navbar = () => {
             >
               <Image src={Menu} alt="menu icon" />
             </button>
-            <Link href="/" className="shrink-0 cursor-pointer">
+            <Link
+              href="/"
+              className="shrink-0 cursor-pointer"
+              onClick={() => {
+                setFilterValue("Home");
+              }}
+            >
               <h1 className="text-primary text-xl font-black text-center">
                 Guideline
               </h1>
@@ -401,9 +404,9 @@ const Navbar = () => {
                           Every week you can find the best discount here
                         </span>
                       </div>
-                      <div className="grid grid-cols-6 mt-5">
+                      <div className="grid grid-cols-3 md:grid-cols-6 mt-5">
                         {filterCats &&
-                          filterCats.map((e: any, i: any) => {
+                          filterCats?.slice(0, 6)?.map((e: any, i: any) => {
                             return (
                               <div
                                 key={i}

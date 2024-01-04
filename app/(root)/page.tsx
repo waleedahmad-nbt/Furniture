@@ -15,10 +15,7 @@ import {
 } from "./components";
 
 import arrowL from "@/app/assets/icons/arrow-left.svg";
-import {
-  setCategory,
-  setCategoryId,
-} from "@/lib/store/slices/Allslices";
+import { setCategory, setCategoryId } from "@/lib/store/slices/Allslices";
 
 import star from "@/app/assets/icons/star.svg";
 import starFill from "@/app/assets/icons/star_fill.svg";
@@ -43,7 +40,6 @@ export default function Home() {
 
   const [categories, setCategories] = useState<any>([]);
   const [products, setProducts] = useState<any>([]);
-  console.log(products, "products");
 
   const [loading, setLoading] = useState(true);
 
@@ -119,7 +115,6 @@ export default function Home() {
     if (activeTab === "") return products;
     return products.filter((item: any) => item.category === activeTab);
   };
-  // console.log(filter(products), "filter");
 
   const filter2 = (products: any) => {
     if (activeTab2 === "") return products;
@@ -154,7 +149,7 @@ export default function Home() {
   return (
     <>
       <div className="relative bg-cream">
-        <div className="absolute container bottom-0 right-0 max-md:right-1/2 max-md:translate-x-1/2 -translate-y-[15%] md:-translate-y-0 h-[30%] md:h-full w-full md:w-[60%] flex justify-end">
+        <div className="absolute px-[15px] sm:px-0  bottom-0 right-0 max-md:right-1/2 max-md:translate-x-1/2 -translate-y-[15%] md:-translate-y-0 h-[30%] md:h-full w-full md:w-[60%] flex justify-end">
           <MainSlider images={showCase?.images} />
         </div>
         <div className="container">
@@ -519,9 +514,9 @@ export default function Home() {
                 {categories.length > 0 &&
                   categories?.slice(0, 6)?.map((item: any, index: number) => (
                     <button
-                      onClick={() => setActiveTab(item?.category)}
+                      onClick={() => setActiveTab2(item?.category)}
                       className={`px-5 py-1 text-gray-100 rounded-lg text-[14px] font-bold hover:text-gray-200 ${
-                        activeTab === item?.category
+                        activeTab2 === item?.category
                           ? "bg-gray-100/30 text-gray-200"
                           : ""
                       }`}

@@ -174,15 +174,15 @@ input[type="number"] {
 
 
 .multi-range-slider .thumb .caption .min-caption {
-  @apply bg-gray-900;
+  @apply bg-gray-900 shadow-none;
 }
 
 .multi-range-slider .thumb .caption .max-caption {
-  @apply bg-gray-900;
+  @apply bg-gray-900 shadow-none;
 }
 
 .multi-range-slider .bar .bar-inner {
-  @apply bg-gray-200 border-none shadow-none;
+  @apply bg-[#1F1F1F] border-none shadow-none h-[5px];
 }
 
 .multi-range-slider .bar .bar-left,
@@ -190,23 +190,31 @@ input[type="number"] {
   box-shadow: none;
   border: none;
   background-color: #DADADA;
+  height: 5px;
+  padding: 0;
 }
+/* .multi-range-slider .bar .bar-left{
+  box-shadow: none;
+  border: none;
+  background-color: #DADADA;
+  height: 5px;
+} */
 
 .multi-range-slider .thumb {
-  transform: translateY(2px);
+  transform: translateY(6px);
 }
 
-.multi-range-slider .thumb::before {
+.multi-range-slider .bar .thumb::before {
   content: "";
   background-color: inherit;
   position: absolute;
-  width: 20px;
-  height: 20px;
-  border: solid 1px #0a4232 !important;
+  width: 15px;
+  height: 15px;
+  /* border: solid 1px #0a4232 !important; */
   box-shadow: none !important;
   border-radius: 50%;
   z-index: 1;
-  margin: -8px -12px;
+  margin: -12px;
   cursor: pointer;
 }
 
@@ -418,3 +426,4 @@ input[type='radio']:checked {
   padding: 0;
   height: 40px;
 }
+

@@ -37,7 +37,6 @@ const Modal = ({
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  // console.log(formData);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -48,7 +47,6 @@ const Modal = ({
           email: formData.email,
           password: formData.password,
         });
-        // console.log(res);
         if (res) {
           dispatch(setLoginUser(res.data.data));
           localStorage.setItem("token", JSON.stringify(res.data.data.token));

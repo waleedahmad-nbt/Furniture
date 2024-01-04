@@ -32,9 +32,12 @@ const Products = () => {
 
   const category: any = useSelector((state: RootState) => state.category);
   const categoryId: any = useSelector((state: RootState) => state.categoryId);
+
   const [isGrid, setIsGrid] = useState(true);
   const [options, setoptions] = useState([]);
+
   const [products, setProducts] = useState<any>([]);
+
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<string>("");
   const [pageData, setPageData] = useState<any>({
@@ -43,9 +46,9 @@ const Products = () => {
   });
 
   const [minMax, setMinMax] = useState<any>({
-    min: 0,
-    max: 0,
-  })
+    min: 100,
+    max: 10000,
+  });
 
   const status = ["In Stock", "On Sale"];
 
@@ -105,7 +108,10 @@ const Products = () => {
 
         if (res.status === 200) {
           setFilterColors(res.data.data?.colors);
-          setMinMax({ min: res.data.data?.minPrice, max: res.data.data?.maxPrice })
+          setMinMax({
+            min: res.data.data?.minPrice,
+            max: res.data.data?.maxPrice,
+          });
         }
       } catch (error) {
         console.error(error);
@@ -401,70 +407,80 @@ const Products = () => {
                             </div>
                             <p className="text-gray-200">{item?.color}</p>
                           </div>
-                          <p className="text-gray-200">( {item?.productCount} )</p>
+                          <p className="text-gray-200">
+                            ( {item?.productCount} )
+                          </p>
                         </button>
                       ))}
                   </div>
                 </div>
-              <div className="bg-[#FAFAFA] px-5 py-7 mt-7">
-                <p className="text-gray-900 font-bold">Filter by Price</p>
-                <div className="w-full mt-4 mb-1">
-                  <MultiRangeSlider
-                    min={minMax?.min}
-                    max={minMax?.max}
-                    step={5}
-                    minValue={minPrice}
-                    maxValue={maxPrice}
-                    style={{
-                      border: "none",
-                      boxShadow: "none",
-                      padding: "15px 10px",
-                    }}
-                    onChange={handleInput2}
-                    label={false}
-                    ruler={false}
-                    thumbLeftColor="#FFFFFF"
-                    thumbRightColor="#FFFFFF"
-                  />
+                <div className="bg-[#FAFAFA] px-5 py-7 mt-7">
+                  <p className="text-gray-900 font-bold">Filter by Price</p>
+                  <div className="w-full mt-4 mb-1">
+                    <MultiRangeSlider
+                      min={minMax?.min}
+                      max={minMax?.max}
+                      step={5}
+                      minValue={minPrice}
+                      maxValue={maxPrice}
+                      style={{
+                        border: "none",
+                        boxShadow: "none",
+                        padding: "15px 10px",
+                      }}
+                      onChange={handleInput2}
+                      label={false}
+                      ruler={false}
+                      thumbLeftColor="#1F1F1F"
+                      thumbRightColor="#1F1F1F"
+                      className="custom-slider"
+                    />
+                  </div>
+                  <div className="flex flex-wrap items-center justify-between text-gray-200">
+                    <span>Min. Price: AED {minMax?.min}</span>
+                    <span>Max. Price: AED {minMax?.max}</span>
+                  </div>
                 </div>
-                <div className="flex flex-wrap items-center justify-between text-gray-200">
-                  <span>Min. Price: ${minMax?.min}</span>
-                  <span>Max. Price: ${minMax?.max}</span>
-                </div>
-              </div>
-              <div className="bg-[#FAFAFA] px-5 py-7 mt-7">
-                <p className="text-gray-900 font-bold">Filter by Category</p>
-                <div className="flex flex-row md:flex-col flex-wrap mt-4 gap-4">
-                  {options?.map((item: any, index: any) => (
-                    <div
-                      key={index}
-                      className="flex justify-start md:justify-between cursor-pointer"
-                      // onClick={() =>
-                      //   setFilters((prev: any) => {
-                      //     return { ...prev, CAta: item };
-                      //   })
-                      // }
+                <div className="bg-[#FAFAFA] px-5 py-7 mt-7">
+                  <p className="text-gray-900 font-bold">Filter by Category</p>
+                  <div className="flex flex-row md:flex-col flex-wrap mt-4 gap-4">
+                    {options?.map((item: any, index: any) => (
+                      <div
+                        key={index}
+                        className="flex justify-start md:justify-between cursor-pointer"
+                        // onClick={() =>
+                        //   setFilters((prev: any) => {
+                        //     return { ...prev, CAta: item };
+                        //   })
+                        // }
 
-                      onClick={() => {
-                        if (filters.CAta === item?.name) {
-                          fetchProductBySubCat("");
-                          setFilters((prev: any) => {
-                            return { ...prev, status: item };
-                          })
-                        }}}
+                        onClick={() => {
+                          if (filters.CAta === item?.name) {
+                            fetchProductBySubCat("");
+                            setFilters((prev: any) => {
+                              return { ...prev, CAta: "" };
+                            });
+                          } else {
+                            fetchProductBySubCat(item?.name);
+                            setFilters((prev: any) => {
+                              return { ...prev, CAta: item?.name };
+                            });
+                          }
+                        }}
                       >
                         <div className="flex items-center gap-2">
-                          <div className="w-[17px] h-[15px] p-[2px] border flex items-center justify-center text-white">
+                          <div className="w-[17px] h-[15px] p-[2px] border flex items-center justify-center">
                             <div
                               className={`w-[9px] h-[8px] ${
-                                filters.status === item
+                                filters.CAta === item?.name
                                   ? "bg-[#272727]"
                                   : "bg-white"
                               }`}
                             ></div>
                           </div>
-                          <p className="text-gray-900">{item}</p>
+                          <p>{item?.name}</p>
                         </div>
+                        <p className="text-gray-200">{item?.count}</p>
                       </div>
                     ))}
                   </div>

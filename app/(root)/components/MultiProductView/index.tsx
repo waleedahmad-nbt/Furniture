@@ -130,7 +130,9 @@ const MultiProductView = ({ item }: any) => {
             onClick={handleCart}
           >
             <HiShoppingCart
-              className={`${existCart ? "text-primary" : "text-gray-200"}`}
+              className={`${
+                existCart.length > 0 ? "text-primary" : "text-gray-200"
+              }`}
             />
           </button>
         </div>
