@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BiSearch} from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
-import { FiEye, FiTrash } from "react-icons/fi";
+import { FiEdit3, FiEye, FiTrash } from "react-icons/fi";
 import { IoIosAdd } from "react-icons/io";
 import { TbArrowsSort } from "react-icons/tb";
 import axios from "axios";
@@ -176,7 +176,7 @@ const Products = () => {
                 />
               </div>
               <label htmlFor="filter" onClick={() => setShowSearch(!showSearch)}>
-                <div className="rounded-lg text-lg px-1 py-1 flex items-center">
+                <div className="rounded-lg text-lg px-1 py-1 flex items-center cursor-pointer">
                   <BiSearch />
                   <BsFilter />
                 </div>
@@ -301,7 +301,7 @@ const Products = () => {
                         </>
                       ) : (
                         <>
-                          AED {discount?.price}
+                          AED {price}
                         </>
                       )}
                     </td>
@@ -315,6 +315,12 @@ const Products = () => {
                           className="text-gray-300 hover:text-gray-900 duration-150 relative"
                         >
                           <FiEye />
+                        </Link>
+                        <Link
+                          href={`/dashboard-furniture/admin/products/details/${_id}`}
+                          className="text-gray-300 hover:text-gray-900 duration-150 relative"
+                        >
+                          <FiEdit3 />
                         </Link>
                         <button
                           onClick={() => deleteProduct(_id)}

@@ -29,6 +29,8 @@ const NewProduct = () => {
     weightUnit: "Kg",
     discount: 0,
     discountDuration: "",
+    price: 0,
+    qty: 0,
   };
 
   const [colors, setColors] = useState<string[]>([]);
@@ -112,11 +114,17 @@ const NewProduct = () => {
     if (sizesArray.length <= 0) {
       errors.sizes = "At least one Size is required";
     }
-    if (boxArray.length <= 0) {
-      errors.boxSizes = "At least one Box Size is required";
-    }
+
     if (colors.length <= 0) {
       errors.colors = "At least one Color is required";
+    }
+
+    if (!boxSizes.heightFeets && !boxSizes.heightInches) {
+      errors.height = "Height is required";
+    }
+
+    if (!boxSizes.widthFeets && !boxSizes.widthInches) {
+      errors.width = "Width is required";
     }
 
     if (showDiscount) {
@@ -127,6 +135,8 @@ const NewProduct = () => {
         errors.discountDuration = "Discount Duration is required";
       }
     }
+
+    console.log(errors);
 
     setFormErrors(errors);
 
@@ -155,20 +165,14 @@ const NewProduct = () => {
       });
 
       sizesArray.forEach((size: any, index: number) => {
-        data.append(`sizes[${index}]`, formatSize(size));
+        data.append(`sizes[${index}]`, size);
       });
 
-      data.append(`features[gDimensions][height]`, boxArray[0].height);
-      data.append(`features[gDimensions][width]`, boxArray[0].width);
+      data.append(`features[gDimensions][height]`, getHeight(boxSizes));
+      data.append(`features[gDimensions][width]`, getWidth(boxSizes));
 
-      data.append(`features[bDimensions][height]`, boxArray[0].height);
-      data.append(`features[bDimensions][width]`, boxArray[0].width);
-
-      // data.append(`features[gDimensions][height]`, (boxSizes.heightFeets + "' H " + boxSizes.heightFeets + "\" W"));
-      // data.append(`features[gDimensions][width]`, (boxSizes.heightFeets + "' H " + boxSizes.heightFeets + "\" W"));
-
-      // data.append(`features[bDimensions][height]`, (boxSizes.heightFeets + "' H " + boxSizes.heightFeets + "\" W"));
-      // data.append(`features[bDimensions][width]`, (boxSizes.heightFeets + "' H " + boxSizes.heightFeets + "\" W"));
+      data.append(`features[bDimensions][height]`, getHeight(boxSizes));
+      data.append(`features[bDimensions][width]`, getWidth(boxSizes));
 
       formData.materials?.forEach((material: any, index: number) => {
         data.append(`features[materials][${index}]`, material);
@@ -191,6 +195,20 @@ const NewProduct = () => {
           alert("Product Created.");
           setSubmit(false);
           setFormData(fields);
+          setBoxSizes({
+            heightFeets: "",
+            heightInches: "",
+            widthFeets: "",
+            widthInches: "",
+          });
+          setSizesArray([]);
+          setSizes({
+            heightFeets: "",
+            heightInches: "",
+            widthFeets: "",
+            widthInches: "",
+          })
+          setColors([]);
         }
       } catch (error) {
         console.error(error);
@@ -257,7 +275,7 @@ const NewProduct = () => {
   const submitSize = (e: any) => {
     e.preventDefault();
     if (validateSizes()) {
-      setSizesArray((prev: any) => [...prev, sizes]);
+      setSizesArray((prev: any) => [...prev, formatSize(sizes)]);
     }
   };
 
@@ -275,50 +293,6 @@ const NewProduct = () => {
     widthFeets: "",
     widthInches: "",
   });
-  const [boxArray, setBoxArray] = useState<any>([]);
-  const [errorBoxes, setErrorBoxes] = useState<any>({});
-
-  const sizeBox = (e: any) => {
-    const { name, value } = e.target;
-
-    setBoxSizes((prev: any) => {
-      return { ...prev, [name]: value };
-    });
-  };
-
-  const validateBox = () => {
-    let errors: any = {};
-
-    if (!boxSizes.heightFeets && !boxSizes.heightInches) {
-      errors.height = "Height is required";
-    }
-
-    if (!boxSizes.widthFeets && !boxSizes.widthInches) {
-      errors.width = "Width is required";
-    }
-
-    setErrorBoxes(errors);
-
-    return Object.keys(errors).length === 0;
-  };
-
-  const submitBox = (e: any) => {
-    e.preventDefault();
-    if (validateBox()) {
-      setBoxArray((prev: any) => [
-        ...prev,
-        { height: getHeight(boxSizes), width: getWidth(boxSizes) },
-      ]);
-    }
-  };
-
-  const deleteBox = (index: number) => {
-    setBoxArray(
-      boxArray.filter((e: any, i: any) => {
-        return i !== index;
-      })
-    );
-  };
 
   const handleImage = (event: any, index: number) => {
     const file = event.target.files && event.target.files[0];
@@ -602,7 +576,7 @@ const NewProduct = () => {
                             placeholder="0.00"
                             name="price"
                             id="price"
-                            value={(formData?.price * (100 - formData?.discount)) / 100}
+                            value={((formData?.price * (100 - formData?.discount)) / 100)?.toFixed(2)}
                             onChange={handleChange}
                           />
                           <div className="absolute text-xs inset-y-0 left-0 flex items-center pl-3 ">
@@ -620,7 +594,7 @@ const NewProduct = () => {
                             placeholder="0.00"
                             name="price"
                             id="price"
-                            value={formData?.price / formData?.discount}
+                            value={((formData?.discount / 100) * formData?.price)?.toFixed(2)}
                             onChange={handleChange}
                           />
                           <div className="absolute text-xs inset-y-0 left-0 flex items-center pl-3 ">
@@ -730,95 +704,66 @@ const NewProduct = () => {
                 </div>
                 <div className="mt-3">
                   <p className="text-sm mb-1 mt-2">Box Dimensions</p>
-                  <form onSubmit={submitBox}>
-                    <p className="text-xs mb-1 mt-2">Height</p>
-                    <div className="grid grid-cols-2 gap-x-4 my-2">
-                      <div>
-                        <input
-                          type="number"
-                          name="heightFeets"
-                          id="heightFeets"
-                          onChange={sizeBox}
-                          placeholder="Feets"
-                          className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
-                        />
-                      </div>
-                      <div>
-                        <input
-                          type="number"
-                          name="heightInches"
-                          id="heightInches"
-                          onChange={sizeBox}
-                          placeholder="Inches"
-                          className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
-                        />
-                      </div>
+                  <p className="text-xs mb-1 mt-2">Height</p>
+                  <div className="grid grid-cols-2 gap-x-4 my-2">
+                    <div>
+                      <input
+                        type="number"
+                        name="heightFeets"
+                        id="heightFeets"
+                        value={boxSizes?.heightFeets}
+                        onChange={(e: any) => setBoxSizes((prev: any) => { return { ...prev, heightFeets: e.target.value } })}
+                        placeholder="Feets"
+                        className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
+                      />
                     </div>
-                    {errorBoxes.height && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {errorBoxes.height}
-                      </p>
-                    )}
-                    <p className="text-xs mb-1 mt-2">Width</p>
-                    <div className="grid grid-cols-2 gap-x-4 my-2">
-                      <div>
-                        <input
-                          type="number"
-                          name="widthFeets"
-                          id="widthFeets"
-                          onChange={sizeBox}
-                          placeholder="Feets"
-                          className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
-                        />
-                      </div>
-                      <div>
-                        <input
-                          type="number"
-                          name="widthInches"
-                          id="widthInches"
-                          onChange={sizeBox}
-                          placeholder="Inches"
-                          className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
-                        />
-                      </div>
+                    <div>
+                      <input
+                        type="number"
+                        name="heightInches"
+                        id="heightInches"
+                        value={boxSizes?.heightInches}
+                        onChange={(e: any) => setBoxSizes((prev: any) => { return { ...prev, heightInches: e.target.value } })}
+                        placeholder="Inches"
+                        className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
+                      />
                     </div>
-                    {errorBoxes.width && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {errorBoxes.width}
-                      </p>
-                    )}
-                    {formErrors.boxSizes && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {formErrors.boxSizes}
-                      </p>
-                    )}
-                    <div className="flex justify-end">
-                      <button
-                        type="submit"
-                        className="bg-gray-900 text-xs text-white px-6 py-2 rounded-lg mt-2"
-                      >
-                        + Add Box Dimensions
-                      </button>
-                    </div>
-                  </form>
-                  <div className="flex flex-wrap">
-                    {boxArray &&
-                      boxArray?.map((e: any, i: any) => {
-                        return (
-                          <span
-                            className="bg-gray-blue/30 relative h-max rounded m-1 text-sm p-1 flex justify-center items-center px-2"
-                            key={i}
-                          >
-                            {e.height + " " + e.width}
-                            <HiXMark
-                              size={18}
-                              onClick={() => deleteBox(i)}
-                              className="cursor-pointer absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-gray-blue/30 rounded-full p-1"
-                            />
-                          </span>
-                        );
-                      })}
                   </div>
+                  {formErrors.height && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {formErrors.height}
+                    </p>
+                  )}
+                  <p className="text-xs mb-1 mt-2">Width</p>
+                  <div className="grid grid-cols-2 gap-x-4 my-2">
+                    <div>
+                      <input
+                        type="number"
+                        name="widthFeets"
+                        id="widthFeets"
+                        value={boxSizes?.widthFeets}
+                        onChange={(e: any) => setBoxSizes((prev: any) => { return { ...prev, widthFeets: e.target.value } })}
+                        placeholder="Feets"
+                        className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="number"
+                        name="widthInches"
+                        id="widthInches"
+                        value={boxSizes?.widthInches}
+                        onChange={(e: any) => setBoxSizes((prev: any) => { return { ...prev, widthInches: e.target.value } })}
+                        placeholder="Inches"
+                        className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
+                      />
+                    </div>
+                  </div>
+                  {formErrors.width && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {formErrors.width}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -877,6 +822,7 @@ const NewProduct = () => {
                           type="number"
                           name="heightFeets"
                           id="heightFeets"
+                          value={sizes.heightFeets}
                           onChange={sizeChange}
                           placeholder="Feets"
                           className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
@@ -887,6 +833,7 @@ const NewProduct = () => {
                           type="number"
                           name="heightInches"
                           id="heightInches"
+                          value={sizes.heightInches}
                           onChange={sizeChange}
                           placeholder="Inches"
                           className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
@@ -905,6 +852,7 @@ const NewProduct = () => {
                           type="number"
                           name="widthFeets"
                           id="widthFeets"
+                          value={sizes.widthFeets}
                           onChange={sizeChange}
                           placeholder="Feets"
                           className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
@@ -915,6 +863,7 @@ const NewProduct = () => {
                           type="number"
                           name="widthInches"
                           id="widthInches"
+                          value={sizes.widthInches}
                           onChange={sizeChange}
                           placeholder="Inches"
                           className="w-full text-xs border p-2 px-3 outline-none rounded-lg focus:border-black"
@@ -948,7 +897,7 @@ const NewProduct = () => {
                             className="bg-gray-blue/30 relative h-max rounded m-1 text-sm p-1 flex justify-center items-center px-2"
                             key={i}
                           >
-                            {formatSize(e)}
+                            {e}
                             <HiXMark
                               size={18}
                               onClick={() => deleteSize(i)}
@@ -1025,6 +974,11 @@ const NewProduct = () => {
                           )
                         )}
                       </select>
+                      {formErrors.subCategory && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {formErrors.subCategory}
+                        </p>
+                      )}
                     </>
                   )}
                 </div>

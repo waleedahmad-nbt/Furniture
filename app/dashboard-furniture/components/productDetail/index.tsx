@@ -36,7 +36,7 @@ const ProductDetail = ({ data }: any) => {
     warranty: data?.features?.warrenty || "",
     weightUnit: weightUnit || "Kg",
     price: data?.price || "",
-    discount: (((data?.price - data?.discount?.discountedPrice) / data?.price) * 100).toFixed(2) || 0,
+    discount: data?.discount?.discountedPrice > 0 ? (((data?.price - data?.discount?.discountedPrice) / data?.price) * 100).toFixed(2) : 0,
     discountDuration: data?.discount?.duration || "",
     sizes: data?.sizes || [],
   };
@@ -82,8 +82,6 @@ const ProductDetail = ({ data }: any) => {
 
   const validateForm = () => {
     let errors: any = {};
-
-    console.log(formData);
 
     if (!formData.title) {
       errors.title = "Category is required";
@@ -136,7 +134,15 @@ const ProductDetail = ({ data }: any) => {
       errors.width = "Width is required";
     }
 
-    console.log("vlid error", errors);
+    if (showDiscount) {
+      if(!formData.discount) {
+        errors.discount = "Discount is required";
+      }
+      if(!formData.discountDuration) {
+        errors.discountDuration = "Discount Duration is required";
+      }
+    }
+
     setFormErrors(errors);
 
     return Object.keys(errors).length === 0;
@@ -164,7 +170,7 @@ const ProductDetail = ({ data }: any) => {
       });
 
       sizesArray.forEach((size: any, index: number) => {
-        data.append(`sizes[${index}]`, formatSize(size));
+        data.append(`sizes[${index}]`, size);
       });
 
       data.append(`features[gDimensions][height]`, getHeight(boxSizes));
@@ -190,9 +196,8 @@ const ProductDetail = ({ data }: any) => {
           data
         );
 
-        console.log(res);
         if (res.status === 201) {
-          alert("Product Created.");
+          alert("Product Updated.");
           setSubmit(false);
           setFormData(fields);
         }
@@ -205,8 +210,6 @@ const ProductDetail = ({ data }: any) => {
   useEffect(() => {
     if (showPopup) {
       const closePopup = (e: any) => {
-        console.log(e.target, "target");
-
         if (!e.target.classList.contains("openDesc")) {
           setShowPopup(false);
         }
@@ -275,14 +278,15 @@ const ProductDetail = ({ data }: any) => {
     );
   };
 
-  function extractNumericValues(dimensionsString: any) {
-    const match = dimensionsString.match(/(\d+)'\s*(\d+)"/); // Match pattern for "5' H 3" W"
+  function reverseHeightString(formattedHeightString: any) {
+    // Match numeric values for feet and inches without requiring 'W'
+    const match = formattedHeightString.match(/(\d+)'\s*(?:(\d+)'')?/);
   
     if (match) {
-      const heightFeet = parseInt(match[1]);
-      const heightInches = parseInt(match[2]);
+      const feet = match[1] ? parseInt(match[1]) : "";
+      const inches = match[2] ? parseInt(match[2]) : "";
   
-      return { heightFeet, heightInches };
+      return { feet, inches };
     } else {
       // Handle the case where the input string doesn't match the expected pattern
       return null;
@@ -290,16 +294,14 @@ const ProductDetail = ({ data }: any) => {
   }
 
   const [boxSizes, setBoxSizes] = useState<any>({
-    heightFeets: extractNumericValues(data?.features?.gDimensions?.height)?.heightFeet || "",
-    heightInches: extractNumericValues(data?.features?.gDimensions?.height)?.heightInches || "",
-    widthFeets: extractNumericValues(data?.features?.gDimensions?.width)?.heightInches || "",
-    widthInches: extractNumericValues(data?.features?.gDimensions?.width)?.heightInches || "",
+    heightFeets: reverseHeightString(data?.features?.gDimensions?.height)?.feet || "",
+    heightInches: reverseHeightString(data?.features?.gDimensions?.height)?.inches || "",
+    widthFeets: reverseHeightString(data?.features?.gDimensions?.width)?.feet || "",
+    widthInches: reverseHeightString(data?.features?.gDimensions?.width)?.inches || "",
   });
 
   const handleImage = (event: any, index: number) => {
     const file = event.target.files && event.target.files[0];
-
-    console.log(index);
 
     if (file) {
       const reader = new FileReader();
