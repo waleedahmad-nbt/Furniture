@@ -420,18 +420,48 @@ const Navbar = () => {
                                       height={100}
                                     />
                                   </div>
-                                  <p className="w-[40px] h-[22px] bg-secondary rounded-full text-[12px] text-white text-center leading-[21px]">
-                                    15%
-                                  </p>
-                                  <div className="flex gap-2">
+                                  {e?.discount?.discountedPrice ? (
+                                    <p className="w-[40px] h-[22px] bg-secondary rounded-full text-[12px] text-white text-center leading-[21px]">
+                                      {Math.round(
+                                        ((e.price -
+                                          e.discount.discountedPrice) /
+                                          e.price) *
+                                          100
+                                      )}
+                                      %
+                                    </p>
+                                  ) : (
+                                    ""
+                                  )}
+                                  {/* <div className="flex gap-2">
                                     <s className="text-gray-300 text-[14px]">
                                       AED 27.90
                                     </s>
                                     <p className="text-white bg-[#3CB242] text-[14px] px-1">
                                       AED {e.price}
                                     </p>
+                                  </div> */}
+
+                                  <div>
+                                    {e?.discount?.discountedPrice ? (
+                                      <div className="flex items-center gap-3">
+                                        <s className="text-gray-200">
+                                          AED {e?.price}
+                                        </s>
+                                        <span className="text-white bg-[#3CB242] text-[14px] px-1">
+                                          AED {e?.discount?.discountedPrice}
+                                        </span>
+                                      </div>
+                                    ) : (
+                                      <span className="text-white bg-[#3CB242] text-[14px] px-1">
+                                        AED {e?.price}
+                                      </span>
+                                    )}
                                   </div>
-                                  <h1 className="text-gray-300">{e.title}</h1>
+
+                                  <h1 className="text-gray-300 font-semibold">
+                                    {e.title}
+                                  </h1>
                                   {!e.totalReviews ? (
                                     <p className="text-gray-200 text-[12px]">
                                       No Reviews

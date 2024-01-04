@@ -1,10 +1,9 @@
-"use client"
+"use client";
 import { useSelector } from "react-redux";
 import { ProductCard } from "../components";
 import { RootState } from "@/lib/store";
 
 const wishlist = () => {
-
   const wishList: any = useSelector((state: RootState) => state.wishList);
 
   return (
@@ -22,12 +21,23 @@ const wishlist = () => {
 
       <div className="container">
         <div className="w-full my-10">
-          <h1 className="text-gray-900 text-[38px] text-center">Your <span className="text-primary">Wishlist</span></h1>
+          <h1 className="text-gray-900 text-[38px] text-center">
+            Your <span className="text-primary">Wishlist</span>
+          </h1>
           <div className="relative flex gap-7 my-16">
-            {wishList.length > 0 ? wishList?.map((item: any, index: number) => (
-              <ProductCard item={item} key={index} className="shrink-0 w-[213px]" />
-            )) : (
-              <p className="text-gray-100 text-center w-full mb-16 py-3 bg-[#F3EFE5]">No Data to show</p> 
+            {wishList.length > 0 ? (
+              wishList?.map((item: any, index: number) => (
+                <ProductCard
+                  item={item}
+                  key={index}
+                  isGrid={true}
+                  className="shrink-0 w-[213px]"
+                />
+              ))
+            ) : (
+              <p className="text-gray-100 text-center w-full mb-16 py-3 bg-[#F3EFE5]">
+                No Data to show
+              </p>
             )}
           </div>
         </div>

@@ -84,7 +84,7 @@ const Modal = ({
                 aria-modal="true"
                 aria-labelledby="modal-headline"
               >
-                <div className="relative grid grid-cols-2 gap-5 w-full xs:w-[400px] sm:w-[500px] md:w-[768px] lg:w-[882px] bg-white min-h-[75vh]  px-4 pt-10 pb-10 sm:p-6 text-gray-900">
+                <div className=" relative grid grid-cols-2 place-items-center gap-5 w-full xs:w-[400px] sm:w-[500px] md:w-[768px] lg:w-[882px] bg-white  p-10 max-sm:p-6 text-gray-900">
                   <div
                     className="absolute top-5 right-5 cursor-pointer scale-110"
                     onClick={handleCancel}
@@ -92,7 +92,7 @@ const Modal = ({
                     <RxCross1 />
                   </div>
 
-                  <div className="hidden md:block w-full">
+                  <div className="hidden md:block w-full h-auto">
                     <Image
                       src={signInImg}
                       alt=""
@@ -102,7 +102,7 @@ const Modal = ({
                     />
                   </div>
 
-                  <div className="w-full sm:w-max mx-auto">
+                  <div className="w-full sm:w-max mx-auto h-max">
                     <h1 className="text-left text-gray-900 text-2xl font-medium">
                       Registered Customers
                     </h1>
@@ -184,7 +184,7 @@ const Modal = ({
                     )}
 
                     <h1 className="text-2xl font-medium mt-3">New Customers</h1>
-                    <p className="text-gray-200 text-[12px] mt-2">
+                    <p className="text-gray-200 text-[14px] mt-2">
                       Creating an account has many benefits: check out faster,{" "}
                       <br />
                       keep more than one address, track orders and more.
