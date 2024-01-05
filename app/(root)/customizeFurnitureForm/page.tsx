@@ -200,21 +200,21 @@ const customizeFurnitureForm = () => {
       </div>
 
       <div className="relative container pt-20 ">
-        <div>
+        <div className="relative">
           <Image src={stylishChair} alt="" className="w-full" />
-        </div>
-        <div
-          className="absolute  top-[30%] left-1/2 -translate-x-1/2 w-[200px] sm:w-[250px] md:w-[452px] border-2 border-white text-center py-2 md:py-5"
-          style={{ backgroundColor: "rgba(61, 60, 60, 0.527)" }}
-        >
-          <h1 className="capitalize text-white text-xs md:text-3xl font-medium">
-            Fill the form and <br />
-            <span className="text-primary">Put your request </span>
-          </h1>
-          <p className="text-white text-[8px] sm:text-[12px] md:text-[16px]">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been
-          </p>
+          <div
+            className="absolute top-[50%] -translate-y-1/2 left-1/2 -translate-x-1/2 w-[200px] sm:w-[250px] md:w-[452px] border-2 border-white text-center py-2 md:py-5"
+            style={{ backgroundColor: "rgba(61, 60, 60, 0.527)" }}
+          >
+            <h1 className="capitalize text-white text-xs md:text-3xl font-medium">
+              Fill the form and <br />
+              <span className="text-primary">Put your request </span>
+            </h1>
+            <p className="text-white text-[8px] sm:text-[12px] md:text-[16px]">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been
+            </p>
+          </div>
         </div>
       </div>
 
@@ -523,21 +523,27 @@ const customizeFurnitureForm = () => {
         <div className="flex flex-col items-center gap-2">
           <div className="flex flex-col lg:flex-row gap-2">
             <div className="relative ">
-              <Image src={blueSofa} alt="" />
-              <div className="absolute top-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-5">
-                <div className="bg-[#3C3C3C] w-[200px] min-h-[100px] md:w-[356px] md:h-[159px] text-center px-2 border">
-                  <h1 className="text-white text-xl md:text-3xl mt-3">
-                    Living <span className="text-primary">Room</span> <br />
-                    Customize{" "}
-                  </h1>
-                  <p className="text-white text-[10px] md:text-[14px] mt-3">
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been
-                  </p>
+              <div className="absolute inset-0 z-[-1]">
+                <Image src={blueSofa} alt="" className="h-full w-full" />
+              </div>
+              <div className="flex items-center justify-center">
+                <div className="py-5">
+                  <div className="bg-[#3C3C3C] w-[200px] min-h-[100px] md:w-[356px] md:h-[159px] text-center px-2 border">
+                    <h1 className="text-white text-xl md:text-3xl mt-3">
+                      Living <span className="text-primary">Room</span> <br />
+                      Customize{" "}
+                    </h1>
+                    <p className="text-white text-[10px] md:text-[14px] mt-3">
+                      Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry. Lorem Ipsum has been
+                    </p>
+                  </div>
+                  <div className="flex justify-center">
+                    <button className="mx-auto mt-2 text-white bg-primary py-[8px] px-[16px] w-[172px] h-[40px]">
+                      Order Now
+                    </button>
+                  </div>
                 </div>
-                <button className=" text-white bg-primary py-[8px] px-[16px] w-[172px] h-[40px]">
-                  Order Now
-                </button>
               </div>
             </div>
             <div>

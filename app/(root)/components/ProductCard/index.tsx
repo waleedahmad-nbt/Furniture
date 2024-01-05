@@ -14,6 +14,7 @@ import {
 } from "@/lib/store/slices/Allslices";
 
 import { RootState } from "@/lib/store";
+import { Fragment } from "react";
 
 const ProductCard = ({ item, className, offer, isGrid }: any) => {
   // console.log(item, "itemmm");
@@ -82,14 +83,13 @@ const ProductCard = ({ item, className, offer, isGrid }: any) => {
               {Array.from({ length: 5 }, (_, index) => {
                 let number = index + 0.5;
                 return (
-                  <>
+                  <Fragment key={index}>
                     {item?.averageRating >= index + 1 ? (
                       <Image
                         src={starFill}
                         alt="product"
                         width={10}
                         height={10}
-                        key={index}
                       />
                     ) : item?.averageRating >= number ? (
                       <Image
@@ -97,7 +97,6 @@ const ProductCard = ({ item, className, offer, isGrid }: any) => {
                         alt="product"
                         width={10}
                         height={10}
-                        key={index}
                       />
                     ) : (
                       <Image
@@ -105,10 +104,9 @@ const ProductCard = ({ item, className, offer, isGrid }: any) => {
                         alt="product"
                         width={10}
                         height={10}
-                        key={index}
                       />
                     )}
-                  </>
+                  </Fragment>
                 );
               })}
             </div>

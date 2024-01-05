@@ -24,7 +24,7 @@ const wishlist = () => {
           <h1 className="text-gray-900 text-[38px] text-center">
             Your <span className="text-primary">Wishlist</span>
           </h1>
-          <div className="relative flex gap-7 my-16">
+          <div className="relative flex flex-wrap gap-7 my-16">
             {wishList.length > 0 ? (
               wishList?.map((item: any, index: number) => (
                 <ProductCard

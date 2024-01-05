@@ -304,7 +304,7 @@ export default function Home() {
             {reDefines &&
               reDefines.map((item: any, index: any) => {
                 return (
-                  <div className="relative">
+                  <div className="relative" key={index}>
                     <div className="absolute inset-0 z-[-1]">
                       <Image
                         src={item?.image}
@@ -466,7 +466,7 @@ export default function Home() {
           offers &&
           offers.map((item: any, index: any) => {
             return (
-              <div className="relative h-[300px]">
+              <div className="relative h-[300px]" key={index}>
                 <div className="absolute h-full w-full right-0 top-0 z-[-1]">
                   <Image
                     src={item?.image}

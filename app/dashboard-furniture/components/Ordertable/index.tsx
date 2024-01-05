@@ -163,7 +163,7 @@ function Table({ data, setOrders }: any) {
                 />
               </td>
               <td className="px-6 text-xs py-2 whitespace-nowrap">
-                {rowData?._id}
+                {rowData?.orderCode}
               </td>
               <td className="px-6 text-xs py-2 whitespace-nowrap">
                 {formateDate(rowData?.createdAt)}

@@ -224,7 +224,7 @@ const ProductDetails = () => {
           <ProductPageSkeleton />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-14 my-10">
-            <div className="w-full">
+            <div className="w-full overflow-hidden">
               <Slider {...settings} className="Product_Details mb-[150px]">
                 {product?.Images?.map((item: any, index: number) => (
                   <div className={`relative w-full h-full`} key={index}>

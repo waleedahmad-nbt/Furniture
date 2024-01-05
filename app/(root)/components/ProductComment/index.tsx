@@ -41,6 +41,21 @@ const ProductComment = ({ item }: any) => {
         <span className="block text-[12px] text-[#858585]">{formatDateString(item?.createdAt)}</span>
       </div>
       <p className="text-gray-400 mt-2 mb-5">{item?.description}</p>
+      {item.adminReply && (
+        <div className="ml-14">
+          <p className="text-gray-400 mt-2 mb-3">Reply:</p>
+          <div className="flex justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <Image src={item?.adminReply?.profilePic} alt="product" width={40} height={40} className="rounded-full"/>
+              <div>
+                <p className="text-gray-900 font-medium">{item?.adminReply?.firstName + " " + item?.adminReply?.lastName}</p>
+                <p className="text-gray-300 text-xs">{formatDateString(item?.updatedAt)}</p>
+              </div>
+            </div>
+          </div>
+          <p className="text-gray-400 mt-2 mb-3">{item?.adminReply?.message}</p>
+        </div>
+      )}
     </div>
   )
 }

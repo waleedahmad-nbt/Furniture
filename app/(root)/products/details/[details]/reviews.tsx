@@ -18,7 +18,6 @@ const Reviews = ({ id }: { id: string }) => {
         const res = await publicRequest.get(`/review/product/${id}`);
 
         if (res.status === 200) {
-          console.log(res.data.data);
           setReviews(res.data.data);
         }
       } catch (error) {
@@ -88,11 +87,11 @@ const Reviews = ({ id }: { id: string }) => {
               <span className="block h-[8px] w-full bg-[#E3E4E4] rounded-md"></span>
               <span
                 className={`block absolute inset-0 w-[0%] bg-[#3CB242] rounded-md`}
-                style={{ width: getPercent(reviews?.ratingCounts[1]) }}
+                style={{ width: getPercent(reviews?.ratingCounts[5]) }}
               ></span>
             </div>
             <p className="text-[12px] min-w-[80px]">
-              {reviews?.ratingCounts[1] || 0} Stars
+              {reviews?.ratingCounts[5] || 0} Stars
             </p>
           </div>
           <div className="flex items-center gap-3 my-3">
@@ -112,11 +111,11 @@ const Reviews = ({ id }: { id: string }) => {
               <span className="block h-[8px] w-full bg-[#E3E4E4] rounded-md"></span>
               <span
                 className={`block absolute inset-0 w-[0%] bg-[#3CB242] rounded-md`}
-                style={{ width: getPercent(reviews?.ratingCounts[2]) }}
+                style={{ width: getPercent(reviews?.ratingCounts[4]) }}
               ></span>
             </div>
             <p className="text-[12px] min-w-[80px]">
-              {reviews?.ratingCounts[2] || 0} Stars
+              {reviews?.ratingCounts[4] || 0} Stars
             </p>
           </div>
           <div className="flex items-center gap-3 my-3">
@@ -169,11 +168,11 @@ const Reviews = ({ id }: { id: string }) => {
               <span className="block h-[8px] w-full bg-[#E3E4E4] rounded-md"></span>
               <span
                 className={`block absolute inset-0 w-[0%] bg-[#3CB242] rounded-md`}
-                style={{ width: getPercent(reviews?.ratingCounts[4]) }}
+                style={{ width: getPercent(reviews?.ratingCounts[2]) }}
               ></span>
             </div>
             <p className="text-[12px] min-w-[80px]">
-              {reviews?.ratingCounts[4] || 0} Stars
+              {reviews?.ratingCounts[2] || 0} Stars
             </p>
           </div>
           <div className="flex items-center gap-3 my-3">
@@ -193,11 +192,11 @@ const Reviews = ({ id }: { id: string }) => {
               <span className="block h-[8px] w-full bg-[#E3E4E4] rounded-md"></span>
               <span
                 className={`block absolute inset-0 w-[0%] bg-[#3CB242] rounded-md`}
-                style={{ width: getPercent(reviews?.ratingCounts[5]) }}
+                style={{ width: getPercent(reviews?.ratingCounts[1]) }}
               ></span>
             </div>
             <p className="text-[12px] min-w-[80px]">
-              {reviews?.ratingCounts[5] || 0} Stars
+              {reviews?.ratingCounts[1] || 0} Stars
             </p>
           </div>
         </div>

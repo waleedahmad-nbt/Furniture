@@ -17,7 +17,6 @@ const ViewOrder = () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/order/${id}`);
   
         if(res.status === 200) {
-          console.log(res.data.data);
           setOrder(res.data.data);
         }
       } catch (error) {
@@ -147,7 +146,7 @@ const ViewOrder = () => {
             </thead>
             <tbody className="divide-y">
               {order && order?.products?.map((product: any, i: number) => {
-                const { _id, image, produtTitle, qty, price} = product;
+                const { _id, image, produtTitle, qty, price, discount} = product;
                 return (
                   <tr key={i}>
                     <td className="px-6">
