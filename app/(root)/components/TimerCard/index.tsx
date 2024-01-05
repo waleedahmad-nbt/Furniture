@@ -5,10 +5,12 @@ import { useState, useEffect } from "react";
 const TimerCard = ({ product }: any) => {
 
   const endDiscount = async () => {
-    try {
-      const res = await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/product/end/discount/${product?._id}`);
-    } catch (error) {
-      console.log(error);
+    if(product?._id) {
+      try {
+        const res = await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/product/end/discount/${product?._id}`);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 

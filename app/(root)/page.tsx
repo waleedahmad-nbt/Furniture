@@ -111,9 +111,12 @@ export default function Home() {
     ],
   };
 
-  const filter = (products: any) => {
+  const filter1Category = (products: any) => {
     if (activeTab === "") return products;
-    return products.filter((item: any) => item.category === activeTab);
+
+    const newP = products.filter((item: any) => item.category === activeTab);
+
+    return newP;
   };
 
   const filter2 = (products: any) => {
@@ -281,10 +284,10 @@ export default function Home() {
             <Slider
               {...settings}
               className={`Product_Slider ${
-                products?.length <= 5 ? "c_hidden" : ""
+                filter1Category(products)?.length <= 5 ? "c_hidden" : ""
               }`}
             >
-              {filter(products)?.map((item: any, index: number) => (
+              {filter1Category(products)?.map((item: any, index: number) => (
                 <div className={`relative w-full`} key={index}>
                   <div className="">
                     <ProductCard item={item} isGrid={true} />
