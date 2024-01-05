@@ -17,6 +17,8 @@ import FurniturePortfolio from "./FurniturePortfolio";
 import RecentViewed from "./RecentViewed";
 import useRequestMethods from "./RequestMethods";
 import ReadOnlyRating from "./ReadOnlyRating";
+import Timer from "./Timer";
+import TimerCard from "./TimerCard";
 
 export {
   Navbar,
@@ -38,4 +40,6 @@ export {
   RecentViewed,
   useRequestMethods,
   ReadOnlyRating,
+  Timer,
+  TimerCard,
 };

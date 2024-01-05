@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { RecentViewed, useRequestMethods } from "../../../components";
+import { RecentViewed, Timer, useRequestMethods } from "../../../components";
 import Image from "next/image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -390,24 +390,7 @@ const ProductDetails = () => {
                 </div>
               </div>
 
-              <div className="flex gap-2 mt-1">
-                <p className="px-2 flex flex-col justify-center items-center gap-6">
-                  10
-                  <span className="text-[#858585]">Day</span>
-                </p>
-                :
-                <p className="px-2 flex flex-col justify-center items-center gap-6">
-                  24<span className="text-[#858585]">Hours</span>
-                </p>
-                :
-                <p className="px-2 flex flex-col justify-center items-center gap-6">
-                  00<span className="text-[#858585]">Min</span>
-                </p>
-                :
-                <p className="px-2 flex flex-col justify-center items-center gap-6">
-                  08<span className="text-[#858585]">Sec</span>
-                </p>
-              </div>
+              <Timer product={product} />
             </div>
           </div>
         )}

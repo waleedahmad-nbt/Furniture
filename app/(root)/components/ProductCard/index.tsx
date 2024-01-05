@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { MultiProductView } from "..";
+import { MultiProductView, TimerCard } from "..";
 
 import star from "@/app/assets/icons/star.svg";
 import starFill from "@/app/assets/icons/star_fill.svg";
@@ -158,28 +158,7 @@ const ProductCard = ({ item, className, offer, isGrid }: any) => {
         )}
 
         {offer && (
-          <>
-            <div className="flex text-gray-blue gap-1 mt-1">
-              <p className="text-gray-300 bg-[#EEF2F6] px-2 py-1 font-medium">
-                38
-              </p>
-              :
-              <p className="text-gray-300 bg-[#EEF2F6] px-2 py-1 font-medium">
-                38
-              </p>
-              :
-              <p className="text-gray-300 bg-[#EEF2F6] px-2 py-1 font-medium">
-                38
-              </p>
-              :
-              <p className="text-gray-300 bg-[#EEF2F6] px-2 py-1 font-medium">
-                38
-              </p>
-            </div>
-            <span className="text-gray-blue text-[12px]">
-              Time remaining until the end of the offer
-            </span>
-          </>
+          <TimerCard product={item}/>
         )}
       </div>
     </div>
