@@ -13,8 +13,16 @@ const TimerCard = ({ product }: any) => {
   }
 
   const calculateTimeLeft = () => {
+    const duration = +product?.discount?.duration;
+
+    if (!duration || isNaN(duration)) {
+      // Handle the case where duration is not defined or NaN
+      endDiscount(); // You need to define the endDiscount function
+      return { days: '00', hours: '00', minutes: '00', seconds: '00', expired: true };
+    }
+
     const currentDate = new Date(product?.updatedAt);
-    const expirationDate: any = new Date(currentDate.getTime() + product?.discount?.duration * 24 * 60 * 60 * 1000);
+    const expirationDate: any = new Date(currentDate.getTime() + +product?.discount?.duration * 24 * 60 * 60 * 1000);
 
     const now: any = new Date();
     const timeDifference = expirationDate - now;
