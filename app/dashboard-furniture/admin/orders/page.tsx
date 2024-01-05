@@ -5,8 +5,8 @@ import Link from "next/link";
 
 import { MdExpandMore } from "react-icons/md";
 import { TbArrowsSort, TbFileReport } from "react-icons/tb";
-import { FiArrowUpRight } from "react-icons/fi";
-import { Smallchart, Table } from "../../components";
+import { FiArrowDownLeft, FiArrowDownRight, FiArrowUpRight } from "react-icons/fi";
+import { Table } from "../../components";
 import { BiSearch } from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
 import { IoIosAdd } from "react-icons/io";
@@ -16,6 +16,8 @@ const Orders = () => {
   const [cureentlocationtab, setCureentlocationtab] = useState("All locations");
   const [Locationbox, setLocationbox] = useState(false);
   const [orders, setOrders] = useState<any>([]);
+
+  const [stats, setStats] = useState<any>({});
 
   useEffect(() => {
     const getProducts = async () => {
@@ -30,7 +32,20 @@ const Orders = () => {
       }
     }
 
+    const OrderStats = async () => {
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/order/all-todays-stats/orders`);
+
+        if(res.status === 200) {
+          setStats(res.data.data);
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
     getProducts();
+    OrderStats();
   }, [])
 
   const [showSearch, setShowSearch] = useState<boolean>(false);
@@ -79,6 +94,10 @@ const Orders = () => {
       }
     });
   };
+
+  const replaceMinus = (value: number) => {
+    return Math.abs(value)?.toFixed();
+  }
 
   return (
     <div className="px-5 w-full">
@@ -151,75 +170,115 @@ const Orders = () => {
         </div>
       </div>
       <div className="w-full rounded-xl bg-white flex shadow-md mb-6">
-        <div className="w-[8%] cursor-pointer flex items-center justify-center p-6 border-r-[1px]">
+        <div className="flex items-center justify-center py-6 px-10 border-r shrink-0">
           <TbFileReport className="text-xl" />
           &nbsp; <span className="text-sm">Today</span>
         </div>
-        <div className="w-[17%] border-r-[1px] flex items-center justify-center px-6">
-          <div>
-            <p className="w-max font-light text-sm">orders</p>
-            <p className="text-sm text-gray-900 font-bold flex">
-              309
-              <span className="text-xs px-1 text-Primary flex items-center text-green">
-                <FiArrowUpRight /> 55%{" "}
-              </span>{" "}
-            </p>
+        <div className="grid grid-cols-5 grow">
+          <div className="border-r flex items-center justify-center px-3">
+            <div>
+              <p className="text-gray-900">Orders</p>
+              <p className="text-sm text-gray-900 font-bold flex items-end">
+                <span className="text-lg leading-6">
+                  {stats?.today?.totalOrders || 0}
+                </span>
+                {stats?.percentageChanges?.totalOrders < 0 ? (
+                  <span className="text-xs px-1 text-Primary flex items-center text-secondary">
+                    <FiArrowDownRight />
+                    {replaceMinus(stats?.percentageChanges?.totalOrders)}%
+                  </span>
+                ) : (
+                  <span className="text-xs px-1 text-Primary flex items-center text-green">
+                    <FiArrowUpRight />
+                    {stats?.percentageChanges?.totalOrders}%
+                  </span>
+                )}
+              </p>
+            </div>
           </div>
-          <div>
-            <Smallchart />
+          <div className="border-r flex items-center justify-center px-3">
+            <div>
+              <p className="text-gray-900">Processing Orders</p>
+              <p className="text-sm text-gray-900 font-bold flex items-end">
+                <span className="text-lg leading-6">
+                  {stats?.today?.totalProcessingOrders || 0}
+                </span>
+                {stats?.percentageChanges?.totalProcessingOrders < 0 ? (
+                  <span className="text-xs px-1 text-Primary flex items-center text-secondary">
+                    <FiArrowDownRight />
+                    {replaceMinus(stats?.percentageChanges?.totalProcessingOrders)}%
+                  </span>
+                ) : (
+                  <span className="text-xs px-1 text-Primary flex items-center text-green">
+                    <FiArrowUpRight />
+                    {stats?.percentageChanges?.totalProcessingOrders}%
+                  </span>
+                )}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="w-[17%] border-r-[1px] flex items-center justify-center px-6">
-          <div>
-            <p className="w-max font-light text-sm">Ordered items</p>
-            <p className="text-sm text-gray-900 font-bold flex">
-              1
-              <span className="text-xs px-1 text-Primary flex items-center text-green">
-                <FiArrowUpRight /> 45%{" "}
-              </span>{" "}
-            </p>
+          <div className="border-r flex items-center justify-center px-3">
+            <div>
+              <p className="text-gray-900">Delivered Orders</p>
+              <p className="text-sm text-gray-900 font-bold flex items-end">
+                <span className="text-lg leading-6">
+                  {stats?.today?.totalDeliveredOrders || 0}
+                </span>
+                {stats?.percentageChanges?.totalDeliveredOrders < 0 ? (
+                  <span className="text-xs px-1 text-Primary flex items-center text-secondary">
+                    <FiArrowDownRight />
+                    {replaceMinus(stats?.percentageChanges?.totalDeliveredOrders)}%
+                  </span>
+                ) : (
+                  <span className="text-xs px-1 text-Primary flex items-center text-green">
+                    <FiArrowUpRight />
+                    {stats?.percentageChanges?.totalDeliveredOrders}%
+                  </span>
+                )}
+              </p>
+            </div>
           </div>
-          <div>
-            <Smallchart />
+          <div className="border-r flex items-center justify-center px-3">
+            <div>
+              <p className="text-gray-900">Completed Orders</p>
+              <p className="text-sm text-gray-900 font-bold flex items-end">
+                <span className="text-lg leading-6">
+                  {stats?.today?.totalCompletedOrders || 0}
+                </span>
+                {stats?.percentageChanges?.totalCompletedOrders < 0 ? (
+                  <span className="text-xs px-1 text-Primary flex items-center text-secondary">
+                    <FiArrowDownRight />
+                    {replaceMinus(stats?.percentageChanges?.totalCompletedOrders)}%
+                  </span>
+                ) : (
+                  <span className="text-xs px-1 text-Primary flex items-center text-green">
+                    <FiArrowUpRight />
+                    {stats?.percentageChanges?.totalCompletedOrders}%
+                  </span>
+                )}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="w-[17%] border-r-[1px] flex items-center justify-center px-6">
-          <div>
-            <p className="w-max font-light text-sm">Returned items</p>
-            <p className="text-sm text-gray-900 font-bold flex">
-              1
-              <span className="text-xs px-1 text-Primary flex items-center text-green">
-                <FiArrowUpRight /> 45%{" "}
-              </span>{" "}
-            </p>
-          </div>
-          <div>
-            <Smallchart />
-          </div>
-        </div>
-        <div className="w-[17%] border-r-[1px] flex items-center justify-center px-6">
-          <div>
-            <p className="w-max font-light text-sm">Fulfilled orders</p>
-            <p className="text-sm text-gray-900 font-bold flex">
-              6
-              <span className="text-xs px-1 text-Primary flex items-center text-green">
-                <FiArrowUpRight /> 25%{" "}
-              </span>{" "}
-            </p>
-          </div>
-          <div>
-            <Smallchart />
-          </div>
-        </div>
-        <div className="w-[23%] flex items-center justify-center">
-          <div>
-            <p className="w-max font-light text-sm">Time to fulfill</p>
-            <p className="text-sm text-gray-900 font-bold flex">
-              1 day 10 hr
-              <span className="text-xs px-1 text-Primary flex items-center text-green">
-                <FiArrowUpRight /> 25%{" "}
-              </span>{" "}
-            </p>
+          <div className="flex items-center justify-center px-3">
+            <div>
+              <p className="text-gray-900">Orders Items</p>
+              <p className="text-sm text-gray-900 font-bold flex items-end">
+                <span className="text-lg leading-6">
+                  {stats?.today?.totalItems || 0}
+                </span>
+                {stats?.percentageChanges?.totalItems < 0 ? (
+                  <span className="text-xs px-1 text-Primary flex items-center text-secondary">
+                    <FiArrowDownRight />
+                    {replaceMinus(stats?.percentageChanges?.totalItems)}%
+                  </span>
+                ) : (
+                  <span className="text-xs px-1 text-Primary flex items-center text-green">
+                    <FiArrowUpRight />
+                    {stats?.percentageChanges?.totalItems}%
+                  </span>
+                )}
+              </p>
+            </div>
           </div>
         </div>
       </div>

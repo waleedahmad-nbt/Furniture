@@ -20,6 +20,7 @@ import ViewContact from "./viewContact";
 import AddTeam from "./addTeam";
 import AddCategory from "./addCategory";
 import ProductDetail from "./productDetail";
+import UnderDevelopment from "./underDevelopment";
 
 export {
   Header,
@@ -44,4 +45,5 @@ export {
   AddTeam,
   AddCategory,
   ProductDetail,
+  UnderDevelopment,
 };

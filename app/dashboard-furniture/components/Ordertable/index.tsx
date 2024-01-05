@@ -37,7 +37,7 @@ function Table({ data, setOrders }: any) {
   };
 
   const formateDate = (date: string) => {
-    const originalDate = new Date("2023-12-23T09:09:26.619Z");
+    const originalDate = new Date(date);
     return originalDate.toISOString().split('T')[0];
   }
 
@@ -95,19 +95,13 @@ function Table({ data, setOrders }: any) {
               scope="col"
               className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
             >
-              Order
+              Customer
             </th>
             <th
               scope="col"
               className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
             >
               Date
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-1.5 text-left text-xs font-bold text-gray-700 capitalize"
-            >
-              Customer
             </th>
             <th
               scope="col"
@@ -163,13 +157,10 @@ function Table({ data, setOrders }: any) {
                 />
               </td>
               <td className="px-6 text-xs py-2 whitespace-nowrap">
-                {rowData?.orderCode}
+                {rowData?.contactInfo?.firstName + " " + rowData?.contactInfo?.lastName}
               </td>
               <td className="px-6 text-xs py-2 whitespace-nowrap">
                 {formateDate(rowData?.createdAt)}
-              </td>
-              <td className="px-6 text-xs py-2 whitespace-nowrap">
-                {rowData?.contactInfo?.firstName + " " + rowData?.contactInfo?.lastName}
               </td>
               <td className="px-6 text-xs py-2 whitespace-nowrap">
                 AED {rowData?.total}

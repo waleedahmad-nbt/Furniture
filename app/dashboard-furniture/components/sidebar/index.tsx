@@ -2,10 +2,9 @@
 import { NavLink } from "@/app/(root)/components";
 import SideLinks from "./SideLinks";
 
-import { SiCoinmarketcap, SiSimpleanalytics } from "react-icons/si";
+import { SiSimpleanalytics } from "react-icons/si";
 import { CiHardDrive } from "react-icons/ci";
 import { BiSolidUser } from "react-icons/bi";
-import { TbDiscount2 } from "react-icons/tb";
 import { GoHomeFill } from "react-icons/go";
 import { ImPriceTag } from "react-icons/im";
 import { RiContactsFill, RiFileList2Line, RiGroupFill } from "react-icons/ri";
@@ -16,9 +15,6 @@ const Sidebar = () => {
   const productsOptions = [
     { label: "Categories", link: "/dashboard-furniture/admin/products/collection" },
     { label: "Inventory", link: "/dashboard-furniture/admin/products/inventory" },
-    { label: "Purchase products", link: "/dashboard-furniture/admin/products/purchase" },
-    { label: "Transfers", link: "/dashboard-furniture/admin/products/transfer" },
-    { label: "Gift Cards", link: "/dashboard-furniture/admin/products/giftcard" },
   ];
 
   const customerSubLink = [

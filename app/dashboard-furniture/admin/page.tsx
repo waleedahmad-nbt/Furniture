@@ -153,7 +153,7 @@ const Admin = () => {
           <div className="py-3 px-2 flex items-center justify-between cursor-pointer">
             <p className="font-bold text-base flex items-center">
               <CiHardDrive />
-              &nbsp;&nbsp; 10 Orders &nbsp;
+              &nbsp;&nbsp; {totals?.orderTotal} Orders &nbsp;
               <span className="font-normal text-sm">to fulfill</span>
             </p>
             <TbMathGreater className="text-sm text-gray-300" />

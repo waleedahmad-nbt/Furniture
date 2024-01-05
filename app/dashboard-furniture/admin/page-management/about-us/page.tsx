@@ -1,9 +1,9 @@
 import { UnderDevelopment } from "@/app/dashboard-furniture/components";
 
-const Segment = () => {
+const page = () => {
   return (
     <UnderDevelopment />
-  );
-};
+  )
+}
 
-export default Segment;
+export default page
