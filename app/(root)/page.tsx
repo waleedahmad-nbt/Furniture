@@ -218,7 +218,7 @@ export default function Home() {
                     <Image
                       src={item?.image}
                       alt="product"
-                      className="w-full h-full group-hover:scale-110 duration-300"
+                      className="w-full h-full group-hover:scale-110 duration-300 object-cover"
                       width={100}
                       height={100}
                     />
@@ -241,7 +241,7 @@ export default function Home() {
           <BarSkeleton />
         ) : (
           <div className="flex flex-wrap items-center justify-between gap-y-6">
-            <div className="flex items-center justify-start">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-y-3 justify-start">
               <h1 className="text-[18px] md:text-[18px] text-gray-300 font-bold mr-10">
                 Best Selling Products
               </h1>
@@ -250,10 +250,10 @@ export default function Home() {
                   categories?.slice(0, 6)?.map((item: any, index: number) => (
                     <button
                       onClick={() => setActiveTab(item?.category)}
-                      className={`px-5 py-1 text-gray-100 rounded-lg text-[14px] font-bold hover:text-gray-200 ${
+                      className={`px-5 py-1 rounded-md text-[16px] font-normal hover:text-[black] duration-300  ${
                         activeTab === item?.category
-                          ? "bg-gray-100/30 text-gray-200"
-                          : ""
+                          ? "bg-[#F3EFE5] text-black shadow-md"
+                          : "text-[#717171]"
                       }`}
                       key={index}
                     >
@@ -266,8 +266,8 @@ export default function Home() {
               href="/products"
               className="flex items-center gap-3  px-2 py-1 w-max text-white text-[14px]"
             >
-              <span className="text-gray-300 flex items-center font-bold duration-100 hover:text-primary">
-                <span className="mr-2">View All </span>
+              <span className="text-[#1F1F1F] hover:text-primary flex items-center font-medium duration-100 ">
+                <span className="mr-2 ">VIEW ALL </span>
                 <GoArrowRight />
               </span>
             </Link>
@@ -506,7 +506,7 @@ export default function Home() {
           <BarSkeleton />
         ) : (
           <div className="flex flex-wrap items-center justify-between gap-y-6">
-            <div className="flex items-center justify-start">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-y-3 justify-start">
               <h1 className="text-[18px] md:text-[18px] text-gray-300 font-bold mr-10">
                 New Arrivals
               </h1>
@@ -515,10 +515,10 @@ export default function Home() {
                   categories?.slice(0, 6)?.map((item: any, index: number) => (
                     <button
                       onClick={() => setActiveTab2(item?.category)}
-                      className={`px-5 py-1 text-gray-100 rounded-lg text-[14px] font-bold hover:text-gray-200 ${
+                      className={`px-5 py-1 rounded-md text-[16px] font-normal hover:text-[black] duration-300  ${
                         activeTab2 === item?.category
-                          ? "bg-gray-100/30 text-gray-200"
-                          : ""
+                          ? "bg-[#F3EFE5] text-black shadow-md"
+                          : "text-[#717171]"
                       }`}
                       key={index}
                     >
@@ -532,8 +532,8 @@ export default function Home() {
               href="/products"
               className="flex items-center gap-3  px-2 py-1 w-max text-white text-[14px]"
             >
-              <span className="text-gray-300 flex items-center font-bold duration-100 hover:text-primary">
-                <span className="mr-2">View All </span>
+              <span className="text-[#1F1F1F] hover:text-primary flex items-center font-medium duration-100 ">
+                <span className="mr-2 ">VIEW ALL </span>
                 <GoArrowRight />
               </span>
             </Link>

@@ -76,13 +76,21 @@ const Cart = () => {
                     } `}
                     style={{ borderBottom: borderBottomStyle }}
                     key={index}
+                    // onClick={() => {
+                    //   if (index === 2) {
+                    //     if (isOrderComplete) setCurrentTabIdx(index);
+                    //     return;
+                    //   }
+
+                    //   setCurrentTabIdx(index);
+                    // }}
+
                     onClick={() => {
-                      if (index === 2) {
-                        if (isOrderComplete) setCurrentTabIdx(index);
+                      if (index == 0) {
+                        setCurrentTabIdx(0);
+                      } else {
                         return;
                       }
-
-                      setCurrentTabIdx(index);
                     }}
                   >
                     <div className="w-[40px] h-[40px] bg-gray-900 text-white rounded-full flex justify-center items-center text-[18px]">
@@ -121,7 +129,7 @@ const Cart = () => {
           <div className="w-full lg:w-[40%] lg:pl-10">
             {currentTabIdx === 0 ? (
               <div>
-                <CartTotal />
+                <CartTotal setCurrentTabIdx={setCurrentTabIdx} />
               </div>
             ) : currentTabIdx === 1 ? (
               <div>

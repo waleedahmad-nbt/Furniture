@@ -27,7 +27,7 @@ async function fetchCats() {
   }
 }
 
-const customizeFurniture = async () => {
+const Portfolio = async () => {
   async function fetchData() {
     try {
       const response = await axios.get(
@@ -50,4 +50,4 @@ const customizeFurniture = async () => {
   );
 };
 
-export default customizeFurniture;
+export default Portfolio;

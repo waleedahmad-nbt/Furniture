@@ -67,7 +67,7 @@ const Modal = ({
   return (
     <>
       {isModalOpen && (
-        <div className="fixed z-30 inset-0 overflow-y-auto">
+        <div className="fixed z-50 inset-0 overflow-y-auto">
           <div className="flex items-center justify-center min-h-screen px-4 text-center ">
             <div className="fixed inset-0 transition-opacity">
               <div

@@ -7,13 +7,26 @@ import Select from "react-select";
 
 import { FaAngleDown } from "react-icons/fa6";
 
-const CartTotal = () => {
+const CartTotal = ({ setCurrentTabIdx }: any) => {
   const cartItems: any = useSelector((state: RootState) => state.cart);
 
-  const totalPrice = cartItems.reduce(
-    (total: any, item: any) => total + +item.price,
-    0
-  );
+  // const totalPrice = cartItems.reduce(
+  //   (total: any, item: any) => total + +item.price,
+  //   0
+  // );
+  const totalPrice = cartItems.reduce((accumulator: any, currentItem: any) => {
+    if (currentItem?.discount?.discountedPrice) {
+      const itemPrice = parseFloat(currentItem.discount.discountedPrice);
+      const itemQuantity = currentItem.quantity;
+
+      return accumulator + itemPrice * itemQuantity;
+    } else {
+      const itemPrice = parseFloat(currentItem.price);
+      const itemQuantity = currentItem.quantity;
+
+      return accumulator + itemPrice * itemQuantity;
+    }
+  }, 0);
 
   const shipping = useRef<any>(null);
   const [toggleShipping, setToggleShipping] = useState<boolean>(false);
@@ -207,7 +220,10 @@ const CartTotal = () => {
         <p>AED {totalPrice?.toFixed(2)}</p>
       </div>
 
-      <button className="bg-primary w-full py-2 text-white font-medium">
+      <button
+        className="bg-primary w-full py-2 text-white font-medium"
+        onClick={() => setCurrentTabIdx(1)}
+      >
         Payment Process
       </button>
     </div>

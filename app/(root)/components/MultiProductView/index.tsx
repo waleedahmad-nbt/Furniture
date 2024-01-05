@@ -84,7 +84,7 @@ const MultiProductView = ({ item }: any) => {
 
   const notify = () =>
     toast("Product Added to Cart!", {
-      className: "custom-toast", // Add a custom class to the toast container
+      className: "custom-toast",
     });
 
   const handleWishList = () => {
@@ -102,6 +102,17 @@ const MultiProductView = ({ item }: any) => {
 
   const existWish = wishList.filter((wish: any) => wish?._id === item?._id);
   const existCart = cartItems.filter((cart: any) => cart?._id === item?._id);
+
+  const handleMouseMove = (event: any) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const percentage = (x / rect.width) * 100;
+    let noOfImages = item?.Images.length;
+    if (noOfImages) {
+      const imageIndex = Math.floor((percentage / 100) * noOfImages);
+      setActiveIndex(imageIndex);
+    }
+  };
 
   return (
     <>
@@ -140,8 +151,8 @@ const MultiProductView = ({ item }: any) => {
         <Link
           href={`/products/details/${item?._id}`}
           onClick={addRecent}
-          onMouseEnter={() => setActiveIndex(1)}
           onMouseLeave={() => setActiveIndex(0)}
+          onMouseMove={handleMouseMove}
           className="w-full h-full flex items-center justify-center"
         >
           {item?.Images?.length > 0 &&
@@ -183,8 +194,6 @@ const MultiProductView = ({ item }: any) => {
                 activeIndex === index ? "bg-gray-300" : "bg-gray-100 opacity-40"
               }`}
               key={index}
-              onMouseEnter={() => setActiveIndex(index)}
-              onMouseLeave={() => setActiveIndex(0)}
             ></div>
           ))}
       </div>

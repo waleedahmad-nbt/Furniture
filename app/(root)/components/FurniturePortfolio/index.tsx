@@ -4,7 +4,6 @@ import Image from "next/image";
 import livingRoomChair from "@/app/assets/images/livingRoomChair.png";
 
 const FurniturePortfolio = ({ response, allCategories }: any) => {
-
   const [filterValue, setFilterValue] = useState<string>("All");
 
   const filter = (rows: any) => {
@@ -12,7 +11,9 @@ const FurniturePortfolio = ({ response, allCategories }: any) => {
       return rows;
     }
 
-    const filtered = rows.filter((item: any) => item.category?.toLowerCase() === filterValue?.toLowerCase());
+    const filtered = rows.filter(
+      (item: any) => item.category?.toLowerCase() === filterValue?.toLowerCase()
+    );
     return filtered;
   };
 
@@ -21,7 +22,7 @@ const FurniturePortfolio = ({ response, allCategories }: any) => {
       <div className="customizeFurnitureBg">
         <div className="container flex flex-col items-center justify-center gap-4 min-h-[50vh]">
           <h1 className="text-white text-center text-3xl md:text-5xl font-bold">
-            Customize Furniture{" "}
+            Customize Furniture Portfolio
           </h1>
           <p className="text-white text-center">
             Lorem ipsum, or lipsum as it is sometimes known, is dummy text used
@@ -39,11 +40,7 @@ const FurniturePortfolio = ({ response, allCategories }: any) => {
           </h1>
           <div>
             <div className="flex flex-wrap gap-2 justify-center mt-5">
-              <div
-                className={`group ${
-                  filterValue === "All" ? "active" : ""
-                }`}
-              >
+              <div className={`group ${filterValue === "All" ? "active" : ""}`}>
                 <div
                   onClick={() => setFilterValue("All")}
                   className="border px-3 py-1 group-[.active]:bg-primary group-[.active]:text-white text-gray-200 font-normal cursor-pointer"

@@ -49,10 +49,17 @@ const CheckoutDetails = ({
   ];
 
   const requiredCart = cartItems.map((item: any, index: any) => {
+    let price = 0;
+    if (item?.discount?.discountedPrice) {
+      price = item?.discount?.discountedPrice;
+    } else {
+      price = item.price;
+    }
+
     return {
       _id: item._id,
       produtTitle: item.title,
-      price: item.price,
+      price: price,
       qty: item.quantity,
       image: item.Images[0],
       isReviewed: false,
@@ -73,7 +80,6 @@ const CheckoutDetails = ({
 
   const userData = useSelector((state: any) => state.user);
   const isLoggedIn = userData !== undefined && Object.keys(userData).length > 0;
-  console.log(isLoggedIn);
 
   const initialFormData = {
     customerId: isLoggedIn ? userData._id : "",
@@ -174,8 +180,6 @@ const CheckoutDetails = ({
     });
   };
 
-  console.log(formData);
-
   const validateForm = () => {
     const newErrors: any = {};
 
@@ -217,7 +221,6 @@ const CheckoutDetails = ({
     if (formData.email && !emailRegex.test(formData.email)) {
       newErrors.email = "Please enter a valid email address.";
     }
-    // console.log(newErrors);
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; // Return true if no errors
@@ -248,9 +251,8 @@ const CheckoutDetails = ({
           email: formData.contactInfo.email,
           password: formData.contactInfo.password,
         });
-        // console.log(signUpRes);
 
-        if (signUpRes) {
+        if (signUpRes.data.success) {
           try {
             const res = await publicRequest.post("/order/add", {
               customerId: signUpRes.data.data._id,
@@ -314,7 +316,7 @@ const CheckoutDetails = ({
     <>
       <div className=" w-full">
         <form onSubmit={handleSubmit}>
-          <div className="bg-white ps-5 pr-10 py-10 mt-5 border-2 rounded-sm shadow-sm">
+          <div className="bg-white ps-5 pr-10 py-10 mt-5 rounded-sm shadow-md">
             <h1 className="text-[20px] font-medium">Contact Infomation</h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
@@ -434,7 +436,7 @@ const CheckoutDetails = ({
             {resMsg ? <div className="text-secondary mt-3">{resMsg}</div> : ""}
           </div>
 
-          <div className="bg-white ps-5 pr-10 py-10 mt-5 border-2 rounded-sm shadow-sm">
+          <div className="bg-white ps-5 pr-10 py-10 mt-5 rounded-sm shadow-md">
             <h1 className="text-[20px] font-medium">Shipping Address</h1>
 
             <div className="mt-5">
@@ -549,7 +551,7 @@ const CheckoutDetails = ({
             </div>
           </div>
 
-          <div className="bg-white ps-5 pr-10 py-10 mt-5 border-2 rounded-sm shadow-sm">
+          <div className="bg-white ps-5 pr-10 py-10 mt-5 rounded-sm shadow-md">
             <h1 className="text-[20px] font-medium">Payment method</h1>
             <div>
               <div className="px-5 py-2.5 flex gap-5 border items-center mt-5">

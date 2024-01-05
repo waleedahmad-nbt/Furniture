@@ -209,7 +209,12 @@ const Navbar = () => {
     <div className="relative bg-gray-900 text-white">
       <header className="border-b hidden md:block">
         <div className="container">
-          <ul className="flex gap-8 py-2 text-[12px]">
+          <ul
+            className="flex gap-8 py-2 text-[12px]"
+            onClick={() => {
+              setFilterValue("");
+            }}
+          >
             <li>
               <NavLink href="/myorders">Track Order</NavLink>
             </li>
@@ -224,6 +229,9 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink href="/customizeFurnitureForm">Get a Quote</NavLink>
+            </li>
+            <li>
+              <NavLink href="/portfolio">Portfolio</NavLink>
             </li>
           </ul>
         </div>
@@ -274,12 +282,12 @@ const Navbar = () => {
                   </button>
                 </form>
               </div>
-              <Link
+              <NavLink
                 href="/customizeFurnitureForm"
                 className="py-[5px] px-[10px] lg:p-[10px] bg-gray-400 text-white shrink-0"
               >
                 Customize furniture
-              </Link>
+              </NavLink>
             </div>
             <div className="flex items-center justify-center gap-4 lg:gap-6">
               {token ? (
@@ -295,7 +303,7 @@ const Navbar = () => {
                       />
                     </div>
                     <div className="hidden lg:block">
-                      <p className="text-[8px] lg:text-[11px] text-[#717171]">
+                      <p className="text-[8px] lg:text-[11px] text-[#717171] whitespace-nowrap">
                         Log out
                       </p>
                       <p className="text-[9px] lg:text-[12px]">
@@ -336,7 +344,7 @@ const Navbar = () => {
                     />
                   </button>
                   <div className="hidden lg:block">
-                    <p className="text-[8px] lg:text-[11px] text-[#717171]">
+                    <p className="text-[8px] lg:text-[11px] text-[#717171] whitespace-nowrap">
                       Sign in
                     </p>
                     <p className="text-[9px] lg:text-[12px]">Account</p>

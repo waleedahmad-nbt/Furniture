@@ -34,7 +34,10 @@ const ViewItem = ({ item, close }: any) => {
     }
   };
 
-  const notify = () => toast("Product Added to Cart!");
+  const notify = () =>
+    toast("Product Added to Cart!", {
+      className: "custom-toast",
+    });
 
   const handleWishList = () => {
     const id = item?._id;
@@ -182,13 +185,13 @@ const ViewItem = ({ item, close }: any) => {
                     className="font-medium bg-[#3CB242] text-white px-2 py-2.5 rounded-md cursor-pointer"
                     onClick={handleSubmit}
                   >
-                    {existCart ? "Already in Cart" : "Add to Cart"}
+                    {existCart.length > 0 ? "Already in Cart" : "Add to Cart"}
                   </button>
 
                   <button
                     className={`font-bold bg-gray-900 w-[40px] h-[40px] flex items-center justify-center text-2xl rounded-md
                     cursor-pointer ${
-                      existWish.length > 0 ? "text-primary" : "text-[#3CB242]"
+                      existWish.length > 0 ? "text-[#3CB242]" : "text-[#3CB242]"
                     }`}
                     onClick={handleWishList}
                   >

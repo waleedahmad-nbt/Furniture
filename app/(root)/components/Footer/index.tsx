@@ -109,7 +109,7 @@ const Footer = () => {
           </div>
           <div className="flex flex-col items-start gap-8 md:flex-row justify-between md:items-center py-5">
             <div className="flex gap-5 items-center">
-              <p>Follow us:</p>
+              <p className="whitespace-nowrap">Follow us:</p>
               <ul className="flex gap-5 items-center">
                 <li className="bg-gray-300 p-2 h-[34px] w-[34px] flex items-center justify-center rounded-full cursor-pointer hover:bg-primary duration-100">
                   <Image src={Instagram} alt="Instagram.svg" />
@@ -133,7 +133,14 @@ const Footer = () => {
               </div>
             </div> */}
             <p className="text-[12px] md:text-[16px]">
-              Copyright 2023 © Guidline. All right reserved. Powered by NBT.
+              Copyright 2024 © Guidline. All right reserved. Powered by &nbsp;
+              <a
+                href="https://www.noblebridgetechnologies.com/"
+                target="_blank"
+                className="underline"
+              >
+                Noble Bridge Technologies.
+              </a>
             </p>
           </div>
         </div>

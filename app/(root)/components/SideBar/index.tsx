@@ -192,7 +192,10 @@ const SideBar = ({ menuOpen, setMenuOpen, showModal, categories }: any) => {
             </div>
             <ul className="my-3">
               <li>
-                <Link href="/" className="block p-3">
+                <Link
+                  href="/"
+                  className="block p-3 hover:text-primary duration-300"
+                >
                   Home
                 </Link>
               </li>
@@ -239,20 +242,20 @@ const SideBar = ({ menuOpen, setMenuOpen, showModal, categories }: any) => {
             </div>
             <ul className="my-3">
               <li className="flex items-center justify-between cursor-pointer w-full p-3">
-                <Link href="/wishlist" className="capitalize">
+                <Link
+                  href="/wishlist"
+                  className="capitalize hover:text-primary duration-300"
+                >
                   Wishlist
                 </Link>
               </li>
-              <li className="flex items-center justify-between cursor-pointer w-full p-3">
-                <span className="capitalize">Compare</span>
-              </li>
               <li
-                className="flex items-center justify-between cursor-pointer w-full p-3"
+                className="flex items-center justify-between cursor-pointer w-full p-3 hover:text-primary duration-300"
                 onClick={myAccount}
               >
                 My Account
               </li>
-              <li className="flex items-center justify-between cursor-pointer w-full p-3">
+              <li className="flex items-center justify-between cursor-pointer w-full p-3 hover:text-primary duration-300">
                 <Link href="/contactus" className="capitalize">
                   Contact
                 </Link>
@@ -280,7 +283,7 @@ const SideBar = ({ menuOpen, setMenuOpen, showModal, categories }: any) => {
                   You can send email at any time
                 </span>
               </div>
-              <p className="text-gray-200 pt-5 px-3">
+              <p className="text-gray-200 pt-5 px-3 text-[14px] md:text-[16px]">
                 Copyroght 2023 guidline website. All right reserved
               </p>
             </div>

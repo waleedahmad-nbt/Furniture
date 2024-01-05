@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { GoHeart } from "react-icons/go";
-import { FaHeart } from "react-icons/fa6";
+import { GoHeartFill } from "react-icons/go";
 import angle from "@/app/assets/icons/angle-right.svg";
 import sofa from "@/app/assets/products/sofa.png";
 import sofa1 from "@/app/assets/products/sofa_01.png";
@@ -345,17 +345,17 @@ const ProductDetails = () => {
                 </button>
 
                 <button
-                  className="font-medium bg-[#3CB242] text-white px-2 md:px-10 py-2.5 rounded-md cursor-pointer"
+                  className="font-medium bg-[#3CB242] text-white px-2 md:px-10 py-2.5 cursor-pointer"
                   onClick={() => handleCart(product)}
                 >
                   Add to Cart
                 </button>
 
                 <button
-                  className="font-bold bg-gray-900 text-[#3CB242] w-[40px] h-[40px] flex items-center justify-center text-2xl rounded-md cursor-pointer"
+                  className="font-bold border  border-gray-100  text-[#3CB242] w-[40px] h-[40px] flex items-center justify-center text-2xl cursor-pointer"
                   onClick={() => handleWishList(product)}
                 >
-                  {existWish.length > 0 ? <FaHeart /> : <GoHeart />}
+                  {existWish.length > 0 ? <GoHeartFill /> : <GoHeart />}
                 </button>
               </div>
 
