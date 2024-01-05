@@ -48,12 +48,14 @@ const CheckoutDetails = ({
     { label: "US", value: "US" },
   ];
 
-  const requiredCart = cartItems.map((item: any, indes: any) => {
+  const requiredCart = cartItems.map((item: any, index: any) => {
     return {
+      _id: item._id,
       produtTitle: item.title,
       price: item.price,
       qty: item.quantity,
       image: item.Images[0],
+      isReviewed: false,
     };
   });
 

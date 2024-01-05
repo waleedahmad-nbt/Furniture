@@ -16,7 +16,7 @@ interface AuthState {
   categoryId: string;
   recentViews: Array<object>;
   searchVal: string;
-
+  orderId: string;
 
   Authcheck: boolean;
   Wishlists: object[]; // You can specify a more specific type here if needed
@@ -36,6 +36,7 @@ const initialState: AuthState = {
   categoryId:"",
   recentViews: [],
   searchVal: "",
+  orderId:"",
 
   
   orderItems: [],
@@ -115,7 +116,9 @@ export const Allslice = createSlice({
     setSearchVal: (state, action: PayloadAction<string>) => {
       state.searchVal = action.payload;
     },
-
+    setOrderId: (state, action: PayloadAction<string>) => {
+      state.orderId = action.payload;
+    },
 
 
     AssignsideTrue: (state) => {
@@ -171,6 +174,7 @@ export const {
   setRecentViews,
   setUpdateRecentViews,
   setSearchVal,
+  setOrderId,
 
   AssignAuthTrue,
   AssignAuthFalse,

@@ -275,7 +275,7 @@ const Navbar = () => {
                 </form>
               </div>
               <Link
-                href="/customizeFurniture"
+                href="/customizeFurnitureForm"
                 className="py-[5px] px-[10px] lg:p-[10px] bg-gray-400 text-white shrink-0"
               >
                 Customize furniture

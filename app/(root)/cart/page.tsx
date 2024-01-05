@@ -20,12 +20,9 @@ const Cart = () => {
   const [orderData, setOrderData] = useState([]);
   const [successMsg, setSuccessMsg] = useState("");
 
-  // console.log(isOrderComplete, "isOrder");
-
   const dispatch = useDispatch();
 
   const cartItems: any = useSelector((state: RootState) => state.cart);
-  // console.log(cartItems[0].Images[0].src);
 
   const removeItem = (id: string) => {
     const filterCart = cartItems.filter((product: any) => product._id === id);

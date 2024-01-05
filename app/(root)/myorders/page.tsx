@@ -5,47 +5,22 @@ import { FiX } from "react-icons/fi";
 
 import Pro2 from "@/app/assets/products/table_03.png";
 import React, { useEffect, useState } from "react";
-// import { publicRequest } from "@/requestMethods";
+import { useDispatch, useSelector } from "react-redux";
+import Link from "next/link";
+import { setOrderId } from "@/lib/store/slices/Allslices";
 
 const MyOrders = () => {
   const { publicRequest } = useRequestMethods();
 
-  // const products = [
-  //   {
-  //     _id: "1",
-  //     name: "Rocket stool",
-  //     images: [Pro2],
-  //     priceWas: "27.90",
-  //     priceNow: "18.80",
-  //     quantity: 2,
-  //     status: "Delivered",
-  //   },
-  //   {
-  //     _id: "2",
-  //     name: "Rocket stool",
-  //     images: [Pro2],
-  //     priceWas: "27.90",
-  //     priceNow: "18.80",
-  //     quantity: 0,
-  //     status: "Pending",
-  //   },
-  //   {
-  //     _id: "3",
-  //     name: "Rocket stool",
-  //     images: [Pro2],
-  //     priceWas: "27.90",
-  //     priceNow: "18.80",
-  //     quantity: 5,
-  //     status: "In Transits",
-  //   },
-  // ];
-
   const [orders, setOrders] = useState<any>([]);
+  console.log(orders, "orders");
+
+  const userData = useSelector((state: any) => state.user);
 
   useEffect(() => {
     const getOrders = async () => {
       try {
-        const res = await publicRequest.get(`/order`);
+        const res = await publicRequest.get(`/order/user/${userData._id}`);
 
         if (res.status === 200) {
           console.log(res.data.data, "orders");
@@ -69,7 +44,8 @@ const MyOrders = () => {
 
   const orderToDisplay = orders.slice(0, itemsToShow);
   const hasMoreItems = itemsToShow < orders.length;
-  // console.log(orderToDisplay);
+
+  const dispatch = useDispatch();
 
   return (
     <div className="container">
@@ -158,6 +134,39 @@ const MyOrders = () => {
                             >
                               {order?.status}
                             </span>
+
+                            {/* {order?.status === "completed" &&
+                            !item?.isReviewed ? (
+                              <Link
+                                href={`/review/${item._id}`}
+                                className="text-white bg-primary w-[97px] h-[28px] flex items-center justify-center mt-1"
+                                onClick={() => {
+                                  dispatch(setOrderId(order._id));
+                                }}
+                              >
+                                Add Review
+                              </Link>
+                            ) : (
+                              <p className="text-primary">Review Added</p>
+                            )} */}
+
+                            {order?.status === "completed" ? (
+                              item?.isReviewed ? (
+                                <p className="text-primary">Review Added</p>
+                              ) : (
+                                <Link
+                                  href={`/review/${item._id}`}
+                                  className="text-white bg-primary w-[97px] h-[28px] flex items-center justify-center mt-1"
+                                  onClick={() => {
+                                    dispatch(setOrderId(order._id));
+                                  }}
+                                >
+                                  Add Review
+                                </Link>
+                              )
+                            ) : (
+                              ""
+                            )}
                           </td>
                         </tr>
                       ))}

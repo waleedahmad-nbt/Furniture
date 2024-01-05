@@ -16,6 +16,7 @@ import AuthGuard from "./AuthGuard";
 import FurniturePortfolio from "./FurniturePortfolio";
 import RecentViewed from "./RecentViewed";
 import useRequestMethods from "./RequestMethods";
+import ReadOnlyRating from "./ReadOnlyRating";
 
 export {
   Navbar,
@@ -36,4 +37,5 @@ export {
   FurniturePortfolio,
   RecentViewed,
   useRequestMethods,
+  ReadOnlyRating,
 };

@@ -204,7 +204,6 @@ const Reviews = ({ id }: { id: string }) => {
       </div>
 
       <h2 className="font-medium text-gray-900 my-4 mr-10">Reviews</h2>
-
       <div>
         {reviews?.reviews.length > 0 &&
           reviews?.reviews?.map((item: any, index: number) => (

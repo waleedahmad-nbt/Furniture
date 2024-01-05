@@ -295,8 +295,8 @@ const Products = () => {
                   <div className="flex gap-2">
                     <div>
                       <Select
-                        className="w-[200px] h-[40px] z-30"
-                        id="country"
+                        className="w-[200px] h-[40px] z-10"
+                        id="Sort"
                         styles={customStyles}
                         options={sortOptions}
                         components={{

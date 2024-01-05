@@ -33,7 +33,7 @@ const OrderComplete = ({ orderData, successMsg }: any) => {
                   height={100}
                 />
               </div>
-              <div className=" flex flex-col items-center justify-center gap-5">
+              <div className=" flex flex-col items-center justify-center gap-3 sm:gap-5">
                 {successMsg ? (
                   <div>
                     <p className="text-green text-center">{successMsg}</p>{" "}
@@ -56,7 +56,7 @@ const OrderComplete = ({ orderData, successMsg }: any) => {
                     return (
                       <div className="relative w-[80px] h-[96px]">
                         <Image
-                          className="w-full h-full"
+                          className="w-full h-full object-cover"
                           src={item.image}
                           alt="Product"
                           width={100}
@@ -70,15 +70,27 @@ const OrderComplete = ({ orderData, successMsg }: any) => {
                   })}
                 </div>
 
-                <div className="grid grid-cols-2 gap-5">
-                  <h2 className="text-gray-200">Order code:</h2>
-                  <p className="font-medium">{item.orderCode}</p>
-                  <h2 className="text-gray-200">Date:</h2>
-                  <p className="font-medium">{formattedDate}</p>
-                  <h2 className="text-gray-200">Total:</h2>
-                  <p className="font-medium">${item.total}</p>
-                  <h2 className="text-gray-200">Payment method:</h2>
-                  <p className="font-medium">{item.paymentMethod}</p>
+                <div className="grid grid-cols-2 gap-2 sm:gap-5">
+                  <h2 className="text-gray-200 max-sm:col-span-full">
+                    Order code:
+                  </h2>
+                  <p className="font-medium max-sm:col-span-full">
+                    {item.orderCode}
+                  </p>
+                  <h2 className="text-gray-200 max-sm:col-span-full">Date:</h2>
+                  <p className="font-medium max-sm:col-span-full">
+                    {formattedDate}
+                  </p>
+                  <h2 className="text-gray-200 max-sm:col-span-full">Total:</h2>
+                  <p className="font-medium max-sm:col-span-full">
+                    ${item.total}
+                  </p>
+                  <h2 className="text-gray-200 max-sm:col-span-full">
+                    Payment method:
+                  </h2>
+                  <p className="font-medium max-sm:col-span-full">
+                    {item.paymentMethod}
+                  </p>
                 </div>
                 <Link
                   href="/products"

@@ -13,10 +13,17 @@ const OrderSummary = () => {
   const cartItems: any = useSelector((state: RootState) => state.cart);
 
   const totalPrice = cartItems.reduce((accumulator: any, currentItem: any) => {
-    const itemPrice = parseFloat(currentItem.price);
-    const itemQuantity = currentItem.quantity;
+    if (currentItem?.discount?.discountedPrice) {
+      const itemPrice = parseFloat(currentItem.discount.discountedPrice);
+      const itemQuantity = currentItem.quantity;
 
-    return accumulator + itemPrice * itemQuantity;
+      return accumulator + itemPrice * itemQuantity;
+    } else {
+      const itemPrice = parseFloat(currentItem.price);
+      const itemQuantity = currentItem.quantity;
+
+      return accumulator + itemPrice * itemQuantity;
+    }
   }, 0);
 
   return (
@@ -62,7 +69,16 @@ const OrderSummary = () => {
                     </div>
                   </div>
                 </div>
-                <h1>${item?.price * item?.quantity}</h1>
+                {/* <h1>AED {item?.price * item?.quantity}</h1> */}
+                {item?.discount?.discountedPrice ? (
+                  <span className="text-gray-300 text-xs md:text-sm">
+                    AED {item?.discount?.discountedPrice * item?.quantity}
+                  </span>
+                ) : (
+                  <span className="text-gray-300 text-xs md:text-sm">
+                    AED {item?.price * item?.quantity}
+                  </span>
+                )}
               </div>
             );
           })}
@@ -70,7 +86,7 @@ const OrderSummary = () => {
 
         <div className="flex justify-between items-center px-5 py-5 border-t">
           <p>Subtotal</p>
-          <p className="font-medium">${totalPrice}</p>
+          <p className="font-medium">AED {totalPrice}</p>
         </div>
 
         <div className="flex justify-between items-center px-5 py-5 border-t">
@@ -80,7 +96,7 @@ const OrderSummary = () => {
 
         <div className="flex justify-between items-center px-5 py-5 border-t">
           <p>Total</p>
-          <p className="font-medium">${totalPrice}</p>
+          <p className="font-medium">AED {totalPrice}</p>
         </div>
       </div>
     </>
