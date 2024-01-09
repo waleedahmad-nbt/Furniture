@@ -11,7 +11,6 @@ const CartTable = () => {
   const dispatch = useDispatch();
 
   const cartItems: any = useSelector((state: RootState) => state.cart);
-  console.log(cartItems, "cartItems");
 
   const removeItem = (id: string) => {
     const filterCart = cartItems.filter((product: any) => product._id === id);

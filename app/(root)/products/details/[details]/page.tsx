@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { RecentViewed, Timer, useRequestMethods } from "../../../components";
 import Image from "next/image";
 import Slider from "react-slick";
@@ -80,7 +80,6 @@ const ProductDetails = () => {
   };
 
   const [product, setProduct] = useState<any>(data);
-  // console.log(product, "product");
 
   const [loading, setLoading] = useState(true);
 
@@ -195,11 +194,6 @@ const ProductDetails = () => {
 
   const existWish = wishList.filter((wish: any) => wish?._id === product?._id);
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    console.log(formData);
-  };
-
   return (
     <>
       <div className="container pt-5">
@@ -248,14 +242,13 @@ const ProductDetails = () => {
                   {Array.from({ length: 5 }, (_, index) => {
                     let number = index + 0.5;
                     return (
-                      <>
+                      <Fragment key={index}>
                         {product?.averageRating >= index + 1 ? (
                           <Image
                             src={starFill}
                             alt="product"
                             width={24}
                             height={24}
-                            key={index}
                           />
                         ) : product?.averageRating >= number ? (
                           <Image
@@ -272,7 +265,7 @@ const ProductDetails = () => {
                             height={24}
                           />
                         )}
-                      </>
+                      </Fragment>
                     );
                   })}
                 </div>

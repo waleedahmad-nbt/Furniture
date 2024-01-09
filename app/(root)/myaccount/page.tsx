@@ -1,11 +1,8 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
-import { AccountSideBar, NavLink } from "../components";
+import { AccountSideBar } from "../components";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { useRequestMethods } from "../components/index";
-// import { userRequest } from "@/requestMethods";
 import { changeUserName } from "@/lib/store/slices/Allslices";
 import { AuthGuard } from "@/app/(root)/components/index";
 
@@ -36,7 +33,7 @@ const MyAccount = () => {
     e.preventDefault();
     try {
       const res = await userRequest.put(`/user/edit/${userData._id}`, formData);
-      console.log(res.data.data);
+
       if (res) {
         dispatch(
           changeUserName({
@@ -64,8 +61,6 @@ const MyAccount = () => {
     });
   };
 
-  console.log(password);
-
   const passwordSubmit = async (e: any) => {
     e.preventDefault();
 
@@ -78,7 +73,7 @@ const MyAccount = () => {
             newPassword: password.newPassword,
           }
         );
-        // console.log(res.data.data.message);
+
         if (res) {
           setPassword({
             currentPassword: "",
@@ -93,7 +88,7 @@ const MyAccount = () => {
           }, 1000);
         }
       } catch (error: any) {
-        // console.error(error.response.data);
+
         setIsPassword(true);
         setPasswordErrVal(error.response.data);
       }
@@ -112,12 +107,12 @@ const MyAccount = () => {
         {userData &&
           [userData].map((e: any, i: any) => {
             return (
-              <div className="bg-white px-4 md:px-10 py-10 rounded-sm flex flex-wrap gap-y-5 mb-16">
+              <div key={i} className="bg-white px-4 md:px-10 py-10 rounded-sm flex flex-wrap gap-y-5 mb-16">
                 <div className="w-full md:w-[30%]">
                   <AccountSideBar />
                 </div>
 
-                <div className="w-full md:w-[65%] pl-5" key={i}>
+                <div className="w-full md:w-[65%] pl-5">
                   <form onSubmit={handleSubmit}>
                     <h2 className="text-gray-900 font-medium text-[20px]">
                       Account Details

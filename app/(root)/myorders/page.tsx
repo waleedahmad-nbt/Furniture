@@ -13,7 +13,6 @@ const MyOrders = () => {
   const { publicRequest } = useRequestMethods();
 
   const [orders, setOrders] = useState<any>([]);
-  console.log(orders, "orders");
 
   const userData = useSelector((state: any) => state.user);
 
@@ -23,7 +22,6 @@ const MyOrders = () => {
         const res = await publicRequest.get(`/order/user/${userData._id}`);
 
         if (res.status === 200) {
-          console.log(res.data.data, "orders");
           setOrders(res.data.data);
         }
       } catch (error) {

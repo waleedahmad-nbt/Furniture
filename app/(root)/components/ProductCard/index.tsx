@@ -17,8 +17,6 @@ import { RootState } from "@/lib/store";
 import { Fragment } from "react";
 
 const ProductCard = ({ item, className, offer, isGrid }: any) => {
-  // console.log(item, "itemmm");
-
   const dispatch = useDispatch();
 
   const recentViews: any = useSelector((state: RootState) => state.recentViews);
@@ -80,7 +78,7 @@ const ProductCard = ({ item, className, offer, isGrid }: any) => {
         >
           <div className="flex mt-3 gap-1">
             <div className="flex">
-              {Array.from({ length: 5 }, (_, index) => {
+              {Array.from({ length: 5 }).map((_, index) => {
                 let number = index + 0.5;
                 return (
                   <Fragment key={index}>

@@ -37,7 +37,6 @@ const Collection = () => {
         const res = await publicRequest.get(`/category`);
 
         if (res.status === 200) {
-          console.log(res);
           setCategories(res.data.data);
         }
       } catch (error) {

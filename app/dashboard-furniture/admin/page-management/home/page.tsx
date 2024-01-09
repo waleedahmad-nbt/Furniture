@@ -17,7 +17,6 @@ const PageManagement = () => {
   
         if(res.status === 200) {
           setData(res.data.data);
-          console.log(res.data.data)
         }
       } catch (error) {
         console.log(error);

@@ -23,7 +23,6 @@ const Quotes = () => {
       try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/quote`);
   
-        console.log(res);
         if(res.status === 200) {
           setData(res.data.data);
         }
@@ -40,7 +39,6 @@ const Quotes = () => {
     try {
       const res = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/quote/delete/${_id}`);
 
-      console.log(res);
       if(res.status === 200) {
         setData((prev: any) => prev.filter((item: any) => item?._id !== _id));
         setUpdating("");

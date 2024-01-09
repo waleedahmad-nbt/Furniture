@@ -284,7 +284,14 @@ const SideBar = ({ menuOpen, setMenuOpen, showModal, categories }: any) => {
                 </span>
               </div>
               <p className="text-gray-200 pt-5 px-3 text-[14px] md:text-[16px]">
-                Copyroght 2023 guidline website. All right reserved
+                Copyright 2024 © Guidline. All right reserved. Powered by &nbsp;
+                <a
+                  href="https://www.noblebridgetechnologies.com/"
+                  target="_blank"
+                  className="underline"
+                >
+                  Noble Bridge Technologies.
+                </a>
               </p>
             </div>
           </div>

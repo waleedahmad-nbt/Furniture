@@ -1,6 +1,5 @@
 "use client"
 import axios from 'axios';
-import { error } from 'console';
 import Image from 'next/image';
 import { useState } from 'react';
 import { FiEdit3, FiTrash } from 'react-icons/fi';

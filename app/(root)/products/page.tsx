@@ -161,7 +161,7 @@ const Products = () => {
       }
     };
 
-    if (category) {
+    if (categoryId) {
       searchCategories();
     }
 

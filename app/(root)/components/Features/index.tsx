@@ -1,9 +1,5 @@
 import Image from "next/image";
 
-import Delivery from "@/app/assets/icons/delivery.svg";
-import money from "@/app/assets/icons/money.svg";
-import time from "@/app/assets/icons/time.svg";
-import discount from "@/app/assets/icons/discount.svg";
 import "react-loading-skeleton/dist/skeleton.css";
 import ServicesSkeleton from "../Skeletons/ServicesSkeleton";
 
@@ -17,7 +13,7 @@ const Features = ({ services, loading }: any) => {
           services &&
           services.map((item: any, index: any) => {
             return (
-              <div className="bg-silver py-7 text-center border-[0.6px] min-h-[150px] border-gray-200 w-[100%] sm:w-[290px] flex flex-col justify-center items-center gap-1">
+              <div key={index} className="bg-silver py-7 text-center border-[0.6px] min-h-[150px] border-gray-200 w-[100%] sm:w-[290px] flex flex-col justify-center items-center gap-1">
                 <div className="w-[83.7px] h-[47.03px]">
                   <Image
                     src={item.image}

@@ -26,7 +26,7 @@ const aboutUs = () => {
   const fetchTeam = async () => {
     try {
       const res = await publicRequest.get("/team");
-      console.log(res.data.data);
+
       if (res) {
         setTeam(res.data.data);
       }
@@ -165,7 +165,7 @@ const aboutUs = () => {
             {team &&
               team.map((e: any, i: any) => {
                 return (
-                  <div className=" w-max">
+                  <div className=" w-max" key={i}>
                     <div className="relative overflow-hidden">
                       <div className="w-[270px] h-[349px]">
                         <Image

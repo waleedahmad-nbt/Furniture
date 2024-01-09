@@ -5,7 +5,6 @@ import Image from "next/image";
 import { AccountSideBar, useRequestMethods } from "../components";
 import { AuthGuard } from "@/app/(root)/components/index";
 import { useSelector } from "react-redux";
-// import { userRequest } from "@/requestMethods";
 import loader from "@/app/assets/icons/loader.gif";
 
 const MyAddress = () => {
@@ -13,7 +12,6 @@ const MyAddress = () => {
 
   const [userAddress, setUserAddress]: any = useState([]);
   const [filterAddrs, setFilterAddrs]: any = useState("");
-  // console.log(filterAddrs);
 
   const [loading, setLoading] = useState(false);
 
@@ -22,7 +20,7 @@ const MyAddress = () => {
   const fetchUseraddress = async () => {
     try {
       const res = await userRequest.get(`/address/${userData._id}`);
-      // console.log(res, "fetching address");
+
       if (res) {
         setUserAddress(res.data.data);
       }
@@ -99,8 +97,6 @@ const MyAddress = () => {
     });
   };
 
-  console.log(formData);
-
   const validateForm = () => {
     let errors: any = {};
 
@@ -119,7 +115,7 @@ const MyAddress = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    // console.log("hello");
+
     setLoading(true);
     try {
       const res = await userRequest.post(`/address/add`, formData);
@@ -147,7 +143,6 @@ const MyAddress = () => {
     const filterAdd = userAddress.find((item: any, index: any) => {
       return item.addressType === addressType;
     });
-    // console.log(filterAdd);
 
     setFilterAddrs(filterAdd);
 
@@ -165,7 +160,6 @@ const MyAddress = () => {
         city: filterAdd ? filterAdd.city : "",
       };
     });
-    // console.log(filterAdd, "filterAdd ");
   };
 
   return (

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Slider from "react-slick";
@@ -365,14 +365,13 @@ export default function Home() {
                       {Array.from({ length: 5 }, (_, index) => {
                         let number = index + 0.5;
                         return (
-                          <>
+                          <Fragment key={index}>
                             {products[1]?.averageRating >= index + 1 ? (
                               <Image
                                 src={starFill}
                                 alt="product"
                                 width={10}
                                 height={10}
-                                key={index}
                               />
                             ) : products[1]?.averageRating >= number ? (
                               <Image
@@ -389,7 +388,7 @@ export default function Home() {
                                 height={10}
                               />
                             )}
-                          </>
+                          </Fragment>
                         );
                       })}
                     </div>

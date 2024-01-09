@@ -45,14 +45,13 @@ const Reviews = ({ id }: { id: string }) => {
             {Array.from({ length: 5 }, (_, index) => {
               let number = index + 0.5;
               return (
-                <p>
+                <p key={index}>
                   {reviews?.averageRating >= index + 1 ? (
                     <Image
                       src={starFill}
                       alt="product"
                       width={24}
                       height={24}
-                      key={index}
                     />
                   ) : reviews?.averageRating >= number ? (
                     <Image

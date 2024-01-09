@@ -32,8 +32,6 @@ const ContactForm = () => {
 
   const validateForm = () => {
     const newErrors: any = {};
-    // Validate each field
-    console.log(Object.keys(formData));
 
     Object.keys(formData).forEach((key) => {
       var captilize = key.replace(/([A-Z])/g, " $1").trim();
@@ -63,7 +61,6 @@ const ContactForm = () => {
     }
     try {
       const res = await publicRequest.post(`/contact/add`, formData);
-      console.log(res);
 
       if (res) {
         setMessage(res.data.data.message);

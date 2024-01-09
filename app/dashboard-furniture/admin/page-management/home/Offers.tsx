@@ -126,7 +126,6 @@ const Offers = ({ data, setData }: any) => {
   
 
   const setUpdateData = (item: any) => {
-    console.log(item)
     setFormData({
       title: item?.title || "",
       subTitle: item?.subTitle || "",

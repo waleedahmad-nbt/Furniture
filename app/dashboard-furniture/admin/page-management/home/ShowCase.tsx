@@ -71,7 +71,6 @@ const ShowCase = ({ data, setData }: any) => {
       try {
         const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/showcase/set`, data);
   
-        console.log(res)
         if(res.status === 201) {
           setData((prev: any) => { return { ...prev, showCase: res.data.data } });
           setLoading(false);
