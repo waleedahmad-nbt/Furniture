@@ -40,7 +40,7 @@ const CheckoutDetails = ({
   };
 
   const { publicRequest } = useRequestMethods();
-
+  const [loading, setLoading] = useState(false);
   const countryOptions = [
     { label: "Pakistan", value: "Pakistan" },
     { label: "China", value: "China" },
@@ -234,9 +234,10 @@ const CheckoutDetails = ({
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
+    setLoading(true);
     // Validate the form
     if (!validateForm()) {
+      setLoading(false);
       return;
     }
 
@@ -275,7 +276,6 @@ const CheckoutDetails = ({
               shipping: "free",
               total: totalPrice,
             });
-            console.log(res.data.data);
 
             if (res) {
               setIsOrderComplete(true);
@@ -283,12 +283,14 @@ const CheckoutDetails = ({
               setOrderData(res.data.data);
               setSuccessMsg("Your account has also been created successfully");
               setResMsg("");
+              setLoading(false);
             }
           } catch (error) {
             console.error(error);
           }
         }
       } catch (error: any) {
+        setLoading(false);
         // console.error(error.response.data.error);
         if (error.response.data.error == "user already exists") {
           setResMsg("Your account already exist. Please Login");
@@ -666,10 +668,14 @@ const CheckoutDetails = ({
           </div>
 
           <button
-            className="w-full bg-primary outline-primary text-white mt-5 py-3"
+            className="w-full flex items-center justify-center bg-primary text-center outline-primary text-white mt-5 py-3"
             type="submit"
           >
-            Complete Order
+            {loading ? (
+              <div className="Loader border-[3px] w-5 h-5 p-[1px]"></div>
+            ) : (
+              "Complete Order"
+            )}
           </button>
         </form>
       </div>
