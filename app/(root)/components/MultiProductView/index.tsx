@@ -158,7 +158,7 @@ const MultiProductView = ({ item }: any) => {
           {item?.Images?.length > 0 &&
             item?.Images?.map((img: any, index: number) => (
               <div
-                className={`mx-auto duration-300 transition-opacity ${
+                className={`mx-auto duration-300 transition-opacity h-full ${
                   index === activeIndex
                     ? "relative opacity-100 visible"
                     : "absolute inset-0 opacity-0 invisible pointer-events-none"
@@ -171,7 +171,7 @@ const MultiProductView = ({ item }: any) => {
                     alt="product"
                     width={100}
                     height={100}
-                    className="w-auto h-auto"
+                    className="w-full h-full object-cover"
                   />
                 )}
               </div>
